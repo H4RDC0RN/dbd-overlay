@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp1.Utils
+namespace DBDUtilityOverlay.Utils
 {
     public static class WindowsServices
     {

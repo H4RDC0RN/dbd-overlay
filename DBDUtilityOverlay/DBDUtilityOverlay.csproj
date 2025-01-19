@@ -9,11 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include="Images\Maps\HADDONFIELD.png" />
+    <None Remove="Images\App\close.png" />
+    <None Remove="Images\Recognition\test1.png" />
+    <None Remove="Images\Recognition\test2.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\Recognition\" />
+    <Resource Include="Images\App\close.png" />
+    <Resource Include="Images\Maps\HADDONFIELD.png" />
+    <Resource Include="Images\Recognition\test1.png" />
+    <Resource Include="Images\Recognition\test2.png" />
   </ItemGroup>
 
 </Project>

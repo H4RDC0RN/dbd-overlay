@@ -12,9 +12,9 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WpfApp1.Utils;
+using DBDUtilityOverlay.Utils;
 
-namespace WpfApp1
+namespace DBDUtilityOverlay
 {
     /// <summary>
     /// Interaction logic for MapOverlay.xaml
