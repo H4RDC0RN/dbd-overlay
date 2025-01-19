@@ -9,7 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include="Images\HADDONFIELD.png" />
+    <Resource Include="Images\Maps\HADDONFIELD.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\Recognition\" />
   </ItemGroup>
 
 </Project>
