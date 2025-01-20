@@ -10,15 +10,116 @@
 
   <ItemGroup>
     <None Remove="Images\App\close.png" />
+    <None Remove="Images\App\minimize.png" />
+    <None Remove="Images\Maps\AZAROVSRESTINGPLACE.png" />
+    <None Remove="Images\Maps\BADHAMPRESCHOOLI.png" />
+    <None Remove="Images\Maps\BADHAMPRESCHOOLII.png" />
+    <None Remove="Images\Maps\BADHAMPRESCHOOLIII.png" />
+    <None Remove="Images\Maps\BADHAMPRESCHOOLIV.png" />
+    <None Remove="Images\Maps\BADHAMPRESCHOOLV.png" />
+    <None Remove="Images\Maps\BLOODLODGE.png" />
+    <None Remove="Images\Maps\COALTOWER.png" />
+    <None Remove="Images\Maps\DEADDAWGSALOON.png" />
+    <None Remove="Images\Maps\DISTURBEDWARD.png" />
+    <None Remove="Images\Maps\Empty.png" />
+    <None Remove="Images\Maps\EYRIEOFCROWS.png" />
+    <None Remove="Images\Maps\FAMILYRESIDENCE.png" />
+    <None Remove="Images\Maps\FATHERCAMPBELLSCHAPEL.png" />
+    <None Remove="Images\Maps\FORGOTTENRUINS.png" />
+    <None Remove="Images\Maps\FRACTUREDCOWSHED.png" />
+    <None Remove="Images\Maps\GARDENOFJOY.png" />
+    <None Remove="Images\Maps\GASHEAVEN.png" />
+    <None Remove="Images\Maps\GREENVILLESQUARE.png" />
+    <None Remove="Images\Maps\GRIMPANTRY.png" />
+    <None Remove="Images\Maps\GROANINGSTOREHOUSE.png" />
+    <None Remove="Images\Maps\IRONWORKS OF MISERY.png" />
+    <None Remove="Images\Maps\MIDWICHELEMNTARYSCHOOL.png" />
+    <None Remove="Images\Maps\MOTHERSDWELLING.png" />
+    <None Remove="Images\Maps\MOUNTORMONDRESORT.png" />
+    <None Remove="Images\Maps\NOSTROMOWRECKAGE.png" />
+    <None Remove="Images\Maps\RACCOONCITYPOLICESTATIONEASTWING.png" />
+    <None Remove="Images\Maps\RACCOONCITYPOLICESTATIONWESTWING.png" />
+    <None Remove="Images\Maps\RANCIDABATTOIR.png" />
+    <None Remove="Images\Maps\ROTTENFIELDS.png" />
+    <None Remove="Images\Maps\SANCTUMOFWRATH.png" />
+    <None Remove="Images\Maps\SHELTERWOODS.png" />
+    <None Remove="Images\Maps\SUFFOCATIONPIT.png" />
+    <None Remove="Images\Maps\THEGAME.png" />
+    <None Remove="Images\Maps\THEGRIMPANTRY.png" />
+    <None Remove="Images\Maps\THEPALEROSE.png" />
+    <None Remove="Images\Maps\THESHATTEREDSQUARE.png" />
+    <None Remove="Images\Maps\THETEMPLEOFPURGATION.png" />
+    <None Remove="Images\Maps\THETHOMPSONHOUSE.png" />
+    <None Remove="Images\Maps\THEUNDERGROUNDCOMPLEX.png" />
+    <None Remove="Images\Maps\TOBALANDING.png" />
+    <None Remove="Images\Maps\TORMENTCREEK.png" />
+    <None Remove="Images\Maps\TREATMENTTHEATRE.png" />
+    <None Remove="Images\Maps\WRECKERSYARD.png" />
+    <None Remove="Images\Maps\WRETCHEDSHOP.png" />
     <None Remove="Images\Recognition\test1.png" />
     <None Remove="Images\Recognition\test2.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="9.0.1" />
+    <PackageReference Include="Tesseract" Version="5.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\App\close.png" />
+    <Resource Include="Images\App\minimize.png" />
+    <Resource Include="Images\Maps\AZAROVSRESTINGPLACE.png" />
+    <Resource Include="Images\Maps\BADHAMPRESCHOOLI.png" />
+    <Resource Include="Images\Maps\BADHAMPRESCHOOLII.png" />
+    <Resource Include="Images\Maps\BADHAMPRESCHOOLIII.png" />
+    <Resource Include="Images\Maps\BADHAMPRESCHOOLIV.png" />
+    <Resource Include="Images\Maps\BADHAMPRESCHOOLV.png" />
+    <Resource Include="Images\Maps\BLOODLODGE.png" />
+    <Resource Include="Images\Maps\COALTOWER.png" />
+    <Resource Include="Images\Maps\DEADDAWGSALOON.png" />
+    <Resource Include="Images\Maps\DISTURBEDWARD.png" />
+    <Resource Include="Images\Maps\Empty.png" />
+    <Resource Include="Images\Maps\EYRIEOFCROWS.png" />
+    <Resource Include="Images\Maps\FAMILYRESIDENCE.png" />
+    <Resource Include="Images\Maps\FATHERCAMPBELLSCHAPEL.png" />
+    <Resource Include="Images\Maps\FORGOTTENRUINS.png" />
+    <Resource Include="Images\Maps\FRACTUREDCOWSHED.png" />
+    <Resource Include="Images\Maps\GARDENOFJOY.png" />
+    <Resource Include="Images\Maps\GASHEAVEN.png" />
+    <Resource Include="Images\Maps\GREENVILLESQUARE.png" />
+    <Resource Include="Images\Maps\GRIMPANTRY.png" />
+    <Resource Include="Images\Maps\GROANINGSTOREHOUSE.png" />
     <Resource Include="Images\Maps\HADDONFIELD.png" />
+    <Resource Include="Images\Maps\IRONWORKS OF MISERY.png" />
+    <Resource Include="Images\Maps\MIDWICHELEMNTARYSCHOOL.png" />
+    <Resource Include="Images\Maps\MOTHERSDWELLING.png" />
+    <Resource Include="Images\Maps\MOUNTORMONDRESORT.png" />
+    <Resource Include="Images\Maps\NOSTROMOWRECKAGE.png" />
+    <Resource Include="Images\Maps\RACCOONCITYPOLICESTATIONEASTWING.png" />
+    <Resource Include="Images\Maps\RACCOONCITYPOLICESTATIONWESTWING.png" />
+    <Resource Include="Images\Maps\RANCIDABATTOIR.png" />
+    <Resource Include="Images\Maps\ROTTENFIELDS.png" />
+    <Resource Include="Images\Maps\SANCTUMOFWRATH.png" />
+    <Resource Include="Images\Maps\SHELTERWOODS.png" />
+    <Resource Include="Images\Maps\SUFFOCATIONPIT.png" />
+    <Resource Include="Images\Maps\THEGAME.png" />
+    <Resource Include="Images\Maps\THEGRIMPANTRY.png" />
+    <Resource Include="Images\Maps\THEPALEROSE.png" />
+    <Resource Include="Images\Maps\THESHATTEREDSQUARE.png" />
+    <Resource Include="Images\Maps\THETEMPLEOFPURGATION.png" />
+    <Resource Include="Images\Maps\THETHOMPSONHOUSE.png" />
+    <Resource Include="Images\Maps\THEUNDERGROUNDCOMPLEX.png" />
+    <Resource Include="Images\Maps\TOBALANDING.png" />
+    <Resource Include="Images\Maps\TORMENTCREEK.png" />
+    <Resource Include="Images\Maps\TREATMENTTHEATRE.png" />
+    <Resource Include="Images\Maps\WRECKERSYARD.png" />
+    <Resource Include="Images\Maps\WRETCHEDSHOP.png" />
     <Resource Include="Images\Recognition\test1.png" />
     <Resource Include="Images\Recognition\test2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Tessdata\" />
   </ItemGroup>
 
 </Project>

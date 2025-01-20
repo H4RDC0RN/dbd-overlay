@@ -1,13 +1,8 @@
-﻿using System.Text;
+﻿using DBDUtilityOverlay.Utils;
+using DBDUtilityOverlay.Utils.Extensions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Tesseract;
 
 namespace DBDUtilityOverlay
 {
@@ -34,6 +29,23 @@ namespace DBDUtilityOverlay
             overlay.Top = 0;
         }
 
+        private void WindowMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left) DragMove();
+        }
+
+        private void ExitButtonClick(object sender, RoutedEventArgs e)
+        {
+            overlay.Close();
+            Close();
+            Application.Current.Shutdown();
+        }
+
+        private void MinButtonClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
         private void OpenButtonClick(object sender, RoutedEventArgs e)
         {
             overlay.Show();
@@ -44,11 +56,16 @@ namespace DBDUtilityOverlay
             overlay.Hide();
         }
 
-        private void ExitButtonClick(object sender, RoutedEventArgs e)
+        private void ReadButtonClick(object sender, RoutedEventArgs e)
         {
-            overlay.Close();
-            Close();
-            Application.Current.Shutdown();
+            var imagePath = @"Images\Recognition\test.jpg".ToProjectPath();
+            ScreenshotRecognizer.GetmageMapNameEsc(imagePath);
+            var engine = new TesseractEngine("Tessdata".ToProjectPath(), "eng");
+            var image = Pix.LoadFromFile(imagePath);
+            var text = engine.Process(image).GetText();
+            var mapName = text.Split('-')[1].Split('\n')[0].Remove(" ").ToUpper();
+
+            overlay.ChangeMap(mapName);
         }
     }
 }

@@ -5,19 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBDUtilityOverlay"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="300">
+        Title="MainWindow" Height="300" Width="300"
+        MouseDown="WindowMouseDown">
     <Grid Height="300">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="Open" Content="Open" HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" Click="OpenButtonClick" Height="30" Width="70" Grid.Row="1"/>
-        <Button x:Name="Close" Content="Close" HorizontalAlignment="Center" Margin="0,84,0,0" VerticalAlignment="Top" Click="CloseButtonClick" Height="30" Width="70" Grid.Row="1"/>
+        <Button x:Name="Min" Width="20" Height="20" Click="MinButtonClick" HorizontalAlignment="Right" Margin="0,0,20,0">
+            <Button.Background>
+                <ImageBrush ImageSource="/Images/App/minimize.png"/>
+            </Button.Background>
+        </Button>
         <Button x:Name="Exit" HorizontalAlignment="Right" Width="20" Height="20" Click="ExitButtonClick">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/App/close.png"/>
             </Button.Background>
         </Button>
+        <Button x:Name="Open" Content="Open" HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" Click="OpenButtonClick" Height="30" Width="70" Grid.Row="1"/>
+        <Button x:Name="Close" Content="Close" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Click="CloseButtonClick" Height="30" Width="70" Grid.Row="1"/>
+        <Button x:Name="Read" Content="Read" HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top" Click="ReadButtonClick" Height="30" Width="70" Grid.Row="1"/>
 
     </Grid>
 </Window>

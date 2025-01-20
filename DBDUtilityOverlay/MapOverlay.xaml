@@ -6,7 +6,5 @@
         xmlns:local="clr-namespace:DBDUtilityOverlay"
         mc:Ignorable="d"
         Title="MapOverlay" Height="200" Width="200">
-    <Grid>
-        <Image x:Name="Map" Source="/Images/Maps/HADDONFIELD.png" Stretch="Fill" Height="200" Width="200"/>
-    </Grid>
+    <Grid x:Name="MapOverlayGrid"/>
 </Window>
