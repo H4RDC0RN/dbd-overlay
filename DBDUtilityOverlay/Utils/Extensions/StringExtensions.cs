@@ -14,7 +14,12 @@ namespace DBDUtilityOverlay.Utils.Extensions
 
         public static string Remove(this string str, string pattern)
         {
-            return Regex.Replace(str, pattern, string.Empty);
+            return str.Replace(pattern, string.Empty);
+        }
+
+        public static string Replace(this string str, string pattern, string newValue)
+        {
+            return Regex.Replace(str, pattern, newValue);
         }
 
         public static string[] Split(this string str, string charsArr)

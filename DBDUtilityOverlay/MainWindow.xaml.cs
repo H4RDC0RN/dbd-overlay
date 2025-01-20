@@ -11,7 +11,7 @@ namespace DBDUtilityOverlay
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MapOverlay overlay;
+        private readonly MapOverlay overlay;
         public MainWindow()
         {
             InitializeComponent();
@@ -63,9 +63,12 @@ namespace DBDUtilityOverlay
             var engine = new TesseractEngine("Tessdata".ToProjectPath(), "eng");
             var image = Pix.LoadFromFile(imagePath);
             var text = engine.Process(image).GetText();
-            var mapName = text.Split('-')[1].Split('\n')[0].Remove(" ").ToUpper();
 
-            overlay.ChangeMap(mapName);
+            var res = text.Split(" - ");
+            var realm = res[0].Split('\n').Last().Remove("'").Replace(" ", "_").Replace("é", "e").ToUpper();
+            var mapName = res[1].Split('\n')[0].Remove("'").Replace(" ", "_").ToUpper();
+
+            overlay.ChangeMap(realm, mapName);
         }
     }
 }

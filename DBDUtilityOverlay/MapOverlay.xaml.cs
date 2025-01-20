@@ -30,22 +30,24 @@ namespace DBDUtilityOverlay
             WindowsServices.SetWindowExTransparent(hwnd);
         }
 
-        public void ChangeMap(string mapName)
+        public void ChangeMap(string realm, string mapName)
         {
             var index = MapOverlayGrid.Children.OfType<Image>().ToList().FindIndex(x => x.Name.Equals(imageElementName));
             MapOverlayGrid.Children.RemoveAt(index);
-            AddMapOverlay(mapName);
+            AddMapOverlay(realm, mapName);
         }
 
-        private void AddMapOverlay(string? mapName = null)
+        private void AddMapOverlay(string? realm = null, string? mapName = null)
         {
-            mapName = mapName ?? "Empty";
+            realm ??= string.Empty;
+            mapName ??= "Empty";
+
             var image = new Image();
             image.Name = imageElementName;
-            image.Source = new BitmapImage(new Uri($@"{mapsPath}{mapName}.png".ToProjectPath()));
+            image.Source = new BitmapImage(new Uri($@"{mapsPath}{realm}/{mapName}.png".ToProjectPath()));
             image.Stretch = Stretch.Fill;
-            image.Width = 200;
-            image.Height = 200;
+            image.Width = Width;
+            image.Height = Height;
             image.HorizontalAlignment = HorizontalAlignment.Center;
             image.VerticalAlignment = VerticalAlignment.Center;
             MapOverlayGrid.Children.Add(image);
