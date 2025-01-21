@@ -22,9 +22,19 @@ namespace DBDUtilityOverlay.Utils.Extensions
             return Regex.Replace(str, pattern, newValue);
         }
 
+        public static bool Contains(this string str, string pattern)
+        {
+            return Regex.IsMatch(str, pattern);
+        }
+
         public static string[] Split(this string str, string charsArr)
         {
             return str.Split([charsArr], StringSplitOptions.None);
+        }
+
+        public static bool IsInt(this string str)
+        {
+            return int.TryParse(str, out _);
         }
     }
 }

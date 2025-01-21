@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -61,6 +63,8 @@
     <None Remove="Images\Maps\NOSTROMOWRECKAGE.png" />
     <None Remove="Images\Maps\NotReady.png" />
     <None Remove="Images\Maps\ORMOND\MOUNT_ORMOND_RESORT.png" />
+    <None Remove="Images\Maps\ORMOND\MOUNT_ORMOND_RESORT_2.png" />
+    <None Remove="Images\Maps\ORMOND\MOUNT_ORMOND_RESORT_3.png" />
     <None Remove="Images\Maps\RACCOONCITYPOLICESTATIONEASTWING.png" />
     <None Remove="Images\Maps\RACCOONCITYPOLICESTATIONWESTWING.png" />
     <None Remove="Images\Maps\RACCOON_CITY\RACCOON_CITY_POLICE_STATION_EAST_WING.png" />
@@ -71,6 +75,7 @@
     <None Remove="Images\Maps\ROTTENFIELDS.png" />
     <None Remove="Images\Maps\SANCTUMOFWRATH.png" />
     <None Remove="Images\Maps\SHELTERWOODS.png" />
+    <None Remove="Images\Maps\SILENT_HILL\MIDWICH_ELEMENTARY_SCHOOL.png" />
     <None Remove="Images\Maps\SILENT_HILL\MIDWICH_ELEMNTARY_SCHOOL.png" />
     <None Remove="Images\Maps\SPRINGWOOD\BADHAM_PRESCHOOL_I.png" />
     <None Remove="Images\Maps\SPRINGWOOD\BADHAM_PRESCHOOL_II.png" />
@@ -88,10 +93,15 @@
     <None Remove="Images\Maps\THE_DECIMATED_BORGO\FORGOTTEN_RUINS.png" />
     <None Remove="Images\Maps\THE_DECIMATED_BORGO\THE_SHATTERED_SQUARE.png" />
     <None Remove="Images\Maps\THE_MACMILLAN_ESTATE\COAL_TOWER.png" />
+    <None Remove="Images\Maps\THE_MACMILLAN_ESTATE\COAL_TOWER_2.png" />
     <None Remove="Images\Maps\THE_MACMILLAN_ESTATE\GROANING_STOREHOUSE.png" />
+    <None Remove="Images\Maps\THE_MACMILLAN_ESTATE\GROANING_STOREHOUSE_2.png" />
     <None Remove="Images\Maps\THE_MACMILLAN_ESTATE\IRONWORKS_OF_MISERY.png" />
+    <None Remove="Images\Maps\THE_MACMILLAN_ESTATE\IRONWORKS_OF_MISERY_2.png" />
     <None Remove="Images\Maps\THE_MACMILLAN_ESTATE\SHELTER_WOODS.png" />
+    <None Remove="Images\Maps\THE_MACMILLAN_ESTATE\SHELTER_WOODS_2.png" />
     <None Remove="Images\Maps\THE_MACMILLAN_ESTATE\SUFFOCATION_PIT.png" />
+    <None Remove="Images\Maps\THE_MACMILLAN_ESTATE\SUFFOCATION_PIT_2.png" />
     <None Remove="Images\Maps\TOBALANDING.png" />
     <None Remove="Images\Maps\TORMENTCREEK.png" />
     <None Remove="Images\Maps\TREATMENTTHEATRE.png" />
@@ -100,7 +110,9 @@
     <None Remove="Images\Maps\WRECKERSYARD.png" />
     <None Remove="Images\Maps\WRETCHEDSHOP.png" />
     <None Remove="Images\Maps\YAMAOKA_ESTATE\FAMILY_RESIDENCE.png" />
+    <None Remove="Images\Maps\YAMAOKA_ESTATE\FAMILY_RESIDENCE_2.png" />
     <None Remove="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH.png" />
+    <None Remove="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png" />
     <None Remove="Images\Recognition\test1.png" />
     <None Remove="Images\Recognition\test2.png" />
   </ItemGroup>
@@ -138,11 +150,13 @@
     <Resource Include="Images\Maps\LERYS_MEMORIAL_INSTITUTE\TREATMENT_THEATRE.png" />
     <Resource Include="Images\Maps\NotReady.png" />
     <Resource Include="Images\Maps\ORMOND\MOUNT_ORMOND_RESORT.png" />
+    <Resource Include="Images\Maps\ORMOND\MOUNT_ORMOND_RESORT_2.png" />
+    <Resource Include="Images\Maps\ORMOND\MOUNT_ORMOND_RESORT_3.png" />
     <Resource Include="Images\Maps\RACCOON_CITY\RACCOON_CITY_POLICE_STATION_EAST_WING.png" />
     <Resource Include="Images\Maps\RACCOON_CITY\RACCOON_CITY_POLICE_STATION_WEST_WING.png" />
     <Resource Include="Images\Maps\RED_FOREST\MOTHERS_DWELLING.png" />
     <Resource Include="Images\Maps\RED_FOREST\THE_TEMPLE_OF_PURGATION.png" />
-    <Resource Include="Images\Maps\SILENT_HILL\MIDWICH_ELEMNTARY_SCHOOL.png" />
+    <Resource Include="Images\Maps\SILENT_HILL\MIDWICH_ELEMENTARY_SCHOOL.png" />
     <Resource Include="Images\Maps\SPRINGWOOD\BADHAM_PRESCHOOL_I.png" />
     <Resource Include="Images\Maps\SPRINGWOOD\BADHAM_PRESCHOOL_II.png" />
     <Resource Include="Images\Maps\SPRINGWOOD\BADHAM_PRESCHOOL_III.png" />
@@ -151,14 +165,21 @@
     <Resource Include="Images\Maps\THE_DECIMATED_BORGO\FORGOTTEN_RUINS.png" />
     <Resource Include="Images\Maps\THE_DECIMATED_BORGO\THE_SHATTERED_SQUARE.png" />
     <Resource Include="Images\Maps\THE_MACMILLAN_ESTATE\COAL_TOWER.png" />
+    <Resource Include="Images\Maps\THE_MACMILLAN_ESTATE\COAL_TOWER_2.png" />
     <Resource Include="Images\Maps\THE_MACMILLAN_ESTATE\GROANING_STOREHOUSE.png" />
+    <Resource Include="Images\Maps\THE_MACMILLAN_ESTATE\GROANING_STOREHOUSE_2.png" />
     <Resource Include="Images\Maps\THE_MACMILLAN_ESTATE\IRONWORKS_OF_MISERY.png" />
+    <Resource Include="Images\Maps\THE_MACMILLAN_ESTATE\IRONWORKS_OF_MISERY_2.png" />
     <Resource Include="Images\Maps\THE_MACMILLAN_ESTATE\SHELTER_WOODS.png" />
+    <Resource Include="Images\Maps\THE_MACMILLAN_ESTATE\SHELTER_WOODS_2.png" />
     <Resource Include="Images\Maps\THE_MACMILLAN_ESTATE\SUFFOCATION_PIT.png" />
+    <Resource Include="Images\Maps\THE_MACMILLAN_ESTATE\SUFFOCATION_PIT_2.png" />
     <Resource Include="Images\Maps\WITHERED_ISLE\GARDEN_OF_JOY.png" />
     <Resource Include="Images\Maps\WITHERED_ISLE\GREENVILLE_SQUARE.png" />
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\FAMILY_RESIDENCE.png" />
+    <Resource Include="Images\Maps\YAMAOKA_ESTATE\FAMILY_RESIDENCE_2.png" />
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH.png" />
+    <Resource Include="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png" />
     <Resource Include="Images\Recognition\test1.png" />
     <Resource Include="Images\Recognition\test2.png" />
   </ItemGroup>
