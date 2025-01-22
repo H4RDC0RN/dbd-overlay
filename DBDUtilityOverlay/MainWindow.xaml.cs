@@ -38,6 +38,8 @@ namespace DBDUtilityOverlay
             overlay.IsHitTestVisible = false;
             overlay.Left = SystemParameters.PrimaryScreenWidth - overlay.Width;
             overlay.Top = 0;
+
+            ScreenshotRecognizer.CreateTrainedData();
         }
 
         protected override void OnSourceInitialized(EventArgs e)

@@ -115,6 +115,7 @@
     <None Remove="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png" />
     <None Remove="Images\Recognition\test1.png" />
     <None Remove="Images\Recognition\test2.png" />
+    <None Remove="Tessdata\eng.traineddata" />
   </ItemGroup>
 
   <ItemGroup>
@@ -182,10 +183,31 @@
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\FAMILY_RESIDENCE_2.png" />
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH.png" />
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png" />
+    <Resource Include="Tessdata\eng.traineddata" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Tessdata\" />
+    <Compile Update="MapImages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MapImages.resx</DependentUpon>
+    </Compile>
+    <Compile Update="TrainedData.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TrainedData.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="MapImages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MapImages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="TrainedData.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TrainedData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

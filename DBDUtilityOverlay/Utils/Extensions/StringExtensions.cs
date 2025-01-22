@@ -1,6 +1,6 @@
-﻿using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text.RegularExpressions;
+using Path = System.IO.Path;
 
 namespace DBDUtilityOverlay.Utils.Extensions
 {
@@ -8,7 +8,7 @@ namespace DBDUtilityOverlay.Utils.Extensions
     {
         public static string ToProjectPath(this string str)
         {
-            var projectPath = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/../../../";
+            var projectPath = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/";
             return $@"{projectPath}{str}";
         }
 

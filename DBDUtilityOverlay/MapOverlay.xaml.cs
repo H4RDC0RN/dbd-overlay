@@ -1,8 +1,6 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using DBDUtilityOverlay.Utils;
 using DBDUtilityOverlay.Utils.Extensions;
 using DBDUtilityOverlay.Utils.Models;
@@ -34,7 +32,7 @@ namespace DBDUtilityOverlay
 
         public void ChangeMap(MapInfo? mapInfo)
         {
-            if (mapInfo == null || !mapInfo.HasFile) return;
+            if (mapInfo == null || !mapInfo.HasImage) return;
             var index = MapOverlayGrid.Children.OfType<Image>().ToList().FindIndex(x => x.Name.Equals(imageElementName));
             MapOverlayGrid.Children.RemoveAt(index);
             AddMapOverlay(mapInfo);
@@ -47,11 +45,11 @@ namespace DBDUtilityOverlay
                 ? $"_{Convert.ToInt32(suffix.Last().ToString()) + 1}" : "_2";
 
             var newName = suffix.Equals("_2") ? $"{name}{suffix}" : name.Replace(name[^2..], $"{suffix}");
-            var variationPath = $@"{Values.MapsPath}{realm}/{newName}.png".ToProjectPath();
-            if (File.Exists(variationPath))
+            var mapInfo = new MapInfo(realm, newName);
+            if (MapImages.ResourceManager.GetObject(mapInfo.ResourceName) != null)
             {
                 name = newName;
-                ChangeMap(new MapInfo(realm, name));
+                ChangeMap(mapInfo);
             }
         }
 
@@ -79,12 +77,18 @@ namespace DBDUtilityOverlay
             {
                 realm = mapInfo.Realm;
                 name = mapInfo.Name;
-            }
-            else { mapInfo = new MapInfo(realm, name); }
+            }            
 
             var image = new Image();
             image.Name = imageElementName;
-            image.Source = new BitmapImage(new Uri(mapInfo.Path));
+            if (mapInfo == null)
+            {
+                image.Source = MapImages.Empty.ToBitmapImage();
+            }
+            else
+            {
+                image.Source = ((Bitmap)MapImages.ResourceManager.GetObject(mapInfo.ResourceName)).ToBitmapImage();
+            }
             image.Stretch = Stretch.Fill;
             image.Width = Width;
             image.Height = Height;

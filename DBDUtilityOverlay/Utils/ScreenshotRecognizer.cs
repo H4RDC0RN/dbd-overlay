@@ -1,11 +1,13 @@
 ﻿using DBDUtilityOverlay.Utils.Extensions;
 using DBDUtilityOverlay.Utils.Models;
 using OpenCvSharp;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
+using Rectangle = System.Drawing.Rectangle;
 using Size = OpenCvSharp.Size;
 
 namespace DBDUtilityOverlay.Utils
@@ -43,8 +45,14 @@ namespace DBDUtilityOverlay.Utils
             PreProcessImage(path, sizeMultiplier);
         }
 
-        public static string RecognizeText(string imagePath)
+        public static void CreateTrainedData()
         {
+            Directory.CreateDirectory(Values.Tessdata.ToProjectPath());
+            File.WriteAllBytes(Values.Tessdata.ToProjectPath() + "/eng.traineddata", TrainedData.eng);
+        }
+
+        public static string RecognizeText(string imagePath)
+        {           
             var engine = new TesseractEngine(Values.Tessdata.ToProjectPath(), "eng");
             var image = Pix.LoadFromFile(imagePath);
             return engine.Process(image).GetText();
@@ -60,11 +68,11 @@ namespace DBDUtilityOverlay.Utils
                 {
                     CreateImageMapNameEsc(imagePath, i);
                     text = RecognizeText(imagePath);
-                    if (IsTextCorrect(text) && ConvertTextToMapInfo(text).HasFile) goto Finish;
+                    if (IsTextCorrect(text) && ConvertTextToMapInfo(text).HasImage) goto Finish;
                 }
             }
             if (!IsTextCorrect(text)) return null;
-            if (!ConvertTextToMapInfo(text).HasFile) return new MapInfo(string.Empty, Values.NotReady);
+            if (!ConvertTextToMapInfo(text).HasImage) return new MapInfo(string.Empty, Values.NotReady);
 
             Finish:
             return ConvertTextToMapInfo(text);
