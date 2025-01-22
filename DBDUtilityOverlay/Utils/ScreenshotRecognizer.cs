@@ -1,5 +1,6 @@
 ﻿using DBDUtilityOverlay.Utils.Extensions;
 using DBDUtilityOverlay.Utils.Models;
+using OpenCvSharp;
 using System.Windows;
 using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
@@ -14,7 +15,7 @@ namespace DBDUtilityOverlay.Utils
 
         public static void CaptureMyScreen(string path)
         {
-            var captureBitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+            var captureBitmap = new Bitmap(width, height, PixelFormat.Format32bppRgb);
             var rect = new Rectangle(0, 0, width, height);
             var captureGraphics = Graphics.FromImage(captureBitmap);
             captureGraphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
@@ -31,10 +32,11 @@ namespace DBDUtilityOverlay.Utils
             var imageHeight = (height * hMultiplier).Round();
             var rect = new Rectangle((width * xMultiplier).Round(), (height * yMultiplier).Round(), imageWidth, imageHeight);
 
-            var captureBitmap = new Bitmap(imageWidth, imageHeight, PixelFormat.Format32bppArgb);
+            var captureBitmap = new Bitmap(imageWidth, imageHeight, PixelFormat.Format32bppRgb);
             var captureGraphics = Graphics.FromImage(captureBitmap);
             captureGraphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
             captureBitmap.Save(path, ImageFormat.Png);
+            PreProcessImage(path);
         }
 
         public static string RecognizeText(string imagePath)
@@ -56,6 +58,15 @@ namespace DBDUtilityOverlay.Utils
             var mapName = res[1].Split('\n')[0].Remove("'").Replace(" ", "_").ToUpper();
 
             return new MapInfo(realm, mapName);
+        }
+
+        private static void PreProcessImage(string path)
+        {
+            var cvImage = Cv2.ImRead(path);
+            Cv2.FastNlMeansDenoisingColored(cvImage, cvImage);
+            Cv2.CvtColor(cvImage, cvImage, ColorConversionCodes.BGR2GRAY);
+            Cv2.Threshold(cvImage, cvImage, 100, 255, ThresholdTypes.Binary);
+            cvImage.SaveImage(path);
         }
     }
 }
