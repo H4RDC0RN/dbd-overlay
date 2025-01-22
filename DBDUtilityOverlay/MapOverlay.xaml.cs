@@ -10,20 +10,18 @@ using Image = System.Windows.Controls.Image;
 
 namespace DBDUtilityOverlay
 {
-    /// <summary>
-    /// Interaction logic for MapOverlay.xaml
-    /// </summary>
     public partial class MapOverlay : Window
     {
-        private readonly string mapsPath = @"Images/Maps/";
         private readonly string imageElementName = "Map";
 
-        private string realm = string.Empty;
-        private string name = "Empty";
+        private string realm;
+        private string name;
 
         public MapOverlay()
         {
             InitializeComponent();
+            realm = string.Empty;
+            name = Values.Empty;
             AddMapOverlay();
         }
 
@@ -34,8 +32,9 @@ namespace DBDUtilityOverlay
             WindowsServices.SetWindowExTransparent(hwnd);
         }
 
-        public void ChangeMap(MapInfo? mapInfo = null)
+        public void ChangeMap(MapInfo? mapInfo)
         {
+            if (mapInfo == null || !mapInfo.HasFile) return;
             var index = MapOverlayGrid.Children.OfType<Image>().ToList().FindIndex(x => x.Name.Equals(imageElementName));
             MapOverlayGrid.Children.RemoveAt(index);
             AddMapOverlay(mapInfo);
@@ -48,11 +47,11 @@ namespace DBDUtilityOverlay
                 ? $"_{Convert.ToInt32(suffix.Last().ToString()) + 1}" : "_2";
 
             var newName = suffix.Equals("_2") ? $"{name}{suffix}" : name.Replace(name[^2..], $"{suffix}");
-            var variationPath = $@"{mapsPath}{realm}/{newName}.png".ToProjectPath();
+            var variationPath = $@"{Values.MapsPath}{realm}/{newName}.png".ToProjectPath();
             if (File.Exists(variationPath))
             {
                 name = newName;
-                ChangeMap();
+                ChangeMap(new MapInfo(realm, name));
             }
         }
 
@@ -63,13 +62,13 @@ namespace DBDUtilityOverlay
             {
                 if (suffix.Last().ToString().Equals("2"))
                 {
-                    name = name.Remove(suffix);
-                    ChangeMap();
+                    name = name.RemoveRegex(suffix);
+                    ChangeMap(new MapInfo(realm, name));
                 }
                 else
                 {
                     name = name.Replace(suffix, $"_{Convert.ToInt32(suffix.Last().ToString()) - 1}");
-                    ChangeMap();
+                    ChangeMap(new MapInfo(realm, name));
                 }
             }
         }
@@ -81,10 +80,11 @@ namespace DBDUtilityOverlay
                 realm = mapInfo.Realm;
                 name = mapInfo.Name;
             }
+            else { mapInfo = new MapInfo(realm, name); }
 
             var image = new Image();
             image.Name = imageElementName;
-            image.Source = new BitmapImage(new Uri($@"{mapsPath}{realm}/{name}.png".ToProjectPath()));
+            image.Source = new BitmapImage(new Uri(mapInfo.Path));
             image.Stretch = Stretch.Fill;
             image.Width = Width;
             image.Height = Height;

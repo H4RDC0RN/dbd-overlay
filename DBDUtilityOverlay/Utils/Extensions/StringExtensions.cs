@@ -12,17 +12,17 @@ namespace DBDUtilityOverlay.Utils.Extensions
             return $@"{projectPath}{str}";
         }
 
-        public static string Remove(this string str, string pattern)
+        public static string RemoveRegex(this string str, string pattern)
         {
-            return str.Replace(pattern, string.Empty);
+            return str.ReplaceRegex(pattern, string.Empty);
         }
 
-        public static string Replace(this string str, string pattern, string newValue)
+        public static string ReplaceRegex(this string str, string pattern, string newValue)
         {
             return Regex.Replace(str, pattern, newValue);
         }
 
-        public static bool Contains(this string str, string pattern)
+        public static bool ContainsRegex(this string str, string pattern)
         {
             return Regex.IsMatch(str, pattern);
         }

@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBDUtilityOverlay"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="300"
+        Title="MainWindow" Height="250" Width="200"
         MouseDown="WindowMouseDown">
-    <Grid Height="300">
+    <Grid Height="250">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="9*"/>
@@ -24,6 +24,6 @@
         </Button>
         <Button x:Name="Open" Content="Open" HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" Click="OpenButtonClick" Height="30" Width="70" Grid.Row="1"/>
         <Button x:Name="Close" Content="Close" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Click="CloseButtonClick" Height="30" Width="70" Grid.Row="1"/>
-        <Button x:Name="Read" Content="Read" HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top" Click="ReadButtonClick" Height="30" Width="70" Grid.Row="1"/>
+        <Button x:Name="Read" Content="Read" HorizontalAlignment="Center" Margin="0,133,0,0" VerticalAlignment="Top" Click="ReadButtonClick" Height="30" Width="70" Grid.Row="1"/>
     </Grid>
 </Window>
