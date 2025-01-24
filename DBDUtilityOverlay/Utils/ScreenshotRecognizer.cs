@@ -27,7 +27,7 @@ namespace DBDUtilityOverlay.Utils
             captureGraphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
             captureBitmap.Save(path, ImageFormat.Png);
         }
-
+          
         public static void CreateImageMapNameEsc(string path, int sizeMultiplier = 1)
         {
             double xMultiplier = 0.13;
@@ -48,7 +48,7 @@ namespace DBDUtilityOverlay.Utils
         public static void CreateTrainedData()
         {
             Directory.CreateDirectory(Values.Tessdata.ToProjectPath());
-            File.WriteAllBytes(Values.Tessdata.ToProjectPath() + "/eng.traineddata", TrainedData.eng);
+            File.WriteAllBytes(Values.Tessdata.ToProjectPath() + "eng.traineddata", TrainedData.eng);
         }
 
         public static string RecognizeText(string imagePath)
