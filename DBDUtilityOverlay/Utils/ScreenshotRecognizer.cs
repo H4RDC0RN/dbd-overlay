@@ -57,7 +57,7 @@ namespace DBDUtilityOverlay.Utils
         public static void CreateTrainedData()
         {
             Directory.CreateDirectory(Values.Tessdata.ToProjectPath());
-            File.WriteAllBytes(Values.Tessdata.ToProjectPath() + "eng.traineddata", TrainedData.eng);
+            File.WriteAllBytes(Values.Tessdata.ToProjectPath() + "/eng.traineddata", TrainedData.eng);
         }
 
         public static string RecognizeText(string imagePath)
