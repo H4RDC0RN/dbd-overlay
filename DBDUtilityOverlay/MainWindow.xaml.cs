@@ -39,6 +39,7 @@ namespace DBDUtilityOverlay
             overlay.Left = SystemParameters.PrimaryScreenWidth - overlay.Width;
             overlay.Top = 0;
 
+            ScreenshotRecognizer.SetScreenBounds();
             ScreenshotRecognizer.CreateTrainedData();
         }
 

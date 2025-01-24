@@ -3,7 +3,6 @@ using DBDUtilityOverlay.Utils.Models;
 using OpenCvSharp;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows;
 using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
@@ -14,10 +13,20 @@ namespace DBDUtilityOverlay.Utils
 {
     public static class ScreenshotRecognizer
     {
-        private static readonly int width = (int)SystemParameters.PrimaryScreenWidth;
-        private static readonly int height = (int)SystemParameters.PrimaryScreenHeight;
+        private static int width;
+        private static int height;
         private static readonly int tries = 3;
         private static readonly int maxSizeMultiplier = 3;
+
+        public static void SetScreenBounds()
+        {
+            var bounds = Screen.PrimaryScreen?.Bounds;
+            if (bounds != null)
+            {
+                width = bounds.Value.Width;
+                height = bounds.Value.Height;
+            }
+        }
 
         public static void CaptureMyScreen(string path)
         {
@@ -52,7 +61,7 @@ namespace DBDUtilityOverlay.Utils
         }
 
         public static string RecognizeText(string imagePath)
-        {           
+        {
             var engine = new TesseractEngine(Values.Tessdata.ToProjectPath(), "eng");
             var image = Pix.LoadFromFile(imagePath);
             return engine.Process(image).GetText();
