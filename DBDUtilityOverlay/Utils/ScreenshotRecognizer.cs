@@ -36,7 +36,7 @@ namespace DBDUtilityOverlay.Utils
             captureGraphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
             captureBitmap.Save(path, ImageFormat.Png);
         }
-          
+
         public static void CreateImageMapNameEsc(string path, int sizeMultiplier = 1)
         {
             double xMultiplier = 0.13;
@@ -97,7 +97,11 @@ namespace DBDUtilityOverlay.Utils
             var res = text.Split(" - ");
             var realm = res[0].Split('\n').Last().RemoveRegex("'").Replace(" ", "_").Replace("é", "e").ToUpper();
             var mapName = res[1].Split('\n')[0].RemoveRegex("'").Replace(" ", "_").ToUpper();
+            return new MapInfo(realm, HandleBadhamIssues(mapName));
+        }
 
+        private static string HandleBadhamIssues(string mapName)
+        {
             var tessWicknessPattern = @"(I|L|\||1)";
             var badhamSuffixPattern = $"_{tessWicknessPattern}{{1,3}}$";
             if (mapName.ContainsRegex(badhamSuffixPattern))
@@ -105,7 +109,7 @@ namespace DBDUtilityOverlay.Utils
                 var suffix = Regex.Match(mapName, badhamSuffixPattern).Value.Replace("|", @"\|");
                 mapName = $"{mapName.RemoveRegex(suffix)}{suffix.ReplaceRegex(tessWicknessPattern, "I")}".RemoveRegex(@"\\");
             }
-            return new MapInfo(realm, mapName);
+            return mapName;
         }
 
         private static void PreProcessImage(string path, int sizeMultiplier = 1)

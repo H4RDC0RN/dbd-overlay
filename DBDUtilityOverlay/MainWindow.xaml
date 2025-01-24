@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBDUtilityOverlay"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="200"
+        Title="MainWindow" Height="200" Width="250"
         MouseDown="WindowMouseDown">
     <Grid Height="250">
         <Grid.RowDefinitions>
@@ -22,8 +22,13 @@
                 <ImageBrush ImageSource="/Images/App/close.png"/>
             </Button.Background>
         </Button>
-        <Button x:Name="Open" Content="Open" HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" Click="OpenButtonClick" Height="30" Width="70" Grid.Row="1"/>
-        <Button x:Name="Close" Content="Close" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Click="CloseButtonClick" Height="30" Width="70" Grid.Row="1"/>
-        <Button x:Name="Read" Content="Read" HorizontalAlignment="Center" Margin="0,133,0,0" VerticalAlignment="Top" Click="ReadButtonClick" Height="30" Width="70" Grid.Row="1"/>
+        <Button x:Name="Read" Content="Read" HorizontalAlignment="Left" Margin="130,15,0,0" VerticalAlignment="Top" Click="ReadButtonClick" Height="30" Width="70" Grid.Row="1"/>
+        <CheckBox x:Name="MoveOverlay" Content="Move overlay" HorizontalAlignment="Left" Margin="27,69,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="MoveCheckBox_Checked" Unchecked="MoveCheckBox_Unchecked"/>
+        <Slider x:Name="Opacity" HorizontalAlignment="Left" Margin="27,118,0,0" Grid.Row="1" VerticalAlignment="Top" Width="135" ValueChanged="Slider_ValueChanged" Maximum="100" Value="90" IsSnapToTickEnabled="True"/>
+        <TextBox HorizontalAlignment="Left" Margin="170,118,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding ElementName=Opacity, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="20" Height="18"/>
+        <Label x:Name="OpacityLabel" Content="Opacity" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="50" Margin="27,93,0,0"/>
+        <Label Content="%" HorizontalAlignment="Left" Margin="188,114,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <RadioButton x:Name="OpenRB" Content="Open" HorizontalAlignment="Left" Margin="27,10,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="OpenRB_Checked"/>
+        <RadioButton x:Name="CloseRB" Content="Close" HorizontalAlignment="Left" Margin="27,30,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="CloseRB_Checked"/>
     </Grid>
 </Window>

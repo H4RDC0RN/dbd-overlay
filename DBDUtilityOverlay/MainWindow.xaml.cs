@@ -26,19 +26,19 @@ namespace DBDUtilityOverlay
         public MainWindow()
         {
             InitializeComponent();
+            overlay = new MapOverlay();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             WindowStyle = WindowStyle.None;
 
-            overlay = new MapOverlay();
             overlay.WindowStyle = WindowStyle.None;
             overlay.AllowsTransparency = true;
             overlay.Opacity = 0.9;
             overlay.ShowInTaskbar = false;
             overlay.Topmost = true;
-            overlay.IsHitTestVisible = false;
             overlay.Left = SystemParameters.PrimaryScreenWidth - overlay.Width;
             overlay.Top = 0;
 
+            CloseRB.IsChecked = true;
             ScreenshotRecognizer.SetScreenBounds();
             ScreenshotRecognizer.CreateTrainedData();
         }
@@ -92,6 +92,21 @@ namespace DBDUtilityOverlay
             overlay.ChangeMap(ScreenshotRecognizer.GetMapInfo());
         }
 
+        private void MoveCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            WindowsServices.RevertWindowExTransparent(new WindowInteropHelper(overlay).Handle);
+        }
+
+        private void MoveCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            WindowsServices.SetWindowExTransparent(new WindowInteropHelper(overlay).Handle);
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (overlay != null) overlay.Opacity = Opacity.Value / 100;
+        }
+
         private void RegisterHotKey()
         {
             var helper = new WindowInteropHelper(this);
@@ -136,6 +151,16 @@ namespace DBDUtilityOverlay
                     break;
             }
             return IntPtr.Zero;
+        }
+
+        private void OpenRB_Checked(object sender, RoutedEventArgs e)
+        {
+            overlay.Show();
+        }
+
+        private void CloseRB_Checked(object sender, RoutedEventArgs e)
+        {
+            overlay.Hide();
         }
     }
 }

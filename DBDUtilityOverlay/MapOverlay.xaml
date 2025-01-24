@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBDUtilityOverlay"
         mc:Ignorable="d"
-        Title="MapOverlay" Height="220" Width="200">
+        Title="MapOverlay" Height="220" Width="200"
+        MouseDown="OverlayMouseDown">
     <Grid x:Name="MapOverlayGrid"/>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using DBDUtilityOverlay.Utils;
@@ -26,8 +27,12 @@ namespace DBDUtilityOverlay
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            var hwnd = new WindowInteropHelper(this).Handle;
-            WindowsServices.SetWindowExTransparent(hwnd);
+            WindowsServices.SetWindowExTransparent(new WindowInteropHelper(this).Handle);
+        }
+
+        private void OverlayMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left) DragMove();
         }
 
         public void ChangeMap(MapInfo? mapInfo)
@@ -77,18 +82,20 @@ namespace DBDUtilityOverlay
             {
                 realm = mapInfo.Realm;
                 name = mapInfo.Name;
-            }            
+            }
 
             var image = new Image();
-            image.Name = imageElementName;
             if (mapInfo == null)
             {
                 image.Source = MapImages.Empty.ToBitmapImage();
             }
             else
             {
-                image.Source = ((Bitmap)MapImages.ResourceManager.GetObject(mapInfo.ResourceName)).ToBitmapImage();
+                var resObject = MapImages.ResourceManager.GetObject(mapInfo.ResourceName);
+                image.Source = resObject == null ? MapImages.NotReady.ToBitmapImage() : ((Bitmap)resObject).ToBitmapImage();
             }
+
+            image.Name = imageElementName;
             image.Stretch = Stretch.Fill;
             image.Width = Width;
             image.Height = Height;
