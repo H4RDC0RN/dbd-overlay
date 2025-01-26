@@ -24,8 +24,8 @@
         </Button>
         <Button x:Name="Read" Content="Read" HorizontalAlignment="Left" Margin="130,15,0,0" VerticalAlignment="Top" Click="ReadButtonClick" Height="30" Width="70" Grid.Row="1"/>
         <CheckBox x:Name="MoveOverlay" Content="Move overlay" HorizontalAlignment="Left" Margin="27,69,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="MoveCheckBox_Checked" Unchecked="MoveCheckBox_Unchecked"/>
-        <Slider x:Name="Opacity" HorizontalAlignment="Left" Margin="27,118,0,0" Grid.Row="1" VerticalAlignment="Top" Width="135" ValueChanged="Slider_ValueChanged" Maximum="100" Value="90" IsSnapToTickEnabled="True"/>
-        <TextBox HorizontalAlignment="Left" Margin="170,118,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding ElementName=Opacity, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="20" Height="18"/>
+        <Slider x:Name="OpacitySlider" HorizontalAlignment="Left" Margin="27,118,0,0" Grid.Row="1" VerticalAlignment="Top" Width="135" ValueChanged="Slider_ValueChanged" Maximum="100" Value="90" IsSnapToTickEnabled="True"/>
+        <TextBox HorizontalAlignment="Left" Margin="170,118,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding ElementName=OpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="20" Height="18"/>
         <Label x:Name="OpacityLabel" Content="Opacity" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="50" Margin="27,93,0,0"/>
         <Label Content="%" HorizontalAlignment="Left" Margin="188,114,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         <RadioButton x:Name="OpenRB" Content="Open" HorizontalAlignment="Left" Margin="27,10,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="OpenRB_Checked"/>

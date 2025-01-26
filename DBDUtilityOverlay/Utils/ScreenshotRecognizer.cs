@@ -13,6 +13,9 @@ namespace DBDUtilityOverlay.Utils
 {
     public static class ScreenshotRecognizer
     {
+        private static readonly string tessdata = "Tessdata";
+        private static readonly string trainedDataFileName = "eng.traineddata";
+        private static readonly string notReadyFileName = "NotReady";
         private static int width;
         private static int height;
         private static readonly int tries = 3;
@@ -56,20 +59,20 @@ namespace DBDUtilityOverlay.Utils
 
         public static void CreateTrainedData()
         {
-            Directory.CreateDirectory(Values.Tessdata.ToProjectPath());
-            File.WriteAllBytes(Values.Tessdata.ToProjectPath() + "/eng.traineddata", TrainedData.eng);
+            Directory.CreateDirectory(tessdata.ToProjectPath());
+            File.WriteAllBytes($"{tessdata.ToProjectPath()}/{trainedDataFileName}", TrainedData.eng);
         }
 
         public static string RecognizeText(string imagePath)
         {
-            var engine = new TesseractEngine(Values.Tessdata.ToProjectPath(), "eng");
+            var engine = new TesseractEngine(tessdata.ToProjectPath(), "eng");
             var image = Pix.LoadFromFile(imagePath);
             return engine.Process(image).GetText();
         }
 
         public static MapInfo? GetMapInfo()
         {
-            var imagePath = Values.TestImage.ToProjectPath();
+            var imagePath = $"{Properties.Settings.Default.ScreenshotFileName}.png".ToProjectPath();
             string text = string.Empty;
             for (int i = 1; i <= maxSizeMultiplier; i++)
             {
@@ -81,7 +84,7 @@ namespace DBDUtilityOverlay.Utils
                 }
             }
             if (!IsTextCorrect(text)) return null;
-            if (!ConvertTextToMapInfo(text).HasImage) return new MapInfo(string.Empty, Values.NotReady);
+            if (!ConvertTextToMapInfo(text).HasImage) return new MapInfo(string.Empty, notReadyFileName);
 
             Finish:
             return ConvertTextToMapInfo(text);

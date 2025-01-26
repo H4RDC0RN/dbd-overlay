@@ -32,13 +32,14 @@ namespace DBDUtilityOverlay
 
             overlay.WindowStyle = WindowStyle.None;
             overlay.AllowsTransparency = true;
-            overlay.Opacity = 0.9;
+            overlay.Opacity = Properties.Settings.Default.OverlayOpacity / 100.0;
             overlay.ShowInTaskbar = false;
             overlay.Topmost = true;
-            overlay.Left = SystemParameters.PrimaryScreenWidth - overlay.Width;
-            overlay.Top = 0;
+            overlay.Left = Properties.Settings.Default.OverlayX;
+            overlay.Top = Properties.Settings.Default.OverlayY;
 
-            CloseRB.IsChecked = true;
+            OpenCloseOverlay(Properties.Settings.Default.IsOverlayOpened);
+            OpacitySlider.Value = Properties.Settings.Default.OverlayOpacity;
             ScreenshotRecognizer.SetScreenBounds();
             ScreenshotRecognizer.CreateTrainedData();
         }
@@ -77,14 +78,18 @@ namespace DBDUtilityOverlay
             WindowState = WindowState.Minimized;
         }
 
-        private void OpenButtonClick(object sender, RoutedEventArgs e)
+        private void OpenRB_Checked(object sender, RoutedEventArgs e)
         {
             overlay.Show();
+            Properties.Settings.Default.IsOverlayOpened = true;
+            Properties.Settings.Default.Save();
         }
 
-        private void CloseButtonClick(object sender, RoutedEventArgs e)
+        private void CloseRB_Checked(object sender, RoutedEventArgs e)
         {
             overlay.Hide();
+            Properties.Settings.Default.IsOverlayOpened = false;
+            Properties.Settings.Default.Save();
         }
 
         private void ReadButtonClick(object sender, RoutedEventArgs e)
@@ -104,19 +109,30 @@ namespace DBDUtilityOverlay
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (overlay != null) overlay.Opacity = Opacity.Value / 100;
+            if (overlay != null)
+            {
+                overlay.Opacity = OpacitySlider.Value / 100;
+                Properties.Settings.Default.OverlayOpacity = (int)OpacitySlider.Value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void OpenCloseOverlay(bool IsOverlayOpened)
+        {
+            if (IsOverlayOpened) OpenRB.IsChecked = true; else CloseRB.IsChecked = true;
         }
 
         private void RegisterHotKey()
         {
             var helper = new WindowInteropHelper(this);
             const uint MOD_CTRL = 0x0002;
+            const uint MOD_NON = 0x00;
             const uint VK_R = (uint)Keys.R;
             const uint VK_0 = (uint)Keys.D0;
             const uint VK_9 = (uint)Keys.D9;
             RegisterHotKey(helper.Handle, READ_MAP_ID, MOD_CTRL, VK_R);
-            RegisterHotKey(helper.Handle, NEXT_MAP_ID, MOD_CTRL, VK_0);
-            RegisterHotKey(helper.Handle, PREVIOUS_MAP_ID, MOD_CTRL, VK_9);
+            RegisterHotKey(helper.Handle, NEXT_MAP_ID, MOD_NON, VK_0);
+            RegisterHotKey(helper.Handle, PREVIOUS_MAP_ID, MOD_NON, VK_9);
         }
 
         private void UnregisterHotKey()
@@ -151,16 +167,6 @@ namespace DBDUtilityOverlay
                     break;
             }
             return IntPtr.Zero;
-        }
-
-        private void OpenRB_Checked(object sender, RoutedEventArgs e)
-        {
-            overlay.Show();
-        }
-
-        private void CloseRB_Checked(object sender, RoutedEventArgs e)
-        {
-            overlay.Hide();
         }
     }
 }

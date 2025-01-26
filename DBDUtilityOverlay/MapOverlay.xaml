@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:DBDUtilityOverlay"
         mc:Ignorable="d"
         Title="MapOverlay" Height="220" Width="200"
-        MouseDown="OverlayMouseDown">
+        MouseLeftButtonDown="OverlayMouseDown"
+        MouseLeftButtonUp="OverlayMouseUp">
     <Grid x:Name="MapOverlayGrid"/>
 </Window>

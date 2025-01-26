@@ -12,6 +12,7 @@ namespace DBDUtilityOverlay
     public partial class MapOverlay : Window
     {
         private readonly string imageElementName = "Map";
+        private readonly string emptyFileName = "Empty";
 
         private string realm;
         private string name;
@@ -20,7 +21,7 @@ namespace DBDUtilityOverlay
         {
             InitializeComponent();
             realm = string.Empty;
-            name = Values.Empty;
+            name = emptyFileName;
             AddMapOverlay();
         }
 
@@ -32,7 +33,14 @@ namespace DBDUtilityOverlay
 
         private void OverlayMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left) DragMove();
+            DragMove();
+        }
+
+        private void OverlayMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Properties.Settings.Default.OverlayX = Left;
+            Properties.Settings.Default.OverlayY = Top;
+            Properties.Settings.Default.Save();
         }
 
         public void ChangeMap(MapInfo? mapInfo)
