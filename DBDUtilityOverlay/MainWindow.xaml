@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DBDUtilityOverlay"
         mc:Ignorable="d"
         Title="MainWindow" Height="200" Width="250"
-        MouseDown="WindowMouseDown">
+        MouseLeftButtonDown="WindowMouseDown">
     <Grid Height="250">
         <Grid.RowDefinitions>
             <RowDefinition/>

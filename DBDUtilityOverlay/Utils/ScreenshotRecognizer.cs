@@ -1,7 +1,6 @@
 ﻿using DBDUtilityOverlay.Utils.Extensions;
 using DBDUtilityOverlay.Utils.Models;
 using OpenCvSharp;
-using System.IO;
 using System.Text.RegularExpressions;
 using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
@@ -14,11 +13,10 @@ namespace DBDUtilityOverlay.Utils
     public static class ScreenshotRecognizer
     {
         private static readonly string tessdata = "Tessdata";
-        private static readonly string trainedDataFileName = "eng.traineddata";
         private static readonly string notReadyFileName = "NotReady";
         private static int width;
         private static int height;
-        private static readonly int tries = 3;
+        private static readonly int tries = 1;
         private static readonly int maxSizeMultiplier = 3;
 
         public static void SetScreenBounds()
@@ -27,7 +25,13 @@ namespace DBDUtilityOverlay.Utils
             if (bounds != null)
             {
                 width = bounds.Value.Width;
+                Logger.Log.Info($"Screen width = {width}");
                 height = bounds.Value.Height;
+                Logger.Log.Info($"Screen height = {height}");
+            }
+            else
+            {
+                Logger.Log.Error("Screen bounds was not found");
             }
         }
 
@@ -40,7 +44,7 @@ namespace DBDUtilityOverlay.Utils
             captureBitmap.Save(path, ImageFormat.Png);
         }
 
-        public static void CreateImageMapNameEsc(string path, int sizeMultiplier = 1)
+        public static void CreateImageMapNameEsc(string path)
         {
             double xMultiplier = 0.13;
             double yMultiplier = 0.62;
@@ -49,45 +53,55 @@ namespace DBDUtilityOverlay.Utils
             var imageWidth = (width * wMultiplier).Round();
             var imageHeight = (height * hMultiplier).Round();
             var rect = new Rectangle((width * xMultiplier).Round(), (height * yMultiplier).Round(), imageWidth, imageHeight);
+            Logger.Log.Info($"Screen area: x = {rect.X}, y = {rect.Y}, width = {rect.Width}, height = {rect.Height}");
 
             var captureBitmap = new Bitmap(imageWidth, imageHeight, PixelFormat.Format32bppRgb);
             var captureGraphics = Graphics.FromImage(captureBitmap);
             captureGraphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
             captureBitmap.Save(path, ImageFormat.Png);
-            PreProcessImage(path, sizeMultiplier);
-        }
-
-        public static void CreateTrainedData()
-        {
-            Directory.CreateDirectory(tessdata.ToProjectPath());
-            File.WriteAllBytes($"{tessdata.ToProjectPath()}/{trainedDataFileName}", TrainedData.eng);
         }
 
         public static string RecognizeText(string imagePath)
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             var engine = new TesseractEngine(tessdata.ToProjectPath(), "eng");
             var image = Pix.LoadFromFile(imagePath);
-            return engine.Process(image).GetText();
+            var text = engine.Process(image).GetText();
+            watch.Stop();
+            Logger.Log.Info($"Recognize text from image - {watch.ElapsedMilliseconds} ms");
+            return text;
         }
 
         public static MapInfo? GetMapInfo()
         {
             var imagePath = $"{Properties.Settings.Default.ScreenshotFileName}.png".ToProjectPath();
             string text = string.Empty;
-            for (int i = 1; i <= maxSizeMultiplier; i++)
+            MapInfo? mapInfo;
+            CreateImageMapNameEsc(imagePath);
+            for (int sizeMultiplier = 1; sizeMultiplier <= maxSizeMultiplier; sizeMultiplier++)
             {
-                for (int j = 0; j < tries; j++)
+                for (int i = 0; i < tries; i++)
                 {
-                    CreateImageMapNameEsc(imagePath, i);
-                    text = RecognizeText(imagePath);
-                    if (IsTextCorrect(text) && ConvertTextToMapInfo(text).HasImage) goto Finish;
+                    Logger.Log.Info($"=============== Size = {sizeMultiplier}, Try = {i + 1}");
+                    text = RecognizeText(PreProcessImage(imagePath, sizeMultiplier));
+                    if (IsTextCorrect(text))
+                    {
+                        mapInfo = ConvertTextToMapInfo(text);
+                        if (mapInfo.HasImage) return mapInfo;
+                        else
+                        {
+                            Logger.Log.Warn("Map file doesn't exist");
+                            return new MapInfo(string.Empty, notReadyFileName);
+                        }
+                    }
+                    else
+                    {
+                        Logger.Log.Warn("Incorrect text:");
+                        Logger.Log.Warn(text);
+                    }
                 }
             }
-            if (!IsTextCorrect(text)) return null;
-            if (!ConvertTextToMapInfo(text).HasImage) return new MapInfo(string.Empty, notReadyFileName);
-
-            Finish:
-            return ConvertTextToMapInfo(text);
+            return null;
         }
 
         private static bool IsTextCorrect(string text)
@@ -100,7 +114,9 @@ namespace DBDUtilityOverlay.Utils
             var res = text.Split(" - ");
             var realm = res[0].Split('\n').Last().RemoveRegex("'").Replace(" ", "_").Replace("é", "e").ToUpper();
             var mapName = res[1].Split('\n')[0].RemoveRegex("'").Replace(" ", "_").ToUpper();
-            return new MapInfo(realm, HandleBadhamIssues(mapName));
+            var mapInfo = new MapInfo(realm, HandleBadhamIssues(mapName));
+            Logger.Log.Info($"Map info: realm = {mapInfo.Realm}, name = {mapInfo.Name}");
+            return mapInfo;
         }
 
         private static string HandleBadhamIssues(string mapName)
@@ -115,14 +131,15 @@ namespace DBDUtilityOverlay.Utils
             return mapName;
         }
 
-        private static void PreProcessImage(string path, int sizeMultiplier = 1)
+        private static string PreProcessImage(string path, int sizeMultiplier = 1)
         {
             var cvImage = Cv2.ImRead(path);
             Cv2.Resize(cvImage, cvImage, new Size(cvImage.Width * sizeMultiplier, cvImage.Height * sizeMultiplier));
-            Cv2.FastNlMeansDenoisingColored(cvImage, cvImage);
             Cv2.CvtColor(cvImage, cvImage, ColorConversionCodes.BGR2GRAY);
             Cv2.Threshold(cvImage, cvImage, 100, 255, ThresholdTypes.Binary);
-            cvImage.SaveImage(path);
+            var newPath = $"{Properties.Settings.Default.ScreenshotFileName}_edited.png".ToProjectPath();
+            cvImage.SaveImage(newPath);
+            return newPath;
         }
     }
 }

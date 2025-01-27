@@ -27,21 +27,14 @@ namespace DBDUtilityOverlay
         {
             InitializeComponent();
             overlay = new MapOverlay();
+            SetOverlaySettings();
+
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             WindowStyle = WindowStyle.None;
-
-            overlay.WindowStyle = WindowStyle.None;
-            overlay.AllowsTransparency = true;
-            overlay.Opacity = Properties.Settings.Default.OverlayOpacity / 100.0;
-            overlay.ShowInTaskbar = false;
-            overlay.Topmost = true;
-            overlay.Left = Properties.Settings.Default.OverlayX;
-            overlay.Top = Properties.Settings.Default.OverlayY;
 
             OpenCloseOverlay(Properties.Settings.Default.IsOverlayOpened);
             OpacitySlider.Value = Properties.Settings.Default.OverlayOpacity;
             ScreenshotRecognizer.SetScreenBounds();
-            ScreenshotRecognizer.CreateTrainedData();
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -61,9 +54,20 @@ namespace DBDUtilityOverlay
             base.OnClosed(e);
         }
 
+        private void SetOverlaySettings()
+        {
+            overlay.WindowStyle = WindowStyle.None;
+            overlay.AllowsTransparency = true;
+            overlay.Opacity = Properties.Settings.Default.OverlayOpacity / 100.0;
+            overlay.ShowInTaskbar = false;
+            overlay.Topmost = true;
+            overlay.Left = Properties.Settings.Default.OverlayX;
+            overlay.Top = Properties.Settings.Default.OverlayY;
+        }
+
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left) DragMove();
+            DragMove();
         }
 
         private void ExitButtonClick(object sender, RoutedEventArgs e)
@@ -152,14 +156,17 @@ namespace DBDUtilityOverlay
                     switch (wParam.ToInt32())
                     {
                         case READ_MAP_ID:
+                            Logger.Log.Info("'Read map' hotkey is pressed (CTRL + R)");
                             overlay.ChangeMap(ScreenshotRecognizer.GetMapInfo());
                             handled = true;
                             break;
                         case NEXT_MAP_ID:
+                            Logger.Log.Info("'Next map' hotkey is pressed (0)");
                             overlay.SwitchMapVariationToNext();
                             handled = true;
                             break;
                         case PREVIOUS_MAP_ID:
+                            Logger.Log.Info("'Previous map' hotkey is pressed (9)");
                             overlay.SwitchMapVariationToPrevious();
                             handled = true;
                             break;
