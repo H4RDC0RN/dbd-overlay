@@ -1,9 +1,11 @@
 ﻿using DBDUtilityOverlay.Utils;
+using DBDUtilityOverlay.Utils.Models;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using Application = System.Windows.Application;
+using Logger = DBDUtilityOverlay.Utils.Logger;
 using Window = System.Windows.Window;
 
 namespace DBDUtilityOverlay
@@ -22,12 +24,16 @@ namespace DBDUtilityOverlay
         private const int PREVIOUS_MAP_ID = 9002;
 
         private readonly MapOverlay overlay;
+        private readonly DownloadLanguage downloadLanguage;
 
         public MainWindow()
         {
             InitializeComponent();
+            HandleExceptions();
             overlay = new MapOverlay();
+            downloadLanguage = new DownloadLanguage();
             SetOverlaySettings();
+            SetLanguages();
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             WindowStyle = WindowStyle.None;
@@ -63,6 +69,14 @@ namespace DBDUtilityOverlay
             overlay.Topmost = true;
             overlay.Left = Properties.Settings.Default.OverlayX;
             overlay.Top = Properties.Settings.Default.OverlayY;
+        }
+
+        private void SetLanguages()
+        {
+            var downloadedLanguages = ScreenshotRecognizer.GetDownloadedLanguages();
+            var languages = Languages.Dictionary.Where(x => downloadedLanguages.Contains(x.Value)).ToDictionary().OrderBy(x => x.Key).ToDictionary();
+            LanguageComboBox.ItemsSource = languages.Select(x => x.Key);
+            LanguageComboBox.SelectedIndex = languages.Select(x => x.Value).ToList().IndexOf(Properties.Settings.Default.Language);
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
@@ -126,6 +140,23 @@ namespace DBDUtilityOverlay
             if (IsOverlayOpened) OpenRB.IsChecked = true; else CloseRB.IsChecked = true;
         }
 
+        private void LanguageComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var newLanguage = Languages.GetValue(LanguageComboBox.SelectedItem.ToString());
+            Properties.Settings.Default.Language = newLanguage;
+            Properties.Settings.Default.Save();
+        }
+
+        private void RefreshButtonClick(object sender, RoutedEventArgs e)
+        {
+            SetLanguages();
+        }
+
+        private void DownloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            downloadLanguage.ShowDialog();
+        }
+
         private void RegisterHotKey()
         {
             var helper = new WindowInteropHelper(this);
@@ -174,6 +205,15 @@ namespace DBDUtilityOverlay
                     break;
             }
             return IntPtr.Zero;
+        }
+
+        private void HandleExceptions()
+        {
+            AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
+            {
+                Logger.Log.Fatal(e.Exception.Message);
+                Logger.Log.Fatal(e.Exception.StackTrace);
+            };
         }
     }
 }

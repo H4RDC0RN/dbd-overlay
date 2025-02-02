@@ -1,6 +1,8 @@
 ﻿using DBDUtilityOverlay.Utils.Extensions;
 using DBDUtilityOverlay.Utils.Models;
 using OpenCvSharp;
+using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
@@ -13,6 +15,7 @@ namespace DBDUtilityOverlay.Utils
     public static class ScreenshotRecognizer
     {
         private static readonly string tessdata = "Tessdata";
+        private static readonly string traineddata = "traineddata";
         private static readonly string notReadyFileName = "NotReady";
         private static int width;
         private static int height;
@@ -63,8 +66,8 @@ namespace DBDUtilityOverlay.Utils
 
         public static string RecognizeText(string imagePath)
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            var engine = new TesseractEngine(tessdata.ToProjectPath(), "eng");
+            var watch = Stopwatch.StartNew();
+            var engine = new TesseractEngine(tessdata.ToProjectPath(), Properties.Settings.Default.Language);
             var image = Pix.LoadFromFile(imagePath);
             var text = engine.Process(image).GetText();
             watch.Stop();
@@ -75,7 +78,6 @@ namespace DBDUtilityOverlay.Utils
         public static MapInfo? GetMapInfo()
         {
             var imagePath = $"{Properties.Settings.Default.ScreenshotFileName}.png".ToProjectPath();
-            string text = string.Empty;
             MapInfo? mapInfo;
             CreateImageMapNameEsc(imagePath);
             for (int sizeMultiplier = 1; sizeMultiplier <= maxSizeMultiplier; sizeMultiplier++)
@@ -83,7 +85,7 @@ namespace DBDUtilityOverlay.Utils
                 for (int i = 0; i < tries; i++)
                 {
                     Logger.Log.Info($"=============== Size = {sizeMultiplier}, Try = {i + 1}");
-                    text = RecognizeText(PreProcessImage(imagePath, sizeMultiplier));
+                    string text = RecognizeText(PreProcessImage(imagePath, sizeMultiplier));
                     if (IsTextCorrect(text))
                     {
                         mapInfo = ConvertTextToMapInfo(text);
@@ -102,6 +104,18 @@ namespace DBDUtilityOverlay.Utils
                 }
             }
             return null;
+        }
+
+        public static List<string> GetDownloadedLanguages()
+        {
+            var regex = $@"(?<={tessdata}\\).*(?=.{traineddata})";
+            return [.. Directory.GetFiles(tessdata.ToProjectPath()).Select(x => Regex.Match(x, regex).Value)];
+        }
+
+        public static void SaveTrainedData(string fileName, byte[]? content)
+        {
+            if (content != null) File.WriteAllBytes($@"{tessdata.ToProjectPath()}\{fileName}", content);
+            else Logger.Log.Warn("Downloaded content is null");
         }
 
         private static bool IsTextCorrect(string text)

@@ -13,6 +13,7 @@
   <ItemGroup>
     <None Remove="Images\App\close.png" />
     <None Remove="Images\App\minimize.png" />
+    <None Remove="Images\App\refresh.jpg" />
     <None Remove="Images\Maps\AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png" />
     <None Remove="Images\Maps\AUTOHAVEN_WRECKERS\BLOOD_LODGE.png" />
     <None Remove="Images\Maps\AUTOHAVEN_WRECKERS\GAS_HEAVEN.png" />
@@ -129,6 +130,7 @@
   <ItemGroup>
     <Resource Include="Images\App\close.png" />
     <Resource Include="Images\App\minimize.png" />
+    <Resource Include="Images\App\refresh.jpg" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\BLOOD_LODGE.png" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\GAS_HEAVEN.png" />
