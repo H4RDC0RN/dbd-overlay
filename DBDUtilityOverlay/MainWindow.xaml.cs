@@ -28,6 +28,7 @@ namespace DBDUtilityOverlay
 
         public MainWindow()
         {
+            Logger.Log.Info("---Open Application---");
             InitializeComponent();
             HandleExceptions();
             overlay = new MapOverlay();
@@ -86,6 +87,7 @@ namespace DBDUtilityOverlay
 
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
+            Logger.Log.Info("---Close Application---");
             overlay.Close();
             Close();
             Application.Current.Shutdown();
@@ -212,7 +214,8 @@ namespace DBDUtilityOverlay
             AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
             {
                 Logger.Log.Fatal(e.Exception.Message);
-                Logger.Log.Fatal(e.Exception.StackTrace);
+                Logger.Log.Fatal(e.Exception.StackTrace); 
+                Logger.Log.Info("---Close Application with exception---");
             };
         }
     }

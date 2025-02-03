@@ -75,7 +75,7 @@ namespace DBDUtilityOverlay.Utils
             return text;
         }
 
-        public static MapInfo? GetMapInfo()
+        public static MapInfo GetMapInfo()
         {
             var imagePath = $"{Properties.Settings.Default.ScreenshotFileName}.png".ToProjectPath();
             MapInfo? mapInfo;
@@ -90,9 +90,9 @@ namespace DBDUtilityOverlay.Utils
                     {
                         mapInfo = ConvertTextToMapInfo(text);
                         if (mapInfo.HasImage) return mapInfo;
-                        else
+                        if (sizeMultiplier == maxSizeMultiplier)
                         {
-                            Logger.Log.Warn("Map file doesn't exist");
+                            Logger.Log.Warn($"Map file for '{mapInfo.FullName}' doesn't exist");
                             return new MapInfo(string.Empty, NamesOfMapsContainer.NotReady);
                         }
                     }
@@ -103,7 +103,7 @@ namespace DBDUtilityOverlay.Utils
                     }
                 }
             }
-            return null;
+            return new MapInfo(string.Empty, NamesOfMapsContainer.Empty);
         }
 
         public static List<string> GetDownloadedLanguages()
@@ -120,14 +120,13 @@ namespace DBDUtilityOverlay.Utils
 
         private static bool IsTextCorrect(string text)
         {
-            //return text.Contains("MAP INFO") && text.Contains('\n') && text.Contains('-');
             return text.Contains('\n') && text.Contains('-');
         }
 
         private static MapInfo ConvertTextToMapInfo(string text)
         {
             var res = text.Split(" - ");
-            var realm = res[0].Split('\n').Last().RemoveRegex("'").Replace(" ", "_").Replace("é", "e").ToUpper();
+            var realm = res[0].Split('\n').Last().RemoveRegex("'").Replace(" ", "_").ToUpper();
             var mapName = res[1].Split('\n')[0].RemoveRegex("'").Replace(" ", "_").ToUpper();
             var mapInfo = new MapInfo(realm, HandleBadhamIssues(mapName));
             Logger.Log.Info($"Map info: realm = {mapInfo.Realm}, name = {mapInfo.Name}");
@@ -136,7 +135,7 @@ namespace DBDUtilityOverlay.Utils
 
         private static string HandleBadhamIssues(string mapName)
         {
-            var tessWicknessPattern = @"(I|L|\||1)";
+            var tessWicknessPattern = @"(I|L|\||1|!)";
             var badhamSuffixPattern = $"_{tessWicknessPattern}{{1,3}}$";
             if (mapName.ContainsRegex(badhamSuffixPattern))
             {

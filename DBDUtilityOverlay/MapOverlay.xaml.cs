@@ -42,13 +42,8 @@ namespace DBDUtilityOverlay
             Properties.Settings.Default.Save();
         }
 
-        public void ChangeMap(MapInfo? mapInfo)
+        public void ChangeMap(MapInfo mapInfo)
         {
-            if (mapInfo == null || !mapInfo.HasImage)
-            {
-                Logger.Log.Error($"Incorrect map info for map change");
-                return;
-            }
             var index = MapOverlayGrid.Children.OfType<Image>().ToList().FindIndex(x => x.Name.Equals(imageElementName));
             MapOverlayGrid.Children.RemoveAt(index);
             AddMapOverlay(mapInfo);
@@ -62,7 +57,7 @@ namespace DBDUtilityOverlay
 
             var newName = suffix.Equals("_2") ? $"{name}{suffix}" : name.Replace(name[^2..], $"{suffix}");
             var mapInfo = new MapInfo(realm, newName);
-            if (MapImages.ResourceManager.GetObject(mapInfo.ResourceName) != null)
+            if (mapInfo.HasImage)
             {
                 name = newName;
                 Logger.Log.Info($"Switching map variation to '{name}'");

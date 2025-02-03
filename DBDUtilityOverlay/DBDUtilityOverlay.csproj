@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Images\Maps\LERYS_MEMORIAL_INSTITUTE\**" />
+    <EmbeddedResource Remove="Images\Maps\LERYS_MEMORIAL_INSTITUTE\**" />
+    <None Remove="Images\Maps\LERYS_MEMORIAL_INSTITUTE\**" />
+    <Page Remove="Images\Maps\LERYS_MEMORIAL_INSTITUTE\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\App\close.png" />
     <None Remove="Images\App\minimize.png" />
     <None Remove="Images\App\refresh.jpg" />
@@ -57,7 +64,7 @@
     <None Remove="Images\Maps\HADDONFIELD\LAMPKIN_LANE.png" />
     <None Remove="Images\Maps\HAWKINS_NATIONAL_LABORATORY\THE_UNDERGROUND_COMPLEX.png" />
     <None Remove="Images\Maps\IRONWORKS OF MISERY.png" />
-    <None Remove="Images\Maps\LERYS_MEMORIAL_INSTITUTE\TREATMENT_THEATRE.png" />
+    <None Remove="Images\Maps\LÉRYS_MEMORIAL_INSTITUTE\TREATMENT_THEATRE.png" />
     <None Remove="Images\Maps\MIDWICHELEMNTARYSCHOOL.png" />
     <None Remove="Images\Maps\MOTHERSDWELLING.png" />
     <None Remove="Images\Maps\MOUNTORMONDRESORT.png" />
@@ -153,7 +160,7 @@
     <Resource Include="Images\Maps\GRAVE_OF_GLENVALE\DEAD_DAWG_SALOON.png" />
     <Resource Include="Images\Maps\HADDONFIELD\LAMPKIN_LANE.png" />
     <Resource Include="Images\Maps\HAWKINS_NATIONAL_LABORATORY\THE_UNDERGROUND_COMPLEX.png" />
-    <Resource Include="Images\Maps\LERYS_MEMORIAL_INSTITUTE\TREATMENT_THEATRE.png" />
+    <Resource Include="Images\Maps\LÉRYS_MEMORIAL_INSTITUTE\TREATMENT_THEATRE.png" />
     <Resource Include="Images\Maps\NotReady.png" />
     <Resource Include="Images\Maps\ORMOND\MOUNT_ORMOND_RESORT.png" />
     <Resource Include="Images\Maps\ORMOND\MOUNT_ORMOND_RESORT_2.png" />

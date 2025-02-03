@@ -283,9 +283,9 @@ namespace DBDUtilityOverlay {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LERYS_MEMORIAL_INSTITUTE_TREATMENT_THEATRE {
+        internal static System.Drawing.Bitmap LÉRYS_MEMORIAL_INSTITUTE_TREATMENT_THEATRE {
             get {
-                object obj = ResourceManager.GetObject("LERYS_MEMORIAL_INSTITUTE.TREATMENT_THEATRE", resourceCulture);
+                object obj = ResourceManager.GetObject("LÉRYS_MEMORIAL_INSTITUTE.TREATMENT_THEATRE", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -3,7 +3,7 @@
     public static class LanguagesManager
     {
         public static readonly string DefaultLanguage = "eng";
-        private static readonly List<string> langAbbs = ["deu", "eng", "spa", "fra", "ita", "pol", "por", "tur", "rus"];
+        private static readonly List<string> langAbbs = ["deu", DefaultLanguage, "spa", "fra", "ita", "pol", "por", "tur", "rus"];
         private static readonly List<string> langNames = ["Deutsch", "English", "Español", "Français", "Italiano", "Polski", "Português", "Türkçe", "Русский"];
         private static readonly Dictionary<string, string> dictionary = langNames.Zip(langAbbs, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
 
