@@ -142,6 +142,8 @@ namespace DBDUtilityOverlay.Utils
                 var suffix = Regex.Match(mapName, badhamSuffixPattern).Value.Replace("|", @"\|");
                 mapName = $"{mapName.RemoveRegex(suffix)}{suffix.ReplaceRegex(tessWicknessPattern, "I")}".RemoveRegex(@"\\");
             }
+            if (mapName.EndsWith('№')) return mapName.ReplaceRegex("№", "IV");
+            if (mapName.EndsWith(@"\/")) return mapName.ReplaceRegex(@"\\/", "V");
             return mapName;
         }
 
