@@ -1,5 +1,5 @@
 ﻿using DBDUtilityOverlay.Utils;
-using DBDUtilityOverlay.Utils.Models;
+using DBDUtilityOverlay.Utils.Languages;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,13 +34,13 @@ namespace DBDUtilityOverlay
 
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            language = Languages.GetValue(LanguageComboBox.SelectedItem.ToString());
+            language = LanguagesManager.GetValue(LanguageComboBox.SelectedItem.ToString());
         }
 
         private void SetLanguages()
         {
-            LanguageComboBox.ItemsSource = Languages.Dictionary.Keys;
-            LanguageComboBox.SelectedIndex = Languages.GetCurrentLanguageIndex();
+            LanguageComboBox.ItemsSource = LanguagesManager.GetLanguages();
+            LanguageComboBox.SelectedIndex = LanguagesManager.GetCurrentLanguageIndex();
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)

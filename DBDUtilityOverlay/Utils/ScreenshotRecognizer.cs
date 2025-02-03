@@ -1,4 +1,5 @@
 ﻿using DBDUtilityOverlay.Utils.Extensions;
+using DBDUtilityOverlay.Utils.Languages;
 using DBDUtilityOverlay.Utils.Models;
 using OpenCvSharp;
 using System.Diagnostics;
@@ -16,7 +17,6 @@ namespace DBDUtilityOverlay.Utils
     {
         private static readonly string tessdata = "Tessdata";
         private static readonly string traineddata = "traineddata";
-        private static readonly string notReadyFileName = "NotReady";
         private static int width;
         private static int height;
         private static readonly int tries = 1;
@@ -93,7 +93,7 @@ namespace DBDUtilityOverlay.Utils
                         else
                         {
                             Logger.Log.Warn("Map file doesn't exist");
-                            return new MapInfo(string.Empty, notReadyFileName);
+                            return new MapInfo(string.Empty, NamesOfMapsContainer.NotReady);
                         }
                     }
                     else
@@ -120,7 +120,8 @@ namespace DBDUtilityOverlay.Utils
 
         private static bool IsTextCorrect(string text)
         {
-            return text.Contains("MAP INFO") && text.Contains('\n') && text.Contains('-');
+            //return text.Contains("MAP INFO") && text.Contains('\n') && text.Contains('-');
+            return text.Contains('\n') && text.Contains('-');
         }
 
         private static MapInfo ConvertTextToMapInfo(string text)

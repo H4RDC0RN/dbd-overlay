@@ -4,6 +4,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using DBDUtilityOverlay.Utils;
 using DBDUtilityOverlay.Utils.Extensions;
+using DBDUtilityOverlay.Utils.Languages;
 using DBDUtilityOverlay.Utils.Models;
 using Image = System.Windows.Controls.Image;
 
@@ -12,8 +13,6 @@ namespace DBDUtilityOverlay
     public partial class MapOverlay : Window
     {
         private readonly string imageElementName = "Map";
-        private readonly string emptyFileName = "Empty";
-
         private string realm;
         private string name;
 
@@ -21,7 +20,7 @@ namespace DBDUtilityOverlay
         {
             InitializeComponent();
             realm = string.Empty;
-            name = emptyFileName;
+            name = NamesOfMapsContainer.Empty;
             AddMapOverlay();
         }
 

@@ -1,5 +1,5 @@
 ﻿using DBDUtilityOverlay.Utils;
-using DBDUtilityOverlay.Utils.Models;
+using DBDUtilityOverlay.Utils.Languages;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
@@ -74,7 +74,7 @@ namespace DBDUtilityOverlay
         private void SetLanguages()
         {
             var downloadedLanguages = ScreenshotRecognizer.GetDownloadedLanguages();
-            var languages = Languages.Dictionary.Where(x => downloadedLanguages.Contains(x.Value)).ToDictionary().OrderBy(x => x.Key).ToDictionary();
+            var languages = LanguagesManager.GetOrderedKeyValuePairs(downloadedLanguages);
             LanguageComboBox.ItemsSource = languages.Select(x => x.Key);
             LanguageComboBox.SelectedIndex = languages.Select(x => x.Value).ToList().IndexOf(Properties.Settings.Default.Language);
         }
@@ -142,7 +142,7 @@ namespace DBDUtilityOverlay
 
         private void LanguageComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            var newLanguage = Languages.GetValue(LanguageComboBox.SelectedItem.ToString());
+            var newLanguage = LanguagesManager.GetValue(LanguageComboBox.SelectedItem.ToString());
             Properties.Settings.Default.Language = newLanguage;
             Properties.Settings.Default.Save();
         }
