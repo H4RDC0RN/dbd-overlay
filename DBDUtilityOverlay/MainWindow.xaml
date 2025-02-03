@@ -30,10 +30,10 @@
         <Label Content="%" HorizontalAlignment="Left" Margin="178,109,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         <RadioButton x:Name="OpenRB" Content="Open" HorizontalAlignment="Left" Margin="20,5,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="OpenRB_Checked"/>
         <RadioButton x:Name="CloseRB" Content="Close" HorizontalAlignment="Left" Margin="20,25,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="CloseRB_Checked"/>
-        <ComboBox x:Name="LanguageComboBox" HorizontalAlignment="Left" Margin="20,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" SelectionChanged="LanguageComboBox_SelectionChanged"/>
+        <ComboBox x:Name="LanguageComboBox" HorizontalAlignment="Left" Margin="20,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" SelectionChanged="LanguageComboBox_SelectionChanged"/>
         <Label x:Name="LanguageLabel" Content="Language" HorizontalAlignment="Left" Margin="20,135,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <Button x:Name="DownloadButton" Content="Download &#xA;    more" HorizontalAlignment="Left" Margin="182,151,0,0" Grid.Row="1" VerticalAlignment="Top" Height="39" Width="68" Click="DownloadButton_Click"/>
-        <Button x:Name="Refresh" HorizontalAlignment="Left" Width="20" Height="20" Click="RefreshButtonClick" Margin="145,161,0,44" Grid.Row="1">
+        <Button x:Name="DownloadButton" Content="Download &#xA;    more" HorizontalAlignment="Left" Margin="183,151,0,0" Grid.Row="1" VerticalAlignment="Top" Height="39" Width="68" Click="DownloadButton_Click"/>
+        <Button x:Name="Refresh" HorizontalAlignment="Left" Width="20" Height="20" Click="RefreshButtonClick" Margin="151,161,0,44" Grid.Row="1">
             <Button.Background>
                 <ImageBrush ImageSource="/Images/App/refresh.jpg"/>
             </Button.Background>

@@ -75,6 +75,7 @@ namespace DBDUtilityOverlay
         private void SetLanguages()
         {
             var downloadedLanguages = ScreenshotRecognizer.GetDownloadedLanguages();
+            if (downloadedLanguages.Contains(LanguagesManager.SpaAbb)) downloadedLanguages.Add(LanguagesManager.MexAbb);
             var languages = LanguagesManager.GetOrderedKeyValuePairs(downloadedLanguages);
             LanguageComboBox.ItemsSource = languages.Select(x => x.Key);
             LanguageComboBox.SelectedIndex = languages.Select(x => x.Value).ToList().IndexOf(Properties.Settings.Default.Language);
@@ -214,7 +215,7 @@ namespace DBDUtilityOverlay
             AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
             {
                 Logger.Log.Fatal(e.Exception.Message);
-                Logger.Log.Fatal(e.Exception.StackTrace); 
+                Logger.Log.Fatal(e.Exception.StackTrace);
                 Logger.Log.Info("---Close Application with exception---");
             };
         }

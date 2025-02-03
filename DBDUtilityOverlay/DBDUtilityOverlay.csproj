@@ -9,14 +9,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Images\Maps\LERYS_MEMORIAL_INSTITUTE\**" />
-    <EmbeddedResource Remove="Images\Maps\LERYS_MEMORIAL_INSTITUTE\**" />
-    <None Remove="Images\Maps\LERYS_MEMORIAL_INSTITUTE\**" />
-    <Page Remove="Images\Maps\LERYS_MEMORIAL_INSTITUTE\**" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <None Remove="Images\App\close.png" />
     <None Remove="Images\App\minimize.png" />

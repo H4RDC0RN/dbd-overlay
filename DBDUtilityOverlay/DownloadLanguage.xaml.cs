@@ -23,18 +23,17 @@ namespace DBDUtilityOverlay
 
         private void Download_Click(object sender, RoutedEventArgs e)
         {
-            using (HttpClient client = new())
-            {
-                var url = $"{downloadLink}{language}{fileExtension}";
-                var content = client.GetByteArrayAsync(url).Result;
-                var fileName = $"{language}{fileExtension}";
-                ScreenshotRecognizer.SaveTrainedData(fileName, content);
-            }
+            using HttpClient client = new();
+            var url = $"{downloadLink}{language}{fileExtension}";
+            var content = client.GetByteArrayAsync(url).Result;
+            var fileName = $"{language}{fileExtension}";
+            ScreenshotRecognizer.SaveTrainedData(fileName, content);
         }
 
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            language = LanguagesManager.GetValue(LanguageComboBox.SelectedItem.ToString());
+            var value = LanguagesManager.GetValue(LanguageComboBox.SelectedItem.ToString());
+            language = value.Equals(LanguagesManager.MexAbb) ? LanguagesManager.SpaAbb : value;
         }
 
         private void SetLanguages()

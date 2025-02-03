@@ -67,7 +67,8 @@ namespace DBDUtilityOverlay.Utils
         public static string RecognizeText(string imagePath)
         {
             var watch = Stopwatch.StartNew();
-            var engine = new TesseractEngine(tessdata.ToProjectPath(), Properties.Settings.Default.Language);
+            var value = Properties.Settings.Default.Language;
+            var engine = new TesseractEngine(tessdata.ToProjectPath(), value.Equals(LanguagesManager.MexAbb) ? LanguagesManager.SpaAbb : value);
             var image = Pix.LoadFromFile(imagePath);
             var text = engine.Process(image).GetText();
             watch.Stop();
@@ -120,7 +121,7 @@ namespace DBDUtilityOverlay.Utils
 
         private static bool IsTextCorrect(string text)
         {
-            return text.Contains('\n') && text.Contains('-');
+            return text.Contains(LanguagesManager.GetMapInfoLocale()) && text.Contains('\n') && text.Contains('-');
         }
 
         private static MapInfo ConvertTextToMapInfo(string text)
