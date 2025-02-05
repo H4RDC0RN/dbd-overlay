@@ -29,8 +29,8 @@ namespace DBDUtilityOverlay.Utils.Languages
             "INFORMACIÓN DEL MAPA",
             "INFORMACIÓN DEL MAPA",
             "INFOS CARTE",
-            "Italiano",
-            "Polski",
+            "INFO MAPPA",
+            "INFORMACJE O MAPIE",
             "Português",
             "Türkçe",
             "Русский"

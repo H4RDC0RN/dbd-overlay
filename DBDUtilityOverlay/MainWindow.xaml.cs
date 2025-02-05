@@ -216,6 +216,8 @@ namespace DBDUtilityOverlay
             {
                 Logger.Log.Fatal(e.Exception.Message);
                 Logger.Log.Fatal(e.Exception.StackTrace);
+                Logger.Log.Fatal("Recognized text:");
+                Logger.Log.Fatal(ScreenshotRecognizer.Text);
                 Logger.Log.Info("---Close Application with exception---");
             };
         }

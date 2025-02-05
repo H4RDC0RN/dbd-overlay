@@ -21,6 +21,7 @@ namespace DBDUtilityOverlay.Utils
         private static int height;
         private static readonly int tries = 1;
         private static readonly int maxSizeMultiplier = 3;
+        public static string Text { get; set; } = string.Empty;
 
         public static void SetScreenBounds()
         {
@@ -64,16 +65,15 @@ namespace DBDUtilityOverlay.Utils
             captureBitmap.Save(path, ImageFormat.Png);
         }
 
-        public static string RecognizeText(string imagePath)
+        public static void RecognizeText(string imagePath)
         {
             var watch = Stopwatch.StartNew();
             var value = Properties.Settings.Default.Language;
             var engine = new TesseractEngine(tessdata.ToProjectPath(), value.Equals(LanguagesManager.MexAbb) ? LanguagesManager.SpaAbb : value);
             var image = Pix.LoadFromFile(imagePath);
-            var text = engine.Process(image).GetText();
+            Text = engine.Process(image).GetText();
             watch.Stop();
             Logger.Log.Info($"Recognize text from image - {watch.ElapsedMilliseconds} ms");
-            return text;
         }
 
         public static MapInfo GetMapInfo()
@@ -86,10 +86,10 @@ namespace DBDUtilityOverlay.Utils
                 for (int i = 0; i < tries; i++)
                 {
                     Logger.Log.Info($"=============== Size = {sizeMultiplier}, Try = {i + 1}");
-                    string text = RecognizeText(PreProcessImage(imagePath, sizeMultiplier));
-                    if (IsTextCorrect(text))
+                    RecognizeText(PreProcessImage(imagePath, sizeMultiplier));
+                    if (IsTextCorrect())
                     {
-                        mapInfo = ConvertTextToMapInfo(text);
+                        mapInfo = ConvertTextToMapInfo();
                         if (mapInfo.HasImage) return mapInfo;
                         if (sizeMultiplier == maxSizeMultiplier)
                         {
@@ -100,7 +100,7 @@ namespace DBDUtilityOverlay.Utils
                     else
                     {
                         Logger.Log.Warn("Incorrect text:");
-                        Logger.Log.Warn(text);
+                        Logger.Log.Warn(Text);
                     }
                 }
             }
@@ -119,14 +119,14 @@ namespace DBDUtilityOverlay.Utils
             else Logger.Log.Warn("Downloaded content is null");
         }
 
-        private static bool IsTextCorrect(string text)
+        private static bool IsTextCorrect()
         {
-            return text.Contains(LanguagesManager.GetMapInfoLocale()) && text.Contains('\n') && text.Contains('-');
+            return Text.Contains(LanguagesManager.GetMapInfoLocale()) && Text.Contains('\n') && Text.ContainsRegex(" - ");
         }
 
-        private static MapInfo ConvertTextToMapInfo(string text)
+        private static MapInfo ConvertTextToMapInfo()
         {
-            var res = text.Split(" - ");
+            var res = Text.Split(" - ");
             var realm = res[0].Split('\n').Last().RemoveRegex("'").Replace(" ", "_").ToUpper();
             var mapName = res[1].Split('\n')[0].RemoveRegex("'").Replace(" ", "_").ToUpper();
             var mapInfo = new MapInfo(realm, HandleBadhamIssues(mapName));
