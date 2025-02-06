@@ -31,9 +31,9 @@ namespace DBDUtilityOverlay.Utils.Languages
             "INFOS CARTE",
             "INFO MAPPA",
             "INFORMACJE O MAPIE",
-            "Português",
-            "Türkçe",
-            "Русский"
+            "INFORMAÇÕES DO MAPA",
+            "HARİTA AYRINTILARI",
+            "О КАРТЕ"
         ];
         private static readonly Dictionary<string, string> mapsInfoDictionary = langAbbs.Zip(mapInfoLocales, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
 
