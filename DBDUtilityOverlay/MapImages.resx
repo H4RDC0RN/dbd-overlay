@@ -283,4 +283,7 @@
   <data name="YAMAOKA_ESTATE.SANCTUM_OF_WRATH_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ORMOND.ORMOND_LAKE_MINE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Images\Maps\ORMOND\ORMOND_LAKE_MINE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -333,6 +333,16 @@ namespace DBDUtilityOverlay {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ORMOND_ORMOND_LAKE_MINE {
+            get {
+                object obj = ResourceManager.GetObject("ORMOND.ORMOND_LAKE_MINE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RACCOON_CITY_RACCOON_CITY_POLICE_STATION_EAST_WING {
             get {
                 object obj = ResourceManager.GetObject("RACCOON_CITY.RACCOON_CITY_POLICE_STATION_EAST_WING", resourceCulture);
