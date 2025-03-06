@@ -79,7 +79,7 @@ namespace DBDUtilityOverlay.Utils
         public static MapInfo GetMapInfo()
         {
             var imagePath = $"{Properties.Settings.Default.ScreenshotFileName}.png".ToProjectPath();
-            MapInfo? mapInfo;
+            MapInfo mapInfo;
             CreateImageMapNameEsc(imagePath);
             for (int sizeMultiplier = 1; sizeMultiplier <= maxSizeMultiplier; sizeMultiplier++)
             {
@@ -113,7 +113,7 @@ namespace DBDUtilityOverlay.Utils
             return [.. Directory.GetFiles(tessdata.ToProjectPath()).Select(x => Regex.Match(x, regex).Value)];
         }
 
-        public static void SaveTrainedData(string fileName, byte[]? content)
+        public static void SaveTrainedData(string fileName, byte[] content)
         {
             if (content != null) File.WriteAllBytes($@"{tessdata.ToProjectPath()}\{fileName}", content);
             else Logger.Log.Warn("Downloaded content is null");

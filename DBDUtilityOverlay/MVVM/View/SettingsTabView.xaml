@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="DBDUtilityOverlay.MVVM.View.SettingsTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DBDUtilityOverlay.MVVM.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="500"
+             Background="#101517">
+    
+    <StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" 
+                       Text="Game Language"
+                       Foreground="White"
+                       FontSize="24"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Margin="10,0,0,0"/>
+
+            <Border Grid.Column="0"
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    CornerRadius="10"
+                    Margin="10,10,10,10">
+
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Color="#5bc3ff" Offset="0.0"/>
+                        <GradientStop Color="#3aa0ff" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Select"
+                                   Foreground="White"
+                                   FontSize="20"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Margin="0,10,0,0"/>
+                        <ComboBox x:Name="LanguageComboBox" 
+                                  VerticalAlignment="Center"
+                                  Margin="10,10,10,10"
+                                  Style="{StaticResource ComboBoxFlatStyle}"
+                                  SelectionChanged="LanguageComboBox_SelectionChanged"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" 
+                                Orientation="Vertical">
+                        <TextBlock Text="Download more"
+                                   Foreground="White"
+                                   FontSize="20"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Margin="0,10,0,0"/>
+                        <ComboBox x:Name="DownloadLanguageComboBox" 
+                                  VerticalAlignment="Center"
+                                  Margin="10,10,10,10"
+                                  Style="{StaticResource CustomComboBoxStyle}"
+                                  SelectionChanged="DownloadLanguageComboBox_SelectionChanged"/>
+                        <Button x:Name="Download"
+                                Content="Download"
+                                Foreground="White"
+                                FontSize="18"
+                                VerticalAlignment="Center"
+                                Margin="0,0,0,10"
+                                Style="{StaticResource ButtonStyle}" 
+                                Click="Download_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </StackPanel>
+</UserControl>

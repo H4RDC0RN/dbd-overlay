@@ -1,5 +1,5 @@
-﻿using DBDUtilityOverlay.Utils;
-using DBDUtilityOverlay.Utils.Languages;
+﻿using DBDUtilityOverlay.MVVM.ViewModel;
+using DBDUtilityOverlay.Utils;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
@@ -18,30 +18,28 @@ namespace DBDUtilityOverlay
         [DllImport("User32.dll")]
         private static extern bool UnregisterHotKey([In] IntPtr hWnd, [In] int id);
 
-        private HwndSource? source;
+        private HwndSource source;
         private const int READ_MAP_ID = 9000;
         private const int NEXT_MAP_ID = 9001;
         private const int PREVIOUS_MAP_ID = 9002;
 
-        private readonly MapOverlay overlay;
-        private readonly DownloadLanguage downloadLanguage;
+        private MapOverlayTabViewModel mapOverlayTabVM;
+        private SettingsTabViewModel settingsTabVM;
+        private AboutTabViewModel aboutTabVM;
+
 
         public MainWindow()
         {
             Logger.Log.Info("---Open Application---");
             InitializeComponent();
             HandleExceptions();
-            overlay = new MapOverlay();
-            downloadLanguage = new DownloadLanguage();
-            SetOverlaySettings();
-            SetLanguages();
-
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            WindowStyle = WindowStyle.None;
-
-            OpenCloseOverlay(Properties.Settings.Default.IsOverlayOpened);
-            OpacitySlider.Value = Properties.Settings.Default.OverlayOpacity;
             ScreenshotRecognizer.SetScreenBounds();
+            MapOverlayController.Initialize();
+
+            mapOverlayTabVM = new MapOverlayTabViewModel();
+            settingsTabVM = new SettingsTabViewModel();
+            aboutTabVM = new AboutTabViewModel();
+            MapOverlayTab.IsChecked = true;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -61,35 +59,30 @@ namespace DBDUtilityOverlay
             base.OnClosed(e);
         }
 
-        private void SetOverlaySettings()
-        {
-            overlay.WindowStyle = WindowStyle.None;
-            overlay.AllowsTransparency = true;
-            overlay.Opacity = Properties.Settings.Default.OverlayOpacity / 100.0;
-            overlay.ShowInTaskbar = false;
-            overlay.Topmost = true;
-            overlay.Left = Properties.Settings.Default.OverlayX;
-            overlay.Top = Properties.Settings.Default.OverlayY;
-        }
-
-        private void SetLanguages()
-        {
-            var downloadedLanguages = ScreenshotRecognizer.GetDownloadedLanguages();
-            if (downloadedLanguages.Contains(LanguagesManager.SpaAbb)) downloadedLanguages.Add(LanguagesManager.MexAbb);
-            var languages = LanguagesManager.GetOrderedKeyValuePairs(downloadedLanguages);
-            LanguageComboBox.ItemsSource = languages.Select(x => x.Key);
-            LanguageComboBox.SelectedIndex = languages.Select(x => x.Value).ToList().IndexOf(Properties.Settings.Default.Language);
-        }
-
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }
 
+        private void MapOverlayTab_Selected(object sender, RoutedEventArgs e)
+        {
+            ViewContent.Content = mapOverlayTabVM;
+        }
+
+        private void SettingsTab_Selected(object sender, RoutedEventArgs e)
+        {
+            ViewContent.Content = settingsTabVM;
+        }
+
+        private void AboutTab_Selected(object sender, RoutedEventArgs e)
+        {
+            ViewContent.Content= aboutTabVM;
+        }
+
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
             Logger.Log.Info("---Close Application---");
-            overlay.Close();
+            MapOverlayController.Instance.Close();
             Close();
             Application.Current.Shutdown();
         }
@@ -97,67 +90,6 @@ namespace DBDUtilityOverlay
         private void MinButtonClick(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
-        }
-
-        private void OpenRB_Checked(object sender, RoutedEventArgs e)
-        {
-            overlay.Show();
-            Properties.Settings.Default.IsOverlayOpened = true;
-            Properties.Settings.Default.Save();
-        }
-
-        private void CloseRB_Checked(object sender, RoutedEventArgs e)
-        {
-            overlay.Hide();
-            Properties.Settings.Default.IsOverlayOpened = false;
-            Properties.Settings.Default.Save();
-        }
-
-        private void ReadButtonClick(object sender, RoutedEventArgs e)
-        {
-            overlay.ChangeMap(ScreenshotRecognizer.GetMapInfo());
-        }
-
-        private void MoveCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            WindowsServices.RevertWindowExTransparent(new WindowInteropHelper(overlay).Handle);
-        }
-
-        private void MoveCheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            WindowsServices.SetWindowExTransparent(new WindowInteropHelper(overlay).Handle);
-        }
-
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (overlay != null)
-            {
-                overlay.Opacity = OpacitySlider.Value / 100;
-                Properties.Settings.Default.OverlayOpacity = (int)OpacitySlider.Value;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        private void OpenCloseOverlay(bool IsOverlayOpened)
-        {
-            if (IsOverlayOpened) OpenRB.IsChecked = true; else CloseRB.IsChecked = true;
-        }
-
-        private void LanguageComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            var newLanguage = LanguagesManager.GetValue(LanguageComboBox.SelectedItem.ToString());
-            Properties.Settings.Default.Language = newLanguage;
-            Properties.Settings.Default.Save();
-        }
-
-        private void RefreshButtonClick(object sender, RoutedEventArgs e)
-        {
-            SetLanguages();
-        }
-
-        private void DownloadButton_Click(object sender, RoutedEventArgs e)
-        {
-            downloadLanguage.ShowDialog();
         }
 
         private void RegisterHotKey()
@@ -191,17 +123,17 @@ namespace DBDUtilityOverlay
                     {
                         case READ_MAP_ID:
                             Logger.Log.Info("'Read map' hotkey is pressed (CTRL + R)");
-                            overlay.ChangeMap(ScreenshotRecognizer.GetMapInfo());
+                            MapOverlayController.ChangeMap(ScreenshotRecognizer.GetMapInfo());
                             handled = true;
                             break;
                         case NEXT_MAP_ID:
                             Logger.Log.Info("'Next map' hotkey is pressed (0)");
-                            overlay.SwitchMapVariationToNext();
+                            MapOverlayController.SwitchMapVariationToNext();
                             handled = true;
                             break;
                         case PREVIOUS_MAP_ID:
                             Logger.Log.Info("'Previous map' hotkey is pressed (9)");
-                            overlay.SwitchMapVariationToPrevious();
+                            MapOverlayController.SwitchMapVariationToPrevious();
                             handled = true;
                             break;
                     }

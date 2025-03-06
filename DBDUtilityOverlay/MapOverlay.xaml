@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="MapOverlay" Height="220" Width="200"
         MouseLeftButtonDown="OverlayMouseDown"
-        MouseLeftButtonUp="OverlayMouseUp">
+        MouseLeftButtonUp="OverlayMouseUp"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ShowInTaskbar="False"
+        Topmost="True">
     <Grid x:Name="MapOverlayGrid"/>
 </Window>

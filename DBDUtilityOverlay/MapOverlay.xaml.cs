@@ -4,7 +4,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using DBDUtilityOverlay.Utils;
 using DBDUtilityOverlay.Utils.Extensions;
-using DBDUtilityOverlay.Utils.Languages;
 using DBDUtilityOverlay.Utils.Models;
 using Image = System.Windows.Controls.Image;
 
@@ -12,22 +11,26 @@ namespace DBDUtilityOverlay
 {
     public partial class MapOverlay : Window
     {
-        private readonly string imageElementName = "Map";
-        private string realm;
-        private string name;
+        private static readonly string imageElementName = "Map";
 
         public MapOverlay()
         {
             InitializeComponent();
-            realm = string.Empty;
-            name = NamesOfMapsContainer.Empty;
-            AddMapOverlay();
+            SetOverlaySettings();
+            AddImageMapOverlay();
         }
 
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
             WindowsServices.SetWindowExTransparent(new WindowInteropHelper(this).Handle);
+        }
+
+        private void SetOverlaySettings()
+        {
+            Opacity = Properties.Settings.Default.OverlayOpacity / 100.0;
+            Left = Properties.Settings.Default.OverlayX;
+            Top = Properties.Settings.Default.OverlayY;
         }
 
         private void OverlayMouseDown(object sender, MouseButtonEventArgs e)
@@ -42,57 +45,15 @@ namespace DBDUtilityOverlay
             Properties.Settings.Default.Save();
         }
 
-        public void ChangeMap(MapInfo mapInfo)
+        public void ChangeMapImageOverlay(MapInfo mapInfo)
         {
             var index = MapOverlayGrid.Children.OfType<Image>().ToList().FindIndex(x => x.Name.Equals(imageElementName));
             MapOverlayGrid.Children.RemoveAt(index);
-            AddMapOverlay(mapInfo);
+            AddImageMapOverlay(mapInfo);
         }
 
-        public void SwitchMapVariationToNext()
+        private void AddImageMapOverlay(MapInfo mapInfo = null)
         {
-            var suffix = name[^2..];
-            suffix = (suffix.First().ToString().Equals("_") && suffix.Last().ToString().IsInt())
-                ? $"_{Convert.ToInt32(suffix.Last().ToString()) + 1}" : "_2";
-
-            var newName = suffix.Equals("_2") ? $"{name}{suffix}" : name.Replace(name[^2..], $"{suffix}");
-            var mapInfo = new MapInfo(realm, newName);
-            if (mapInfo.HasImage)
-            {
-                name = newName;
-                Logger.Log.Info($"Switching map variation to '{name}'");
-                ChangeMap(mapInfo);
-            }
-        }
-
-        public void SwitchMapVariationToPrevious()
-        {
-            var suffix = name[^2..];
-            if (suffix.First().ToString().Equals("_") && suffix.Last().ToString().IsInt())
-            {
-                if (suffix.Last().ToString().Equals("2"))
-                {
-                    name = name.RemoveRegex(suffix);
-                    Logger.Log.Info($"Switching map variation to '{name}'");
-                    ChangeMap(new MapInfo(realm, name));
-                }
-                else
-                {
-                    name = name.Replace(suffix, $"_{Convert.ToInt32(suffix.Last().ToString()) - 1}");
-                    Logger.Log.Info($"Switching map variation to '{name}'");
-                    ChangeMap(new MapInfo(realm, name));
-                }
-            }
-        }
-
-        private void AddMapOverlay(MapInfo? mapInfo = null)
-        {
-            if (mapInfo != null)
-            {
-                realm = mapInfo.Realm;
-                name = mapInfo.Name;
-            }
-
             var image = new Image();
             if (mapInfo == null)
             {

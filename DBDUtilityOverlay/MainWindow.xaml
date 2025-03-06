@@ -4,39 +4,88 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBDUtilityOverlay"
+        xmlns:viewModel="clr-namespace:DBDUtilityOverlay.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="280"
-        MouseLeftButtonDown="WindowMouseDown">
-    <Grid Height="250">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="9*"/>
-        </Grid.RowDefinitions>
-        <Button x:Name="Min" Width="20" Height="20" Click="MinButtonClick" HorizontalAlignment="Right" Margin="0,0,20,0">
-            <Button.Background>
-                <ImageBrush ImageSource="/Images/App/minimize.png"/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="Exit" HorizontalAlignment="Right" Width="20" Height="20" Click="ExitButtonClick">
-            <Button.Background>
-                <ImageBrush ImageSource="/Images/App/close.png"/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="Read" Content="Read" HorizontalAlignment="Left" Margin="130,10,0,0" VerticalAlignment="Top" Click="ReadButtonClick" Height="30" Width="70" Grid.Row="1"/>
-        <CheckBox x:Name="MoveOverlay" Content="Move overlay" HorizontalAlignment="Left" Margin="20,64,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="MoveCheckBox_Checked" Unchecked="MoveCheckBox_Unchecked"/>
-        <Slider x:Name="OpacitySlider" HorizontalAlignment="Left" Margin="20,113,0,0" Grid.Row="1" VerticalAlignment="Top" Width="135" ValueChanged="Slider_ValueChanged" Maximum="100" Value="90" IsSnapToTickEnabled="True"/>
-        <TextBox HorizontalAlignment="Left" Margin="160,113,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding ElementName=OpacitySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="20" Height="18"/>
-        <Label x:Name="OpacityLabel" Content="Opacity" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="50" Margin="20,88,0,0"/>
-        <Label Content="%" HorizontalAlignment="Left" Margin="178,109,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <RadioButton x:Name="OpenRB" Content="Open" HorizontalAlignment="Left" Margin="20,5,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="OpenRB_Checked"/>
-        <RadioButton x:Name="CloseRB" Content="Close" HorizontalAlignment="Left" Margin="20,25,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="CloseRB_Checked"/>
-        <ComboBox x:Name="LanguageComboBox" HorizontalAlignment="Left" Margin="20,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" SelectionChanged="LanguageComboBox_SelectionChanged"/>
-        <Label x:Name="LanguageLabel" Content="Language" HorizontalAlignment="Left" Margin="20,135,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <Button x:Name="DownloadButton" Content="Download &#xA;    more" HorizontalAlignment="Left" Margin="183,151,0,0" Grid.Row="1" VerticalAlignment="Top" Height="39" Width="68" Click="DownloadButton_Click"/>
-        <Button x:Name="Refresh" HorizontalAlignment="Left" Width="20" Height="20" Click="RefreshButtonClick" Margin="151,161,0,44" Grid.Row="1">
-            <Button.Background>
-                <ImageBrush ImageSource="/Images/App/refresh.jpg"/>
-            </Button.Background>
-        </Button>
-    </Grid>
+        Title="MainWindow" Height="400" Width="650"
+        MouseLeftButtonDown="WindowMouseDown"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+    
+    <Border Background="#101517"
+            CornerRadius="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="DBD OVERLAY"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Foreground="White"
+                       FontSize="15"
+                       Margin="10,5,5,5"/>
+
+            <StackPanel Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                <Button x:Name="Min" 
+                        Click="MinButtonClick"
+                        Style="{StaticResource ButtonMinStyle}"/>
+
+                <Button x:Name="Exit"
+                        Click="ExitButtonClick"
+                        Style="{StaticResource ButtonCloseStyle}"/>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <RadioButton x:Name="MapOverlayTab"
+                             Content="Map Overlay"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonStyle}"
+                             Checked="MapOverlayTab_Selected"/>
+
+                <RadioButton x:Name="SettingsTab"
+                             Content="Settings"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonStyle}"
+                             Checked="SettingsTab_Selected"/>
+
+                <RadioButton x:Name="AboutTab" 
+                             Content="About"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonStyle}"
+                             Checked="AboutTab_Selected"/>
+            </StackPanel>
+            <Border x:Name="MenuBorder"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Background="#1d2327"
+                    Height="{Binding RelativeSource={RelativeSource FindAncestor, 
+                             AncestorType={x:Type Grid}}, Path=ActualHeight}"
+                    Width="2"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    CornerRadius="1"
+                    Margin="0,0,0,5"/>
+            <ContentControl x:Name="ViewContent"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="10"/>
+        </Grid>
+    </Border>
 </Window>

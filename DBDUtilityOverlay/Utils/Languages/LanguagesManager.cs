@@ -37,7 +37,7 @@ namespace DBDUtilityOverlay.Utils.Languages
         ];
         private static readonly Dictionary<string, string> mapsInfoDictionary = langAbbs.Zip(mapInfoLocales, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
 
-        public static string GetValue(string? key)
+        public static string GetValue(string key)
         {
             return langsDictionary.FirstOrDefault(x => x.Key.Equals(key)).Value;
         }
