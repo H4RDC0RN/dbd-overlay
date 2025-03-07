@@ -11,8 +11,8 @@
     <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -27,7 +27,7 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="10,0,0,0"/>
-            
+
             <TextBlock Grid.Row="1" 
                        Text="Change Position"
                        Foreground="White"
@@ -65,42 +65,36 @@
                           ToolTipService.InitialShowDelay="200"
                           ToolTip="- Turn on&#x0a;- Drag map&#x0a;- Turn off"/>
 
-                <Border Grid.Column="1"
+            <StackPanel Grid.Column="1"
                         Grid.Row="2"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        CornerRadius="10"
-                        Margin="10,10,10,10">
-
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                        <GradientStop Color="#ffc554" Offset="0.0"/>
-                        <GradientStop Color="#ffb73a" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-
-                <StackPanel Orientation="Horizontal">
-                    <Slider x:Name="OpacitySlider" 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Slider x:Name="OpacitySlider" 
                             VerticalAlignment="Center" 
-                            Margin="30,0,0,0" 
-                            Width="135" 
+                            Margin="20,0,0,0" 
+                            Width="140" 
                             ValueChanged="Slider_ValueChanged" 
-                            Maximum="100" 
-                            Value="90" 
-                            IsSnapToTickEnabled="True"/>
-                    <TextBox Margin="10,0,0,0" 
-                             TextWrapping="Wrap" 
+                            Maximum="100"
+                            IsSnapToTickEnabled="True"
+                            Style="{StaticResource Horizontal_Slider}"/>
+                <TextBox x:Name="OpacityTextBox" 
                              Text="{Binding ElementName=OpacitySlider, 
                                             Path=Value, 
                                             UpdateSourceTrigger=PropertyChanged}" 
-                             VerticalAlignment="Center" 
-                             Width="20" 
-                             Height="20"/>
-                    <Label Content="%" 
-                           Margin="0,0,0,0"  
+                             VerticalAlignment="Center"
+                             Width="34" 
+                             Height="30"
+                             Margin="10,0,0,0" 
+                             FontSize="20"
+                             Foreground="White"
+                             TextAlignment="Center"
+                             Style="{StaticResource TextBoxInputStyle}"/>
+                <Label Content="%"
+                           Foreground="White"
+                           FontSize="20"
+                           Margin="0,0,0,5"  
                            VerticalAlignment="Center"/>
-                </StackPanel>
-            </Border>
+            </StackPanel>
         </Grid>
     </StackPanel>
 </UserControl>

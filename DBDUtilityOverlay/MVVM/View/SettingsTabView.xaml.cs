@@ -51,7 +51,7 @@ namespace DBDUtilityOverlay.MVVM.View
         private void SetDownloadLanguages()
         {
             DownloadLanguageComboBox.ItemsSource = LanguagesManager.GetLanguages();
-            DownloadLanguageComboBox.SelectedIndex = LanguagesManager.GetCurrentLanguageIndex();
+            DownloadLanguageComboBox.SelectedIndex = 0;
         }
 
         private void DownloadLanguageData()
