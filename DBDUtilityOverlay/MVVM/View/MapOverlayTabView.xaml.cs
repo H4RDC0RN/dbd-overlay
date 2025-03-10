@@ -1,4 +1,5 @@
 ﻿using DBDUtilityOverlay.Utils;
+using DBDUtilityOverlay.Utils.Windows;
 using System.Windows;
 using System.Windows.Interop;
 using UserControl = System.Windows.Controls.UserControl;
@@ -26,11 +27,6 @@ namespace DBDUtilityOverlay.MVVM.View
             MapOverlayController.Instance.Hide();
             Properties.Settings.Default.IsOverlayOpened = false;
             Properties.Settings.Default.Save();
-        }
-
-        private void ReadButtonClick(object sender, RoutedEventArgs e)
-        {
-            MapOverlayController.ChangeMap(ScreenshotRecognizer.GetMapInfo());
         }
 
         private void Move_Checked(object sender, RoutedEventArgs e)

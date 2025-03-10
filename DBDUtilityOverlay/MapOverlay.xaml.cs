@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using DBDUtilityOverlay.Utils;
+using DBDUtilityOverlay.Utils.Windows;
 using DBDUtilityOverlay.Utils.Extensions;
 using DBDUtilityOverlay.Utils.Models;
 using Image = System.Windows.Controls.Image;

@@ -1,11 +1,11 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace DBDUtilityOverlay.Utils
+namespace DBDUtilityOverlay.Utils.Windows
 {
     public static class WindowsServices
     {
         private const int WS_EX_TRANSPARENT = 0x00000020;
-        private const int GWL_EXSTYLE = (-20);
+        private const int GWL_EXSTYLE = -20;
 
         [DllImport("user32.dll")]
         private static extern int GetWindowLong(IntPtr hwnd, int index);

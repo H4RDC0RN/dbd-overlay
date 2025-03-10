@@ -18,25 +18,26 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.44*"/>
+                <ColumnDefinition Width="0.56*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
-                <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="1" 
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
                        Text="Select"
-                       Foreground="White"
-                       FontSize="20"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Margin="10,0,0,0"/>
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       Text="Download more"
+                       Style="{StaticResource TextBlockStyle}"/>
 
             <ComboBox x:Name="LanguageComboBox"
-                      Grid.Row="1"
+                      Grid.Row="0"
                       Grid.Column="1"
                       VerticalAlignment="Center"
                       HorizontalAlignment="Left"
@@ -45,15 +46,7 @@
                       Style="{StaticResource ComboBoxFlatStyle}"
                       SelectionChanged="LanguageComboBox_SelectionChanged"/>
 
-            <TextBlock Text="Download More"
-                       Grid.Row="2"
-                       Foreground="White"
-                       FontSize="20"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Margin="10,0,0,0"/>
-
-            <StackPanel Grid.Row="2"
+            <StackPanel Grid.Row="1"
                         Grid.Column="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Left">
@@ -66,8 +59,9 @@
                           SelectionChanged="DownloadLanguageComboBox_SelectionChanged"/>
 
                 <Button x:Name="Download"
-                        Content="⤓"
+                        Content="{StaticResource DownloadImage}"
                         Margin="10"
+                        Padding="10"
                         Foreground="White"
                         FontSize="20"
                         VerticalAlignment="Center"
@@ -75,5 +69,41 @@
                         Click="Download_Click"/>
             </StackPanel>
         </Grid>
+
+        <TextBlock Text="Keyboard Shortcuts"
+                   Foreground="White"
+                   FontSize="24"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,10"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.44*"/>
+                <ColumnDefinition Width="0.56*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Read map"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       Text="Next map variation"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0"
+                       Text="Previous map variation"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+        </Grid>
+        
     </StackPanel>
 </UserControl>

@@ -8,12 +8,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Images/App/Images.xaml"/>
                 <ResourceDictionary Source="Styles/Palette.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
-                <ResourceDictionary Source="Styles/ComboboxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ComboBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/MenuTabStyle.xaml"/>
                 <ResourceDictionary Source="Styles/SliderStyle.xaml"/>
-                <ResourceDictionary Source="Styles/TextboxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TextBlockStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 

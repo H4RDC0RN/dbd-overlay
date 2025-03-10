@@ -10,7 +10,6 @@
         MouseLeftButtonDown="WindowMouseDown"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True">
     

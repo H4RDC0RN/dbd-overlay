@@ -11,8 +11,8 @@
     <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.44*"/>
+                <ColumnDefinition Width="0.56*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -21,32 +21,20 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" 
-                       Text="Map Overlay"
-                       Foreground="White"
-                       FontSize="20"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Margin="10,0,0,0"/>
+                       Text="Map overlay"
+                       Style="{StaticResource TextBlockStyle}"/>
 
             <TextBlock Grid.Row="1" 
-                       Text="Change Position"
-                       Foreground="White"
-                       FontSize="20"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Margin="10,0,0,0"/>
+                       Text="Change position"
+                       Style="{StaticResource TextBlockStyle}"/>
 
             <TextBlock Grid.Row="2" 
                        Text="Opacity"
-                       Foreground="White"
-                       FontSize="20"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Margin="10,0,0,0"/>
+                       Style="{StaticResource TextBlockStyle}"/>
 
             <ToggleButton x:Name="OpenCloseToggleButton"
-                          Grid.Column="1"
                           Grid.Row="0"
+                          Grid.Column="1"
                           HorizontalAlignment="Center"
                           Margin="5"
                           Style="{StaticResource ToggleButtonStyle}"

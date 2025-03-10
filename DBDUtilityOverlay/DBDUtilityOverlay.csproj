@@ -12,6 +12,7 @@
   
   <ItemGroup>
     <None Remove="Images\App\close.png" />
+    <None Remove="Images\App\download.png" />
     <None Remove="Images\App\minimize.png" />
     <None Remove="Images\App\refresh.jpg" />
     <None Remove="Images\Maps\AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png" />
@@ -130,6 +131,7 @@
 
   <ItemGroup>
     <Resource Include="Images\App\close.png" />
+    <Resource Include="Images\App\download.png" />
     <Resource Include="Images\App\minimize.png" />
     <Resource Include="Images\App\refresh.jpg" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png" />
