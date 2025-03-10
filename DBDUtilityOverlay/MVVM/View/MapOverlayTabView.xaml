@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DBDUtilityOverlay.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500"
-             Background="#101517">
+             Background="{DynamicResource DarkestGrayBrush}">
 
     <StackPanel>
         <Grid>

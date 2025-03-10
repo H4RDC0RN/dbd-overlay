@@ -14,7 +14,7 @@
         Background="Transparent"
         AllowsTransparency="True">
     
-    <Border Background="#101517"
+    <Border Background="{DynamicResource DarkestGrayBrush}"
             CornerRadius="10">
         <Grid>
             <Grid.ColumnDefinitions>

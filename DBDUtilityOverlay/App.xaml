@@ -8,9 +8,13 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme/MenuTabStyle.xaml"/>
-                <ResourceDictionary Source="Theme/ToggleButtonTheme.xaml"/>
-                <ResourceDictionary Source="Theme/ElementsStyle.xaml"/>
+                <ResourceDictionary Source="Styles/Palette.xaml"/>
+                <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ComboboxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/MenuTabStyle.xaml"/>
+                <ResourceDictionary Source="Styles/SliderStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TextboxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:MapOverlayTabViewModel}">

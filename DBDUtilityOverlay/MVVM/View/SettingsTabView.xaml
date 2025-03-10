@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DBDUtilityOverlay.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500"
-             Background="#101517">
+             Background="{DynamicResource DarkestGrayBrush}">
 
     <StackPanel>
         <TextBlock Text="Game Language"
@@ -39,8 +39,9 @@
                       Grid.Row="1"
                       Grid.Column="1"
                       VerticalAlignment="Center"
+                      HorizontalAlignment="Left"
                       Width="180"
-                      Margin="10,10,10,10"
+                      Margin="10"
                       Style="{StaticResource ComboBoxFlatStyle}"
                       SelectionChanged="LanguageComboBox_SelectionChanged"/>
 
@@ -55,19 +56,20 @@
             <StackPanel Grid.Row="2"
                         Grid.Column="1"
                         Orientation="Horizontal"
-                        HorizontalAlignment="Center">
+                        HorizontalAlignment="Left">
 
                 <ComboBox x:Name="DownloadLanguageComboBox" 
                           VerticalAlignment="Center"
                           Width="180"
-                          Margin="10,10,10,10"
+                          Margin="10"
                           Style="{StaticResource ComboBoxFlatStyle}"
                           SelectionChanged="DownloadLanguageComboBox_SelectionChanged"/>
 
                 <Button x:Name="Download"
                         Content="⤓"
+                        Margin="10"
                         Foreground="White"
-                        FontSize="18"
+                        FontSize="20"
                         VerticalAlignment="Center"
                         Style="{StaticResource ButtonStyle}" 
                         Click="Download_Click"/>

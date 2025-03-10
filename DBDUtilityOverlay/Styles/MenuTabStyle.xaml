@@ -14,13 +14,13 @@
                                     HorizontalAlignment="Stretch"
                                     Background="{TemplateBinding Background}">
                                 <TextBlock x:Name="ItemNameTextBlock"
-                                       Text="{TemplateBinding Property=Content}"
-                                       Foreground="#dcdcde"
-                                       VerticalAlignment="Center"
-                                       Margin="30,0,0,0"/>
+                                           Text="{TemplateBinding Property=Content}"
+                                           Foreground="#dcdcde"
+                                           VerticalAlignment="Center"
+                                           Margin="30,0,0,0"/>
                             </Border>
                             <Border x:Name="SelectedItemBorder"
-                                    Background="#d63638"
+                                    Background="{DynamicResource RedLightBrush}"
                                     Height="0"
                                     Width="4"
                                     HorizontalAlignment="Left"
@@ -30,7 +30,7 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#1d2327"/>
+                                <Setter Property="Background" Value="{DynamicResource DarkGrayBrush}"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
                                 <Trigger.EnterActions>
