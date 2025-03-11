@@ -1,6 +1,5 @@
 ﻿using DBDUtilityOverlay.MVVM.ViewModel;
 using DBDUtilityOverlay.Utils;
-using DBDUtilityOverlay.Utils.Windows;
 using System.Windows;
 using System.Windows.Input;
 using Application = System.Windows.Application;
@@ -11,10 +10,9 @@ namespace DBDUtilityOverlay
 {
     public partial class MainWindow : Window
     {
-        private readonly KeyboardHook hook = new();
         private readonly MapOverlayTabViewModel mapOverlayTabVM;
         private readonly SettingsTabViewModel settingsTabVM;
-        private readonly AboutTabViewModel aboutTabVM;     
+        private readonly AboutTabViewModel aboutTabVM;
 
         public MainWindow()
         {
@@ -23,6 +21,7 @@ namespace DBDUtilityOverlay
             HandleExceptions();
             ScreenshotRecognizer.SetScreenBounds();
             MapOverlayController.Initialize();
+            InitializeHotKeys();
 
             mapOverlayTabVM = new MapOverlayTabViewModel();
             settingsTabVM = new SettingsTabViewModel();
@@ -30,18 +29,18 @@ namespace DBDUtilityOverlay
             MapOverlayTab.IsChecked = true;
         }
 
-        protected override void OnSourceInitialized(EventArgs e)
+        private void InitializeHotKeys()
         {
-            base.OnSourceInitialized(e);
-            hook.RegisterHotKey(ModifierKeys.Control, Keys.R, PressedRead);
-            hook.RegisterHotKey(ModifierKeys.None, Keys.OemCloseBrackets, PressedNext);
-            hook.RegisterHotKey(ModifierKeys.None, Keys.OemOpenBrackets, PressedPrevious);
-        }
+            var readModifier = (ModifierKeys)Properties.Settings.Default.ReadModifier;
+            var readKey = (Keys)Properties.Settings.Default.ReadKey;
+            var nextModifier = (ModifierKeys)Properties.Settings.Default.NextMapModifier;
+            var nextKey = (Keys)Properties.Settings.Default.NextMapKey;
+            var previousModifier = (ModifierKeys)Properties.Settings.Default.PreviousMapModifier;
+            var previousKey = (Keys)Properties.Settings.Default.PreviousMapKey;
 
-        protected override void OnClosed(EventArgs e)
-        {
-            hook.Dispose();
-            base.OnClosed(e);
+            HotKeysController.RegisterHotKey(HotKeyType.Read, readModifier, readKey);
+            HotKeysController.RegisterHotKey(HotKeyType.NextMap, nextModifier, nextKey);
+            HotKeysController.RegisterHotKey(HotKeyType.PreviousMap, previousModifier, previousKey);
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
@@ -61,12 +60,13 @@ namespace DBDUtilityOverlay
 
         private void AboutTab_Selected(object sender, RoutedEventArgs e)
         {
-            ViewContent.Content= aboutTabVM;
+            ViewContent.Content = aboutTabVM;
         }
 
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
             Logger.Log.Info("---Close Application---");
+            HotKeysController.UnregisterAllHotKeys();
             MapOverlayController.Instance.Close();
             Close();
             Application.Current.Shutdown();
@@ -75,24 +75,6 @@ namespace DBDUtilityOverlay
         private void MinButtonClick(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
-        }
-
-        private void PressedRead(object sender, KeyPressedEventArgs e)
-        {
-            e.Log("Read map");
-            MapOverlayController.ChangeMap(ScreenshotRecognizer.GetMapInfo());
-        }
-
-        private void PressedNext(object sender, KeyPressedEventArgs e)
-        {
-            e.Log("Next map");
-            MapOverlayController.SwitchMapVariationToNext();
-        }
-
-        private void PressedPrevious(object sender, KeyPressedEventArgs e)
-        {
-            e.Log("Previous map");
-            MapOverlayController.SwitchMapVariationToPrevious();
         }
 
         private void HandleExceptions()

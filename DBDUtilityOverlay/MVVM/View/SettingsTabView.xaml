@@ -11,10 +11,10 @@
     <StackPanel>
         <TextBlock Text="Game Language"
                    Foreground="White"
-                   FontSize="24"
+                   FontSize="22"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Margin="0,0,0,10"/>
+                   Margin="0,0,0,5"/>
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -42,7 +42,7 @@
                       VerticalAlignment="Center"
                       HorizontalAlignment="Left"
                       Width="180"
-                      Margin="10"
+                      Margin="5"
                       Style="{StaticResource ComboBoxFlatStyle}"
                       SelectionChanged="LanguageComboBox_SelectionChanged"/>
 
@@ -54,13 +54,13 @@
                 <ComboBox x:Name="DownloadLanguageComboBox" 
                           VerticalAlignment="Center"
                           Width="180"
-                          Margin="10"
+                          Margin="5"
                           Style="{StaticResource ComboBoxFlatStyle}"
                           SelectionChanged="DownloadLanguageComboBox_SelectionChanged"/>
 
                 <Button x:Name="Download"
                         Content="{StaticResource DownloadImage}"
-                        Margin="10"
+                        Margin="5"
                         Padding="10"
                         Foreground="White"
                         FontSize="20"
@@ -72,10 +72,10 @@
 
         <TextBlock Text="Keyboard Shortcuts"
                    Foreground="White"
-                   FontSize="24"
+                   FontSize="22"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Margin="0,0,0,10"/>
+                   Margin="0,5,0,5"/>
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -102,6 +102,36 @@
                        Grid.Column="0"
                        Text="Previous map variation"
                        Style="{StaticResource TextBlockStyle}"/>
+
+            <ComboBox x:Name="ReadModifierComboBox"
+                      Grid.Row="0"
+                      Grid.Column="1"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Left"
+                      Width="100"
+                      Margin="5"
+                      Style="{StaticResource ComboBoxFlatStyle}"
+                      SelectionChanged="ReadModifierComboBox_SelectionChanged"/>
+
+            <ComboBox x:Name="NextModifierComboBox"
+                      Grid.Row="1"
+                      Grid.Column="1"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Left"
+                      Width="100"
+                      Margin="5"
+                      Style="{StaticResource ComboBoxFlatStyle}"
+                      SelectionChanged="NextModifierComboBox_SelectionChanged"/>
+
+            <ComboBox x:Name="PreviousModifierComboBox"
+                      Grid.Row="2"
+                      Grid.Column="1"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Left"
+                      Width="100"
+                      Margin="5"
+                      Style="{StaticResource ComboBoxFlatStyle}"
+                      SelectionChanged="PreviousModifierComboBox_SelectionChanged"/>
 
         </Grid>
         

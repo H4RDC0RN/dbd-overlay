@@ -10,8 +10,17 @@ namespace DBDUtilityOverlay.Utils.Windows
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-        private int _currentId = 9000;
         private readonly Window _window = new();
+        private static KeyboardHook instance;
+
+        public static KeyboardHook Instance
+        {
+            get
+            {
+                instance ??= new KeyboardHook();
+                return instance;
+            }
+        }
 
         private class Window : NativeWindow, IDisposable
         {
@@ -43,19 +52,25 @@ namespace DBDUtilityOverlay.Utils.Windows
             }
         }
 
-        public void RegisterHotKey(ModifierKeys modifier, Keys key, Action<object, KeyPressedEventArgs> action)
+        public void RegisterHotKey(int id, ModifierKeys modifier, Keys key, Action<object, KeyPressedEventArgs> action)
         {
-            _currentId++;
-            RegisterHotKey(_window.Handle, _currentId, (uint)modifier, (uint)key);
-            _window.KeyPressedEvents.Add(_currentId, delegate (object sender, KeyPressedEventArgs args)
+            RegisterHotKey(_window.Handle, id, (uint)modifier, (uint)key);
+            _window.KeyPressedEvents.Add(id, delegate (object sender, KeyPressedEventArgs args)
             {
                 new EventHandler<KeyPressedEventArgs>(action).Invoke(this, args);
             });
         }
 
+        public void UnregisterHotKey(int id)
+        {
+            UnregisterHotKey(_window.Handle, id);
+            _window?.KeyPressedEvents.Remove(id);
+        }
+
         public void Dispose()
         {
-            _window.KeyPressedEvents.Keys.ToList().ForEach(x => UnregisterHotKey(_window.Handle, x));
+            _window.KeyPressedEvents.Keys.ToList().ForEach(UnregisterHotKey);
+            _window?.KeyPressedEvents.Clear();
             _window.Dispose();
         }
     }

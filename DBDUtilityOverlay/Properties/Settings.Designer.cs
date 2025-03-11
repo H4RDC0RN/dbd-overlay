@@ -94,5 +94,77 @@ namespace DBDUtilityOverlay.Properties {
                 this["Language"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public uint ReadModifier {
+            get {
+                return ((uint)(this["ReadModifier"]));
+            }
+            set {
+                this["ReadModifier"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("82")]
+        public uint ReadKey {
+            get {
+                return ((uint)(this["ReadKey"]));
+            }
+            set {
+                this["ReadKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public uint NextMapModifier {
+            get {
+                return ((uint)(this["NextMapModifier"]));
+            }
+            set {
+                this["NextMapModifier"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("221")]
+        public uint NextMapKey {
+            get {
+                return ((uint)(this["NextMapKey"]));
+            }
+            set {
+                this["NextMapKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public uint PreviousMapModifier {
+            get {
+                return ((uint)(this["PreviousMapModifier"]));
+            }
+            set {
+                this["PreviousMapModifier"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("219")]
+        public uint PreviousMapKey {
+            get {
+                return ((uint)(this["PreviousMapKey"]));
+            }
+            set {
+                this["PreviousMapKey"] = value;
+            }
+        }
     }
 }
