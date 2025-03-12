@@ -45,6 +45,7 @@ namespace DBDUtilityOverlay
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
         {
+            MainGrid.Focus();
             DragMove();
         }
 

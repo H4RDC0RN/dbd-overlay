@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Input;
 
 namespace DBDUtilityOverlay.Utils.Windows
@@ -9,8 +10,18 @@ namespace DBDUtilityOverlay.Utils.Windows
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        
+        [DllImport("user32.dll")]
+        public static extern bool GetKeyboardState(byte[] lpKeyState);
 
-        private readonly Window _window = new();
+        [DllImport("user32.dll")]
+        public static extern uint MapVirtualKey(uint uCode);
+
+        [DllImport("user32.dll")]
+        public static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState,
+            [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
+
+        private readonly HotKeyWindow _window = new();
         private static KeyboardHook instance;
 
         public static KeyboardHook Instance
@@ -19,36 +30,6 @@ namespace DBDUtilityOverlay.Utils.Windows
             {
                 instance ??= new KeyboardHook();
                 return instance;
-            }
-        }
-
-        private class Window : NativeWindow, IDisposable
-        {
-            private static readonly int WM_HOTKEY = 0x0312;
-            public Dictionary<int, EventHandler<KeyPressedEventArgs>> KeyPressedEvents = [];
-
-            public Window()
-            {
-                CreateHandle(new CreateParams());
-            }
-
-            protected override void WndProc(ref Message m)
-            {
-                base.WndProc(ref m);
-
-                if (m.Msg == WM_HOTKEY)
-                {
-                    var key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                    var modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
-                    var id = (int)m.WParam & 0xFFFF;
-
-                    KeyPressedEvents.FirstOrDefault(x => x.Key.Equals(id)).Value.Invoke(this, new KeyPressedEventArgs(modifier, key));
-                }
-            }
-
-            public void Dispose()
-            {
-                DestroyHandle();
             }
         }
 
@@ -72,6 +53,18 @@ namespace DBDUtilityOverlay.Utils.Windows
             _window.KeyPressedEvents.Keys.ToList().ForEach(UnregisterHotKey);
             _window?.KeyPressedEvents.Clear();
             _window.Dispose();
+        }
+
+        public char GetCharFromKey(Keys virtualKey)
+        {
+            var keyboardState = new byte[256];
+            GetKeyboardState(keyboardState);
+            uint scanCode = MapVirtualKey((uint)virtualKey);
+            var stringBuilder = new StringBuilder(2);
+            var result = ToUnicodeEx((uint)virtualKey, scanCode, keyboardState, stringBuilder, 5, 0, 1033);
+
+            if (result != 0 && result != -1) return stringBuilder[0];
+            else return ' ';
         }
     }
 }

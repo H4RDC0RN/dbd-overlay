@@ -72,9 +72,8 @@
                              VerticalAlignment="Center"
                              Width="34" 
                              Height="30"
-                             Margin="10,0,0,0" 
+                             Margin="10,0,0,0"
                              FontSize="20"
-                             Foreground="White"
                              TextAlignment="Center"
                              Style="{StaticResource TextBoxInputStyle}"/>
                 <Label Content="%"

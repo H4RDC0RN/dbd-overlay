@@ -15,7 +15,8 @@
     
     <Border Background="{DynamicResource DarkestGrayBrush}"
             CornerRadius="10">
-        <Grid>
+        <Grid Name="MainGrid"
+              Focusable="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition/>

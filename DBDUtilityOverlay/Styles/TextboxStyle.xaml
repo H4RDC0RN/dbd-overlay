@@ -3,10 +3,12 @@
 
     <Style x:Key="TextBoxInputStyle" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource WhiteGreyBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Padding" Value="0,1,0,0"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
+                <ControlTemplate x:Name="TextBoxTemplate" TargetType="{x:Type TextBox}">
                     <Border x:Name="Border" 
                             Background="Transparent" 
                             Focusable="True" 
@@ -23,10 +25,20 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
                         </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderThickness" TargetName="Border" Value="1,1,1,1"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="TextBoxKeyStyle" TargetType="TextBox" BasedOn="{StaticResource TextBoxInputStyle}">
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="IsReadOnlyCaretVisible" Value="False"/>
+        <Setter Property="IsUndoEnabled" Value="False"/>
     </Style>
 
 </ResourceDictionary>

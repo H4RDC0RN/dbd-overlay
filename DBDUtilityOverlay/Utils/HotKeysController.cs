@@ -15,6 +15,12 @@ namespace DBDUtilityOverlay.Utils
             KeyboardHook.Instance.UnregisterHotKey((int)hotKeyType);
         }
 
+        public static void UpdateHotKey(HotKeyType hotKeyType, ModifierKeys modifier, Keys key)
+        {
+            UnregisterHotKey(hotKeyType);
+            RegisterHotKey(hotKeyType, modifier, key);
+        }
+
         public static void UnregisterAllHotKeys()
         {
             KeyboardHook.Instance.Dispose();

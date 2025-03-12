@@ -5,6 +5,10 @@ using System.Windows.Controls;
 using UserControl = System.Windows.Controls.UserControl;
 using System.Net.Http;
 using System.Windows.Input;
+using DBDUtilityOverlay.Utils.Windows;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using ComboBox = System.Windows.Controls.ComboBox;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace DBDUtilityOverlay.MVVM.View
 {
@@ -13,7 +17,7 @@ namespace DBDUtilityOverlay.MVVM.View
         private string language;
         private readonly string downloadLink = "https://raw.github.com/tesseract-ocr/tessdata/main/";
         private readonly string fileExtension = ".traineddata";
-        
+
         private readonly Dictionary<ModifierKeys, string> modifiers = [];
 
         public SettingsTabView()
@@ -22,6 +26,7 @@ namespace DBDUtilityOverlay.MVVM.View
             SetLanguages();
             SetDownloadLanguages();
             SetModifiers();
+            SetKeys();
         }
 
         private void SetModifiers()
@@ -32,14 +37,21 @@ namespace DBDUtilityOverlay.MVVM.View
             NextModifierComboBox.ItemsSource = modifiers.Values;
             PreviousModifierComboBox.ItemsSource = modifiers.Values;
 
-            ReadModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Properties.Settings.Default.ReadModifier); 
-            NextModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Properties.Settings.Default.NextMapModifier); 
-            PreviousModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Properties.Settings.Default.PreviousMapModifier); 
+            ReadModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Properties.Settings.Default.ReadModifier);
+            NextModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Properties.Settings.Default.NextMapModifier);
+            PreviousModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Properties.Settings.Default.PreviousMapModifier);
+        }
+
+        private void SetKeys()
+        {
+            ReadKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Properties.Settings.Default.ReadKey).ToString().ToUpper();
+            NextKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Properties.Settings.Default.NextMapKey).ToString().ToUpper();
+            PreviousKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Properties.Settings.Default.PreviousMapKey).ToString().ToUpper();
         }
 
         private void InitializeModifiers()
         {
-            modifiers.Add(ModifierKeys.None, "None");
+            modifiers.Add(ModifierKeys.None, "-None-");
             modifiers.Add(ModifierKeys.Alt, "Alt");
             modifiers.Add(ModifierKeys.Control, "Ctrl");
             modifiers.Add(ModifierKeys.Shift, "Shift");
@@ -81,28 +93,50 @@ namespace DBDUtilityOverlay.MVVM.View
 
         private void ReadModifierComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var newReadModifier =  modifiers.FirstOrDefault(x => x.Value.Equals(ReadModifierComboBox.SelectedItem.ToString())).Key;
-            HotKeysController.UnregisterHotKey(HotKeyType.Read);
-            HotKeysController.RegisterHotKey(HotKeyType.Read, newReadModifier, (Keys)Properties.Settings.Default.ReadKey);
-            Properties.Settings.Default.ReadModifier = (uint)newReadModifier;
-            Properties.Settings.Default.Save();
+            UpdateModifier((ComboBox)sender, HotKeyType.Read);
         }
 
         private void NextModifierComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var newNextModifier = modifiers.FirstOrDefault(x => x.Value.Equals(NextModifierComboBox.SelectedItem.ToString())).Key;
-            HotKeysController.UnregisterHotKey(HotKeyType.NextMap);
-            HotKeysController.RegisterHotKey(HotKeyType.NextMap, newNextModifier, (Keys)Properties.Settings.Default.NextMapKey);
-            Properties.Settings.Default.NextMapModifier = (uint)newNextModifier;
-            Properties.Settings.Default.Save();
+            UpdateModifier((ComboBox)sender, HotKeyType.NextMap);
         }
 
         private void PreviousModifierComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var newPreviousModifier = modifiers.FirstOrDefault(x => x.Value.Equals(PreviousModifierComboBox.SelectedItem.ToString())).Key;
-            HotKeysController.UnregisterHotKey(HotKeyType.PreviousMap);
-            HotKeysController.RegisterHotKey(HotKeyType.PreviousMap, newPreviousModifier, (Keys)Properties.Settings.Default.PreviousMapKey);
-            Properties.Settings.Default.PreviousMapModifier = (uint)newPreviousModifier;
+            UpdateModifier((ComboBox)sender, HotKeyType.PreviousMap);
+        }
+
+        private void ReadKeyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            UpdateKey((TextBox)sender, HotKeyType.Read, e.Key);
+        }
+
+        private void NextKeyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            UpdateKey((TextBox)sender, HotKeyType.NextMap, e.Key);
+        }
+
+        private void PreviousKeyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            UpdateKey((TextBox)sender, HotKeyType.PreviousMap, e.Key);
+        }
+
+        private void UpdateModifier(ComboBox comboBox, HotKeyType hotKeyType)
+        {
+            var newModifier = modifiers.FirstOrDefault(x => x.Value.Equals(comboBox.SelectedItem.ToString())).Key;
+            var hotKeyName = hotKeyType.ToString();
+            HotKeysController.UpdateHotKey(hotKeyType, newModifier, (Keys)(uint)Properties.Settings.Default[$"{hotKeyName}Key"]);
+            Properties.Settings.Default[$"{hotKeyName}Modifier"] = (uint)newModifier;
+            Properties.Settings.Default.Save();
+        }
+
+        private void UpdateKey(TextBox textBox, HotKeyType hotKeyType, Key key)
+        {
+            var newKey = (Keys)KeyInterop.VirtualKeyFromKey(key);
+            textBox.Text = KeyboardHook.Instance.GetCharFromKey(newKey).ToString().ToUpper();
+            var hotKeyName = hotKeyType.ToString();
+            HotKeysController.UpdateHotKey(hotKeyType, (ModifierKeys)(uint)Properties.Settings.Default[$"{hotKeyName}Modifier"], newKey);
+            Properties.Settings.Default[$"{hotKeyName}Key"] = (uint)newKey;
             Properties.Settings.Default.Save();
         }
 
