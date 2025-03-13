@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DBDUtilityOverlay.MVVM.View"
+             xmlns:local="clr-namespace:DBDUtilityOverlay.MVVM.View" 
+             xmlns:custom="clr-namespace:DBDUtilityOverlay.Core.CustomItems"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500"
              Background="{DynamicResource DarkestGrayBrush}">
@@ -32,7 +33,7 @@
                        Text="Opacity"
                        Style="{StaticResource TextBlockStyle}"/>
 
-            <ToggleButton x:Name="OpenCloseToggleButton"
+            <custom:CustomToggleButton x:Name="OpenCloseToggleButton"
                           Grid.Row="0"
                           Grid.Column="1"
                           HorizontalAlignment="Center"
@@ -41,7 +42,7 @@
                           Checked="OpenClose_Checked"
                           Unchecked="OpenClose_Unchecked"/>
 
-            <ToggleButton x:Name="MoveToggleButton"
+            <custom:CustomToggleButton x:Name="MoveToggleButton"
                           Grid.Column="1"
                           Grid.Row="1"
                           IsChecked="False"

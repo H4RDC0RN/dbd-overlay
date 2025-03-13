@@ -1,20 +1,23 @@
-﻿using DBDUtilityOverlay.Utils.Extensions;
-using DBDUtilityOverlay.Utils.Languages;
-using DBDUtilityOverlay.Utils.Models;
+﻿using DBDUtilityOverlay.Core.Extensions;
+using DBDUtilityOverlay.Core.Languages;
+using DBDUtilityOverlay.Core.Models;
 
-namespace DBDUtilityOverlay.Utils
+namespace DBDUtilityOverlay.Core.Utils
 {
     public static class MapOverlayController
     {
-        private static string realm;
-        private static string name;
-        public static MapOverlay Instance { get; private set; }
+        private static string realm = string.Empty;
+        private static string name = NamesOfMapsContainer.Empty;
 
-        public static void Initialize()
+        private static MapOverlay instance;
+
+        public static MapOverlay Instance
         {
-            realm = string.Empty;
-            name = NamesOfMapsContainer.Empty;
-            Instance = new MapOverlay();
+            get
+            {
+                instance ??= new MapOverlay();
+                return instance;
+            }
         }
 
         public static void ChangeMap(MapInfo mapInfo)
@@ -30,7 +33,7 @@ namespace DBDUtilityOverlay.Utils
         public static void SwitchMapVariationToNext()
         {
             var suffix = name[^2..];
-            suffix = (suffix.First().ToString().Equals("_") && suffix.Last().ToString().IsInt())
+            suffix = suffix.First().ToString().Equals("_") && suffix.Last().ToString().IsInt()
                 ? $"_{Convert.ToInt32(suffix.Last().ToString()) + 1}" : "_2";
 
             var newName = suffix.Equals("_2") ? $"{name}{suffix}" : name.Replace(name[^2..], $"{suffix}");

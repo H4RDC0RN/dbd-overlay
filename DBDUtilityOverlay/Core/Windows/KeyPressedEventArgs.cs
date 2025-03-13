@@ -1,6 +1,7 @@
-﻿using System.Windows.Input;
+﻿using DBDUtilityOverlay.Core.Utils;
+using System.Windows.Input;
 
-namespace DBDUtilityOverlay.Utils.Windows
+namespace DBDUtilityOverlay.Core.Windows
 {
     public class KeyPressedEventArgs : EventArgs
     {

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace DBDUtilityOverlay.Utils.Windows
+namespace DBDUtilityOverlay.Core.Windows
 {
     public static class WindowsServices
     {

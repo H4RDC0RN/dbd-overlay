@@ -1,6 +1,6 @@
-﻿using DBDUtilityOverlay.Utils.Languages;
+﻿using DBDUtilityOverlay.Core.Languages;
 
-namespace DBDUtilityOverlay.Utils.Models
+namespace DBDUtilityOverlay.Core.Models
 {
     public class MapInfo(string realm, string name)
     {

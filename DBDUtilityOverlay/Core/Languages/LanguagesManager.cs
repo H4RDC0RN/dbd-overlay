@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace DBDUtilityOverlay.Utils.Languages
+namespace DBDUtilityOverlay.Core.Languages
 {
     public static class LanguagesManager
     {

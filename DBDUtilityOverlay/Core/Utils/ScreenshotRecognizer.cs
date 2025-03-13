@@ -1,6 +1,6 @@
-﻿using DBDUtilityOverlay.Utils.Extensions;
-using DBDUtilityOverlay.Utils.Languages;
-using DBDUtilityOverlay.Utils.Models;
+﻿using DBDUtilityOverlay.Core.Extensions;
+using DBDUtilityOverlay.Core.Languages;
+using DBDUtilityOverlay.Core.Models;
 using OpenCvSharp;
 using System.Diagnostics;
 using System.IO;
@@ -11,7 +11,7 @@ using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Rectangle = System.Drawing.Rectangle;
 using Size = OpenCvSharp.Size;
 
-namespace DBDUtilityOverlay.Utils
+namespace DBDUtilityOverlay.Core.Utils
 {
     public static class ScreenshotRecognizer
     {

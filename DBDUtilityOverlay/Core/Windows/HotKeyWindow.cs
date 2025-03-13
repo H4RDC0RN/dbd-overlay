@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace DBDUtilityOverlay.Utils.Windows
+namespace DBDUtilityOverlay.Core.Windows
 {
     public class HotKeyWindow : NativeWindow, IDisposable
     {

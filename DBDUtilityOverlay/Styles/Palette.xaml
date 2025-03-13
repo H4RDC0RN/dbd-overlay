@@ -9,8 +9,8 @@
     <Color x:Key="DarkLightGray">#2c3338</Color>
     <Color x:Key="DarkestGray">#101517</Color>
 
-    <SolidColorBrush x:Key="WhiteGreyBrush" Color="{StaticResource WhiteGrayColor}"/>
-    <SolidColorBrush x:Key="GreyBrush" Color="{StaticResource GrayColor}"/>
+    <SolidColorBrush x:Key="WhiteGrayBrush" Color="{StaticResource WhiteGrayColor}"/>
+    <SolidColorBrush x:Key="GrayBrush" Color="{StaticResource GrayColor}"/>
     <SolidColorBrush x:Key="RedBrush" Color="{StaticResource RedColor}"/>
     <SolidColorBrush x:Key="RedLightBrush" Color="{StaticResource RedLightColor}"/>
     <SolidColorBrush x:Key="DarkGrayBrush" Color="{StaticResource DarkGray}"/>

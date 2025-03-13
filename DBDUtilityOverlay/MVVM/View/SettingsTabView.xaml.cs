@@ -1,14 +1,15 @@
-﻿using DBDUtilityOverlay.Utils.Languages;
-using DBDUtilityOverlay.Utils;
+﻿using DBDUtilityOverlay.Core.Languages;
 using System.Windows;
 using System.Windows.Controls;
 using UserControl = System.Windows.Controls.UserControl;
 using System.Net.Http;
 using System.Windows.Input;
-using DBDUtilityOverlay.Utils.Windows;
+using DBDUtilityOverlay.Core.Windows;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ComboBox = System.Windows.Controls.ComboBox;
 using TextBox = System.Windows.Controls.TextBox;
+using DBDUtilityOverlay.Core.Utils;
+using DBDUtilityOverlay.Core.Enums;
 
 namespace DBDUtilityOverlay.MVVM.View
 {

@@ -1,7 +1,8 @@
-﻿using DBDUtilityOverlay.Utils.Windows;
+﻿using DBDUtilityOverlay.Core.Enums;
+using DBDUtilityOverlay.Core.Windows;
 using System.Windows.Input;
 
-namespace DBDUtilityOverlay.Utils
+namespace DBDUtilityOverlay.Core.Utils
 {
     public static class HotKeysController
     {
@@ -54,12 +55,5 @@ namespace DBDUtilityOverlay.Utils
             e.Log("Previous map");
             MapOverlayController.SwitchMapVariationToPrevious();
         }
-    }
-
-    public enum HotKeyType
-    {
-        Read = 9001,
-        NextMap = 9002,
-        PreviousMap = 9003
     }
 }

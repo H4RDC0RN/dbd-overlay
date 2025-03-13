@@ -1,7 +1,8 @@
-﻿using System.Collections;
+﻿using DBDUtilityOverlay.Core.Utils;
+using System.Collections;
 using System.Globalization;
 
-namespace DBDUtilityOverlay.Utils.Languages
+namespace DBDUtilityOverlay.Core.Languages
 {
     public static class NamesOfMapsContainer
     {

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Windows.Input;
 
-namespace DBDUtilityOverlay.Utils.Windows
+namespace DBDUtilityOverlay.Core.Windows
 {
     public sealed class KeyboardHook : IDisposable
     {

@@ -11,7 +11,7 @@
                   HorizontalAlignment="Right" 
                   VerticalAlignment="Center"
                   Margin="0,0,15,0"
-                  Fill="{StaticResource WhiteGreyBrush}"/>
+                  Fill="{StaticResource WhiteGrayBrush}"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="UIElement.IsMouseOver" Value="True">

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace DBDUtilityOverlay.Utils.Extensions
+namespace DBDUtilityOverlay.Core.Extensions
 {
     public static class BitmapExtensions
     {

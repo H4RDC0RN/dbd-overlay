@@ -1,10 +1,11 @@
 ﻿using DBDUtilityOverlay.MVVM.ViewModel;
-using DBDUtilityOverlay.Utils;
 using System.Windows;
 using System.Windows.Input;
 using Application = System.Windows.Application;
-using Logger = DBDUtilityOverlay.Utils.Logger;
+using Logger = DBDUtilityOverlay.Core.Utils.Logger;
 using Window = System.Windows.Window;
+using DBDUtilityOverlay.Core.Utils;
+using DBDUtilityOverlay.Core.Enums;
 
 namespace DBDUtilityOverlay
 {
@@ -20,7 +21,6 @@ namespace DBDUtilityOverlay
             InitializeComponent();
             HandleExceptions();
             ScreenshotRecognizer.SetScreenBounds();
-            MapOverlayController.Initialize();
             InitializeHotKeys();
 
             mapOverlayTabVM = new MapOverlayTabViewModel();

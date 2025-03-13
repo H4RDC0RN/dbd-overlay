@@ -1,4 +1,4 @@
-﻿namespace DBDUtilityOverlay.Utils.Extensions
+﻿namespace DBDUtilityOverlay.Core.Extensions
 {
     public static class DoubleExtensions
     {
