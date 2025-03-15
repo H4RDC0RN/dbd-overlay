@@ -24,7 +24,7 @@ namespace DBDUtilityOverlay
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            WindowsServices.SetWindowExTransparent(new WindowInteropHelper(this).Handle);
+            WindowsServices.Instance.SetWindowExTransparent(new WindowInteropHelper(this).Handle);
         }
 
         private void SetOverlaySettings()

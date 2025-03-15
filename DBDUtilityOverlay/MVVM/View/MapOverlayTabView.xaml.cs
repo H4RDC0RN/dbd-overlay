@@ -31,12 +31,12 @@ namespace DBDUtilityOverlay.MVVM.View
 
         private void Move_Checked(object sender, RoutedEventArgs e)
         {
-            WindowsServices.RevertWindowExTransparent(new WindowInteropHelper(MapOverlayController.Instance).Handle);
+            WindowsServices.Instance.RevertWindowExTransparent(new WindowInteropHelper(MapOverlayController.Instance).Handle);
         }
 
         private void Move_Unchecked(object sender, RoutedEventArgs e)
         {
-            WindowsServices.SetWindowExTransparent(new WindowInteropHelper(MapOverlayController.Instance).Handle);
+            WindowsServices.Instance.SetWindowExTransparent(new WindowInteropHelper(MapOverlayController.Instance).Handle);
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

@@ -10,7 +10,7 @@ namespace DBDUtilityOverlay.Core.Windows
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-        
+
         [DllImport("user32.dll")]
         public static extern bool GetKeyboardState(byte[] lpKeyState);
 
@@ -48,10 +48,14 @@ namespace DBDUtilityOverlay.Core.Windows
             _window?.KeyPressedEvents.Remove(id);
         }
 
-        public void Dispose()
+        public void UnregisterAllHotKeys()
         {
             _window.KeyPressedEvents.Keys.ToList().ForEach(UnregisterHotKey);
             _window?.KeyPressedEvents.Clear();
+        }
+
+        public void Dispose()
+        {
             _window.Dispose();
         }
 
@@ -61,7 +65,8 @@ namespace DBDUtilityOverlay.Core.Windows
             GetKeyboardState(keyboardState);
             uint scanCode = MapVirtualKey((uint)virtualKey);
             var stringBuilder = new StringBuilder(2);
-            var result = ToUnicodeEx((uint)virtualKey, scanCode, keyboardState, stringBuilder, 5, 0, 1033);
+            var engLayout = 1033;
+            var result = ToUnicodeEx((uint)virtualKey, scanCode, keyboardState, stringBuilder, 5, 0, engLayout);
 
             if (result != 0 && result != -1) return stringBuilder[0];
             else return ' ';

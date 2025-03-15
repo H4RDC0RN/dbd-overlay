@@ -27,13 +27,13 @@
       <Value Profile="(Default)">82</Value>
     </Setting>
     <Setting Name="NextMapModifier" Type="System.UInt32" Scope="User">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="NextMapKey" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">221</Value>
     </Setting>
     <Setting Name="PreviousMapModifier" Type="System.UInt32" Scope="User">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="PreviousMapKey" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">219</Value>

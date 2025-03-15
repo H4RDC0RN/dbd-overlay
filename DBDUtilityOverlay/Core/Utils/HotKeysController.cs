@@ -6,36 +6,31 @@ namespace DBDUtilityOverlay.Core.Utils
 {
     public static class HotKeysController
     {
-        public static void RegisterHotKey(HotKeyType hotKeyType, ModifierKeys modifier, Keys key)
+        public static void RegisterAllHotKeys()
         {
-            KeyboardHook.Instance.RegisterHotKey((int)hotKeyType, modifier, key, GetHotKeyAction(hotKeyType));
-        }
+            Logger.Log.Info("Register all hotkeys");
+            var readModifier = (ModifierKeys)Properties.Settings.Default.ReadModifier;
+            var readKey = (Keys)Properties.Settings.Default.ReadKey;
+            var nextModifier = (ModifierKeys)Properties.Settings.Default.NextMapModifier;
+            var nextKey = (Keys)Properties.Settings.Default.NextMapKey;
+            var previousModifier = (ModifierKeys)Properties.Settings.Default.PreviousMapModifier;
+            var previousKey = (Keys)Properties.Settings.Default.PreviousMapKey;
 
-        public static void UnregisterHotKey(HotKeyType hotKeyType)
-        {
-            KeyboardHook.Instance.UnregisterHotKey((int)hotKeyType);
-        }
-
-        public static void UpdateHotKey(HotKeyType hotKeyType, ModifierKeys modifier, Keys key)
-        {
-            UnregisterHotKey(hotKeyType);
-            RegisterHotKey(hotKeyType, modifier, key);
+            KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.Read, readModifier, readKey, PressedRead);
+            KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.NextMap, nextModifier, nextKey, PressedNext);
+            KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.PreviousMap, previousModifier, previousKey, PressedPrevious);
         }
 
         public static void UnregisterAllHotKeys()
         {
-            KeyboardHook.Instance.Dispose();
+            Logger.Log.Info("Unregister all hotkeys");
+            KeyboardHook.Instance.UnregisterAllHotKeys();
         }
 
-        private static Action<object, KeyPressedEventArgs> GetHotKeyAction(HotKeyType hotKeyType)
+        public static void Dispose()
         {
-            return hotKeyType switch
-            {
-                HotKeyType.Read => PressedRead,
-                HotKeyType.NextMap => PressedNext,
-                HotKeyType.PreviousMap => PressedPrevious,
-                _ => null,
-            };
+            Logger.Log.Info("Dispose hotkeys window");
+            KeyboardHook.Instance.Dispose();
         }
 
         private static void PressedRead(object sender, KeyPressedEventArgs e)

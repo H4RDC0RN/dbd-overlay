@@ -3,7 +3,7 @@
 namespace DBDUtilityOverlay.Core.Windows
 {
     public class HotKeyWindow : NativeWindow, IDisposable
-    {
+    {        
         private static readonly int WM_HOTKEY = 0x0312;
         public Dictionary<int, EventHandler<KeyPressedEventArgs>> KeyPressedEvents = [];
 

@@ -30,6 +30,14 @@ namespace DBDUtilityOverlay.MVVM.View
             SetKeys();
         }
 
+        private void InitializeModifiers()
+        {
+            modifiers.Add(ModifierKeys.None, "-None-");
+            modifiers.Add(ModifierKeys.Alt, "Alt");
+            modifiers.Add(ModifierKeys.Control, "Ctrl");
+            modifiers.Add(ModifierKeys.Shift, "Shift");
+        }
+
         private void SetModifiers()
         {
             InitializeModifiers();
@@ -48,14 +56,6 @@ namespace DBDUtilityOverlay.MVVM.View
             ReadKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Properties.Settings.Default.ReadKey).ToString().ToUpper();
             NextKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Properties.Settings.Default.NextMapKey).ToString().ToUpper();
             PreviousKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Properties.Settings.Default.PreviousMapKey).ToString().ToUpper();
-        }
-
-        private void InitializeModifiers()
-        {
-            modifiers.Add(ModifierKeys.None, "-None-");
-            modifiers.Add(ModifierKeys.Alt, "Alt");
-            modifiers.Add(ModifierKeys.Control, "Ctrl");
-            modifiers.Add(ModifierKeys.Shift, "Shift");
         }
 
         private void SetLanguages()
@@ -125,9 +125,7 @@ namespace DBDUtilityOverlay.MVVM.View
         private void UpdateModifier(ComboBox comboBox, HotKeyType hotKeyType)
         {
             var newModifier = modifiers.FirstOrDefault(x => x.Value.Equals(comboBox.SelectedItem.ToString())).Key;
-            var hotKeyName = hotKeyType.ToString();
-            HotKeysController.UpdateHotKey(hotKeyType, newModifier, (Keys)(uint)Properties.Settings.Default[$"{hotKeyName}Key"]);
-            Properties.Settings.Default[$"{hotKeyName}Modifier"] = (uint)newModifier;
+            Properties.Settings.Default[$"{hotKeyType}Modifier"] = (uint)newModifier;
             Properties.Settings.Default.Save();
         }
 
@@ -135,9 +133,7 @@ namespace DBDUtilityOverlay.MVVM.View
         {
             var newKey = (Keys)KeyInterop.VirtualKeyFromKey(key);
             textBox.Text = KeyboardHook.Instance.GetCharFromKey(newKey).ToString().ToUpper();
-            var hotKeyName = hotKeyType.ToString();
-            HotKeysController.UpdateHotKey(hotKeyType, (ModifierKeys)(uint)Properties.Settings.Default[$"{hotKeyName}Modifier"], newKey);
-            Properties.Settings.Default[$"{hotKeyName}Key"] = (uint)newKey;
+            Properties.Settings.Default[$"{hotKeyType}Key"] = (uint)newKey;
             Properties.Settings.Default.Save();
         }
 
