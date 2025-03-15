@@ -6,13 +6,14 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="CaretBrush" Value="White"/>
         <Setter Property="Padding" Value="0,1,0,0"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate x:Name="TextBoxTemplate" TargetType="{x:Type TextBox}">
                     <Border x:Name="Border" 
                             Background="Transparent" 
                             Focusable="True" 
-                            BorderThickness="0,0,0,1" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
                             BorderBrush="{TemplateBinding Background}" 
                             SnapsToDevicePixels="True" 
                             Cursor="IBeam">
@@ -25,10 +26,6 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="BorderThickness" TargetName="Border" Value="1,1,1,1"/>
-                            <Setter Property="Padding" Value="0"/>
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -39,6 +36,31 @@
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="IsReadOnlyCaretVisible" Value="False"/>
         <Setter Property="IsUndoEnabled" Value="False"/>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="300"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Style="{DynamicResource ToolTipStyle}">
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" 
+                                   Style="{DynamicResource ToolTipTextBlockStyle}">
+                            To change shortcut key:
+                        </TextBlock>
+                        <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                            - Click
+                        </TextBlock>
+                        <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                            - Press key
+                        </TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                <Setter Property="Padding" Value="0"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

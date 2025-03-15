@@ -4,7 +4,7 @@
 
     <Style x:Key="ToggleButtonStyle" TargetType="{x:Type custom:CustomToggleButton}">
         <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="ToolTipService.InitialShowDelay" Value="200"/>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="300"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type custom:CustomToggleButton}">

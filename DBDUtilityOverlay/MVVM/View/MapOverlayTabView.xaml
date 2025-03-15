@@ -54,10 +54,19 @@
                 <custom:CustomToggleButton.ToolTip>
                     <ToolTip Style="{StaticResource ToolTipStyle}">
                         <StackPanel>
-                            <TextBlock FontWeight="Bold">To change position:</TextBlock>
-                            <TextBlock>- Turn on</TextBlock>
-                            <TextBlock>- Drag map overlay</TextBlock>
-                            <TextBlock>- Turn off</TextBlock>
+                            <TextBlock FontWeight="Bold" 
+                                       Style="{DynamicResource ToolTipTextBlockStyle}">
+                                To change position:
+                            </TextBlock>
+                            <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                                - Turn on
+                            </TextBlock>
+                            <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                                - Drag map overlay
+                            </TextBlock>
+                            <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                                - Turn off
+                            </TextBlock>
                         </StackPanel>
                     </ToolTip>
                 </custom:CustomToggleButton.ToolTip>
