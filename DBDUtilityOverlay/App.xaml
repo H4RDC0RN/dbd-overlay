@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="Styles/TextBlockStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ToolTipStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:MapOverlayTabViewModel}">

@@ -3,6 +3,8 @@
                     xmlns:custom="clr-namespace:DBDUtilityOverlay.Core.CustomItems">
 
     <Style x:Key="ToggleButtonStyle" TargetType="{x:Type custom:CustomToggleButton}">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="200"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type custom:CustomToggleButton}">

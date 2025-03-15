@@ -8,6 +8,7 @@
         Title="MapOverlay" Height="220" Width="200"
         MouseLeftButtonDown="OverlayMouseDown"
         MouseLeftButtonUp="OverlayMouseUp"
+        Cursor="Hand"
         WindowStyle="None"
         AllowsTransparency="True"
         ShowInTaskbar="False"

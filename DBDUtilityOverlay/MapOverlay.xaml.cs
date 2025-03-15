@@ -6,6 +6,7 @@ using DBDUtilityOverlay.Core.Windows;
 using DBDUtilityOverlay.Core.Extensions;
 using DBDUtilityOverlay.Core.Models;
 using Image = System.Windows.Controls.Image;
+using Cursors = System.Windows.Input.Cursors;
 
 namespace DBDUtilityOverlay
 {
@@ -35,11 +36,13 @@ namespace DBDUtilityOverlay
 
         private void OverlayMouseDown(object sender, MouseButtonEventArgs e)
         {
+            Cursor = Cursors.SizeAll;
             DragMove();
         }
 
         private void OverlayMouseUp(object sender, MouseButtonEventArgs e)
         {
+            Cursor = Cursors.Hand;
             Properties.Settings.Default.OverlayX = Left;
             Properties.Settings.Default.OverlayY = Top;
             Properties.Settings.Default.Save();
