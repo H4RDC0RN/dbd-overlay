@@ -1,7 +1,6 @@
 ﻿using DBDUtilityOverlay.Core.Extensions;
 using DBDUtilityOverlay.Core.Languages;
 using DBDUtilityOverlay.Core.Models;
-using OpenCvSharp;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -9,7 +8,6 @@ using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Rectangle = System.Drawing.Rectangle;
-using Size = OpenCvSharp.Size;
 
 namespace DBDUtilityOverlay.Core.Utils
 {
@@ -20,7 +18,7 @@ namespace DBDUtilityOverlay.Core.Utils
         private static int width;
         private static int height;
         private static readonly int tries = 1;
-        private static readonly int maxSizeMultiplier = 3;
+        private static readonly int maxScale = 3;
         public static string Text { get; set; } = string.Empty;
 
         public static void SetScreenBounds()
@@ -81,17 +79,17 @@ namespace DBDUtilityOverlay.Core.Utils
             var imagePath = $"{Properties.Settings.Default.ScreenshotFileName}.png".ToProjectPath();
             MapInfo mapInfo;
             CreateImageMapNameEsc(imagePath);
-            for (int sizeMultiplier = 1; sizeMultiplier <= maxSizeMultiplier; sizeMultiplier++)
+            for (int scale = 1; scale <= maxScale; scale++)
             {
                 for (int i = 0; i < tries; i++)
                 {
-                    Logger.Log.Info($"=============== Size = {sizeMultiplier}, Try = {i + 1}");
-                    RecognizeText(PreProcessImage(imagePath, sizeMultiplier));
+                    Logger.Log.Info($"=============== Size = {scale}, Try = {i + 1}");
+                    RecognizeText(PreProcessImage(imagePath, scale));
                     if (IsTextCorrect())
                     {
                         mapInfo = ConvertTextToMapInfo();
                         if (mapInfo.HasImage) return mapInfo;
-                        if (sizeMultiplier == maxSizeMultiplier)
+                        if (scale == maxScale)
                         {
                             Logger.Log.Warn($"Map file for '{mapInfo.FullName}' doesn't exist");
                             return new MapInfo(string.Empty, NamesOfMapsContainer.NotReady);
@@ -148,14 +146,11 @@ namespace DBDUtilityOverlay.Core.Utils
             return mapName;
         }
 
-        private static string PreProcessImage(string path, int sizeMultiplier = 1)
+        private static string PreProcessImage(string path, int scale = 1)
         {
-            var cvImage = Cv2.ImRead(path);
-            Cv2.Resize(cvImage, cvImage, new Size(cvImage.Width * sizeMultiplier, cvImage.Height * sizeMultiplier));
-            Cv2.CvtColor(cvImage, cvImage, ColorConversionCodes.BGR2GRAY);
-            Cv2.Threshold(cvImage, cvImage, 100, 255, ThresholdTypes.Binary);
             var newPath = $"{Properties.Settings.Default.ScreenshotFileName}_edited.png".ToProjectPath();
-            cvImage.SaveImage(newPath);
+            var image = new Bitmap(path);
+            image.Resize(scale).GrayScale().ApplyThreshold().Save(newPath);
             return newPath;
         }
     }
