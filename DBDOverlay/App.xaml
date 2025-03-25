@@ -1,0 +1,36 @@
+﻿<Application x:Class="DBDOverlay.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DBDOverlay"
+             xmlns:viewModel="clr-namespace:DBDOverlay.MVVM.ViewModel"
+             xmlns:view="clr-namespace:DBDOverlay.MVVM.View"
+             StartupUri="Windows/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Palette.xaml"/>
+                <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ComboBoxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/MenuTabStyle.xaml"/>
+                <ResourceDictionary Source="Styles/SliderStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TextBlockStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ToolTipStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewModel:MapOverlayTabViewModel}">
+                <view:MapOverlayTabView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:SettingsTabViewModel}">
+                <view:SettingsTabView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AboutTabViewModel}">
+                <view:AboutTabView/>
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
