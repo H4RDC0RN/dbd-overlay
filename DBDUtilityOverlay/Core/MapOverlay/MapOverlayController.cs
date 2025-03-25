@@ -1,8 +1,8 @@
 ﻿using DBDUtilityOverlay.Core.Extensions;
 using DBDUtilityOverlay.Core.Languages;
-using DBDUtilityOverlay.Core.Models;
+using DBDUtilityOverlay.Core.Utils;
 
-namespace DBDUtilityOverlay.Core.Utils
+namespace DBDUtilityOverlay.Core.MapOverlaySpace
 {
     public static class MapOverlayController
     {

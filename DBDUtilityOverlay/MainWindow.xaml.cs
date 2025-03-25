@@ -5,6 +5,8 @@ using Application = System.Windows.Application;
 using Logger = DBDUtilityOverlay.Core.Utils.Logger;
 using Window = System.Windows.Window;
 using DBDUtilityOverlay.Core.Utils;
+using DBDUtilityOverlay.Core.Hotkeys;
+using DBDUtilityOverlay.Core.MapOverlaySpace;
 
 namespace DBDUtilityOverlay
 {

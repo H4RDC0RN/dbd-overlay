@@ -1,8 +1,8 @@
-﻿using DBDUtilityOverlay.Core.Extensions;
+﻿using DBDUtilityOverlay.Core.Download;
+using DBDUtilityOverlay.Core.Extensions;
 using DBDUtilityOverlay.Core.Languages;
-using DBDUtilityOverlay.Core.Models;
+using DBDUtilityOverlay.Core.MapOverlaySpace;
 using System.Diagnostics;
-using System.IO;
 using System.Text.RegularExpressions;
 using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
@@ -13,8 +13,6 @@ namespace DBDUtilityOverlay.Core.Utils
 {
     public static class ScreenshotRecognizer
     {
-        private static readonly string tessdata = "Tessdata";
-        private static readonly string traineddata = "traineddata";
         private static int width;
         private static int height;
         private static readonly int tries = 1;
@@ -67,7 +65,7 @@ namespace DBDUtilityOverlay.Core.Utils
         {
             var watch = Stopwatch.StartNew();
             var value = Properties.Settings.Default.Language;
-            var engine = new TesseractEngine(tessdata.ToProjectPath(), value.Equals(LanguagesManager.MexAbb) ? LanguagesManager.SpaAbb : value);
+            var engine = new TesseractEngine(DownloadManager.Instance.TessDataFolder.ToProjectPath(), LanguagesManager.ConvertMexToSpa(value));
             var image = Pix.LoadFromFile(imagePath);
             Text = engine.Process(image).GetText();
             watch.Stop();
@@ -103,18 +101,6 @@ namespace DBDUtilityOverlay.Core.Utils
                 }
             }
             return new MapInfo(string.Empty, NamesOfMapsContainer.Empty);
-        }
-
-        public static List<string> GetDownloadedLanguages()
-        {
-            var regex = $@"(?<={tessdata}\\).*(?=.{traineddata})";
-            return [.. Directory.GetFiles(tessdata.ToProjectPath()).Select(x => Regex.Match(x, regex).Value)];
-        }
-
-        public static void SaveTrainedData(string fileName, byte[] content)
-        {
-            if (content != null) File.WriteAllBytes($@"{tessdata.ToProjectPath()}\{fileName}", content);
-            else Logger.Log.Warn("Downloaded content is null");
         }
 
         private static bool IsTextCorrect()

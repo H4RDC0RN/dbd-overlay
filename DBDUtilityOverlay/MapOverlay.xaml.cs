@@ -4,9 +4,10 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using DBDUtilityOverlay.Core.Windows;
 using DBDUtilityOverlay.Core.Extensions;
-using DBDUtilityOverlay.Core.Models;
 using Image = System.Windows.Controls.Image;
 using Cursors = System.Windows.Input.Cursors;
+using DBDUtilityOverlay.Core.MapOverlaySpace;
+using DBDUtilityOverlay.Images.Maps;
 
 namespace DBDUtilityOverlay
 {

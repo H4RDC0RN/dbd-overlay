@@ -1,13 +1,19 @@
-﻿using System.Windows.Input;
-
-namespace DBDUtilityOverlay.Core.Languages
+﻿namespace DBDUtilityOverlay.Core.Languages
 {
     public static class LanguagesManager
     {
-        public static readonly string DefaultLanguage = "eng";
-        public static readonly string SpaAbb = "spa";
-        public static readonly string MexAbb = "mex";
-        private static readonly List<string> langAbbs = ["deu", DefaultLanguage, SpaAbb, MexAbb, "fra", "ita", "pol", "por", "tur", "rus"];
+        public static readonly string Deu = "deu";
+        public static readonly string Eng = "eng";
+        public static readonly string Spa = "spa";
+        public static readonly string Mex = "mex";
+        public static readonly string Fra = "fra";
+        public static readonly string Ita = "ita";
+        public static readonly string Pol = "pol";
+        public static readonly string Por = "por";
+        public static readonly string Tur = "tur";
+        public static readonly string Rus = "rus";
+
+        private static readonly List<string> langAbbs = [Deu, Eng, Spa, Mex, Fra, Ita, Pol, Por, Tur, Rus];
         private static readonly List<string> langNames =
         [
             "Deutsch",
@@ -65,6 +71,11 @@ namespace DBDUtilityOverlay.Core.Languages
         public static string GetMapInfoLocale()
         {
             return mapsInfoDictionary.FirstOrDefault(x => x.Key.Equals(Properties.Settings.Default.Language)).Value;
+        }
+
+        public static string ConvertMexToSpa(string value)
+        {
+            return value.Equals(Mex) ? Spa : value;
         }
     }
 }

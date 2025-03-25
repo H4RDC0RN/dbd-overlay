@@ -1,9 +1,9 @@
 ﻿using System.Windows.Input;
 
-namespace DBDUtilityOverlay.Core.Windows
+namespace DBDUtilityOverlay.Core.Hotkeys
 {
     public class HotKeyWindow : NativeWindow, IDisposable
-    {        
+    {
         private static readonly int WM_HOTKEY = 0x0312;
         public Dictionary<int, EventHandler<KeyPressedEventArgs>> KeyPressedEvents = [];
 
@@ -18,7 +18,7 @@ namespace DBDUtilityOverlay.Core.Windows
 
             if (m.Msg == WM_HOTKEY)
             {
-                var key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
+                var key = (Keys)((int)m.LParam >> 16 & 0xFFFF);
                 var modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
                 var id = (int)m.WParam & 0xFFFF;
 

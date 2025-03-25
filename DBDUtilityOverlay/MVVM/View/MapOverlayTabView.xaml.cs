@@ -1,4 +1,4 @@
-﻿using DBDUtilityOverlay.Core.Utils;
+﻿using DBDUtilityOverlay.Core.MapOverlaySpace;
 using DBDUtilityOverlay.Core.Windows;
 using System.Windows;
 using System.Windows.Interop;

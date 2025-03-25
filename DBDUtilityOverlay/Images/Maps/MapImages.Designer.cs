@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DBDUtilityOverlay {
+namespace DBDUtilityOverlay.Images.Maps {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DBDUtilityOverlay {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DBDUtilityOverlay.MapImages", typeof(MapImages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DBDUtilityOverlay.Images.Maps.MapImages", typeof(MapImages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

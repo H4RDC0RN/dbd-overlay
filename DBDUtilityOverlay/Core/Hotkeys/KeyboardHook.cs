@@ -2,14 +2,14 @@
 using System.Text;
 using System.Windows.Input;
 
-namespace DBDUtilityOverlay.Core.Windows
+namespace DBDUtilityOverlay.Core.Hotkeys
 {
     public sealed class KeyboardHook : IDisposable
     {
         [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+        private static extern bool RegisterHotKey(nint hWnd, int id, uint fsModifiers, uint vk);
         [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        private static extern bool UnregisterHotKey(nint hWnd, int id);
 
         [DllImport("user32.dll")]
         public static extern bool GetKeyboardState(byte[] lpKeyState);
@@ -19,7 +19,7 @@ namespace DBDUtilityOverlay.Core.Windows
 
         [DllImport("user32.dll")]
         public static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState,
-            [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
+            [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, nint dwhkl);
 
         private readonly HotKeyWindow _window = new();
         private static KeyboardHook instance;

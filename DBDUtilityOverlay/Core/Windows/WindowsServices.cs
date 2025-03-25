@@ -1,4 +1,4 @@
-﻿using DBDUtilityOverlay.Core.Utils;
+﻿using DBDUtilityOverlay.Core.Hotkeys;
 using System.Runtime.InteropServices;
 using System.Text;
 

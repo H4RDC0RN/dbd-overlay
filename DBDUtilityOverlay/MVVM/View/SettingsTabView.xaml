@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DBDUtilityOverlay.MVVM.View"
+             xmlns:custom="clr-namespace:DBDUtilityOverlay.Core.CustomItems"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500"
              Background="{DynamicResource DarkestGrayBrush}">
@@ -55,19 +56,23 @@
                           VerticalAlignment="Center"
                           Width="180"
                           Margin="5"
-                          Style="{StaticResource ComboBoxFlatStyle}"
-                          SelectionChanged="DownloadLanguageComboBox_SelectionChanged"/>
+                          Style="{StaticResource ComboBoxFlatStyle}"/>
 
-                <Button x:Name="Download"
-                        Content="{StaticResource DownloadImage}"
+                <Button x:Name="DownloadButton"
                         Margin="10,5,5,5"
                         Padding="10"
                         Foreground="White"
                         FontSize="20"
                         VerticalAlignment="Center"
                         Style="{StaticResource ButtonStyle}" 
-                        Click="Download_Click"/>
-
+                        Click="Download_Click">
+                    <Button.Content>
+                        <custom:DownloadImage x:Name="DownloadButtonImage" 
+                               Source="/Images/App/download.png"
+                               RenderTransformOrigin=".5,.5">
+                        </custom:DownloadImage>
+                    </Button.Content>
+                </Button>
             </StackPanel>
         </Grid>
 

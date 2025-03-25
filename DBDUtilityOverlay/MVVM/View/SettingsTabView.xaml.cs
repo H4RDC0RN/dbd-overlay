@@ -2,23 +2,17 @@
 using System.Windows;
 using System.Windows.Controls;
 using UserControl = System.Windows.Controls.UserControl;
-using System.Net.Http;
 using System.Windows.Input;
-using DBDUtilityOverlay.Core.Windows;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ComboBox = System.Windows.Controls.ComboBox;
 using TextBox = System.Windows.Controls.TextBox;
-using DBDUtilityOverlay.Core.Utils;
-using DBDUtilityOverlay.Core.Enums;
+using DBDUtilityOverlay.Core.Hotkeys;
+using DBDUtilityOverlay.Core.Download;
 
 namespace DBDUtilityOverlay.MVVM.View
 {
     public partial class SettingsTabView : UserControl
     {
-        private string language;
-        private readonly string downloadLink = "https://raw.github.com/tesseract-ocr/tessdata/main/";
-        private readonly string fileExtension = ".traineddata";
-
         private readonly Dictionary<ModifierKeys, string> modifiers = [];
 
         public SettingsTabView()
@@ -28,6 +22,7 @@ namespace DBDUtilityOverlay.MVVM.View
             SetDownloadLanguages();
             SetModifiers();
             SetKeys();
+            DownloadManager.Instance.Downloading += HandleDownloading;
         }
 
         private void InitializeModifiers()
@@ -60,8 +55,8 @@ namespace DBDUtilityOverlay.MVVM.View
 
         private void SetLanguages()
         {
-            var downloadedLanguages = ScreenshotRecognizer.GetDownloadedLanguages();
-            if (downloadedLanguages.Contains(LanguagesManager.SpaAbb)) downloadedLanguages.Add(LanguagesManager.MexAbb);
+            var downloadedLanguages = DownloadManager.Instance.GetDownloadedLanguages();
+            if (downloadedLanguages.Contains(LanguagesManager.Spa)) downloadedLanguages.Add(LanguagesManager.Mex);
             var languages = LanguagesManager.GetOrderedKeyValuePairs(downloadedLanguages);
             LanguageComboBox.ItemsSource = languages.Select(x => x.Key);
             LanguageComboBox.SelectedIndex = languages.Select(x => x.Value).ToList().IndexOf(Properties.Settings.Default.Language);
@@ -80,16 +75,9 @@ namespace DBDUtilityOverlay.MVVM.View
             Properties.Settings.Default.Save();
         }
 
-        private void DownloadLanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var value = LanguagesManager.GetValue(DownloadLanguageComboBox.SelectedItem.ToString());
-            language = value.Equals(LanguagesManager.MexAbb) ? LanguagesManager.SpaAbb : value;
-        }
-
         private void Download_Click(object sender, RoutedEventArgs e)
         {
-            DownloadLanguageData();
-            SetLanguages();
+            DownloadManager.Instance.Download(LanguagesManager.GetValue(DownloadLanguageComboBox.SelectedItem.ToString()));
         }
 
         private void ReadModifierComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -137,14 +125,19 @@ namespace DBDUtilityOverlay.MVVM.View
             Properties.Settings.Default.Save();
         }
 
-        private void DownloadLanguageData()
+        private void HandleDownloading(object sender, DownloadEventArgs e)
         {
-            if (ScreenshotRecognizer.GetDownloadedLanguages().Contains(language)) return;
-            using HttpClient client = new();
-            var url = $"{downloadLink}{language}{fileExtension}";
-            var content = client.GetByteArrayAsync(url).Result;
-            var fileName = $"{language}{fileExtension}";
-            ScreenshotRecognizer.SaveTrainedData(fileName, content);
+            if (e.IsDownloading)
+            {
+                DownloadButton.IsEnabled = false;
+                e.Log();
+            }
+            else
+            {
+                DownloadButton.IsEnabled = true;
+                e.Log();
+                SetLanguages();
+            }
         }
     }
 }

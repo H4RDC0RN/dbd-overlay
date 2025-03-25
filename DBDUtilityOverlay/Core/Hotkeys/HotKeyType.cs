@@ -1,4 +1,4 @@
-﻿namespace DBDUtilityOverlay.Core.Enums
+﻿namespace DBDUtilityOverlay.Core.Hotkeys
 {
     public enum HotKeyType
     {

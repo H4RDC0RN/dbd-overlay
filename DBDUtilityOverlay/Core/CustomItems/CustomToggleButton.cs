@@ -25,15 +25,16 @@ namespace DBDUtilityOverlay.Core.CustomItems
 
         void RaiseCheckClickEvent()
         {
-            RoutedEventArgs routedEventArgs = new(CheckClickEvent);
+            var routedEventArgs = new RoutedEventArgs(CheckClickEvent);
             RaiseEvent(routedEventArgs);
         }
 
         void RaiseUnCheckClickEvent()
         {
-            RoutedEventArgs routedEventArgs = new(UncheckClickEvent);
+            var routedEventArgs = new RoutedEventArgs(UncheckClickEvent);
             RaiseEvent(routedEventArgs);
         }
+
         protected override void OnClick()
         {
             base.OnClick();

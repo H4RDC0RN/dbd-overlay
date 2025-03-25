@@ -119,171 +119,171 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="AUTOHAVEN_WRECKERS.AZAROVS_RESTING_PLACE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AUTOHAVEN_WRECKERS.BLOOD_LODGE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\AUTOHAVEN_WRECKERS\BLOOD_LODGE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>AUTOHAVEN_WRECKERS\BLOOD_LODGE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\Empty.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Empty.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AUTOHAVEN_WRECKERS.GAS_HEAVEN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\AUTOHAVEN_WRECKERS\GAS_HEAVEN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>AUTOHAVEN_WRECKERS\GAS_HEAVEN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="NotReady" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\NotReady.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>NotReady.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AUTOHAVEN_WRECKERS.WRECKERS_YARD" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\AUTOHAVEN_WRECKERS\WRECKERS_YARD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>AUTOHAVEN_WRECKERS\WRECKERS_YARD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AUTOHAVEN_WRECKERS.WRETCHED_SHOP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\AUTOHAVEN_WRECKERS\WRETCHED_SHOP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>AUTOHAVEN_WRECKERS\WRETCHED_SHOP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BACKWATER_SWAMP.GRIM_PANTRY" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\BACKWATER_SWAMP\GRIM_PANTRY.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>BACKWATER_SWAMP\GRIM_PANTRY.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BACKWATER_SWAMP.THE_PALE_ROSE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\BACKWATER_SWAMP\THE_PALE_ROSE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>BACKWATER_SWAMP\THE_PALE_ROSE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="COLDWIND_FARM.FRACTURED_COWSHED" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\COLDWIND_FARM\FRACTURED_COWSHED.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>COLDWIND_FARM\FRACTURED_COWSHED.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="COLDWIND_FARM.RANCID_ABATTOIR" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\COLDWIND_FARM\RANCID_ABATTOIR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>COLDWIND_FARM\RANCID_ABATTOIR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="COLDWIND_FARM.ROTTEN_FIELDS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\COLDWIND_FARM\ROTTEN_FIELDS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>COLDWIND_FARM\ROTTEN_FIELDS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="COLDWIND_FARM.THE_THOMPSON_HOUSE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\COLDWIND_FARM\THE_THOMPSON_HOUSE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>COLDWIND_FARM\THE_THOMPSON_HOUSE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="COLDWIND_FARM.TORMENT_CREEK" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\COLDWIND_FARM\TORMENT_CREEK.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>COLDWIND_FARM\TORMENT_CREEK.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CROTUS_PRENN_ASYLUM.DISTURBED_WARD" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\CROTUS_PRENN_ASYLUM\DISTURBED_WARD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>CROTUS_PRENN_ASYLUM\DISTURBED_WARD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CROTUS_PRENN_ASYLUM.FATHER_CAMPBELLS_CHAPEL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\CROTUS_PRENN_ASYLUM\FATHER_CAMPBELLS_CHAPEL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>CROTUS_PRENN_ASYLUM\FATHER_CAMPBELLS_CHAPEL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DVARKA_DEEPWOOD.NOSTROMO_WRECKAGE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\DVARKA_DEEPWOOD\NOSTROMO_WRECKAGE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>DVARKA_DEEPWOOD\NOSTROMO_WRECKAGE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DVARKA_DEEPWOOD.TOBA_LANDING" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\DVARKA_DEEPWOOD\TOBA_LANDING.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>DVARKA_DEEPWOOD\TOBA_LANDING.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FORSAKEN_BONEYARD.EYRIE_OF_CROWS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\FORSAKEN_BONEYARD\EYRIE_OF_CROWS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>FORSAKEN_BONEYARD\EYRIE_OF_CROWS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GIDEON_MEAT_PLANT.THE_GAME" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\GIDEON_MEAT_PLANT\THE_GAME.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>GIDEON_MEAT_PLANT\THE_GAME.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GRAVE_OF_GLENVALE.DEAD_DAWG_SALOON" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\GRAVE_OF_GLENVALE\DEAD_DAWG_SALOON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>GRAVE_OF_GLENVALE\DEAD_DAWG_SALOON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HADDONFIELD.LAMPKIN_LANE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\HADDONFIELD\LAMPKIN_LANE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>HADDONFIELD\LAMPKIN_LANE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HAWKINS_NATIONAL_LABORATORY.THE_UNDERGROUND_COMPLEX" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\HAWKINS_NATIONAL_LABORATORY\THE_UNDERGROUND_COMPLEX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>HAWKINS_NATIONAL_LABORATORY\THE_UNDERGROUND_COMPLEX.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LÉRYS_MEMORIAL_INSTITUTE.TREATMENT_THEATRE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\LÉRYS_MEMORIAL_INSTITUTE\TREATMENT_THEATRE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>LÉRYS_MEMORIAL_INSTITUTE\TREATMENT_THEATRE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ORMOND.MOUNT_ORMOND_RESORT" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\ORMOND\MOUNT_ORMOND_RESORT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>ORMOND\MOUNT_ORMOND_RESORT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ORMOND.MOUNT_ORMOND_RESORT_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\ORMOND\MOUNT_ORMOND_RESORT_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>ORMOND\MOUNT_ORMOND_RESORT_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ORMOND.MOUNT_ORMOND_RESORT_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\ORMOND\MOUNT_ORMOND_RESORT_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>ORMOND\MOUNT_ORMOND_RESORT_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RACCOON_CITY.RACCOON_CITY_POLICE_STATION_EAST_WING" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\RACCOON_CITY\RACCOON_CITY_POLICE_STATION_EAST_WING.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>RACCOON_CITY\RACCOON_CITY_POLICE_STATION_EAST_WING.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RACCOON_CITY.RACCOON_CITY_POLICE_STATION_WEST_WING" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\RACCOON_CITY\RACCOON_CITY_POLICE_STATION_WEST_WING.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>RACCOON_CITY\RACCOON_CITY_POLICE_STATION_WEST_WING.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RED_FOREST.MOTHERS_DWELLING" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\RED_FOREST\MOTHERS_DWELLING.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>RED_FOREST\MOTHERS_DWELLING.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RED_FOREST.THE_TEMPLE_OF_PURGATION" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\RED_FOREST\THE_TEMPLE_OF_PURGATION.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>RED_FOREST\THE_TEMPLE_OF_PURGATION.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SILENT_HILL.MIDWICH_ELEMENTARY_SCHOOL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\SILENT_HILL\MIDWICH_ELEMENTARY_SCHOOL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>SILENT_HILL\MIDWICH_ELEMENTARY_SCHOOL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SPRINGWOOD.BADHAM_PRESCHOOL_I" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\SPRINGWOOD\BADHAM_PRESCHOOL_I.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>SPRINGWOOD\BADHAM_PRESCHOOL_I.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SPRINGWOOD.BADHAM_PRESCHOOL_II" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\SPRINGWOOD\BADHAM_PRESCHOOL_II.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>SPRINGWOOD\BADHAM_PRESCHOOL_II.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SPRINGWOOD.BADHAM_PRESCHOOL_III" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\SPRINGWOOD\BADHAM_PRESCHOOL_III.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>SPRINGWOOD\BADHAM_PRESCHOOL_III.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SPRINGWOOD.BADHAM_PRESCHOOL_IV" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\SPRINGWOOD\BADHAM_PRESCHOOL_IV.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>SPRINGWOOD\BADHAM_PRESCHOOL_IV.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SPRINGWOOD.BADHAM_PRESCHOOL_V" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\SPRINGWOOD\BADHAM_PRESCHOOL_V.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>SPRINGWOOD\BADHAM_PRESCHOOL_V.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_DECIMATED_BORGO.FORGOTTEN_RUINS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_DECIMATED_BORGO\FORGOTTEN_RUINS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_DECIMATED_BORGO\FORGOTTEN_RUINS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_DECIMATED_BORGO.THE_SHATTERED_SQUARE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_DECIMATED_BORGO\THE_SHATTERED_SQUARE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_DECIMATED_BORGO\THE_SHATTERED_SQUARE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_MACMILLAN_ESTATE.COAL_TOWER" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_MACMILLAN_ESTATE\COAL_TOWER.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_MACMILLAN_ESTATE\COAL_TOWER.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_MACMILLAN_ESTATE.COAL_TOWER_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_MACMILLAN_ESTATE\COAL_TOWER_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_MACMILLAN_ESTATE\COAL_TOWER_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_MACMILLAN_ESTATE.GROANING_STOREHOUSE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_MACMILLAN_ESTATE\GROANING_STOREHOUSE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_MACMILLAN_ESTATE\GROANING_STOREHOUSE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_MACMILLAN_ESTATE.GROANING_STOREHOUSE_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_MACMILLAN_ESTATE\GROANING_STOREHOUSE_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_MACMILLAN_ESTATE\GROANING_STOREHOUSE_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_MACMILLAN_ESTATE.IRONWORKS_OF_MISERY" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_MACMILLAN_ESTATE\IRONWORKS_OF_MISERY.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_MACMILLAN_ESTATE\IRONWORKS_OF_MISERY.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_MACMILLAN_ESTATE.IRONWORKS_OF_MISERY_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_MACMILLAN_ESTATE\IRONWORKS_OF_MISERY_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_MACMILLAN_ESTATE\IRONWORKS_OF_MISERY_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_MACMILLAN_ESTATE.SHELTER_WOODS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_MACMILLAN_ESTATE\SHELTER_WOODS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_MACMILLAN_ESTATE\SHELTER_WOODS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_MACMILLAN_ESTATE.SHELTER_WOODS_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_MACMILLAN_ESTATE\SHELTER_WOODS_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_MACMILLAN_ESTATE\SHELTER_WOODS_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_MACMILLAN_ESTATE.SUFFOCATION_PIT" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_MACMILLAN_ESTATE\SUFFOCATION_PIT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_MACMILLAN_ESTATE\SUFFOCATION_PIT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="THE_MACMILLAN_ESTATE.SUFFOCATION_PIT_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\THE_MACMILLAN_ESTATE\SUFFOCATION_PIT_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>THE_MACMILLAN_ESTATE\SUFFOCATION_PIT_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WITHERED_ISLE.GARDEN_OF_JOY" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\WITHERED_ISLE\GARDEN_OF_JOY.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>WITHERED_ISLE\GARDEN_OF_JOY.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WITHERED_ISLE.GREENVILLE_SQUARE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\WITHERED_ISLE\GREENVILLE_SQUARE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>WITHERED_ISLE\GREENVILLE_SQUARE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="YAMAOKA_ESTATE.FAMILY_RESIDENCE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\YAMAOKA_ESTATE\FAMILY_RESIDENCE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>YAMAOKA_ESTATE\FAMILY_RESIDENCE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="YAMAOKA_ESTATE.FAMILY_RESIDENCE_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\YAMAOKA_ESTATE\FAMILY_RESIDENCE_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>YAMAOKA_ESTATE\FAMILY_RESIDENCE_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="YAMAOKA_ESTATE.SANCTUM_OF_WRATH" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>YAMAOKA_ESTATE\SANCTUM_OF_WRATH.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="YAMAOKA_ESTATE.SANCTUM_OF_WRATH_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ORMOND.ORMOND_LAKE_MINE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Images\Maps\ORMOND\ORMOND_LAKE_MINE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>ORMOND\ORMOND_LAKE_MINE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

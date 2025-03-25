@@ -1,8 +1,8 @@
-﻿using DBDUtilityOverlay.Core.Enums;
-using DBDUtilityOverlay.Core.Windows;
+﻿using DBDUtilityOverlay.Core.MapOverlaySpace;
+using DBDUtilityOverlay.Core.Utils;
 using System.Windows.Input;
 
-namespace DBDUtilityOverlay.Core.Utils
+namespace DBDUtilityOverlay.Core.Hotkeys
 {
     public static class HotKeysController
     {

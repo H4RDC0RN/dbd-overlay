@@ -128,10 +128,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\App\close.png" />
     <Resource Include="Images\App\download.png" />
-    <Resource Include="Images\App\minimize.png" />
-    <Resource Include="Images\App\refresh.jpg" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\BLOOD_LODGE.png" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\GAS_HEAVEN.png" />
@@ -194,7 +191,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="MapImages.Designer.cs">
+    <Compile Update="Images\App\AppImages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppImages.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Images\Maps\MapImages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MapImages.resx</DependentUpon>
@@ -207,7 +209,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="MapImages.resx">
+    <EmbeddedResource Update="Images\App\AppImages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppImages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Images\Maps\MapImages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MapImages.Designer.cs</LastGenOutput>
     </EmbeddedResource>

@@ -1,4 +1,5 @@
 ﻿using DBDUtilityOverlay.Core.Utils;
+using DBDUtilityOverlay.Images.Maps;
 using System.Collections;
 using System.Globalization;
 
@@ -555,7 +556,7 @@ namespace DBDUtilityOverlay.Core.Languages
 
         public static string GetMapFileName(string mapName)
         {
-            if (Properties.Settings.Default.Language.Equals(LanguagesManager.DefaultLanguage)) return mapName;
+            if (Properties.Settings.Default.Language.Equals(LanguagesManager.Eng)) return mapName;
             var mapsList = mapsByLang.FirstOrDefault(x => x.Key.Equals(Properties.Settings.Default.Language)).Value;
 
             int index = -1;

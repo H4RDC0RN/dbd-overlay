@@ -1,18 +1,18 @@
 ﻿using DBDUtilityOverlay.Core.Utils;
 using System.Windows.Input;
 
-namespace DBDUtilityOverlay.Core.Windows
+namespace DBDUtilityOverlay.Core.Hotkeys
 {
     public class KeyPressedEventArgs : EventArgs
     {
+        public ModifierKeys Modifier { get; }
+        public Keys Key { get; }
+
         internal KeyPressedEventArgs(ModifierKeys modifier, Keys key)
         {
             Modifier = modifier;
             Key = key;
         }
-
-        public ModifierKeys Modifier { get; }
-        public Keys Key { get; }
 
         public void Log(string hotKeyName)
         {
