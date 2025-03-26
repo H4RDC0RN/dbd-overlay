@@ -8,12 +8,15 @@
     <UseWPF>true</UseWPF>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UseWindowsForms>True</UseWindowsForms>
+    <ApplicationIcon>Images\App\icon.ico</ApplicationIcon>
   </PropertyGroup>
   
   <ItemGroup>
     <None Remove="Images\App\close.png" />
     <None Remove="Images\App\download.png" />
+    <None Remove="Images\App\link.png" />
     <None Remove="Images\App\loading.png" />
+    <None Remove="Images\App\logo.png" />
     <None Remove="Images\App\minimize.png" />
     <None Remove="Images\App\refresh.jpg" />
     <None Remove="Images\Maps\AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png" />
@@ -130,7 +133,9 @@
 
   <ItemGroup>
     <Resource Include="Images\App\download.png" />
+    <Resource Include="Images\App\link.png" />
     <Resource Include="Images\App\loading.png" />
+    <Resource Include="Images\App\logo.png" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\BLOOD_LODGE.png" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\GAS_HEAVEN.png" />
@@ -187,6 +192,7 @@
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\FAMILY_RESIDENCE_2.png" />
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH.png" />
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png" />
+    <Content Include="Images\App\icon.ico" />
     <Content Include="Tessdata\eng.traineddata">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -7,7 +7,99 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500"
              Background="{DynamicResource DarkestGrayBrush}">
-    <Grid>
-            
-    </Grid>
+
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Image Source="/Images/App/logo.png"
+                       Width="75"
+                       Height="80"
+                       HorizontalAlignment="Left"
+                       Margin="5,0,0,0"/>
+
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="DBD OVERLAY"
+                               Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="Version 1.0.0"
+                               FontSize="12"
+                               Foreground="{StaticResource WhiteGrayBrush}"
+                               Style="{StaticResource TextBlockStyle}"/>
+                <TextBlock Text="© 2025 H4RDC0RN. All rights reserved."
+                               FontSize="12"
+                               Foreground="{StaticResource WhiteGrayBrush}"
+                               Style="{StaticResource TextBlockStyle}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <TextBlock Text="Donate"
+                   Foreground="White"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,10,0,5"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.65*"/>
+                <ColumnDefinition Width="0.35*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0" 
+                       Text="This application has been developed by&#10;only one person and is completely free.&#10;You can support the creator via these links:"
+                       FontSize="14"
+                       Foreground="{StaticResource WhiteGrayBrush}"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <StackPanel Grid.Column="1">
+                <Button x:Name="BoostyButton"
+                        Style="{StaticResource LinkButtonStyle}"
+                        Click="Click_BoostyButton"
+                        Content="Boosty">
+                </Button>
+                <Button x:Name="DonationAlertsButton"
+                        Style="{StaticResource LinkButtonStyle}"
+                        Click="Click_DonationAlertsButton"
+                        Content="Donation alerts">
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <TextBlock Text="Feedback"
+                   Foreground="White"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,10,0,5"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.65*"/>
+                <ColumnDefinition Width="0.35*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0" 
+                       Text="If you have any issues, questions, suggestions&#10;or you just want to say thanks, you can use&#10;the following links to contact the creator:"
+                       FontSize="14"
+                       Foreground="{StaticResource WhiteGrayBrush}"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <StackPanel Grid.Column="1">
+                <Button x:Name="DiscordServerButton"
+                        Style="{StaticResource LinkButtonStyle}"
+                        Click="Click_DiscordServerButton"
+                        Content="Discord server">
+                </Button>
+                <Button x:Name="DiscordProfileButton"
+                        Style="{StaticResource LinkButtonStyle}"
+                        Click="Click_DiscordProfileButton"
+                        Content="Discord profile">
+                </Button>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
 </UserControl>

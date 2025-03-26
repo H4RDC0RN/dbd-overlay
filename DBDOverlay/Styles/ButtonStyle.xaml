@@ -70,4 +70,33 @@
         </Setter>
     </Style>
 
+    <Style x:Key="LinkButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource DarkestGrayBrush}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Height="30"
+                            Background="{TemplateBinding Background}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Images/App/link.png"
+                                       Width="15"
+                                       HorizontalAlignment="Left"
+                                       Margin="10,5,10,5"/>
+                            <TextBlock Text="{TemplateBinding Content}"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource DarkGrayBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>
