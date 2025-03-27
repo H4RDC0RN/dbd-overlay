@@ -17,7 +17,8 @@ namespace DBDOverlay.Core.Download
     {
         public event EventHandler<DownloadEventArgs> Downloading;
         public readonly string TessDataFolder = "Tessdata";
-        private readonly string downloadLink = "https://raw.github.com/tesseract-ocr/tessdata/main/";
+        private readonly string githubLink = "github.com";
+        private readonly string downloadLink = $"https://raw.github.com/tesseract-ocr/tessdata/main/";
         private readonly string traineddata = "traineddata";
 
         private static DownloadManager instance;
@@ -38,7 +39,7 @@ namespace DBDOverlay.Core.Download
             {
                 try
                 {
-                    Dns.GetHostEntry("github.com");
+                    Dns.GetHostEntry(githubLink);
                     return true;
                 }
                 catch
