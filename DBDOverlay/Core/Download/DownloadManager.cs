@@ -76,6 +76,15 @@ namespace DBDOverlay.Core.Download
             worker.RunWorkerAsync();
         }
 
+        public void DownloadDefaultLanguage()
+        {
+            Directory.CreateDirectory(TessDataFolder.ToProjectPath());
+            if (GetDownloadedLanguages().Count == 0)
+            {
+                Download(LanguagesManager.Eng);
+            }
+        }
+
         private void DownloadLanguageData(string language)
         {
             language = LanguagesManager.ConvertMexToSpa(language);

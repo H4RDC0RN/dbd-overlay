@@ -20,6 +20,7 @@ namespace DBDOverlay
 
         public MainWindow()
         {
+            DownloadManager.Instance.DownloadDefaultLanguage();
             Logger.Log.Info("---Open Application---");
             InitializeComponent();
             HandleExceptions();

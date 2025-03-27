@@ -121,7 +121,6 @@
     <None Remove="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png" />
     <None Remove="Images\Recognition\test1.png" />
     <None Remove="Images\Recognition\test2.png" />
-    <None Remove="Tessdata\eng.traineddata" />
   </ItemGroup>
 
   <ItemGroup>
@@ -192,9 +191,6 @@
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH.png" />
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png" />
     <Content Include="Images\App\icon.ico" />
-    <Content Include="Tessdata\eng.traineddata">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
