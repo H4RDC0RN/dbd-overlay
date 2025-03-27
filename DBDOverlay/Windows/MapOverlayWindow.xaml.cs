@@ -8,6 +8,9 @@ using DBDOverlay.Images.Maps;
 using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.MapOverlay;
 using DBDOverlay.Core.Windows;
+using System;
+using System.Linq;
+using System.Drawing;
 
 namespace DBDOverlay
 {
@@ -25,7 +28,7 @@ namespace DBDOverlay
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            WindowsServices.Instance.SetWindowExTransparent(new WindowInteropHelper(this).Handle);
+            WindowsServices.Instance.SetWindowExTransparent(new WindowInteropHelper(this).Handle.ToInt32());
         }
 
         private void SetOverlaySettings()

@@ -1,6 +1,7 @@
 ﻿using DBDOverlay.Core.Download;
 using DBDOverlay.Core.Extensions;
 using DBDOverlay.Images.App;
+using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;

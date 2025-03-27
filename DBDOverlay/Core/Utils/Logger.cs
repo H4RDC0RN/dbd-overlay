@@ -10,7 +10,8 @@ namespace DBDOverlay.Core.Utils
         {
             get
             {
-                instance ??= LogManager.GetLogger(typeof(Logger));
+                if (instance == null)
+                    instance = LogManager.GetLogger(typeof(Logger));
                 return instance;
             }
         }

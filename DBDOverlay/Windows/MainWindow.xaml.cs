@@ -7,6 +7,8 @@ using DBDOverlay.Core.Hotkeys;
 using DBDOverlay.Core.MapOverlay;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.MVVM.ViewModel;
+using System;
+using DBDOverlay.Core.Download;
 
 namespace DBDOverlay
 {

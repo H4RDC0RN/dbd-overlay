@@ -8,12 +8,15 @@ using TextBox = System.Windows.Controls.TextBox;
 using DBDOverlay.Core.Download;
 using DBDOverlay.Core.Hotkeys;
 using DBDOverlay.Core.Languages;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace DBDOverlay.MVVM.View
 {
     public partial class SettingsTabView : UserControl
     {
-        private readonly Dictionary<ModifierKeys, string> modifiers = [];
+        private readonly Dictionary<ModifierKeys, string> modifiers = new Dictionary<ModifierKeys, string>();
 
         public SettingsTabView()
         {

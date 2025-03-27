@@ -1,8 +1,12 @@
 ﻿using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Languages;
 using DBDOverlay.Core.Utils;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using Application = System.Windows.Application;
@@ -22,14 +26,36 @@ namespace DBDOverlay.Core.Download
         {
             get
             {
-                instance ??= new DownloadManager();
+                if (instance == null)
+                    instance = new DownloadManager();
                 return instance;
+            }
+        }
+
+        private bool IsConnected
+        {
+            get
+            {
+                try
+                {
+                    Dns.GetHostEntry("github.com");
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
 
         public void Download(string language)
         {
             if (GetDownloadedLanguages().Contains(language)) return;
+            if (!IsConnected)
+            {
+                Logger.Log.Error("Can't connect to github");
+                return;
+            }
             var worker = new BackgroundWorker();
 
             worker.DoWork += (s, e) =>
@@ -53,17 +79,19 @@ namespace DBDOverlay.Core.Download
         private void DownloadLanguageData(string language)
         {
             language = LanguagesManager.ConvertMexToSpa(language);
-            using HttpClient client = new();
-            var url = $"{downloadLink}{language}.{traineddata}";
-            var content = client.GetByteArrayAsync(url).Result;
-            var fileName = $"{language}.{traineddata}";
-            SaveTrainedData(fileName, content);
+            using (var client = new HttpClient())
+            {
+                var url = $"{downloadLink}{language}.{traineddata}";
+                var content = client.GetByteArrayAsync(url).Result;
+                var fileName = $"{language}.{traineddata}";
+                SaveTrainedData(fileName, content);
+            }
         }
 
         public List<string> GetDownloadedLanguages()
         {
             var regex = $@"(?<={TessDataFolder}\\).*(?=.{traineddata})";
-            return [.. Directory.GetFiles(TessDataFolder.ToProjectPath()).Select(x => Regex.Match(x, regex).Value)];
+            return Directory.GetFiles(TessDataFolder.ToProjectPath()).Select(x => Regex.Match(x, regex).Value).ToList();
         }
 
         public void SaveTrainedData(string fileName, byte[] content)

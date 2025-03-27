@@ -1,4 +1,7 @@
-﻿namespace DBDOverlay.Core.Languages
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace DBDOverlay.Core.Languages
 {
     public static class LanguagesManager
     {
@@ -13,9 +16,9 @@
         public static readonly string Tur = "tur";
         public static readonly string Rus = "rus";
 
-        private static readonly List<string> langAbbs = [Deu, Eng, Spa, Mex, Fra, Ita, Pol, Por, Tur, Rus];
-        private static readonly List<string> langNames =
-        [
+        private static readonly List<string> langAbbs = new List<string>() { Deu, Eng, Spa, Mex, Fra, Ita, Pol, Por, Tur, Rus };
+        private static readonly List<string> langNames = new List<string>()
+        {
             "Deutsch",
             "English",
             "Español",
@@ -26,10 +29,10 @@
             "Português",
             "Türkçe",
             "Русский"
-        ];
+        };
         private static readonly Dictionary<string, string> langsDictionary = langNames.Zip(langAbbs, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
-        private static readonly List<string> mapInfoLocales =
-        [
+        private static readonly List<string> mapInfoLocales = new List<string>()
+        {
             "KARTENINFO",
             "MAP INFO",
             "INFORMACIÓN DEL MAPA",
@@ -40,7 +43,7 @@
             "INFORMAÇÕES DO MAPA",
             "HARİTA AYRINTILARI",
             "О КАРТЕ"
-        ];
+        };
         private static readonly Dictionary<string, string> mapsInfoDictionary = langAbbs.Zip(mapInfoLocales, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
 
         public static string GetValue(string key)
@@ -55,7 +58,7 @@
 
         public static Dictionary<string, string> GetOrderedKeyValuePairs(List<string> values)
         {
-            return langsDictionary.Where(x => values.Contains(x.Value)).ToDictionary().OrderBy(x => x.Key).ToDictionary();
+            return langsDictionary.Where(x => values.Contains(x.Value)).ToDictionary(x => x.Key, y => y.Value).OrderBy(x => x.Key).ToDictionary(x => x.Key, y => y.Value);
         }
 
         public static List<string> GetAbbreviations()

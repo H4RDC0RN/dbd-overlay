@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using Path = System.IO.Path;
 
@@ -29,12 +31,27 @@ namespace DBDOverlay.Core.Extensions
 
         public static string[] Split(this string str, string charsArr)
         {
-            return str.Split([charsArr], StringSplitOptions.None);
+            return str.Split(new string[] { charsArr }, StringSplitOptions.None);
         }
 
         public static bool IsInt(this string str)
         {
             return int.TryParse(str, out _);
+        }
+
+        public static string GetLast(this string str, int substringLenght)
+        {
+            return str.Substring(str.Length - substringLenght);
+        }
+
+        public static int Increment(this string str)
+        {
+            return Convert.ToInt32(str.Last()) + 1;
+        }
+
+        public static int Decrement(this string str)
+        {
+            return Convert.ToInt32(str.Last()) - 1;
         }
     }
 }

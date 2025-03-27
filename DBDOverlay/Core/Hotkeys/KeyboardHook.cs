@@ -1,5 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace DBDOverlay.Core.Hotkeys
@@ -7,9 +10,9 @@ namespace DBDOverlay.Core.Hotkeys
     public sealed class KeyboardHook : IDisposable
     {
         [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(nint hWnd, int id, uint fsModifiers, uint vk);
+        private static extern bool RegisterHotKey(int hWnd, int id, uint fsModifiers, uint vk);
         [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(nint hWnd, int id);
+        private static extern bool UnregisterHotKey(int hWnd, int id);
 
         [DllImport("user32.dll")]
         public static extern bool GetKeyboardState(byte[] lpKeyState);
@@ -19,23 +22,24 @@ namespace DBDOverlay.Core.Hotkeys
 
         [DllImport("user32.dll")]
         public static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState,
-            [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, nint dwhkl);
+            [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, int dwhkl);
 
-        private readonly HotKeyWindow _window = new();
+        private readonly HotKeyWindow _window = new HotKeyWindow();
         private static KeyboardHook instance;
 
         public static KeyboardHook Instance
         {
             get
             {
-                instance ??= new KeyboardHook();
+                if (instance == null)
+                    instance = new KeyboardHook();
                 return instance;
             }
         }
 
         public void RegisterHotKey(int id, ModifierKeys modifier, Keys key, Action<object, KeyPressedEventArgs> action)
         {
-            RegisterHotKey(_window.Handle, id, (uint)modifier, (uint)key);
+            RegisterHotKey(_window.Handle.ToInt32(), id, (uint)modifier, (uint)key);
             _window.KeyPressedEvents.Add(id, delegate (object sender, KeyPressedEventArgs args)
             {
                 new EventHandler<KeyPressedEventArgs>(action).Invoke(this, args);
@@ -44,7 +48,7 @@ namespace DBDOverlay.Core.Hotkeys
 
         public void UnregisterHotKey(int id)
         {
-            UnregisterHotKey(_window.Handle, id);
+            UnregisterHotKey(_window.Handle.ToInt32(), id);
             _window?.KeyPressedEvents.Remove(id);
         }
 

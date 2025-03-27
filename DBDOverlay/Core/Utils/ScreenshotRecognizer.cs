@@ -3,7 +3,10 @@ using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Languages;
 using DBDOverlay.Core.MapOverlay;
 using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
@@ -127,7 +130,7 @@ namespace DBDOverlay.Core.Utils
                 var suffix = Regex.Match(mapName, badhamSuffixPattern).Value.Replace("|", @"\|");
                 mapName = $"{mapName.RemoveRegex(suffix)}{suffix.ReplaceRegex(tessWicknessPattern, "I")}".RemoveRegex(@"\\");
             }
-            if (mapName.EndsWith('№')) return mapName.ReplaceRegex("№", "IV");
+            if (mapName.EndsWith("№")) return mapName.ReplaceRegex("№", "IV");
             if (mapName.EndsWith(@"\/")) return mapName.ReplaceRegex(@"\\/", "V");
             return mapName;
         }

@@ -1,5 +1,6 @@
 ﻿using DBDOverlay.Core.MapOverlay;
 using DBDOverlay.Core.Utils;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace DBDOverlay.Core.Hotkeys

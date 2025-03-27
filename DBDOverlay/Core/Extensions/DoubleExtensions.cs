@@ -1,4 +1,6 @@
-﻿namespace DBDOverlay.Core.Extensions
+﻿using System;
+
+namespace DBDOverlay.Core.Extensions
 {
     public static class DoubleExtensions
     {

@@ -1,7 +1,9 @@
 ﻿using DBDOverlay.Core.Utils;
 using DBDOverlay.Images.Maps;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace DBDOverlay.Core.Languages
 {
@@ -17,13 +19,13 @@ namespace DBDOverlay.Core.Languages
             if (resources == null)
             {
                 Logger.Log.Warn("MapImages resources are null");
-                return [];
+                return new List<string>();
             }
             else
             {
                 var nullableList = resources.Cast<DictionaryEntry>().Select(x => x.Key.ToString()).Where(x => x != null && !x.Equals(Empty) && !x.Equals(NotReady)).ToList();
                 nullableList.Sort();
-                List<string> result = [];
+                List<string> result = new List<string>();
                 foreach (var x in nullableList)
                 {
                     if (x != null)
@@ -35,8 +37,8 @@ namespace DBDOverlay.Core.Languages
             }
         }
 
-        private static readonly List<string> deu =
-        [
+        private static readonly List<string> deu = new List<string>()
+        {
             "AUTOHAVEN-SCHROTTPLATZ.AZAROVS_RUHESTÄTTE",
             "AUTOHAVEN-SCHROTTPLATZ.BLUTHÜTTE",
             "AUTOHAVEN-SCHROTTPLATZ.SPRITHIMMEL",
@@ -91,10 +93,10 @@ namespace DBDOverlay.Core.Languages
             "YAMAOKA-ANWESEN.FAMILIENSITZ_2",
             "YAMAOKA-ANWESEN.HEILIGTUM_DES_ZORNS",
             "YAMAOKA-ANWESEN.HEILIGTUM_DES_ZORNS_2"
-        ];
+        };
         private static readonly List<string> eng = GetNamesOfMaps();
-        private static readonly List<string> spa =
-        [
+        private static readonly List<string> spa = new List<string>()
+        {
             "DESGUACE_AUTOHAVEN.LUGAR_DE_DESCANSO_DE_AZAROV",
             "DESGUACE_AUTOHAVEN.CABAÑA_DE_SANGRE",
             "DESGUACE_AUTOHAVEN.GASOLINERA",
@@ -149,9 +151,9 @@ namespace DBDOverlay.Core.Languages
             "RESIDENCIA_YAMAOKA.RESIDENCIA_FAMILIAR_2",
             "RESIDENCIA_YAMAOKA.SANTUARIO_DE_LA_CÓLERA",
             "RESIDENCIA_YAMAOKA.SANTUARIO_DE_LA_CÓLERA_2"
-        ];
-        private static readonly List<string> mex =
-        [
+        };
+        private static readonly List<string> mex = new List<string>()
+        {
             "DESGUACE_AUTOHAVEN.LUGAR_DE_DESCANSO_DE_AZAROV",
             "DESGUACE_AUTOHAVEN.CABAÑA_DE_SANGRE",
             "DESGUACE_AUTOHAVEN.GASOLINERA",
@@ -206,9 +208,9 @@ namespace DBDOverlay.Core.Languages
             "RESIDENCIA_YAMAOKA.RESIDENCIA_FAMILIAR_2",
             "RESIDENCIA_YAMAOKA.SANTUARIO_DE_LA_IRA",
             "RESIDENCIA_YAMAOKA.SANTUARIO_DE_LA_IRA_2"
-        ];
-        private static readonly List<string> fra =
-        [
+        };
+        private static readonly List<string> fra = new List<string>()
+        {
             "CASSE_AUTOHAVEN.DERNIÈRE_DEMEURE_DAZAROV",
             "CASSE_AUTOHAVEN.CABANE_DU_SANG",
             "CASSE_AUTOHAVEN.GAS_HEAVEN",
@@ -263,9 +265,9 @@ namespace DBDOverlay.Core.Languages
             "PROPRIÉTÉ_YAMAOKA.RÉSIDENCE_FAMILIALE_2",
             "PROPRIÉTÉ_YAMAOKA.SANCTUAIRE_DU_COURROUX",
             "PROPRIÉTÉ_YAMAOKA.SANCTUAIRE_DU_COURROUX_2"
-        ];
-        private static readonly List<string> ita =
-        [
+        };
+        private static readonly List<string> ita = new List<string>()
+        {
             "DEMOLIZIONI_AUTOHAVEN.SEPOLCRO_DI_AZAROV",
             "DEMOLIZIONI_AUTOHAVEN.RIFUGIO_INSANGUINATO",
             "DEMOLIZIONI_AUTOHAVEN.GAS_HEAVEN",
@@ -320,9 +322,9 @@ namespace DBDOverlay.Core.Languages
             "TENUTA_YAMAOKA.RESIDENZA_DI_FAMIGLIA_2",
             "TENUTA_YAMAOKA.SACRARIO_DELLIRA",
             "TENUTA_YAMAOKA.SACRARIO_DELLIRA_2"
-        ];
-        private static readonly List<string> pol =
-        [
+        };
+        private static readonly List<string> pol = new List<string>()
+        {
             "ZŁOMOWISKO_AUTOHAVEN.MIEJSCE_SPOCZYNKU_AZAROWA",
             "ZŁOMOWISKO_AUTOHAVEN.KRWAWA_STRÓŻÓWKA",
             "ZŁOMOWISKO_AUTOHAVEN.STACJA_PALIW",
@@ -377,9 +379,9 @@ namespace DBDOverlay.Core.Languages
             "POSIADŁOŚĆ_RODZINY_YAMAOKA.REZYDENCJA_RODZINNA_2",
             "POSIADŁOŚĆ_RODZINY_YAMAOKA.SANKTUARIUM_GNIEWU",
             "POSIADŁOŚĆ_RODZINY_YAMAOKA.SANKTUARIUM_GNIEWU_2"
-        ];
-        private static readonly List<string> por =
-        [
+        };
+        private static readonly List<string> por = new List<string>()
+        {
             "FERRO-VELHO_AUTOHAVEN.SEPULTURA_DE_AZAROV",
             "FERRO-VELHO_AUTOHAVEN.ABRIGO_SANGRENTO",
             "FERRO-VELHO_AUTOHAVEN.PARAÍSO_DO_COMBUSTÍVEL",
@@ -434,9 +436,9 @@ namespace DBDOverlay.Core.Languages
             "PROPRIEDADE_DOS_YAMAOKA.RESIDÊNCIA_DA_FAMÍLIA_2",
             "PROPRIEDADE_DOS_YAMAOKA.SANTUÁRIO_DA_IRA",
             "PROPRIEDADE_DOS_YAMAOKA.SANTUÁRIO_DA_IRA_2"
-        ];
-        private static readonly List<string> tur =
-        [
+        };
+        private static readonly List<string> tur = new List<string>()
+        {
             "OTOMAOBIL_MEZARLIĞI.AZAROVUN_YAZIHANESI",
             "OTOMOBIL_MEZARLIĞI.KAN_KULÜBESI",
             "OTOMOBIL_MEZARLIĞI.BENZIN_İSTASYONU",
@@ -491,9 +493,9 @@ namespace DBDOverlay.Core.Languages
             "YAMAOKA_MALIKÂNESI.AILE_KONUTU_2",
             "YAMAOKA_MALIKÂNESI.HIDDET_SUNAĞI",
             "YAMAOKA_MALIKÂNESI.HIDDET_SUNAĞI_2"
-        ];
-        private static readonly List<string> rus =
-        [
+        };
+        private static readonly List<string> rus = new List<string>()
+        {
             "СВАЛКА_АВТОХЕВЕН.МЕСТО_УПОКОЕНИЯ_АЗАРОВА",
             "СВАЛКА_АВТОХЕВЕН.КРОВАВАЯ_ЛАЧУГА",
             "СВАЛКА_АВТОХЕВЕН.ГЭС_ХЕВЕН",
@@ -548,9 +550,9 @@ namespace DBDOverlay.Core.Languages
             "ПОМЕСТЬЕ_ЯМАОКИ.СЕМЕЙНАЯ_РЕЗИДЕНЦИЯ_2",
             "ПОМЕСТЬЕ_ЯМАОКИ.ПРИБЕЖИЩЕ_ГНЕВА",
             "ПОМЕСТЬЕ_ЯМАОКИ.ПРИБЕЖИЩЕ_ГНЕВА_2"
-        ];
+        };
 
-        private static readonly List<List<string>> maps = [deu, eng, spa, mex, fra, ita, pol, por, tur, rus];
+        private static readonly List<List<string>> maps = new List<List<string>> { deu, eng, spa, mex, fra, ita, pol, por, tur, rus };
         private static readonly Dictionary<string, List<string>> mapsByLang = LanguagesManager.GetAbbreviations()
             .Zip(maps, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
 
@@ -562,7 +564,7 @@ namespace DBDOverlay.Core.Languages
             int index = -1;
             if (mapName.Length > maxLength)
             {
-                mapName = mapName[..maxLength];
+                mapName = mapName.Substring(0, maxLength);
                 var result = mapsList.FirstOrDefault(x => x.StartsWith(mapName));
                 index = mapsList.IndexOf(result ?? mapName);
             }
