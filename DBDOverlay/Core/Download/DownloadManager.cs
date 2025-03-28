@@ -4,10 +4,13 @@ using DBDOverlay.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using Application = System.Windows.Application;
 
@@ -16,10 +19,20 @@ namespace DBDOverlay.Core.Download
     public class DownloadManager
     {
         public event EventHandler<DownloadEventArgs> Downloading;
-        public readonly string TessDataFolder = "Tessdata";
+
         private readonly string githubLink = "github.com";
-        private readonly string downloadLink = $"https://raw.github.com/tesseract-ocr/tessdata/main/";
-        private readonly string traineddata = "traineddata";
+        private readonly string downloadTessDataLink = "https://raw.github.com/tesseract-ocr/tessdata/main/";
+        private readonly string releasesLink = "https://github.com/H4RDC0RN/dbd-overlay/releases/";
+        private readonly string download = "download";
+        private readonly string latest = "latest";
+
+        public readonly string TessDataFolder = "Tessdata";
+        private readonly string UpdateFolder = "Update";
+
+        private readonly string traineddataExtension = ".traineddata";
+        private readonly string zipExtension = ".zip";
+
+        private readonly string binariesName = "dbd-overlay-";
 
         private static DownloadManager instance;
 
@@ -49,12 +62,21 @@ namespace DBDOverlay.Core.Download
             }
         }
 
-        public void Download(string language)
+        public string CurrentVersion
+        {
+            get
+            {
+                var currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                return currentVersion.Substring(0, currentVersion.Length - 2);
+            }
+        }
+
+        public void DownloadLanguage(string language)
         {
             if (GetDownloadedLanguages().Contains(language)) return;
             if (!IsConnected)
             {
-                Logger.Log.Error("Can't connect to github");
+                Logger.Log.Error($"Can't connect to {githubLink}");
                 return;
             }
             var worker = new BackgroundWorker();
@@ -82,32 +104,86 @@ namespace DBDOverlay.Core.Download
             Directory.CreateDirectory(TessDataFolder.ToProjectPath());
             if (GetDownloadedLanguages().Count == 0)
             {
-                Download(LanguagesManager.Eng);
+                DownloadLanguage(LanguagesManager.Eng);
             }
+        }
+
+        public void CheckForUpdate()
+        {
+            int.TryParse(CurrentVersion.RemoveRegex(@"\."), out int currentVersionNumber);
+            var latestVersion = GetLatestVersion();
+            int.TryParse(latestVersion.RemoveRegex(@"\."), out int latestVersionNumber);
+
+            if (currentVersionNumber >= latestVersionNumber)
+            {
+                Directory.Delete(UpdateFolder.ToProjectPath(), true);
+                return;
+            }
+            var zipFilePath = DownloadUpdate(latestVersion);
+            ZipFile.ExtractToDirectory(zipFilePath, UpdateFolder.ToProjectPath());
+            File.Delete(zipFilePath);
+            var exeName = AppDomain.CurrentDomain.FriendlyName;
+            var exePath = Assembly.GetEntryAssembly().Location;
+            var from = $"{UpdateFolder.ToProjectPath()}/{binariesName}{latestVersion}";
+            var to = string.Empty.ToProjectPath();
+            RunCommand($"taskkill /f /im \"{exeName}\" && " +
+                $"timeout /t 1 && " +
+                $"xcopy /i /e /y \"{from}\" \"{to}\" && " +
+                $"\"{exePath}\" &&" +
+                $"exit 0");
+        }
+
+        public List<string> GetDownloadedLanguages()
+        {
+            var regex = $@"(?<={TessDataFolder}\\).*(?=.{traineddataExtension})";
+            return Directory.GetFiles(TessDataFolder.ToProjectPath()).Select(x => Regex.Match(x, regex).Value).ToList();
         }
 
         private void DownloadLanguageData(string language)
         {
             language = LanguagesManager.ConvertMexToSpa(language);
+            DownloadFile($"{downloadTessDataLink}{language}{traineddataExtension}", $"{TessDataFolder.ToProjectPath()}/{language}{traineddataExtension}");
+        }
+
+        private string DownloadUpdate(string version)
+        {
+            Directory.CreateDirectory(UpdateFolder.ToProjectPath());
+            var fileName = $"{binariesName}{version}{zipExtension}";
+            var path = $"{UpdateFolder.ToProjectPath()}/{fileName}";
+            DownloadFile($"{releasesLink}{download}/{version}/{fileName}", path);
+            return path;
+        }
+
+        private void DownloadFile(string url, string path)
+        {
             using (var client = new HttpClient())
             {
-                var url = $"{downloadLink}{language}.{traineddata}";
-                var content = client.GetByteArrayAsync(url).Result;
-                var fileName = $"{language}.{traineddata}";
-                SaveTrainedData(fileName, content);
+                SaveFile(path, client.GetByteArrayAsync(url).Result);
             }
         }
 
-        public List<string> GetDownloadedLanguages()
+        private void SaveFile(string path, byte[] content)
         {
-            var regex = $@"(?<={TessDataFolder}\\).*(?=.{traineddata})";
-            return Directory.GetFiles(TessDataFolder.ToProjectPath()).Select(x => Regex.Match(x, regex).Value).ToList();
+            if (content != null) File.WriteAllBytes(path, content);
+            else Logger.Log.Warn("Downloaded content is null");
         }
 
-        public void SaveTrainedData(string fileName, byte[] content)
+        private string GetLatestVersion()
         {
-            if (content != null) File.WriteAllBytes($@"{TessDataFolder.ToProjectPath()}\{fileName}", content);
-            else Logger.Log.Warn("Downloaded content is null");
+            using (var client = new HttpClient())
+            {
+                return client.GetAsync($"{releasesLink}{latest}").Result.RequestMessage.RequestUri.ToString().GetLast(5);
+            }
+        }
+
+        private void RunCommand(string line)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "cmd",
+                Arguments = $"/c {line}",
+                WindowStyle = ProcessWindowStyle.Hidden
+            });
         }
     }
 }

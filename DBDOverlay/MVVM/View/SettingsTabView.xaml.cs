@@ -80,7 +80,7 @@ namespace DBDOverlay.MVVM.View
 
         private void Download_Click(object sender, RoutedEventArgs e)
         {
-            DownloadManager.Instance.Download(LanguagesManager.GetValue(DownloadLanguageComboBox.SelectedItem.ToString()));
+            DownloadManager.Instance.DownloadLanguage(LanguagesManager.GetValue(DownloadLanguageComboBox.SelectedItem.ToString()));
         }
 
         private void ReadModifierComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

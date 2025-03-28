@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using DBDOverlay.Core.Download;
+using System.Diagnostics;
 using System.Windows;
 using UserControl = System.Windows.Controls.UserControl;
 
@@ -14,6 +15,7 @@ namespace DBDOverlay.MVVM.View
         public AboutTabView()
         {
             InitializeComponent();
+            VersionTextBlock.Text = DownloadManager.Instance.CurrentVersion;
         }
 
         private void Click_BoostyButton(object sender, RoutedEventArgs e)

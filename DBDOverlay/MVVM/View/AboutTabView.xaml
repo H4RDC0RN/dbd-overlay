@@ -19,10 +19,18 @@
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="DBD OVERLAY"
                                Style="{StaticResource TextBlockStyle}"/>
-                <TextBlock Text="Version 1.0.0"
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Version"
                                FontSize="12"
                                Foreground="{StaticResource WhiteGrayBrush}"
                                Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock x:Name="VersionTextBlock"
+                               Text="1.0.0"
+                               FontSize="12"
+                               Foreground="{StaticResource WhiteGrayBrush}"
+                               Style="{StaticResource TextBlockStyle}"
+                               Margin="3,0,0,0"/>
+                </StackPanel>
                 <TextBlock Text="© 2025 H4RDC0RN. All rights reserved."
                                FontSize="12"
                                Foreground="{StaticResource WhiteGrayBrush}"

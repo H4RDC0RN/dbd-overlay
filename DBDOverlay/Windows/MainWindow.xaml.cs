@@ -9,6 +9,9 @@ using DBDOverlay.Core.Utils;
 using DBDOverlay.MVVM.ViewModel;
 using System;
 using DBDOverlay.Core.Download;
+using System.Configuration;
+using DBDOverlay.Properties;
+using System.IO;
 
 namespace DBDOverlay
 {
@@ -21,6 +24,9 @@ namespace DBDOverlay
         public MainWindow()
         {
             DownloadManager.Instance.DownloadDefaultLanguage();
+            DownloadManager.Instance.CheckForUpdate();
+            ReloadSettings();
+
             Logger.Log.Info("---Open Application---");
             InitializeComponent();
             HandleExceptions();
@@ -65,6 +71,17 @@ namespace DBDOverlay
         private void MinButtonClick(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
+        }
+
+        private void ReloadSettings()
+        {
+            string configPath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            if (!File.Exists(configPath))
+            {
+                Settings.Default.Upgrade();
+                Settings.Default.Reload();
+                Settings.Default.Save();
+            }
         }
 
         private void HandleExceptions()
