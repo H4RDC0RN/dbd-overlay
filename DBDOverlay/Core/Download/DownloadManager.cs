@@ -56,6 +56,7 @@ namespace DBDOverlay.Core.Download
                 }
                 catch
                 {
+                    Logger.Log.Error($"Can't connect to {githubLink}");
                     return false;
                 }
             }
@@ -73,25 +74,21 @@ namespace DBDOverlay.Core.Download
         public void DownloadLanguage(string language)
         {
             if (GetDownloadedLanguages().Contains(language)) return;
-            if (!IsConnected)
-            {
-                Logger.Log.Error($"Can't connect to {githubLink}");
-                return;
-            }
+            if (!IsConnected) return;
             var worker = new BackgroundWorker();
 
             worker.DoWork += (s, e) =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Downloading?.Invoke(this, new DownloadEventArgs(true, language));
+                    Downloading?.Invoke(this, new DownloadEventArgs(true));
                 });
 
                 DownloadLanguageData(language);
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Downloading?.Invoke(this, new DownloadEventArgs(false, language));
+                    Downloading?.Invoke(this, new DownloadEventArgs(false));
                 });
             };
 
@@ -104,16 +101,13 @@ namespace DBDOverlay.Core.Download
             if (GetDownloadedLanguages().Count == 0)
             {
                 DownloadLanguage(LanguagesManager.Eng);
+                Logger.Log.Info($"Default language is downloaded ({LanguagesManager.Eng})");
             }
         }
 
         public void CheckForUpdate()
         {
-            if (!IsConnected)
-            {
-                Logger.Log.Error($"Can't connect to {githubLink}");
-                return;
-            }
+            if (!IsConnected) return;
 
             int.TryParse(CurrentVersion.RemoveRegex(@"\."), out int currentVersionNumber);
             var latestVersion = GetLatestVersion();
@@ -121,14 +115,23 @@ namespace DBDOverlay.Core.Download
 
             if (currentVersionNumber >= latestVersionNumber)
             {
+                Logger.Log.Info($"Application has latest version ({CurrentVersion})");
                 var updatePath = UpdateFolder.ToProjectPath();
-                if (Directory.Exists(updatePath)) Directory.Delete(updatePath, true);
+                if (Directory.Exists(updatePath))
+                {
+                    Directory.Delete(updatePath, true);
+                    Logger.Log.Info("Update folder is deleted");
+                }
                 return;
             }
 
+            Logger.Log.Info($"New application version is available ({latestVersion})");
             var zipFilePath = DownloadUpdate(latestVersion);
+
             ZipFile.ExtractToDirectory(zipFilePath, UpdateFolder.ToProjectPath());
             File.Delete(zipFilePath);
+            Logger.Log.Info("Zip file with update is unpacked");
+
             InstallUpdate(latestVersion);
         }
 
@@ -155,6 +158,7 @@ namespace DBDOverlay.Core.Download
 
         private void DownloadFile(string url, string path)
         {
+            Logger.Log.Info($"Start downloading file from '{url}'");
             using (var client = new HttpClient())
             {
                 SaveFile(path, client.GetByteArrayAsync(url).Result);
@@ -163,7 +167,11 @@ namespace DBDOverlay.Core.Download
 
         private void SaveFile(string path, byte[] content)
         {
-            if (content != null) File.WriteAllBytes(path, content);
+            if (content != null)
+            {
+                File.WriteAllBytes(path, content);
+                Logger.Log.Info($"Downloaded file is saved to '{path}'");
+            }
             else Logger.Log.Warn("Downloaded content is null");
         }
 
@@ -177,10 +185,13 @@ namespace DBDOverlay.Core.Download
 
         private void InstallUpdate(string version)
         {
+            Logger.Log.Info($"Installation version {version}");
+
             var exeName = AppDomain.CurrentDomain.FriendlyName;
             var exePath = Assembly.GetEntryAssembly().Location;
             var from = $"{UpdateFolder.ToProjectPath()}/{binariesName}{version}";
             var to = string.Empty.ToProjectPath();
+
             CmdHelper.RunCommand($"taskkill /f /im \"{exeName}\" && " +
                 $"timeout /t 1 && " +
                 $"xcopy /i /e /y \"{from}\" \"{to}\" && " +

@@ -9,7 +9,6 @@ namespace DBDOverlay.Core.Hotkeys
     {
         public static void RegisterAllHotKeys()
         {
-            Logger.Log.Info("Register all hotkeys");
             var readModifier = (ModifierKeys)Properties.Settings.Default.ReadModifier;
             var readKey = (Keys)Properties.Settings.Default.ReadKey;
             var nextModifier = (ModifierKeys)Properties.Settings.Default.NextMapModifier;
@@ -24,13 +23,11 @@ namespace DBDOverlay.Core.Hotkeys
 
         public static void UnregisterAllHotKeys()
         {
-            Logger.Log.Info("Unregister all hotkeys");
             KeyboardHook.Instance.UnregisterAllHotKeys();
         }
 
         public static void Dispose()
         {
-            Logger.Log.Info("Dispose hotkeys window");
             KeyboardHook.Instance.Dispose();
         }
 

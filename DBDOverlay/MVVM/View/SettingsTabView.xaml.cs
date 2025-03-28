@@ -11,6 +11,7 @@ using DBDOverlay.Core.Languages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using DBDOverlay.Core.Utils;
 
 namespace DBDOverlay.MVVM.View
 {
@@ -115,17 +116,31 @@ namespace DBDOverlay.MVVM.View
 
         private void UpdateModifier(ComboBox comboBox, HotKeyType hotKeyType)
         {
+            var settingName = $"{hotKeyType}Modifier";
+            var oldModifier = (ModifierKeys)(uint)Properties.Settings.Default[settingName];
             var newModifier = modifiers.FirstOrDefault(x => x.Value.Equals(comboBox.SelectedItem.ToString())).Key;
-            Properties.Settings.Default[$"{hotKeyType}Modifier"] = (uint)newModifier;
+            
+            Properties.Settings.Default[settingName] = (uint)newModifier;
             Properties.Settings.Default.Save();
+
+            Logger.Log.Info($"Modifier for '{hotKeyType}' hotkey is updated");
+            Logger.Log.Info($"Old value '{oldModifier}'");
+            Logger.Log.Info($"New value '{newModifier}'");
         }
 
         private void UpdateKey(TextBox textBox, HotKeyType hotKeyType, Key key)
         {
+            var settingName = $"{hotKeyType}Key";
+            var oldKey = (Keys)(uint)Properties.Settings.Default[settingName];
             var newKey = (Keys)KeyInterop.VirtualKeyFromKey(key);
+
             textBox.Text = KeyboardHook.Instance.GetCharFromKey(newKey).ToString().ToUpper();
-            Properties.Settings.Default[$"{hotKeyType}Key"] = (uint)newKey;
+            Properties.Settings.Default[settingName] = (uint)newKey;
             Properties.Settings.Default.Save();
+
+            Logger.Log.Info($"Key for '{hotKeyType}' hotkey is updated");
+            Logger.Log.Info($"Old value '{oldKey}'");
+            Logger.Log.Info($"New value '{newKey}'");
         }
 
         private void HandleDownloading(object sender, DownloadEventArgs e)
@@ -133,12 +148,10 @@ namespace DBDOverlay.MVVM.View
             if (e.IsDownloading)
             {
                 DownloadButton.IsEnabled = false;
-                e.Log();
             }
             else
             {
                 DownloadButton.IsEnabled = true;
-                e.Log();
                 SetLanguages();
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBDOverlay.Core.Utils;
+using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -39,6 +40,13 @@ namespace DBDOverlay.Core.Hotkeys
 
         public void RegisterHotKey(int id, ModifierKeys modifier, Keys key, Action<object, KeyPressedEventArgs> action)
         {
+            if (_window.KeyPressedEvents.ContainsKey(id))
+            {
+                Logger.Log.Warn($"Hot key with id '{id}' already exists");
+                Logger.Log.Warn($"Modifier = '{id}',  key = '{key}'");
+                return;
+            }
+
             RegisterHotKey(_window.Handle.ToInt32(), id, (uint)modifier, (uint)key);
             _window.KeyPressedEvents.Add(id, delegate (object sender, KeyPressedEventArgs args)
             {
