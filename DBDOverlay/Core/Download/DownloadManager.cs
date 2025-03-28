@@ -4,7 +4,6 @@ using DBDOverlay.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -126,17 +125,11 @@ namespace DBDOverlay.Core.Download
                 if (Directory.Exists(updatePath)) Directory.Delete(updatePath, true);
                 return;
             }
+
             var zipFilePath = DownloadUpdate(latestVersion);
             ZipFile.ExtractToDirectory(zipFilePath, UpdateFolder.ToProjectPath());
             File.Delete(zipFilePath);
-            var exeName = AppDomain.CurrentDomain.FriendlyName;
-            var exePath = Assembly.GetEntryAssembly().Location;
-            var from = $"{UpdateFolder.ToProjectPath()}/{binariesName}{latestVersion}";
-            var to = string.Empty.ToProjectPath();
-            RunCommand($"taskkill /f /im \"{exeName}\" && " +
-                $"timeout /t 1 && " +
-                $"xcopy /i /e /y \"{from}\" \"{to}\" && " +
-                $"{exePath}");
+            InstallUpdate(latestVersion);
         }
 
         public List<string> GetDownloadedLanguages()
@@ -182,14 +175,16 @@ namespace DBDOverlay.Core.Download
             }
         }
 
-        private void RunCommand(string line)
+        private void InstallUpdate(string version)
         {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "cmd",
-                Arguments = $"/c {line} | taskkill /F /IM cmd.exe",
-                WindowStyle = ProcessWindowStyle.Hidden
-            });
+            var exeName = AppDomain.CurrentDomain.FriendlyName;
+            var exePath = Assembly.GetEntryAssembly().Location;
+            var from = $"{UpdateFolder.ToProjectPath()}/{binariesName}{version}";
+            var to = string.Empty.ToProjectPath();
+            CmdHelper.RunCommand($"taskkill /f /im \"{exeName}\" && " +
+                $"timeout /t 1 && " +
+                $"xcopy /i /e /y \"{from}\" \"{to}\" && " +
+                $"{exePath}");
         }
     }
 }
