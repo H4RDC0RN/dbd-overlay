@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DBDOverlay"
         xmlns:viewModel="clr-namespace:DBDOverlay.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="650"
+        Title="DBD Overlay" Height="400" Width="650"
         MouseLeftButtonDown="WindowMouseDown"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"

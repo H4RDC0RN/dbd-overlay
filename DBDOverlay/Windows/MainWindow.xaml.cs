@@ -23,13 +23,13 @@ namespace DBDOverlay
 
         public MainWindow()
         {
+            HandleExceptions();
             DownloadManager.Instance.DownloadDefaultLanguage();
             DownloadManager.Instance.CheckForUpdate();
             ReloadSettings();
 
             Logger.Log.Info("---Open Application---");
-            InitializeComponent();
-            HandleExceptions();
+            InitializeComponent();            
             ScreenshotRecognizer.SetScreenBounds();
 
             mapOverlayTabVM = new MapOverlayTabViewModel();

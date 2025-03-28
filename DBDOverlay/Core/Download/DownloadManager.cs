@@ -110,13 +110,20 @@ namespace DBDOverlay.Core.Download
 
         public void CheckForUpdate()
         {
+            if (!IsConnected)
+            {
+                Logger.Log.Error($"Can't connect to {githubLink}");
+                return;
+            }
+
             int.TryParse(CurrentVersion.RemoveRegex(@"\."), out int currentVersionNumber);
             var latestVersion = GetLatestVersion();
             int.TryParse(latestVersion.RemoveRegex(@"\."), out int latestVersionNumber);
 
             if (currentVersionNumber >= latestVersionNumber)
             {
-                Directory.Delete(UpdateFolder.ToProjectPath(), true);
+                var updatePath = UpdateFolder.ToProjectPath();
+                if (Directory.Exists(updatePath)) Directory.Delete(updatePath, true);
                 return;
             }
             var zipFilePath = DownloadUpdate(latestVersion);
@@ -129,13 +136,12 @@ namespace DBDOverlay.Core.Download
             RunCommand($"taskkill /f /im \"{exeName}\" && " +
                 $"timeout /t 1 && " +
                 $"xcopy /i /e /y \"{from}\" \"{to}\" && " +
-                $"\"{exePath}\" &&" +
-                $"exit 0");
+                $"{exePath}");
         }
 
         public List<string> GetDownloadedLanguages()
         {
-            var regex = $@"(?<={TessDataFolder}\\).*(?=.{traineddataExtension})";
+            var regex = $@"(?<={TessDataFolder}\\).*(?={traineddataExtension})";
             return Directory.GetFiles(TessDataFolder.ToProjectPath()).Select(x => Regex.Match(x, regex).Value).ToList();
         }
 
@@ -181,7 +187,7 @@ namespace DBDOverlay.Core.Download
             Process.Start(new ProcessStartInfo
             {
                 FileName = "cmd",
-                Arguments = $"/c {line}",
+                Arguments = $"/c {line} | taskkill /F /IM cmd.exe",
                 WindowStyle = ProcessWindowStyle.Hidden
             });
         }
