@@ -10,7 +10,7 @@ namespace DBDOverlay.Core.Extensions
     {
         public static string ToProjectPath(this string str)
         {
-            var projectPath = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/";
+            var projectPath = $@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\";
             return $@"{projectPath}{str}";
         }
 

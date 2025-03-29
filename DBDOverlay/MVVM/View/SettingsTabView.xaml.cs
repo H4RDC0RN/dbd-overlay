@@ -123,6 +123,7 @@ namespace DBDOverlay.MVVM.View
             Properties.Settings.Default[settingName] = (uint)newModifier;
             Properties.Settings.Default.Save();
 
+            if (newModifier == oldModifier) return;
             Logger.Log.Info($"Modifier for '{hotKeyType}' hotkey is updated");
             Logger.Log.Info($"Old value '{oldModifier}'");
             Logger.Log.Info($"New value '{newModifier}'");
@@ -138,6 +139,7 @@ namespace DBDOverlay.MVVM.View
             Properties.Settings.Default[settingName] = (uint)newKey;
             Properties.Settings.Default.Save();
 
+            if (newKey == oldKey) return;
             Logger.Log.Info($"Key for '{hotKeyType}' hotkey is updated");
             Logger.Log.Info($"Old value '{oldKey}'");
             Logger.Log.Info($"New value '{newKey}'");

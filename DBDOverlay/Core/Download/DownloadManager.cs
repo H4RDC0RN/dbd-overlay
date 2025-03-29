@@ -19,9 +19,9 @@ namespace DBDOverlay.Core.Download
     {
         public event EventHandler<DownloadEventArgs> Downloading;
 
-        private readonly string githubLink = "github.com";
         private readonly string downloadTessDataLink = "https://raw.github.com/tesseract-ocr/tessdata/main/";
         private readonly string releasesLink = "https://github.com/H4RDC0RN/dbd-overlay/releases/";
+        private readonly string githubLink = "github.com";
         private readonly string download = "download";
         private readonly string latest = "latest";
 
@@ -144,14 +144,14 @@ namespace DBDOverlay.Core.Download
         private void DownloadLanguageData(string language)
         {
             language = LanguagesManager.ConvertMexToSpa(language);
-            DownloadFile($"{downloadTessDataLink}{language}{traineddataExtension}", $"{TessDataFolder.ToProjectPath()}/{language}{traineddataExtension}");
+            DownloadFile($"{downloadTessDataLink}{language}{traineddataExtension}", $@"{TessDataFolder.ToProjectPath()}\{language}{traineddataExtension}");
         }
 
         private string DownloadUpdate(string version)
         {
             Directory.CreateDirectory(UpdateFolder.ToProjectPath());
             var fileName = $"{binariesName}{version}{zipExtension}";
-            var path = $"{UpdateFolder.ToProjectPath()}/{fileName}";
+            var path = $@"{UpdateFolder.ToProjectPath()}\{fileName}";
             DownloadFile($"{releasesLink}{download}/{version}/{fileName}", path);
             return path;
         }
@@ -189,7 +189,7 @@ namespace DBDOverlay.Core.Download
 
             var exeName = AppDomain.CurrentDomain.FriendlyName;
             var exePath = Assembly.GetEntryAssembly().Location;
-            var from = $"{UpdateFolder.ToProjectPath()}/{binariesName}{version}";
+            var from = $@"{UpdateFolder.ToProjectPath()}\{binariesName}{version}";
             var to = string.Empty.ToProjectPath();
 
             CmdHelper.RunCommand($"taskkill /f /im \"{exeName}\" && " +

@@ -29,7 +29,7 @@ namespace DBDOverlay
             ReloadSettings();
 
             Logger.Log.Info("---Open Application---");
-            InitializeComponent();            
+            InitializeComponent();
             ScreenshotRecognizer.SetScreenBounds();
 
             mapOverlayTabVM = new MapOverlayTabViewModel();

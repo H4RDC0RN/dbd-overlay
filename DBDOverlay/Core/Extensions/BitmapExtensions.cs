@@ -78,6 +78,8 @@ namespace DBDOverlay.Core.Extensions
 
         public static Bitmap Resize(this Bitmap bitmap, int scale)
         {
+            if (scale == 1) return bitmap;
+
             var oldWidth = bitmap.Width;
             var oldHeight = bitmap.Height;
 

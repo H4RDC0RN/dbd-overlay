@@ -40,21 +40,12 @@ namespace DBDOverlay.Core.Utils
 
         public static void CreateImageMapNameEsc(string path)
         {
-            double xMultiplier = 0.13;
-            double yMultiplier = 0.62;
-            double wMultiplier = 0.36;
-            double hMultiplier = 0.14;
-            var imageWidth = (width * wMultiplier).Round();
-            var imageHeight = (height * hMultiplier).Round();
-            var rect = new Rectangle((width * xMultiplier).Round(), (height * yMultiplier).Round(), imageWidth, imageHeight);
-            Logger.Log.Info($"Screen area: x = {rect.X}, y = {rect.Y}, width = {rect.Width}, height = {rect.Height}");
+            CreateImageFromScreenArea(0.13, 0.62, 0.36, 0.14, path);
+        }
 
-            var captureBitmap = new Bitmap(imageWidth, imageHeight, PixelFormat.Format32bppRgb);
-            var captureGraphics = Graphics.FromImage(captureBitmap);
-            captureGraphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
-            captureBitmap.Save(path, ImageFormat.Png);
-            captureBitmap.Dispose();
-            Logger.Log.Info($"Image is saved to '{path}'");
+        public static void CreateImageMapNameStart(string path)
+        {
+            CreateImageFromScreenArea(0.04, 0.81, 0.56, 0.05, path);
         }
 
         public static void RecognizeText(string imagePath)
@@ -86,11 +77,13 @@ namespace DBDOverlay.Core.Utils
                         if (mapInfo.HasImage)
                         {
                             Logger.Log.Info("Map has image file");
+                            Logger.Log.Info($"=============== Finish getting map info ===============");
                             return mapInfo;
                         }
                         if (scale == maxScale)
                         {
                             Logger.Log.Warn($"Map file for '{mapInfo.FullName}' doesn't exist");
+                            Logger.Log.Info($"=============== Finish getting map info ===============");
                             return new MapInfo(string.Empty, NamesOfMapsContainer.NotReady);
                         }
                     }
@@ -103,6 +96,23 @@ namespace DBDOverlay.Core.Utils
             }
             Logger.Log.Info($"=============== Finish getting map info ===============");
             return new MapInfo(string.Empty, NamesOfMapsContainer.Empty);
+        }
+
+        private static void CreateImageFromScreenArea(double xMultiplier, double yMultiplier, double wMultiplier, double hMultiplier, string path)
+        {
+            var imageWidth = (width * wMultiplier).Round();
+            var imageHeight = (height * hMultiplier).Round();
+            var rect = new Rectangle((width * xMultiplier).Round(), (height * yMultiplier).Round(), imageWidth, imageHeight);
+            Logger.Log.Info($"Screen area: x = {rect.X}, y = {rect.Y}, width = {rect.Width}, height = {rect.Height}");
+
+            var captureBitmap = new Bitmap(imageWidth, imageHeight, PixelFormat.Format32bppRgb);
+            var captureGraphics = Graphics.FromImage(captureBitmap);
+            captureGraphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
+            captureBitmap.Save(path, ImageFormat.Png);
+
+            captureGraphics.Dispose();
+            captureBitmap.Dispose();
+            Logger.Log.Info($"Image is saved to '{path}'");
         }
 
         private static bool IsMapTextCorrect()
