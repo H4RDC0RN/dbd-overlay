@@ -1,5 +1,6 @@
 ﻿using DBDOverlay.Core.MapOverlay;
 using DBDOverlay.Core.Utils;
+using DBDOverlay.Properties;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -9,12 +10,12 @@ namespace DBDOverlay.Core.Hotkeys
     {
         public static void RegisterAllHotKeys()
         {
-            var readModifier = (ModifierKeys)Properties.Settings.Default.ReadModifier;
-            var readKey = (Keys)Properties.Settings.Default.ReadKey;
-            var nextModifier = (ModifierKeys)Properties.Settings.Default.NextMapModifier;
-            var nextKey = (Keys)Properties.Settings.Default.NextMapKey;
-            var previousModifier = (ModifierKeys)Properties.Settings.Default.PreviousMapModifier;
-            var previousKey = (Keys)Properties.Settings.Default.PreviousMapKey;
+            var readModifier = (ModifierKeys)Settings.Default.ReadModifier;
+            var readKey = (Keys)Settings.Default.ReadKey;
+            var nextModifier = (ModifierKeys)Settings.Default.NextMapModifier;
+            var nextKey = (Keys)Settings.Default.NextMapKey;
+            var previousModifier = (ModifierKeys)Settings.Default.PreviousMapModifier;
+            var previousKey = (Keys)Settings.Default.PreviousMapKey;
 
             KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.Read, readModifier, readKey, PressedRead);
             KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.NextMap, nextModifier, nextKey, PressedNext);

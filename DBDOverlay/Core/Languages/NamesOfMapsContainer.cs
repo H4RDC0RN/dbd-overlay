@@ -1,5 +1,6 @@
 ﻿using DBDOverlay.Core.Utils;
 using DBDOverlay.Images.Maps;
+using DBDOverlay.Properties;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -556,26 +557,36 @@ namespace DBDOverlay.Core.Languages
         private static readonly Dictionary<string, List<string>> mapsByLang = LanguagesManager.GetAbbreviations()
             .Zip(maps, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
 
-        public static string GetMapFileName(string mapName)
+        public static string GetMapFileName(string mapFullName)
         {
-            if (Properties.Settings.Default.Language.Equals(LanguagesManager.Eng)) return mapName;
-            var mapsList = mapsByLang.FirstOrDefault(x => x.Key.Equals(Properties.Settings.Default.Language)).Value;
+            if (Settings.Default.Language.Equals(LanguagesManager.Eng)) return mapFullName;
+            var mapsList = mapsByLang.FirstOrDefault(x => x.Key.Equals(Settings.Default.Language)).Value;
 
             int index = -1;
-            if (mapName.Length > maxLength)
+            if (mapFullName.Length > maxLength)
             {
-                mapName = mapName.Substring(0, maxLength);
-                var result = mapsList.FirstOrDefault(x => x.StartsWith(mapName));
-                index = mapsList.IndexOf(result ?? mapName);
+                mapFullName = mapFullName.Substring(0, maxLength);
+                var result = mapsList.FirstOrDefault(x => x.StartsWith(mapFullName));
+                index = mapsList.IndexOf(result ?? mapFullName);
             }
-            else index = mapsList.IndexOf(mapName);
+            else index = mapsList.IndexOf(mapFullName);
 
             if (index == -1)
             {
-                Logger.Log.Warn($"No entry in dictionary for '{mapName}'");
-                return mapName;
+                Logger.Log.Warn($"No entry in dictionary for '{mapFullName}'");
+                return mapFullName;
             }
             return eng[index];
+        }
+
+        public static string GetRealmByName(string name)
+        {
+            var mapsList = mapsByLang.FirstOrDefault(x => x.Key.Equals(Settings.Default.Language)).Value;
+            var result = mapsList.FirstOrDefault(x => x.Split('.')[1].StartsWith(name));
+            if (result == null)
+                return string.Empty;
+            else
+                return result.Split('.')[0];
         }
     }
 }

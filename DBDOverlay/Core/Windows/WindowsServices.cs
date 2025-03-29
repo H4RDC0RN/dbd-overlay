@@ -50,24 +50,16 @@ namespace DBDOverlay.Core.Windows
         [DllImport("user32.dll")]
         static extern int GetWindowText(int hWnd, StringBuilder text, int count);
 
-        private string GetActiveWindowTitle()
-        {
-            const int nChars = 256;
-            var sb = new StringBuilder(nChars);
-            var handle = GetForegroundWindow();
-
-            if (GetWindowText(handle, sb, nChars) > 0)
-            {
-                return sb.ToString();
-            }
-            return string.Empty;
-        }
-
         public void HandleWindowEvent(int hWinEventHook, uint eventType,
             int hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
-            if (GetActiveWindowTitle().Contains(dbdWindowName)) HotKeysController.RegisterAllHotKeys();
+            if (IsDBDActiveWindow()) HotKeysController.RegisterAllHotKeys();
             else HotKeysController.UnregisterAllHotKeys();
+        }
+
+        public bool IsDBDActiveWindow()
+        {
+            return GetActiveWindowTitle().Contains(dbdWindowName);
         }
 
         public void SetWindowExTransparent(int hwnd)
@@ -80,6 +72,19 @@ namespace DBDOverlay.Core.Windows
         {
             var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle * WS_EX_TRANSPARENT);
+        }
+
+        private string GetActiveWindowTitle()
+        {
+            const int nChars = 256;
+            var sb = new StringBuilder(nChars);
+            var handle = GetForegroundWindow();
+
+            if (GetWindowText(handle, sb, nChars) > 0)
+            {
+                return sb.ToString();
+            }
+            return string.Empty;
         }
     }
 }

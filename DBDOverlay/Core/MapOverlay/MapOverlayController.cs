@@ -1,5 +1,4 @@
 ﻿using DBDOverlay.Core.Extensions;
-using DBDOverlay.Core.Languages;
 using DBDOverlay.Core.Utils;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace DBDOverlay.Core.MapOverlay
     public static class MapOverlayController
     {
         private static string realm = string.Empty;
-        private static string name = NamesOfMapsContainer.Empty;
+        private static string name = string.Empty;
         private static readonly int suffixLength = 2;
 
         private static MapOverlayWindow instance;
@@ -18,19 +17,26 @@ namespace DBDOverlay.Core.MapOverlay
             get
             {
                 if (instance == null)
+                {
                     instance = new MapOverlayWindow();
+                    AutoModeManager.Instance.NewMapRecognized += HandleNewMapRecognized;
+                }
                 return instance;
             }
         }
 
         public static void ChangeMap(MapInfo mapInfo)
         {
-            if (mapInfo != null)
-            {
-                realm = mapInfo.Realm;
-                name = mapInfo.Name;
-            }
+            if (!CanMapOverlayBeApplied(mapInfo)) return;
+
+            realm = mapInfo.Realm;
+            name = mapInfo.Name;
             Instance.ChangeMapImageOverlay(mapInfo);
+        }
+
+        public static bool CanMapOverlayBeApplied(MapInfo mapInfo)
+        {
+            return mapInfo != null && !name.StartsWith(mapInfo.Name);
         }
 
         public static void SwitchMapVariationToNext()
@@ -67,6 +73,11 @@ namespace DBDOverlay.Core.MapOverlay
                     Instance.ChangeMapImageOverlay(new MapInfo(realm, name));
                 }
             }
+        }
+
+        private static void HandleNewMapRecognized(object sender, AutoModeEventArgs e)
+        {
+            ChangeMap(e.MapInfo);
         }
     }
 }

@@ -46,12 +46,12 @@ namespace DBDOverlay.Core.Extensions
 
         public static int Increment(this string str)
         {
-            return Convert.ToInt32(str.Last()) + 1;
+            return Convert.ToInt32(str.Last().ToString()) + 1;
         }
 
         public static int Decrement(this string str)
         {
-            return Convert.ToInt32(str.Last()) - 1;
+            return Convert.ToInt32(str.Last().ToString()) - 1;
         }
     }
 }

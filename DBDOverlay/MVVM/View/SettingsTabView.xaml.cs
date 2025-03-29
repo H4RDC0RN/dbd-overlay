@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DBDOverlay.Core.Utils;
+using DBDOverlay.Properties;
 
 namespace DBDOverlay.MVVM.View
 {
@@ -45,16 +46,16 @@ namespace DBDOverlay.MVVM.View
             NextModifierComboBox.ItemsSource = modifiers.Values;
             PreviousModifierComboBox.ItemsSource = modifiers.Values;
 
-            ReadModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Properties.Settings.Default.ReadModifier);
-            NextModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Properties.Settings.Default.NextMapModifier);
-            PreviousModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Properties.Settings.Default.PreviousMapModifier);
+            ReadModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.ReadModifier);
+            NextModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.NextMapModifier);
+            PreviousModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.PreviousMapModifier);
         }
 
         private void SetKeys()
         {
-            ReadKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Properties.Settings.Default.ReadKey).ToString().ToUpper();
-            NextKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Properties.Settings.Default.NextMapKey).ToString().ToUpper();
-            PreviousKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Properties.Settings.Default.PreviousMapKey).ToString().ToUpper();
+            ReadKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.ReadKey).ToString().ToUpper();
+            NextKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.NextMapKey).ToString().ToUpper();
+            PreviousKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.PreviousMapKey).ToString().ToUpper();
         }
 
         private void SetLanguages()
@@ -63,7 +64,7 @@ namespace DBDOverlay.MVVM.View
             if (downloadedLanguages.Contains(LanguagesManager.Spa)) downloadedLanguages.Add(LanguagesManager.Mex);
             var languages = LanguagesManager.GetOrderedKeyValuePairs(downloadedLanguages);
             LanguageComboBox.ItemsSource = languages.Select(x => x.Key);
-            LanguageComboBox.SelectedIndex = languages.Select(x => x.Value).ToList().IndexOf(Properties.Settings.Default.Language);
+            LanguageComboBox.SelectedIndex = languages.Select(x => x.Value).ToList().IndexOf(Settings.Default.Language);
         }
 
         private void SetDownloadLanguages()
@@ -75,8 +76,8 @@ namespace DBDOverlay.MVVM.View
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var newLanguage = LanguagesManager.GetValue(LanguageComboBox.SelectedItem.ToString());
-            Properties.Settings.Default.Language = newLanguage;
-            Properties.Settings.Default.Save();
+            Settings.Default.Language = newLanguage;
+            Settings.Default.Save();
         }
 
         private void Download_Click(object sender, RoutedEventArgs e)
@@ -117,11 +118,11 @@ namespace DBDOverlay.MVVM.View
         private void UpdateModifier(ComboBox comboBox, HotKeyType hotKeyType)
         {
             var settingName = $"{hotKeyType}Modifier";
-            var oldModifier = (ModifierKeys)(uint)Properties.Settings.Default[settingName];
+            var oldModifier = (ModifierKeys)(uint)Settings.Default[settingName];
             var newModifier = modifiers.FirstOrDefault(x => x.Value.Equals(comboBox.SelectedItem.ToString())).Key;
             
-            Properties.Settings.Default[settingName] = (uint)newModifier;
-            Properties.Settings.Default.Save();
+            Settings.Default[settingName] = (uint)newModifier;
+            Settings.Default.Save();
 
             if (newModifier == oldModifier) return;
             Logger.Log.Info($"Modifier for '{hotKeyType}' hotkey is updated");
@@ -132,12 +133,12 @@ namespace DBDOverlay.MVVM.View
         private void UpdateKey(TextBox textBox, HotKeyType hotKeyType, Key key)
         {
             var settingName = $"{hotKeyType}Key";
-            var oldKey = (Keys)(uint)Properties.Settings.Default[settingName];
+            var oldKey = (Keys)(uint)Settings.Default[settingName];
             var newKey = (Keys)KeyInterop.VirtualKeyFromKey(key);
 
             textBox.Text = KeyboardHook.Instance.GetCharFromKey(newKey).ToString().ToUpper();
-            Properties.Settings.Default[settingName] = (uint)newKey;
-            Properties.Settings.Default.Save();
+            Settings.Default[settingName] = (uint)newKey;
+            Settings.Default.Save();
 
             if (newKey == oldKey) return;
             Logger.Log.Info($"Key for '{hotKeyType}' hotkey is updated");

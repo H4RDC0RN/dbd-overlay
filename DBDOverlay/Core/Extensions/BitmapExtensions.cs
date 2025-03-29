@@ -42,7 +42,7 @@ namespace DBDOverlay.Core.Extensions
             return bitmap;
         }
 
-        public static Bitmap ApplyThreshold(this Bitmap bitmap, short thresholdValue = 400)
+        public static Bitmap ApplyThreshold(this Bitmap bitmap, int thresholdValue)
         {
             var bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 ImageLockMode.ReadWrite, PixelFormat.Format32bppRgb);

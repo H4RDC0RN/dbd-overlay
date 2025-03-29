@@ -11,6 +11,8 @@ using DBDOverlay.Core.Windows;
 using System;
 using System.Linq;
 using System.Drawing;
+using DBDOverlay.Properties;
+using DBDOverlay.Core.Languages;
 
 namespace DBDOverlay
 {
@@ -22,7 +24,7 @@ namespace DBDOverlay
         {
             InitializeComponent();
             SetOverlaySettings();
-            AddImageMapOverlay();
+            AddImageMapOverlay(new MapInfo(NamesOfMapsContainer.Empty));
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -33,9 +35,9 @@ namespace DBDOverlay
 
         private void SetOverlaySettings()
         {
-            Opacity = Properties.Settings.Default.OverlayOpacity / 100.0;
-            Left = Properties.Settings.Default.OverlayX;
-            Top = Properties.Settings.Default.OverlayY;
+            Opacity = Settings.Default.OverlayOpacity / 100.0;
+            Left = Settings.Default.OverlayX;
+            Top = Settings.Default.OverlayY;
         }
 
         private void OverlayMouseDown(object sender, MouseButtonEventArgs e)
@@ -47,9 +49,9 @@ namespace DBDOverlay
         private void OverlayMouseUp(object sender, MouseButtonEventArgs e)
         {
             Cursor = Cursors.Hand;
-            Properties.Settings.Default.OverlayX = Left;
-            Properties.Settings.Default.OverlayY = Top;
-            Properties.Settings.Default.Save();
+            Settings.Default.OverlayX = Left;
+            Settings.Default.OverlayY = Top;
+            Settings.Default.Save();
         }
 
         public void ChangeMapImageOverlay(MapInfo mapInfo)
@@ -59,24 +61,17 @@ namespace DBDOverlay
             AddImageMapOverlay(mapInfo);
         }
 
-        private void AddImageMapOverlay(MapInfo mapInfo = null)
+        private void AddImageMapOverlay(MapInfo mapInfo)
         {
             var image = new Image();
-            if (mapInfo == null)
-            {
-                image.Source = MapImages.Empty.ToBitmapImage();
-            }
-            else
-            {
-                var resObject = MapImages.ResourceManager.GetObject(mapInfo.ResourceName);
-                image.Source = resObject == null ? MapImages.NotReady.ToBitmapImage() : ((Bitmap)resObject).ToBitmapImage();
-            }
+            var resObject = MapImages.ResourceManager.GetObject(mapInfo.ResourceName);
 
+            image.Source = resObject == null ? MapImages.NotReady.ToBitmapImage() : ((Bitmap)resObject).ToBitmapImage();
             image.Name = imageElementName;
             image.Stretch = Stretch.Fill;
             image.Width = Width;
             image.Height = Height;
-            image.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            image.HorizontalAlignment = HorizontalAlignment.Center;
             image.VerticalAlignment = VerticalAlignment.Center;
             MapOverlayGrid.Children.Add(image);
         }

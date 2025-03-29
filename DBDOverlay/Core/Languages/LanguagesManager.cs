@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DBDOverlay.Properties;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DBDOverlay.Core.Languages
@@ -53,7 +54,7 @@ namespace DBDOverlay.Core.Languages
 
         public static int GetCurrentLanguageIndex()
         {
-            return langsDictionary.Select(x => x.Value).ToList().IndexOf(Properties.Settings.Default.Language);
+            return langsDictionary.Select(x => x.Value).ToList().IndexOf(Settings.Default.Language);
         }
 
         public static Dictionary<string, string> GetOrderedKeyValuePairs(List<string> values)
@@ -73,7 +74,7 @@ namespace DBDOverlay.Core.Languages
 
         public static string GetMapInfoLocale()
         {
-            return mapsInfoDictionary.FirstOrDefault(x => x.Key.Equals(Properties.Settings.Default.Language)).Value;
+            return mapsInfoDictionary.FirstOrDefault(x => x.Key.Equals(Settings.Default.Language)).Value;
         }
 
         public static string ConvertMexToSpa(string value)

@@ -2,6 +2,7 @@
 using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Languages;
 using DBDOverlay.Core.MapOverlay;
+using DBDOverlay.Properties;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -38,20 +39,10 @@ namespace DBDOverlay.Core.Utils
             }
         }
 
-        public static void CreateImageMapNameEsc(string path)
-        {
-            CreateImageFromScreenArea(0.13, 0.62, 0.36, 0.14, path);
-        }
-
-        public static void CreateImageMapNameStart(string path)
-        {
-            CreateImageFromScreenArea(0.04, 0.81, 0.56, 0.05, path);
-        }
-
         public static void RecognizeText(string imagePath)
         {
             var watch = Stopwatch.StartNew();
-            var value = Properties.Settings.Default.Language;
+            var value = Settings.Default.Language;
             var engine = new TesseractEngine(DownloadManager.Instance.TessDataFolder.ToProjectPath(), LanguagesManager.ConvertMexToSpa(value));
             var image = Pix.LoadFromFile(imagePath);
             text = engine.Process(image).GetText();
@@ -59,21 +50,21 @@ namespace DBDOverlay.Core.Utils
             Logger.Log.Info($"Text from image is recognized ({watch.ElapsedMilliseconds} ms)");
         }
 
-        public static MapInfo GetMapInfo()
+        public static MapInfo GetMapInfo(bool autoMode = false)
         {
             Logger.Log.Info($"=============== Start getting map info ===============");
-            var imagePath = $"{Properties.Settings.Default.ScreenshotFileName}.png".ToProjectPath();
-            CreateImageMapNameEsc(imagePath);
+            var imagePath = $"{Settings.Default.ScreenshotFileName}.png".ToProjectPath();
+            CreateImageFromScreenArea(GetRectMultiplier(autoMode), imagePath);
             for (int scale = 1; scale <= maxScale; scale++)
             {
                 for (int i = 0; i < tries; i++)
                 {
                     Logger.Log.Info($"=============== Size = {scale}, Try = {i + 1} ===============");
-                    RecognizeText(PreProcessImage(imagePath, scale));
-                    if (IsMapTextCorrect())
+                    RecognizeText(PreProcessImage(imagePath, scale, autoMode));
+                    if (IsMapTextCorrect(autoMode))
                     {
                         Logger.Log.Info("Map text is correct");
-                        var mapInfo = ConvertTextToMapInfo();
+                        var mapInfo = ConvertTextToMapInfo(autoMode);
                         if (mapInfo.HasImage)
                         {
                             Logger.Log.Info("Map has image file");
@@ -83,8 +74,6 @@ namespace DBDOverlay.Core.Utils
                         if (scale == maxScale)
                         {
                             Logger.Log.Warn($"Map file for '{mapInfo.FullName}' doesn't exist");
-                            Logger.Log.Info($"=============== Finish getting map info ===============");
-                            return new MapInfo(string.Empty, NamesOfMapsContainer.NotReady);
                         }
                     }
                     else
@@ -95,14 +84,14 @@ namespace DBDOverlay.Core.Utils
                 }
             }
             Logger.Log.Info($"=============== Finish getting map info ===============");
-            return new MapInfo(string.Empty, NamesOfMapsContainer.Empty);
+            return null;
         }
 
-        private static void CreateImageFromScreenArea(double xMultiplier, double yMultiplier, double wMultiplier, double hMultiplier, string path)
+        private static void CreateImageFromScreenArea(RectMultiplier rectMultiplier, string path)
         {
-            var imageWidth = (width * wMultiplier).Round();
-            var imageHeight = (height * hMultiplier).Round();
-            var rect = new Rectangle((width * xMultiplier).Round(), (height * yMultiplier).Round(), imageWidth, imageHeight);
+            var imageWidth = (width * rectMultiplier.Width).Round();
+            var imageHeight = (height * rectMultiplier.Height).Round();
+            var rect = new Rectangle((width * rectMultiplier.X).Round(), (height * rectMultiplier.Y).Round(), imageWidth, imageHeight);
             Logger.Log.Info($"Screen area: x = {rect.X}, y = {rect.Y}, width = {rect.Width}, height = {rect.Height}");
 
             var captureBitmap = new Bitmap(imageWidth, imageHeight, PixelFormat.Format32bppRgb);
@@ -115,21 +104,39 @@ namespace DBDOverlay.Core.Utils
             Logger.Log.Info($"Image is saved to '{path}'");
         }
 
-        private static bool IsMapTextCorrect()
+        private static RectMultiplier GetRectMultiplier(bool autoMode)
         {
-            return text.Contains(LanguagesManager.GetMapInfoLocale()) && text.Contains('\n') && text.ContainsRegex(" - ");
+            return autoMode ? new RectMultiplier(0.04, 0.81, 0.56, 0.05) : new RectMultiplier(0.13, 0.62, 0.36, 0.14);
         }
 
-        private static MapInfo ConvertTextToMapInfo()
+        private static bool IsMapTextCorrect(bool autoMode = false)
         {
-            var res = text.Split(" - ");
-            var realm = res[0].Split('\n').Last().RemoveRegex("'").Replace(" ", "_").ToUpper();
-            var mapName = res[1].Split('\n')[0].RemoveRegex("'").Replace(" ", "_").ToUpper();
-            var mapInfo = new MapInfo(realm, HandleBadhamIssues(mapName));
+            return autoMode
+                ? text.Length > 5 && text.Contains('\n')
+                : text.Contains(LanguagesManager.GetMapInfoLocale()) && text.Contains('\n') && text.ContainsRegex(" - ");
+        }
+
+        private static MapInfo ConvertTextToMapInfo(bool autoMode = false)
+        {
+            var mapInfo = autoMode ? ConvertStartTextToMapInfo() : ConvertEscTextToMapInfo();
 
             Logger.Log.Info("Text is converted to 'Map info' object");
             Logger.Log.Info($"Map info: realm = {mapInfo.Realm}, name = {mapInfo.Name}");
             return mapInfo;
+        }
+
+        private static MapInfo ConvertEscTextToMapInfo()
+        {
+            var res = text.Split(" - ");
+            var realm = res[0].Split('\n').Last().RemoveRegex("'").Replace(" ", "_").ToUpper();
+            var mapName = res[1].Split('\n')[0].RemoveRegex("'").Replace(" ", "_").ToUpper();
+            return new MapInfo(realm, HandleBadhamIssues(mapName));
+        }
+
+        private static MapInfo ConvertStartTextToMapInfo()
+        {
+            var mapName = text.RemoveRegex(@"\n|'").Replace(" ", "_").ToUpper();
+            return new MapInfo(HandleBadhamIssues(mapName), true);
         }
 
         private static string HandleBadhamIssues(string mapName)
@@ -154,21 +161,18 @@ namespace DBDOverlay.Core.Utils
 
         private static string ReplaceSymbol(string mapName, string oldString, string newString)
         {
-            if (mapName.EndsWith(oldString))
-            {
-                if (oldString.StartsWith(@"\")) oldString = $@"\{oldString}";
-                mapName = mapName.ReplaceRegex(oldString, newString);
-                Logger.Log.Info($"'{oldString}' symbol is replaced with '{newString}'");
-                return mapName;
-            }
+            if (!mapName.EndsWith(oldString)) return mapName;
+            if (oldString.StartsWith(@"\")) oldString = $@"\{oldString}";            
+            mapName = mapName.ReplaceRegex(oldString, newString);
+            Logger.Log.Info($"'{oldString}' symbol is replaced with '{newString}'");
             return mapName;
         }
 
-        private static string PreProcessImage(string path, int scale = 1)
+        private static string PreProcessImage(string path, int scale = 1, bool autoMode = false)
         {
-            var newPath = $"{Properties.Settings.Default.ScreenshotFileName}_edited.png".ToProjectPath();
+            var newPath = $"{Settings.Default.ScreenshotFileName}_edited.png".ToProjectPath();
             var image = new Bitmap(path);
-            image.Resize(scale).GrayScale().ApplyThreshold().Save(newPath);
+            image.Resize(scale).GrayScale().ApplyThreshold(autoMode ? 750 : 400).Save(newPath);
             image.Dispose();
             Logger.Log.Info($"Preprocessed image is saved to '{newPath}'");
             return newPath;

@@ -1,6 +1,8 @@
-﻿namespace DBDOverlay.Core.Download
+﻿using System;
+
+namespace DBDOverlay.Core.Download
 {
-    public class DownloadEventArgs
+    public class DownloadEventArgs : EventArgs
     {
         public bool IsDownloading { get; }
 
