@@ -1,4 +1,4 @@
-﻿using DBDOverlay.Core.Utils;
+﻿using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.Windows;
 using System;
 using System.ComponentModel;

@@ -25,13 +25,13 @@ namespace DBDOverlay.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("test")]
-        public string ScreenshotFileName {
+        [global::System.Configuration.DefaultSettingValueAttribute("manual")]
+        public string ManualScreenshotFileName {
             get {
-                return ((string)(this["ScreenshotFileName"]));
+                return ((string)(this["ManualScreenshotFileName"]));
             }
             set {
-                this["ScreenshotFileName"] = value;
+                this["ManualScreenshotFileName"] = value;
             }
         }
         
@@ -164,6 +164,18 @@ namespace DBDOverlay.Properties {
             }
             set {
                 this["PreviousMapKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("auto")]
+        public string AutoScreenshotFileName {
+            get {
+                return ((string)(this["AutoScreenshotFileName"]));
+            }
+            set {
+                this["AutoScreenshotFileName"] = value;
             }
         }
     }

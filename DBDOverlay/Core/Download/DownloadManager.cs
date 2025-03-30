@@ -25,9 +25,6 @@ namespace DBDOverlay.Core.Download
         private readonly string download = "download";
         private readonly string latest = "latest";
 
-        public readonly string TessDataFolder = "Tessdata";
-        private readonly string UpdateFolder = "Update";
-
         private readonly string traineddataExtension = ".traineddata";
         private readonly string zipExtension = ".zip";
 
@@ -56,7 +53,7 @@ namespace DBDOverlay.Core.Download
                 }
                 catch
                 {
-                    Logger.Log.Error($"Can't connect to {githubLink}");
+                    Logger.Error($"Can't connect to {githubLink}");
                     return false;
                 }
             }
@@ -97,11 +94,10 @@ namespace DBDOverlay.Core.Download
 
         public void DownloadDefaultLanguage()
         {
-            Directory.CreateDirectory(TessDataFolder.ToProjectPath());
             if (GetDownloadedLanguages().Count == 0)
             {
                 DownloadLanguage(LanguagesManager.Eng);
-                Logger.Log.Info($"Default language is downloaded ({LanguagesManager.Eng})");
+                Logger.Info($"Default language is downloaded ({LanguagesManager.Eng})");
             }
         }
 
@@ -115,50 +111,50 @@ namespace DBDOverlay.Core.Download
 
             if (currentVersionNumber >= latestVersionNumber)
             {
-                Logger.Log.Info($"Application has latest version ({CurrentVersion})");
-                var updatePath = UpdateFolder.ToProjectPath();
+                Logger.Info($"Application has latest version ({CurrentVersion})");
+                var updatePath = Folders.Update;
                 if (Directory.Exists(updatePath))
                 {
                     Directory.Delete(updatePath, true);
-                    Logger.Log.Info("Update folder is deleted");
+                    Logger.Info("Update folder is deleted");
                 }
                 return;
             }
 
-            Logger.Log.Info($"New application version is available ({latestVersion})");
+            Logger.Info($"New application version is available ({latestVersion})");
             var zipFilePath = DownloadUpdate(latestVersion);
 
-            ZipFile.ExtractToDirectory(zipFilePath, UpdateFolder.ToProjectPath());
+            ZipFile.ExtractToDirectory(zipFilePath, Folders.Update);
             File.Delete(zipFilePath);
-            Logger.Log.Info("Zip file with update is unpacked");
+            Logger.Info("Zip file with update is unpacked");
 
             InstallUpdate(latestVersion);
         }
 
         public List<string> GetDownloadedLanguages()
         {
-            var regex = $@"(?<={TessDataFolder}\\).*(?={traineddataExtension})";
-            return Directory.GetFiles(TessDataFolder.ToProjectPath()).Select(x => Regex.Match(x, regex).Value).ToList();
+            var regex = $@"(?<={Folders.TessData.Split(@"\").Last()}\\).*(?={traineddataExtension})";
+            return Directory.GetFiles(Folders.TessData).Select(x => Regex.Match(x, regex).Value).ToList();
         }
 
         private void DownloadLanguageData(string language)
         {
             language = LanguagesManager.ConvertMexToSpa(language);
-            DownloadFile($"{downloadTessDataLink}{language}{traineddataExtension}", $@"{TessDataFolder.ToProjectPath()}\{language}{traineddataExtension}");
+            DownloadFile($"{downloadTessDataLink}{language}{traineddataExtension}", $@"{Folders.TessData}\{language}{traineddataExtension}");
         }
 
         private string DownloadUpdate(string version)
         {
-            Directory.CreateDirectory(UpdateFolder.ToProjectPath());
+            Directory.CreateDirectory(Folders.Update);
             var fileName = $"{binariesName}{version}{zipExtension}";
-            var path = $@"{UpdateFolder.ToProjectPath()}\{fileName}";
+            var path = $@"{Folders.Update}\{fileName}";
             DownloadFile($"{releasesLink}{download}/{version}/{fileName}", path);
             return path;
         }
 
         private void DownloadFile(string url, string path)
         {
-            Logger.Log.Info($"Start downloading file from '{url}'");
+            Logger.Info($"Start downloading file from '{url}'");
             using (var client = new HttpClient())
             {
                 SaveFile(path, client.GetByteArrayAsync(url).Result);
@@ -170,9 +166,9 @@ namespace DBDOverlay.Core.Download
             if (content != null)
             {
                 File.WriteAllBytes(path, content);
-                Logger.Log.Info($"Downloaded file is saved to '{path}'");
+                Logger.Info($"Downloaded file is saved to '{path}'");
             }
-            else Logger.Log.Warn("Downloaded content is null");
+            else Logger.Warn("Downloaded content is null");
         }
 
         private string GetLatestVersion()
@@ -185,11 +181,11 @@ namespace DBDOverlay.Core.Download
 
         private void InstallUpdate(string version)
         {
-            Logger.Log.Info($"Installation version {version}");
+            Logger.Info($"Installation version {version}");
 
             var exeName = AppDomain.CurrentDomain.FriendlyName;
             var exePath = Assembly.GetEntryAssembly().Location;
-            var from = $@"{UpdateFolder.ToProjectPath()}\{binariesName}{version}";
+            var from = $@"{Folders.Update}\{binariesName}{version}";
             var to = string.Empty.ToProjectPath();
 
             CmdHelper.RunCommand($"taskkill /f /im \"{exeName}\" && " +

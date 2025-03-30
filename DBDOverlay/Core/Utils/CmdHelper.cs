@@ -6,7 +6,7 @@ namespace DBDOverlay.Core.Utils
     {
         public static void RunCommand(string line)
         {
-            Logger.Log.Info("Run cmd command");
+            Logger.Info("Run cmd command");
             Process.Start(new ProcessStartInfo
             {
                 FileName = "cmd",

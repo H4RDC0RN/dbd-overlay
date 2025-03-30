@@ -125,9 +125,9 @@ namespace DBDOverlay.MVVM.View
             Settings.Default.Save();
 
             if (newModifier == oldModifier) return;
-            Logger.Log.Info($"Modifier for '{hotKeyType}' hotkey is updated");
-            Logger.Log.Info($"Old value '{oldModifier}'");
-            Logger.Log.Info($"New value '{newModifier}'");
+            Logger.Info($"Modifier for '{hotKeyType}' hotkey is updated");
+            Logger.Info($"Old value '{oldModifier}'");
+            Logger.Info($"New value '{newModifier}'");
         }
 
         private void UpdateKey(TextBox textBox, HotKeyType hotKeyType, Key key)
@@ -141,9 +141,9 @@ namespace DBDOverlay.MVVM.View
             Settings.Default.Save();
 
             if (newKey == oldKey) return;
-            Logger.Log.Info($"Key for '{hotKeyType}' hotkey is updated");
-            Logger.Log.Info($"Old value '{oldKey}'");
-            Logger.Log.Info($"New value '{newKey}'");
+            Logger.Info($"Key for '{hotKeyType}' hotkey is updated");
+            Logger.Info($"Old value '{oldKey}'");
+            Logger.Info($"New value '{newKey}'");
         }
 
         private void HandleDownloading(object sender, DownloadEventArgs e)

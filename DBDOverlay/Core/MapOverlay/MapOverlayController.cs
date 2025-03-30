@@ -50,7 +50,7 @@ namespace DBDOverlay.Core.MapOverlay
             if (mapInfo.HasImage)
             {
                 name = newName;
-                Logger.Log.Info($"Switching map variation to '{name}'");
+                Logger.Info($"Switching map variation to '{name}'");
                 Instance.ChangeMapImageOverlay(mapInfo);
             }
         }
@@ -63,13 +63,13 @@ namespace DBDOverlay.Core.MapOverlay
                 if (suffix.Last().ToString().Equals("2"))
                 {
                     name = name.RemoveRegex(suffix);
-                    Logger.Log.Info($"Switching map variation to '{name}'");
+                    Logger.Info($"Switching map variation to '{name}'");
                     Instance.ChangeMapImageOverlay(new MapInfo(realm, name));
                 }
                 else
                 {
                     name = name.Replace(suffix, $"_{suffix.Decrement()}");
-                    Logger.Log.Info($"Switching map variation to '{name}'");
+                    Logger.Info($"Switching map variation to '{name}'");
                     Instance.ChangeMapImageOverlay(new MapInfo(realm, name));
                 }
             }

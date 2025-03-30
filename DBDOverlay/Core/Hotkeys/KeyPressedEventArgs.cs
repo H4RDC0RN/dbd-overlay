@@ -18,7 +18,7 @@ namespace DBDOverlay.Core.Hotkeys
 
         public void Log(string hotKeyName)
         {
-            Logger.Log.Info($"'{hotKeyName}' hotkey is pressed ({Modifier} + {Key})");
+            Logger.Info($"'{hotKeyName}' hotkey is pressed ({Modifier} + {Key})");
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DBDUtilityOverlay.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DBDOverlay.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ScreenshotFileName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">test</Value>
+    <Setting Name="ManualScreenshotFileName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">manual</Value>
     </Setting>
     <Setting Name="OverlayX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -37,6 +37,9 @@
     </Setting>
     <Setting Name="PreviousMapKey" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">219</Value>
+    </Setting>
+    <Setting Name="AutoScreenshotFileName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">auto</Value>
     </Setting>
   </Settings>
 </SettingsFile>

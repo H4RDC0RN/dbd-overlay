@@ -1,4 +1,4 @@
-﻿namespace DBDOverlay.Core.Utils
+﻿namespace DBDOverlay.Core.ImageProcessing
 {
     public class RectMultiplier
     {

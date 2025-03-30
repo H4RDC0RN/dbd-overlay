@@ -1,5 +1,5 @@
-﻿using DBDOverlay.Core.MapOverlay;
-using DBDOverlay.Core.Utils;
+﻿using DBDOverlay.Core.ImageProcessing;
+using DBDOverlay.Core.MapOverlay;
 using DBDOverlay.Properties;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -35,7 +35,14 @@ namespace DBDOverlay.Core.Hotkeys
         private static void PressedRead(object sender, KeyPressedEventArgs e)
         {
             e.Log("Read map");
-            MapOverlayController.ChangeMap(ScreenshotRecognizer.GetMapInfo());
+            if (AutoModeManager.Instance.IsAutoMode)
+            {
+                AutoModeManager.Instance.StopAutoMode();
+                MapOverlayController.ChangeMap(ScreenshotRecognizer.GetMapInfo());
+                AutoModeManager.Instance.RunAutoMode();
+            }
+            else
+                MapOverlayController.ChangeMap(ScreenshotRecognizer.GetMapInfo());
         }
 
         private static void PressedNext(object sender, KeyPressedEventArgs e)

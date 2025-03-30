@@ -19,7 +19,7 @@ namespace DBDOverlay.Core.Languages
             var resources = MapImages.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
             if (resources == null)
             {
-                Logger.Log.Warn("MapImages resources are null");
+                Logger.Warn("MapImages resources are null");
                 return new List<string>();
             }
             else
@@ -573,7 +573,7 @@ namespace DBDOverlay.Core.Languages
 
             if (index == -1)
             {
-                Logger.Log.Warn($"No entry in dictionary for '{mapFullName}'");
+                Logger.Warn($"No entry in dictionary for '{mapFullName}'");
                 return mapFullName;
             }
             return eng[index];

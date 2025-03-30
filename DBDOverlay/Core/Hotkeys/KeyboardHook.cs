@@ -42,8 +42,8 @@ namespace DBDOverlay.Core.Hotkeys
         {
             if (_window.KeyPressedEvents.ContainsKey(id))
             {
-                Logger.Log.Warn($"Hot key with id '{id}' already exists");
-                Logger.Log.Warn($"Modifier = '{id}',  key = '{key}'");
+                Logger.Warn($"Hot key with id '{id}' already exists");
+                Logger.Warn($"Modifier = '{id}',  key = '{key}'");
                 return;
             }
 
