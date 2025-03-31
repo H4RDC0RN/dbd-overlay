@@ -75,8 +75,9 @@ namespace DBDOverlay.Core.MapOverlay
             }
         }
 
-        private static void HandleNewMapRecognized(object sender, AutoModeEventArgs e)
+        private static void HandleNewMapRecognized(object sender, NewMapEventArgs e)
         {
+            e.Log();
             ChangeMap(e.MapInfo);
         }
     }

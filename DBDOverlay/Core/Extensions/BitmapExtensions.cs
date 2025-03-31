@@ -1,5 +1,4 @@
-﻿using DBDOverlay.Core.Utils;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
@@ -38,7 +37,6 @@ namespace DBDOverlay.Core.Extensions
                     bitmap.SetPixel(x, y, Color.FromArgb(rgb, rgb, rgb));
                 }
             }
-            Logger.ConditionalInfo("Image is greyscaled");
             return bitmap;
         }
 
@@ -71,8 +69,7 @@ namespace DBDOverlay.Core.Extensions
                     ptr += 4;
                 }
             }
-            bitmap.UnlockBits(bmpData);
-            Logger.ConditionalInfo($"Threshold is applied to image with value '{thresholdValue}'");
+            bitmap.UnlockBits(bmpData);            
             return bitmap;
         }
 
@@ -80,11 +77,8 @@ namespace DBDOverlay.Core.Extensions
         {
             if (scale == 1) return bitmap;
 
-            var oldWidth = bitmap.Width;
-            var oldHeight = bitmap.Height;
-
-            var newWidth = oldWidth * scale;
-            var newHeight = oldHeight * scale;
+            var newWidth = bitmap.Width * scale;
+            var newHeight = bitmap.Height * scale;
 
             var result = new Bitmap(newWidth, newHeight);
             using (var graphics = Graphics.FromImage(result))
@@ -94,10 +88,6 @@ namespace DBDOverlay.Core.Extensions
                 graphics.SmoothingMode = SmoothingMode.HighQuality;
                 graphics.DrawImage(bitmap, 0, 0, newWidth, newHeight);
             }
-
-            Logger.ConditionalInfo($"Image is resized with scale '{scale}'");
-            Logger.ConditionalInfo($"Old size: width = '{oldWidth}', height = '{oldHeight}'");
-            Logger.ConditionalInfo($"New size: width = '{newWidth}', height = '{newHeight}'");
 
             return result;
         }

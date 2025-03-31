@@ -26,7 +26,7 @@ namespace DBDOverlay.Core.Download
         private readonly string latest = "latest";
 
         private readonly string traineddataExtension = ".traineddata";
-        private readonly string zipExtension = ".zip";
+        private readonly string zip = "zip";
 
         private readonly string binariesName = "dbd-overlay-";
 
@@ -146,7 +146,7 @@ namespace DBDOverlay.Core.Download
         private string DownloadUpdate(string version)
         {
             Directory.CreateDirectory(Folders.Update);
-            var fileName = $"{binariesName}{version}{zipExtension}";
+            var fileName = $"{binariesName}{version}.{zip}";
             var path = $@"{Folders.Update}\{fileName}";
             DownloadFile($"{releasesLink}{download}/{version}/{fileName}", path);
             return path;

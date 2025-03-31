@@ -1,5 +1,4 @@
-﻿using DBDOverlay.Core.MapOverlay;
-using log4net;
+﻿using log4net;
 
 namespace DBDOverlay.Core.Utils
 {
@@ -35,16 +34,6 @@ namespace DBDOverlay.Core.Utils
         public static void Fatal(string message)
         {
             Log.Fatal(message);
-        }
-
-        public static void ConditionalInfo(string message)
-        {
-            if (!AutoModeManager.Instance.IsAutoMode) Log.Info(message);
-        }
-
-        public static void ConditionalWarn(string message)
-        {
-            if (!AutoModeManager.Instance.IsAutoMode) Log.Warn(message);
         }
     }
 }

@@ -9,9 +9,9 @@ namespace DBDOverlay.Core.MapOverlay
     public class AutoModeManager
     {
         public bool IsAutoMode { get; set; } = false;
-        public event EventHandler<AutoModeEventArgs> NewMapRecognized;
+        public event EventHandler<NewMapEventArgs> NewMapRecognized;
         private static AutoModeManager instance;
-        private static readonly BackgroundWorker worker = new BackgroundWorker();
+        private readonly BackgroundWorker worker = new BackgroundWorker();
 
         public static AutoModeManager Instance
         {
@@ -27,6 +27,7 @@ namespace DBDOverlay.Core.MapOverlay
         {
             IsAutoMode = true;
             worker.WorkerSupportsCancellation = true;
+            worker.WorkerReportsProgress = true;
             worker.DoWork += (s, e) =>
             {
                 while (IsAutoMode)
@@ -38,7 +39,7 @@ namespace DBDOverlay.Core.MapOverlay
                         {
                             Application.Current.Dispatcher.Invoke(() =>
                             {
-                                NewMapRecognized?.Invoke(this, new AutoModeEventArgs(mapInfo));
+                                NewMapRecognized?.Invoke(this, new NewMapEventArgs(mapInfo));
                             });
                         }
                     }
@@ -51,6 +52,7 @@ namespace DBDOverlay.Core.MapOverlay
         {
             IsAutoMode = false;
             worker.CancelAsync();
+            worker.Dispose();
         }
     }
 }

@@ -35,14 +35,7 @@ namespace DBDOverlay.Core.Hotkeys
         private static void PressedRead(object sender, KeyPressedEventArgs e)
         {
             e.Log("Read map");
-            if (AutoModeManager.Instance.IsAutoMode)
-            {
-                AutoModeManager.Instance.StopAutoMode();
-                MapOverlayController.ChangeMap(ScreenshotRecognizer.GetMapInfo());
-                AutoModeManager.Instance.RunAutoMode();
-            }
-            else
-                MapOverlayController.ChangeMap(ScreenshotRecognizer.GetMapInfo());
+            MapOverlayController.ChangeMap(ScreenshotRecognizer.GetMapInfo());
         }
 
         private static void PressedNext(object sender, KeyPressedEventArgs e)
