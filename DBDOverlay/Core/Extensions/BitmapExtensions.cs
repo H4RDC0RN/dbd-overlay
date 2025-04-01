@@ -26,21 +26,7 @@ namespace DBDOverlay.Core.Extensions
             }
         }
 
-        public static Bitmap GrayScale(this Bitmap bitmap)
-        {
-            for (int y = 0; y < bitmap.Height; y++)
-            {
-                for (int x = 0; x < bitmap.Width; x++)
-                {
-                    var c = bitmap.GetPixel(x, y);
-                    var rgb = (c.R + c.G + c.B) / 3;
-                    bitmap.SetPixel(x, y, Color.FromArgb(rgb, rgb, rgb));
-                }
-            }
-            return bitmap;
-        }
-
-        public static Bitmap ApplyThreshold(this Bitmap bitmap, int thresholdValue)
+        public static Bitmap ConvertToBlackWhite(this Bitmap bitmap, int thresholdValue)
         {
             var bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 ImageLockMode.ReadWrite, PixelFormat.Format32bppRgb);
@@ -69,26 +55,25 @@ namespace DBDOverlay.Core.Extensions
                     ptr += 4;
                 }
             }
-            bitmap.UnlockBits(bmpData);            
+            bitmap.UnlockBits(bmpData);
             return bitmap;
         }
 
-        public static Bitmap Resize(this Bitmap bitmap, int scale)
+        public static Bitmap Resize(this Bitmap bitmap, double scale)
         {
             if (scale == 1) return bitmap;
 
             var newWidth = bitmap.Width * scale;
             var newHeight = bitmap.Height * scale;
 
-            var result = new Bitmap(newWidth, newHeight);
+            var result = new Bitmap((int)newWidth, (int)newHeight);
             using (var graphics = Graphics.FromImage(result))
             {
                 graphics.CompositingQuality = CompositingQuality.HighQuality;
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.DrawImage(bitmap, 0, 0, newWidth, newHeight);
+                graphics.DrawImage(bitmap, 0, 0, (int)newWidth, (int)newHeight);
             }
-
             return result;
         }
     }

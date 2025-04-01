@@ -19,9 +19,13 @@ namespace DBDOverlay.Core.ImageProcessing
     {
         private static int width;
         private static int height;
-        private static readonly int maxScale = 3;
+        private static readonly double maxScaleManual = 3;
+        private static readonly double maxScaleAuto = 1.5;
+        private static readonly double scaleStepManual = 1;
+        private static readonly double scaleStepAuto = 0.5;
         private static readonly int maxTreshold = 750;
         private static readonly int minTreshold = 400;
+        private static readonly int tresholdStep = 50;
         private static readonly string png = "png";
         private static string text = string.Empty;
 
@@ -48,9 +52,12 @@ namespace DBDOverlay.Core.ImageProcessing
             var imagePath = $@"{Folders.Images}\{GetFileName(autoMode)}.{png}";
             var watch = Stopwatch.StartNew();
             CreateImageFromScreenArea(GetRectMultiplier(autoMode), imagePath, log);
-            for (int scale = 1; scale <= (autoMode ? 1 : maxScale); scale++)
+
+            var maxScale = autoMode ? maxScaleAuto : maxScaleManual;
+            var scaleStep = autoMode ? scaleStepAuto : scaleStepManual;
+            for (double scale = 1; scale <= maxScale; scale += scaleStep)
             {
-                for (int treshold = autoMode ? maxTreshold : minTreshold; treshold >= minTreshold; treshold -= 50)
+                for (int treshold = autoMode ? maxTreshold : minTreshold; treshold >= minTreshold; treshold -= tresholdStep)
                 {
                     if (log) Logger.Info($"===== Size = {scale}, Treshold = {treshold} =====");
                     RecognizeText(PreProcessImage(imagePath, scale, treshold, true, log), log);
@@ -65,7 +72,7 @@ namespace DBDOverlay.Core.ImageProcessing
                             var time = watch.ElapsedMilliseconds;
                             mapInfo.Scale = scale;
                             mapInfo.Treshold = treshold;
-                            mapInfo.Time = time;
+                            mapInfo.Time = time;                            
                             if (log) Logger.Info($"=============== Finish getting map info ===============");
                             if (log) Logger.Info($"=============== ({time} ms) ===============");
                             return mapInfo;
@@ -123,7 +130,7 @@ namespace DBDOverlay.Core.ImageProcessing
         private static bool IsMapTextCorrect(bool autoMode = false)
         {
             return autoMode
-                ? text.Length > 5 && text.Contains('\n')
+                ? text.Length > 5 && text.ContainsRegex(@"\w")
                 : text.Contains(LanguagesManager.GetMapInfoLocale()) && text.Contains('\n') && text.ContainsRegex(" - ");
         }
 
@@ -146,7 +153,7 @@ namespace DBDOverlay.Core.ImageProcessing
 
         private static MapInfo ConvertStartTextToMapInfo()
         {
-            var mapName = text.RemoveRegex(@"\n|'|\.").Replace(" ", "_").RemoveRegex(@"_{1,}$").ToUpper();
+            var mapName = text.RemoveRegex(@"\n|'|\.").Replace(" ", "_").RemoveRegex(@"^_{1,}").ToUpper();
             return new MapInfo(HandleBadhamIssues(mapName, false), true);
         }
 
@@ -179,12 +186,11 @@ namespace DBDOverlay.Core.ImageProcessing
             return mapName;
         }
 
-        private static string PreProcessImage(string path, int scale = 1, int treshold = 400, bool saveAsNew = false, bool log = true)
+        private static string PreProcessImage(string path, double scale = 1, int treshold = 400, bool saveAsNew = false, bool log = true)
         {
             var newPath = saveAsNew ? path.ReplaceRegex($@"\.{png}", $"_edited.{png}") : path;
             var image = new Bitmap(path);
-            image.Resize(scale).GrayScale().ApplyThreshold(treshold).Save(newPath);
-
+            image.Resize(scale).ConvertToBlackWhite(treshold).Save(newPath);
             image.Dispose();
             if (log) Logger.Info($"Preprocessed image is saved to '{newPath}'");
             return newPath;

@@ -1,4 +1,5 @@
-﻿using DBDOverlay.Core.Utils;
+﻿using DBDOverlay.Core.Extensions;
+using DBDOverlay.Core.Utils;
 using DBDOverlay.Images.Maps;
 using DBDOverlay.Properties;
 using System.Collections;
@@ -12,7 +13,7 @@ namespace DBDOverlay.Core.Languages
     {
         public static readonly string Empty = "Empty";
         public static readonly string NotReady = "NotReady";
-        private static readonly int maxLength = 48;
+        private static readonly int maxFullNameLength = 48;
 
         private static List<string> GetNamesOfMaps()
         {
@@ -563,9 +564,9 @@ namespace DBDOverlay.Core.Languages
             var mapsList = mapsByLang.FirstOrDefault(x => x.Key.Equals(Settings.Default.Language)).Value;
 
             int index = -1;
-            if (mapFullName.Length > maxLength)
+            if (mapFullName.Length > maxFullNameLength)
             {
-                mapFullName = mapFullName.Substring(0, maxLength);
+                mapFullName = mapFullName.Substring(0, maxFullNameLength);
                 var result = mapsList.FirstOrDefault(x => x.StartsWith(mapFullName));
                 index = mapsList.IndexOf(result ?? mapFullName);
             }
@@ -579,14 +580,32 @@ namespace DBDOverlay.Core.Languages
             return eng[index];
         }
 
-        public static string GetRealmByName(string name)
+        public static string GetRealmByRecognizedName(string recognizedName)
         {
-            var mapsList = mapsByLang.FirstOrDefault(x => x.Key.Equals(Settings.Default.Language)).Value;
-            var result = mapsList.FirstOrDefault(x => x.Split('.')[1].StartsWith(name));
+            var result = GetFullMapName(recognizedName);
             if (result == null)
                 return string.Empty;
             else
                 return result.Split('.')[0];
+        }
+
+        public static string GetNameByRecognizedName(string recognizedName)
+        {
+            var result = GetFullMapName(recognizedName);
+            if (result == null)
+                return recognizedName;
+            else
+                return result.Split('.')[1];
+        }
+
+        private static string GetFullMapName(string recognizedName)
+        {
+            var mapsList = mapsByLang.FirstOrDefault(x => x.Key.Equals(Settings.Default.Language)).Value;
+            
+            if (recognizedName.ContainsRegex(@"_{1,}$"))
+                return mapsList.FirstOrDefault(x => recognizedName.StartsWith(x.Split('.')[1]));
+            else
+                return mapsList.FirstOrDefault(x => x.Split('.')[1].Equals(recognizedName));
         }
     }
 }

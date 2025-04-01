@@ -36,7 +36,7 @@ namespace DBDOverlay.Core.MapOverlay
 
         public static bool CanMapOverlayBeApplied(MapInfo mapInfo)
         {
-            return mapInfo != null && !name.StartsWith(mapInfo.Name);
+            return mapInfo != null && !name.Equals(mapInfo.Name);
         }
 
         public static void SwitchMapVariationToNext()

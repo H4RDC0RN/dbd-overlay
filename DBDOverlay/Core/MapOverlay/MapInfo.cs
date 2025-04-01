@@ -7,7 +7,7 @@ namespace DBDOverlay.Core.MapOverlay
     {
         public string Realm { get; set; }
         public string Name { get; set; }
-        public int Scale { get; set; }
+        public double Scale { get; set; }
         public int Treshold { get; set; }
         public long Time { get; set; }
 
@@ -19,8 +19,8 @@ namespace DBDOverlay.Core.MapOverlay
 
         public MapInfo(string name, bool addRealm = false)
         {
-            Name = name;
-            Realm = addRealm ? NamesOfMapsContainer.GetRealmByName(name) : string.Empty;
+            Name = addRealm ? NamesOfMapsContainer.GetNameByRecognizedName(name) : name;
+            Realm = addRealm ? NamesOfMapsContainer.GetRealmByRecognizedName(name) : string.Empty;
         }
 
         public string FullName => Realm != string.Empty ? $@"{Realm}.{Name}" : Name;
