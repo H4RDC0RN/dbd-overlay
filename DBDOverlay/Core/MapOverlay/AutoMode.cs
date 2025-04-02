@@ -6,32 +6,32 @@ using Application = System.Windows.Application;
 
 namespace DBDOverlay.Core.MapOverlay
 {
-    public class AutoModeManager
+    public class AutoMode
     {
-        public bool IsAutoMode { get; set; } = false;
+        public bool IsActive { get; set; } = false;
         public event EventHandler<NewMapEventArgs> NewMapRecognized;
-        private static AutoModeManager instance;
+        private static AutoMode instance;
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
-        public static AutoModeManager Instance
+        public static AutoMode Instance
         {
             get
             {
                 if (instance == null)
-                    instance = new AutoModeManager();
+                    instance = new AutoMode();
                 return instance;
             }
         }
 
-        public void RunAutoMode()
+        public void Run()
         {
-            IsAutoMode = true;
+            IsActive = true;
             NewMapRecognized += MapOverlayController.Instance.HandleNewMapRecognized;
             worker.WorkerSupportsCancellation = true;
             worker.WorkerReportsProgress = true;
             worker.DoWork += (s, e) =>
             {
-                while (IsAutoMode)
+                while (IsActive)
                 {
                     if (WindowsServices.Instance.IsDBDActiveWindow())
                     {
@@ -49,9 +49,9 @@ namespace DBDOverlay.Core.MapOverlay
             worker.RunWorkerAsync();
         }
 
-        public void StopAutoMode()
+        public void Stop()
         {
-            IsAutoMode = false;
+            IsActive = false;
             worker.CancelAsync();
             worker.Dispose();
         }

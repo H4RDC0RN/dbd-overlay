@@ -4,6 +4,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
+using System.Windows.Interop;
 
 namespace DBDOverlay.Core.Windows
 {
@@ -17,6 +18,7 @@ namespace DBDOverlay.Core.Windows
         private const int GWL_EXSTYLE = -20;
         private const uint WINEVENT_OUTOFCONTEXT = 0;
         private const uint EVENT_SYSTEM_FOREGROUND = 3;
+
         private readonly string dbdWindowName = "DeadByDaylight";
         private readonly string appWindowName = "DBD Overlay";
         private readonly string overlayWindowName = "Map overlay";
@@ -32,7 +34,8 @@ namespace DBDOverlay.Core.Windows
         {
             get
             {
-                instance = instance ?? new WindowsServices();
+                if (instance == null)
+                    instance = new WindowsServices();
                 return instance;
             }
         }
@@ -73,16 +76,18 @@ namespace DBDOverlay.Core.Windows
             return GetActiveWindowTitle().Equals(appWindowName) || GetActiveWindowTitle().Equals(overlayWindowName);
         }
 
-        public void SetWindowExTransparent(int hwnd)
+        public int SetWindowExTransparent(Window window)
         {
+            var hwnd = new WindowInteropHelper(window).Handle.ToInt32();
             var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
+            return extendedStyle;
         }
 
-        public void RevertWindowExTransparent(int hwnd)
+        public void RevertWindowExTransparent(Window window, int extendedStyle)
         {
-            var extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-            SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle * WS_EX_TRANSPARENT);
+            var hwnd = new WindowInteropHelper(window).Handle.ToInt32();
+            SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle);
         }
 
         private void HandleHotkeys()

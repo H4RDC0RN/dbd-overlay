@@ -3,7 +3,6 @@ using DBDOverlay.Core.Windows;
 using DBDOverlay.Properties;
 using System;
 using System.Windows;
-using System.Windows.Interop;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace DBDOverlay.MVVM.View
@@ -15,7 +14,7 @@ namespace DBDOverlay.MVVM.View
             InitializeComponent();
             OpenCloseToggleButton.IsChecked = Settings.Default.IsOverlayOpened;
             OpacitySlider.Value = Settings.Default.OverlayOpacity;
-            AutoModeToggleButton.IsChecked = AutoModeManager.Instance.IsAutoMode ? true : AutoModeToggleButton.IsChecked = Settings.Default.IsAutoModeOn;
+            AutoModeToggleButton.IsChecked = AutoMode.Instance.IsActive ? true : AutoModeToggleButton.IsChecked = Settings.Default.IsAutoModeOn;
 
             if (MapOverlayController.Instance.CanBeMoved) MoveToggleButton.IsChecked = true;
 
@@ -39,12 +38,12 @@ namespace DBDOverlay.MVVM.View
         private void Move_Checked(object sender, RoutedEventArgs e)
         {
             MapOverlayController.Instance.CanBeMoved = true;
-            WindowsServices.Instance.RevertWindowExTransparent(new WindowInteropHelper(MapOverlayController.Overlay).Handle.ToInt32());
+            WindowsServices.Instance.RevertWindowExTransparent(MapOverlayController.Overlay, MapOverlayController.Overlay.DefaultStyle);
         }
 
         private void Move_Unchecked(object sender, RoutedEventArgs e)
         {
-            WindowsServices.Instance.SetWindowExTransparent(new WindowInteropHelper(MapOverlayController.Overlay).Handle.ToInt32());
+            MapOverlayController.Overlay.DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(MapOverlayController.Overlay);
             MapOverlayController.Instance.CanBeMoved = false;
         }
 
@@ -59,9 +58,9 @@ namespace DBDOverlay.MVVM.View
 
         private void AutoMode_Checked(object sender, RoutedEventArgs e)
         {
-            if (!AutoModeManager.Instance.IsAutoMode)
+            if (!AutoMode.Instance.IsActive)
             {
-                AutoModeManager.Instance.RunAutoMode();
+                AutoMode.Instance.Run();
                 Settings.Default.IsAutoModeOn = true;
                 Settings.Default.Save();
             }
@@ -69,7 +68,7 @@ namespace DBDOverlay.MVVM.View
 
         private void AutoMode_Unchecked(object sender, RoutedEventArgs e)
         {
-            AutoModeManager.Instance.StopAutoMode();
+            AutoMode.Instance.Stop();
             Settings.Default.IsAutoModeOn = false;
             Settings.Default.Save();
         }

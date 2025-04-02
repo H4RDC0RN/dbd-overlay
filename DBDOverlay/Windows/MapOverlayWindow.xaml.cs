@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using Image = System.Windows.Controls.Image;
 using Cursors = System.Windows.Input.Cursors;
@@ -18,7 +17,8 @@ namespace DBDOverlay
 {
     public partial class MapOverlayWindow : Window
     {
-        private static readonly string imageElementName = "Map";
+        public int DefaultStyle { get; set; }
+        private readonly string imageElementName = "Map";
 
         public MapOverlayWindow()
         {
@@ -30,7 +30,7 @@ namespace DBDOverlay
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            WindowsServices.Instance.SetWindowExTransparent(new WindowInteropHelper(this).Handle.ToInt32());
+            DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(this);
         }
 
         private void SetOverlaySettings()
@@ -43,7 +43,7 @@ namespace DBDOverlay
         private void OverlayMouseDown(object sender, MouseButtonEventArgs e)
         {
             Cursor = Cursors.SizeAll;
-            DragMove();            
+            DragMove();
         }
 
         private void OverlayMouseUp(object sender, MouseButtonEventArgs e)
