@@ -27,19 +27,22 @@
       <Value Profile="(Default)">82</Value>
     </Setting>
     <Setting Name="NextMapModifier" Type="System.UInt32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="NextMapKey" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">221</Value>
     </Setting>
     <Setting Name="PreviousMapModifier" Type="System.UInt32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="PreviousMapKey" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">219</Value>
     </Setting>
     <Setting Name="AutoScreenshotFileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">auto</Value>
+    </Setting>
+    <Setting Name="IsAutoModeOn" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

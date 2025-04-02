@@ -65,7 +65,7 @@ namespace DBDOverlay
         {
             Logger.Info("---Close Application---");
             HotKeysController.Dispose();
-            MapOverlayController.Instance.Close();
+            MapOverlayController.Overlay.Close();
             Close();
             Application.Current.Shutdown();
         }

@@ -26,6 +26,7 @@ namespace DBDOverlay.Core.MapOverlay
         public void RunAutoMode()
         {
             IsAutoMode = true;
+            NewMapRecognized += MapOverlayController.Instance.HandleNewMapRecognized;
             worker.WorkerSupportsCancellation = true;
             worker.WorkerReportsProgress = true;
             worker.DoWork += (s, e) =>
@@ -35,7 +36,7 @@ namespace DBDOverlay.Core.MapOverlay
                     if (WindowsServices.Instance.IsDBDActiveWindow())
                     {
                         var mapInfo = ScreenshotRecognizer.GetMapInfo(true);
-                        if (MapOverlayController.CanMapOverlayBeApplied(mapInfo))
+                        if (MapOverlayController.Instance.CanMapOverlayBeApplied(mapInfo))
                         {
                             Application.Current.Dispatcher.Invoke(() =>
                             {

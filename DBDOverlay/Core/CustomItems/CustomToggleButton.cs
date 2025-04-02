@@ -23,13 +23,13 @@ namespace DBDOverlay.Core.CustomItems
             remove { RemoveHandler(UncheckClickEvent, value); }
         }
 
-        void RaiseCheckClickEvent()
+        protected void RaiseCheckClickEvent()
         {
             var routedEventArgs = new RoutedEventArgs(CheckClickEvent);
             RaiseEvent(routedEventArgs);
         }
 
-        void RaiseUnCheckClickEvent()
+        protected void RaiseUnCheckClickEvent()
         {
             var routedEventArgs = new RoutedEventArgs(UncheckClickEvent);
             RaiseEvent(routedEventArgs);
@@ -40,6 +40,12 @@ namespace DBDOverlay.Core.CustomItems
             base.OnClick();
             if (IsChecked == true) RaiseCheckClickEvent();
             else RaiseUnCheckClickEvent();
+        }
+
+        public void Uncheck()
+        {
+            IsChecked = false;
+            RaiseUnCheckClickEvent();
         }
     }
 }

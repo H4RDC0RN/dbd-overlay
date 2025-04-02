@@ -4,42 +4,51 @@ using System.Linq;
 
 namespace DBDOverlay.Core.MapOverlay
 {
-    public static class MapOverlayController
+    public class MapOverlayController
     {
-        private static string realm = string.Empty;
-        private static string name = string.Empty;
-        private static readonly int suffixLength = 2;
+        public bool CanBeMoved { get; set; } = false;
+        private string realm = string.Empty;
+        private string name = string.Empty;
+        private readonly int suffixLength = 2;
 
-        private static MapOverlayWindow instance;
+        private static MapOverlayController instance;
+        private static MapOverlayWindow overlay;
 
-        public static MapOverlayWindow Instance
+        public static MapOverlayController Instance
         {
             get
             {
                 if (instance == null)
-                {
-                    instance = new MapOverlayWindow();
-                    AutoModeManager.Instance.NewMapRecognized += HandleNewMapRecognized;
-                }
+                    instance = new MapOverlayController();
                 return instance;
             }
         }
 
-        public static void ChangeMap(MapInfo mapInfo)
+        public static MapOverlayWindow Overlay
+        {
+            get
+            {
+                if (overlay == null)
+                    overlay = new MapOverlayWindow();
+                return overlay;
+            }
+        }
+
+        public void ChangeMap(MapInfo mapInfo)
         {
             if (!CanMapOverlayBeApplied(mapInfo)) return;
 
             realm = mapInfo.Realm;
             name = mapInfo.Name;
-            Instance.ChangeMapImageOverlay(mapInfo);
+            Overlay.ChangeMapImageOverlay(mapInfo);
         }
 
-        public static bool CanMapOverlayBeApplied(MapInfo mapInfo)
+        public bool CanMapOverlayBeApplied(MapInfo mapInfo)
         {
             return mapInfo != null && !name.Equals(mapInfo.Name);
         }
 
-        public static void SwitchMapVariationToNext()
+        public void SwitchMapVariationToNext()
         {
             var suffix = name.GetLast(suffixLength);
             suffix = suffix.First().ToString().Equals("_") && suffix.Last().ToString().IsInt()
@@ -51,11 +60,11 @@ namespace DBDOverlay.Core.MapOverlay
             {
                 name = newName;
                 Logger.Info($"Switching map variation to '{name}'");
-                Instance.ChangeMapImageOverlay(mapInfo);
+                Overlay.ChangeMapImageOverlay(mapInfo);
             }
         }
 
-        public static void SwitchMapVariationToPrevious()
+        public void SwitchMapVariationToPrevious()
         {
             var suffix = name.GetLast(suffixLength);
             if (suffix.First().ToString().Equals("_") && suffix.Last().ToString().IsInt())
@@ -64,18 +73,18 @@ namespace DBDOverlay.Core.MapOverlay
                 {
                     name = name.RemoveRegex(suffix);
                     Logger.Info($"Switching map variation to '{name}'");
-                    Instance.ChangeMapImageOverlay(new MapInfo(realm, name));
+                    Overlay.ChangeMapImageOverlay(new MapInfo(realm, name));
                 }
                 else
                 {
                     name = name.Replace(suffix, $"_{suffix.Decrement()}");
                     Logger.Info($"Switching map variation to '{name}'");
-                    Instance.ChangeMapImageOverlay(new MapInfo(realm, name));
+                    Overlay.ChangeMapImageOverlay(new MapInfo(realm, name));
                 }
             }
         }
 
-        private static void HandleNewMapRecognized(object sender, NewMapEventArgs e)
+        public void HandleNewMapRecognized(object sender, NewMapEventArgs e)
         {
             e.Log();
             ChangeMap(e.MapInfo);

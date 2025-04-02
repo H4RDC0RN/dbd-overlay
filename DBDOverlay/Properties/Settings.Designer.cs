@@ -121,7 +121,7 @@ namespace DBDOverlay.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public uint NextMapModifier {
             get {
                 return ((uint)(this["NextMapModifier"]));
@@ -145,7 +145,7 @@ namespace DBDOverlay.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public uint PreviousMapModifier {
             get {
                 return ((uint)(this["PreviousMapModifier"]));
@@ -176,6 +176,18 @@ namespace DBDOverlay.Properties {
             }
             set {
                 this["AutoScreenshotFileName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsAutoModeOn {
+            get {
+                return ((bool)(this["IsAutoModeOn"]));
+            }
+            set {
+                this["IsAutoModeOn"] = value;
             }
         }
     }

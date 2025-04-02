@@ -35,19 +35,19 @@ namespace DBDOverlay.Core.Hotkeys
         private static void PressedRead(object sender, KeyPressedEventArgs e)
         {
             e.Log("Read map");
-            MapOverlayController.ChangeMap(ScreenshotRecognizer.GetMapInfo());
+            MapOverlayController.Instance.ChangeMap(ScreenshotRecognizer.GetMapInfo());
         }
 
         private static void PressedNext(object sender, KeyPressedEventArgs e)
         {
             e.Log("Next map");
-            MapOverlayController.SwitchMapVariationToNext();
+            MapOverlayController.Instance.SwitchMapVariationToNext();
         }
 
         private static void PressedPrevious(object sender, KeyPressedEventArgs e)
         {
             e.Log("Previous map");
-            MapOverlayController.SwitchMapVariationToPrevious();
+            MapOverlayController.Instance.SwitchMapVariationToPrevious();
         }
     }
 }

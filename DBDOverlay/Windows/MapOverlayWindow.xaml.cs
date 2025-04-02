@@ -43,7 +43,7 @@ namespace DBDOverlay
         private void OverlayMouseDown(object sender, MouseButtonEventArgs e)
         {
             Cursor = Cursors.SizeAll;
-            DragMove();
+            DragMove();            
         }
 
         private void OverlayMouseUp(object sender, MouseButtonEventArgs e)
