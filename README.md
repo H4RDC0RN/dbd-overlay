@@ -10,7 +10,14 @@
 ## How to install
 - Download zip archive (dbd-overlay-x.x.x.zip) from [Latest Release](https://github.com/H4RDC0RN/dbd-overlay/releases/latest)
 - Unpack to any folder
-- Done
+- Launch DBDOverlay.exe
+### First launch
+When app first time opened on you PC, you have to accept MIcrosoft Defender SmartScreen window.
+
+To do this:
+
+- Click 'More info'
+- Click 'Run anyway'
 ## How to use
 ### Important
 
@@ -24,4 +31,4 @@ How to do this:
 ### User Guide
 If you are new user, check out the [User Guide](https://github.com/H4RDC0RN/dbd-overlay/wiki/How-to-use)
 ## How it works
-**DBD Overlay** just taking screenshots and recognizing text from it. It doesn't interact with any game processes so can't be considered as exploits. It's completely legal.
+**DBD Overlay** just take screenshots and recognize text from it. It doesn't interact with any game processes so can't be considered as exploits. It's completely legal.
