@@ -8,11 +8,11 @@
 - Switching between **map variations** (like Ormond, Yamaoka etc.)
 - Configurable **hotkeys**
 ## How to install
-- Download zip archive (dbd-overlay-x.x.x.zip) from [latest release](https://github.com/H4RDC0RN/dbd-overlay/releases/latest)
+- Download zip archive (dbd-overlay-x.x.x.zip) from [Latest Release](https://github.com/H4RDC0RN/dbd-overlay/releases/latest)
 - Unpack to any folder
 - Done
 ## How to use
-### Important !!!
+### Important
 
 First of all you have to set DBD to **Windowed Fullscreen** mode. This will allow overlay be on top of it. 
 
