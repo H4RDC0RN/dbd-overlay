@@ -1,5 +1,5 @@
 ﻿using DBDOverlay.Core.Extensions;
-using DBDOverlay.Core.Languages;
+using DBDOverlay.Core.MapOverlay.Languages;
 using DBDOverlay.Core.Utils;
 using System;
 using System.Collections.Generic;

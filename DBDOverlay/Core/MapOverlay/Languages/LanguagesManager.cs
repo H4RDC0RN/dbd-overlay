@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DBDOverlay.Core.Languages
+namespace DBDOverlay.Core.MapOverlay.Languages
 {
     public static class LanguagesManager
     {

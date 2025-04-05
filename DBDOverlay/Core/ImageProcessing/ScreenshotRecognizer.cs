@@ -1,7 +1,9 @@
 ﻿using DBDOverlay.Core.Extensions;
-using DBDOverlay.Core.Languages;
+using DBDOverlay.Core.KillerOverlay;
 using DBDOverlay.Core.MapOverlay;
+using DBDOverlay.Core.MapOverlay.Languages;
 using DBDOverlay.Core.Utils;
+using DBDOverlay.Images.SurvivorStatuses;
 using DBDOverlay.Properties;
 using System.Diagnostics;
 using System.Drawing;
@@ -12,6 +14,7 @@ using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Rectangle = System.Drawing.Rectangle;
+using Application = System.Windows.Application;
 
 namespace DBDOverlay.Core.ImageProcessing
 {
@@ -49,9 +52,9 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             var log = !autoMode;
             if (log) Logger.Info($"=============== Start getting map info ===============");
-            var imagePath = $@"{Folders.Images}\{GetFileName(autoMode)}.{png}";
+            var imagePath = GetImagePath(GetFileName(autoMode));
             var watch = Stopwatch.StartNew();
-            CreateImageFromScreenArea(GetRectMultiplier(autoMode), imagePath, log);
+            CreateImageFromScreenArea(autoMode ? RectType.Auto : RectType.Manual, imagePath, log);
 
             var maxScale = autoMode ? maxScaleAuto : maxScaleManual;
             var scaleStep = autoMode ? scaleStepAuto : scaleStepManual;
@@ -72,7 +75,7 @@ namespace DBDOverlay.Core.ImageProcessing
                             var time = watch.ElapsedMilliseconds;
                             mapInfo.Scale = scale;
                             mapInfo.Treshold = treshold;
-                            mapInfo.Time = time;                            
+                            mapInfo.Time = time;
                             if (log) Logger.Info($"=============== Finish getting map info ===============");
                             if (log) Logger.Info($"=============== ({time} ms) ===============");
                             return mapInfo;
@@ -95,26 +98,88 @@ namespace DBDOverlay.Core.ImageProcessing
             return null;
         }
 
-        private static void CreateImageFromScreenArea(RectMultiplier rectMultiplier, string path, bool log = true)
+        public static void HandleSurvivors()
         {
-            var imageWidth = (width * rectMultiplier.Width).Round();
-            var imageHeight = (height * rectMultiplier.Height).Round();
-            var rect = new Rectangle((width * rectMultiplier.X).Round(), (height * rectMultiplier.Y).Round(), imageWidth, imageHeight);
+            int parts = 4;
+            double treshold = 0.95;
+            var path = GetImagePath(Settings.Default.SurvivorsScreenshotName);
+            CreateImageFromScreenArea(RectType.Survivors, path, false);
+            var newPath = PreProcessImage(path, treshold: 600, saveAsNew: true, log: false);            
+            var image = new Bitmap(newPath);
+
+            var width = image.Width;
+            var height = image.Height / parts;
+            var statusRectMulti = GetRectMultiplier(RectType.Status);
+            var srcRect = GetRect(statusRectMulti, width, height);
+            var destRect = GetRect(new RectMultiplier(0, 0, statusRectMulti.Width, statusRectMulti.Height), width, height);
+            var piece = new Bitmap(destRect.Width, destRect.Height);
+
+            using (Graphics graphics = Graphics.FromImage(piece))
+            {
+                for (int i = 0; i < parts; i++)
+                {
+                    graphics.DrawImage(image, destRect, srcRect, GraphicsUnit.Pixel);
+                    if (!KillerOverlayController.Instance.Survivors[i].State.Equals(SurvivorState.Hooked) && piece.Compare(SurvivorStatuses.Hooked) > treshold)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            var textBlock = KillerOverlayController.HooksOverlay.GetHooksTextBlock((SurvivorNumber)i);
+                            textBlock.Text = textBlock.Text.Increment().ToString();
+                            KillerOverlayController.Instance.Survivors[i].State = SurvivorState.Hooked;
+                            KillerOverlayController.Instance.Survivors[i].Hooks++;
+                        });
+                    }
+                    if (KillerOverlayController.Instance.Survivors[i].State.Equals(SurvivorState.Hooked) && piece.Compare(SurvivorStatuses.Hooked) < treshold)
+                    {
+                        KillerOverlayController.Instance.Survivors[i].State = SurvivorState.Unhooked;
+                    }
+                    srcRect.Y += height;
+                }
+                Logger.Info("-------");
+            }
+            image.Dispose();
+            piece.Dispose();
+        }
+
+        public static Rectangle GetRect(RectType rectType, int w = 0, int h = 0)
+        {
+            return GetRect(GetRectMultiplier(rectType), w, h);
+        }
+
+        public static Rectangle GetRect(RectMultiplier rectMultiplier, int w = 0, int h = 0)
+        {
+            if (w == 0) w = width;
+            if (h == 0) h = height;
+            var imageWidth = (w * rectMultiplier.Width).Round();
+            var imageHeight = (h * rectMultiplier.Height).Round();
+            return new Rectangle((w * rectMultiplier.X).Round(), (h * rectMultiplier.Y).Round(), imageWidth, imageHeight);
+        }
+
+        private static void CreateImageFromScreenArea(RectType rectType, string path, bool log = true)
+        {
+            var rect = GetRect(rectType);
             if (log) Logger.Info($"Screen area: x = {rect.X}, y = {rect.Y}, width = {rect.Width}, height = {rect.Height}");
 
-            var captureBitmap = new Bitmap(imageWidth, imageHeight, PixelFormat.Format32bppRgb);
-            var captureGraphics = Graphics.FromImage(captureBitmap);
-            captureGraphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
-            captureBitmap.Save(path, ImageFormat.Png);
+            var image = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppRgb);
+            var graphics = Graphics.FromImage(image);
+            graphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
+            image.Save(path, ImageFormat.Png);
 
-            captureGraphics.Dispose();
-            captureBitmap.Dispose();
+            graphics.Dispose();
+            image.Dispose();
             if (log) Logger.Info($"Image is saved to '{path}'");
         }
 
-        private static RectMultiplier GetRectMultiplier(bool autoMode)
+        private static RectMultiplier GetRectMultiplier(RectType rectType)
         {
-            return autoMode ? new RectMultiplier(0.04, 0.81, 0.56, 0.05) : new RectMultiplier(0.13, 0.62, 0.36, 0.14);
+            switch (rectType)
+            {
+                case RectType.Manual: return new RectMultiplier(0.13, 0.62, 0.36, 0.14);
+                case RectType.Auto: return new RectMultiplier(0.04, 0.81, 0.56, 0.05);
+                case RectType.Survivors: return new RectMultiplier(0.04, 0.38, 0.055, 0.326);
+                case RectType.Status: return new RectMultiplier(0.25, 0.2, 0.45, 0.6);
+                default: return null;
+            }
         }
 
         private static void RecognizeText(string imagePath, bool log = true)
@@ -190,10 +255,15 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             var newPath = saveAsNew ? path.ReplaceRegex($@"\.{png}", $"_edited.{png}") : path;
             var image = new Bitmap(path);
-            image.Resize(scale).ConvertToBlackWhite(treshold).Save(newPath);
+            image.Resize(scale).ToBlackWhite(treshold).Save(newPath);
             image.Dispose();
             if (log) Logger.Info($"Preprocessed image is saved to '{newPath}'");
             return newPath;
+        }
+
+        private static string GetImagePath(string imageName)
+        {
+            return $@"{Folders.Images}\{imageName}.{png}";
         }
 
         private static string GetFileName(bool autoMode = false)

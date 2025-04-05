@@ -13,12 +13,14 @@ using DBDOverlay.Properties;
 using System.IO;
 using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.Utils;
+using DBDOverlay.Core.KillerOverlay;
 
 namespace DBDOverlay
 {
     public partial class MainWindow : Window
     {
         private readonly MapOverlayTabViewModel mapOverlayTabVM;
+        private readonly KillerOverlayTabViewModel killerOverlayTabVM;
         private readonly SettingsTabViewModel settingsTabVM;
         private readonly AboutTabViewModel aboutTabVM;
 
@@ -33,8 +35,10 @@ namespace DBDOverlay
             Logger.Info("---Open Application---");
             InitializeComponent();
             ScreenshotRecognizer.SetScreenBounds();
+            SetKillerOverlaysBounds();
 
             mapOverlayTabVM = new MapOverlayTabViewModel();
+            killerOverlayTabVM = new KillerOverlayTabViewModel();
             settingsTabVM = new SettingsTabViewModel();
             aboutTabVM = new AboutTabViewModel();
             MapOverlayTab.IsChecked = true;
@@ -49,6 +53,11 @@ namespace DBDOverlay
         private void MapOverlayTab_Selected(object sender, RoutedEventArgs e)
         {
             ViewContent.Content = mapOverlayTabVM;
+        }
+
+        private void KillerOverlayTab_Selected(object sender, RoutedEventArgs e)
+        {
+            ViewContent.Content = killerOverlayTabVM;
         }
 
         private void SettingsTab_Selected(object sender, RoutedEventArgs e)
@@ -84,6 +93,22 @@ namespace DBDOverlay
                 Settings.Default.Reload();
                 Settings.Default.Save();
             }
+        }
+
+        private void SetKillerOverlaysBounds()
+        {
+            var rect = ScreenshotRecognizer.GetRect(RectType.Survivors);
+            var halfWidth = rect.Width / 2;
+
+            KillerOverlayController.HooksOverlay.Left = rect.Left + rect.Width;
+            KillerOverlayController.HooksOverlay.Top = rect.Top;
+            KillerOverlayController.HooksOverlay.Width = halfWidth;
+            KillerOverlayController.HooksOverlay.Height = rect.Height;
+
+            KillerOverlayController.PostUnhookTimerOverlay.Left = rect.Left - halfWidth;
+            KillerOverlayController.PostUnhookTimerOverlay.Top = rect.Top;
+            KillerOverlayController.PostUnhookTimerOverlay.Width = halfWidth;
+            KillerOverlayController.PostUnhookTimerOverlay.Height = rect.Height;
         }
 
         private void HandleExceptions()

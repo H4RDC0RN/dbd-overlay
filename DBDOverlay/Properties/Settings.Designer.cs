@@ -25,7 +25,7 @@ namespace DBDOverlay.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("manual")]
+        [global::System.Configuration.DefaultSettingValueAttribute("manual_map")]
         public string ManualScreenshotFileName {
             get {
                 return ((string)(this["ManualScreenshotFileName"]));
@@ -169,7 +169,7 @@ namespace DBDOverlay.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("auto")]
+        [global::System.Configuration.DefaultSettingValueAttribute("auto_map")]
         public string AutoScreenshotFileName {
             get {
                 return ((string)(this["AutoScreenshotFileName"]));
@@ -182,12 +182,48 @@ namespace DBDOverlay.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsAutoModeOn {
+        public bool IsAutoMode {
             get {
-                return ((bool)(this["IsAutoModeOn"]));
+                return ((bool)(this["IsAutoMode"]));
             }
             set {
-                this["IsAutoModeOn"] = value;
+                this["IsAutoMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("survivors")]
+        public string SurvivorsScreenshotName {
+            get {
+                return ((string)(this["SurvivorsScreenshotName"]));
+            }
+            set {
+                this["SurvivorsScreenshotName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsHookMode {
+            get {
+                return ((bool)(this["IsHookMode"]));
+            }
+            set {
+                this["IsHookMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsPostUnhookTimerMode {
+            get {
+                return ((bool)(this["IsPostUnhookTimerMode"]));
+            }
+            set {
+                this["IsPostUnhookTimerMode"] = value;
             }
         }
     }

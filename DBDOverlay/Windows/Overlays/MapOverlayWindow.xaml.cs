@@ -11,7 +11,7 @@ using System;
 using System.Linq;
 using System.Drawing;
 using DBDOverlay.Properties;
-using DBDOverlay.Core.Languages;
+using DBDOverlay.Core.MapOverlay.Languages;
 
 namespace DBDOverlay
 {

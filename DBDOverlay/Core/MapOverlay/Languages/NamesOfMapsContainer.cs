@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace DBDOverlay.Core.Languages
+namespace DBDOverlay.Core.MapOverlay.Languages
 {
     public static class NamesOfMapsContainer
     {
@@ -601,7 +601,7 @@ namespace DBDOverlay.Core.Languages
         private static string GetFullMapName(string recognizedName)
         {
             var mapsList = mapsByLang.FirstOrDefault(x => x.Key.Equals(Settings.Default.Language)).Value;
-            
+
             if (recognizedName.ContainsRegex(@"_{1,}$"))
                 return mapsList.FirstOrDefault(x => recognizedName.StartsWith(x.Split('.')[1]));
             else

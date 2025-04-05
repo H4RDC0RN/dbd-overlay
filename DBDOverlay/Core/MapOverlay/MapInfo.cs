@@ -1,4 +1,4 @@
-﻿using DBDOverlay.Core.Languages;
+﻿using DBDOverlay.Core.MapOverlay.Languages;
 using DBDOverlay.Images.Maps;
 
 namespace DBDOverlay.Core.MapOverlay

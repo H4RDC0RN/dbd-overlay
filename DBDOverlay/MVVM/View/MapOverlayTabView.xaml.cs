@@ -1,4 +1,5 @@
-﻿using DBDOverlay.Core.MapOverlay;
+﻿using DBDOverlay.Core.BackgroundProcesses;
+using DBDOverlay.Core.MapOverlay;
 using DBDOverlay.Core.Windows;
 using DBDOverlay.Properties;
 using System;
@@ -14,7 +15,7 @@ namespace DBDOverlay.MVVM.View
             InitializeComponent();
             OpenCloseToggleButton.IsChecked = Settings.Default.IsOverlayOpened;
             OpacitySlider.Value = Settings.Default.OverlayOpacity;
-            AutoModeToggleButton.IsChecked = AutoMode.Instance.IsActive ? true : AutoModeToggleButton.IsChecked = Settings.Default.IsAutoModeOn;
+            AutoModeToggleButton.IsChecked = AutoMode.Instance.IsActive ? true : AutoModeToggleButton.IsChecked = Settings.Default.IsAutoMode;
 
             if (MapOverlayController.Instance.CanBeMoved) MoveToggleButton.IsChecked = true;
 
@@ -61,7 +62,7 @@ namespace DBDOverlay.MVVM.View
             if (!AutoMode.Instance.IsActive)
             {
                 AutoMode.Instance.Run();
-                Settings.Default.IsAutoModeOn = true;
+                Settings.Default.IsAutoMode = true;
                 Settings.Default.Save();
             }
         }
@@ -69,7 +70,7 @@ namespace DBDOverlay.MVVM.View
         private void AutoMode_Unchecked(object sender, RoutedEventArgs e)
         {
             AutoMode.Instance.Stop();
-            Settings.Default.IsAutoModeOn = false;
+            Settings.Default.IsAutoMode = false;
             Settings.Default.Save();
         }
 

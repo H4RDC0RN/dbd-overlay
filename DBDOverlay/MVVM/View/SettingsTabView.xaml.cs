@@ -7,12 +7,12 @@ using ComboBox = System.Windows.Controls.ComboBox;
 using TextBox = System.Windows.Controls.TextBox;
 using DBDOverlay.Core.Download;
 using DBDOverlay.Core.Hotkeys;
-using DBDOverlay.Core.Languages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.Properties;
+using DBDOverlay.Core.MapOverlay.Languages;
 
 namespace DBDOverlay.MVVM.View
 {

@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ManualScreenshotFileName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">manual</Value>
+      <Value Profile="(Default)">manual_map</Value>
     </Setting>
     <Setting Name="OverlayX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -39,9 +39,18 @@
       <Value Profile="(Default)">219</Value>
     </Setting>
     <Setting Name="AutoScreenshotFileName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">auto</Value>
+      <Value Profile="(Default)">auto_map</Value>
     </Setting>
-    <Setting Name="IsAutoModeOn" Type="System.Boolean" Scope="User">
+    <Setting Name="IsAutoMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SurvivorsScreenshotName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">survivors</Value>
+    </Setting>
+    <Setting Name="IsHookMode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IsPostUnhookTimerMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
