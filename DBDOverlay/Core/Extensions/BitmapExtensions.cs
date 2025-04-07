@@ -85,7 +85,7 @@ namespace DBDOverlay.Core.Extensions
             var toCompare = bitmapToCompare.ToHashMap();
             var equals = current.Zip(toCompare, (i, j) => i == j).Count(x => x);
             var result = equals / (double)current.Count;
-            return result.RoundTwoDec();
+            return result.Round(2);
         }
 
         private static List<bool> ToHashMap(this Bitmap bitmap, int thresholdValue = 400)

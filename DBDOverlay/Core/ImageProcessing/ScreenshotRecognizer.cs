@@ -101,9 +101,6 @@ namespace DBDOverlay.Core.ImageProcessing
 
         public static void HandleSurvivors()
         {
-            //CreateImageFromScreenArea(RectType.HookMark, GetImagePath("CHECK"), false);
-            //PreProcessImage(GetImagePath("CHECK"), treshold: 700, saveAsNew: true, log: false);
-            //return;
             int parts = 4;
             var path = GetImagePath(Settings.Default.SurvivorsScreenshotName);
             CreateImageFromScreenArea(RectType.Survivors, path, false);
@@ -121,7 +118,6 @@ namespace DBDOverlay.Core.ImageProcessing
             {
                 for (int i = 0; i < parts; i++)
                 {
-                    //Logger.Info($"--- {i} {piece.Compare(SurvivorStates.Hooked)}");
                     graphics.DrawImage(image, destRect, srcRect, GraphicsUnit.Pixel);
 
                     KillerOverlayController.Instance.CheckIfHooked(i, piece.Compare(SurvivorStates.Hooked));
@@ -135,7 +131,6 @@ namespace DBDOverlay.Core.ImageProcessing
                     };
 
                     KillerOverlayController.Instance.CheckIfRefreshed(i, refreshStates);
-                    //piece.Save(GetImagePath($"survivor_{i + 1}"));
                     srcRect.Y += height;
                 }
             }
@@ -180,7 +175,6 @@ namespace DBDOverlay.Core.ImageProcessing
                 case RectType.Auto: return new RectMultiplier(0.04, 0.81, 0.56, 0.05);
                 case RectType.Survivors: return new RectMultiplier(0.04, 0.38, 0.055, 0.326);
                 case RectType.State: return new RectMultiplier(0.32, 0.25, 0.31, 0.5);
-                case RectType.HookMark: return new RectMultiplier(0.058, 0.75, 0.015, 0.032);
                 default: return null;
             }
         }

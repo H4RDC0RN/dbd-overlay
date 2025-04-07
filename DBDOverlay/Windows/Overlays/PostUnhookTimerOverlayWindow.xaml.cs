@@ -21,7 +21,7 @@ namespace DBDOverlay.Windows
             DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(this);
         }
 
-        public Label GetHooksLabel(SurvivorNumber survivor)
+        public Label GetTimerLabel(SurvivorNumber survivor)
         {
             switch (survivor)
             {

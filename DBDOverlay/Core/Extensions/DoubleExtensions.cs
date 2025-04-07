@@ -9,9 +9,9 @@ namespace DBDOverlay.Core.Extensions
             return (int)Math.Round(value, MidpointRounding.AwayFromZero);
         }
 
-        public static double RoundTwoDec(this double value)
+        public static double Round(this double value, int decCount)
         {
-            return Math.Round(value * 100) / 100;
+            return Math.Round(value, decCount);
         }
     }
 }

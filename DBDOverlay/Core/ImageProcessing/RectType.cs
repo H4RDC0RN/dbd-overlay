@@ -5,7 +5,6 @@
         Manual,
         Auto,
         Survivors,
-        State,
-        HookMark
+        State
     }
 }

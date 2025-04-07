@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="Styles/Palette.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/ComboBoxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/LabelStyle.xaml"/>
                 <ResourceDictionary Source="Styles/MenuTabStyle.xaml"/>
                 <ResourceDictionary Source="Styles/SliderStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TextBlockStyle.xaml"/>

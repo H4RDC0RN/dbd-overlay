@@ -22,15 +22,15 @@
 
         <Label x:Name="SurvivorTimer_1"
                Grid.Row="0"
-               Style="{StaticResource LabelStyle}">0.00</Label>
+               Style="{StaticResource TimerLabelStyle}">0.0</Label>
         <Label x:Name="SurvivorTimer_2"
                Grid.Row="1"
-               Style="{StaticResource LabelStyle}">0.00</Label>
+               Style="{StaticResource TimerLabelStyle}">0.0</Label>
         <Label x:Name="SurvivorTimer_3"
                Grid.Row="2"
-               Style="{StaticResource LabelStyle}">0.00</Label>
+               Style="{StaticResource TimerLabelStyle}">0.0</Label>
         <Label x:Name="SurvivorTimer_4"
                Grid.Row="3"
-               Style="{StaticResource LabelStyle}">0.00</Label>
+               Style="{StaticResource TimerLabelStyle}">0.0</Label>
     </Grid>
 </Window>
