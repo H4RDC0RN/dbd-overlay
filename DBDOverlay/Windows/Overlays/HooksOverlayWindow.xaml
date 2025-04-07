@@ -11,7 +11,7 @@
         ShowInTaskbar="False"
         Topmost="True"
         Background="Transparent">
-    
+
     <Grid x:Name="HooksOverlayGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -19,41 +19,19 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <TextBlock x:Name="SurvivorHooks_1"
-                   Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="20"
-                   Foreground="White"
-                   Background="{DynamicResource DarkestGrayBrush}"
-                   Padding="5">0</TextBlock>
 
-        <TextBlock x:Name="SurvivorHooks_2"
-                   Grid.Row="1"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="20"
-                   Foreground="White"
-                   Background="{DynamicResource DarkestGrayBrush}"
-                   Padding="5">0</TextBlock>
 
-        <TextBlock x:Name="SurvivorHooks_3"
-                   Grid.Row="2"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="20"
-                   Foreground="White"
-                   Background="{DynamicResource DarkestGrayBrush}"
-                   Padding="5">0</TextBlock>
-
-        <TextBlock x:Name="SurvivorHooks_4"
-                   Grid.Row="3"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="20"
-                   Foreground="White"
-                   Background="{DynamicResource DarkestGrayBrush}"
-                   Padding="5">0</TextBlock>
+        <Label x:Name="SurvivorHooks_1"
+               Grid.Row="0"
+               Style="{StaticResource LabelStyle}">0</Label>
+        <Label x:Name="SurvivorHooks_2"
+               Grid.Row="1"
+               Style="{StaticResource LabelStyle}">0</Label>
+        <Label x:Name="SurvivorHooks_3"
+               Grid.Row="2"
+               Style="{StaticResource LabelStyle}">0</Label>
+        <Label x:Name="SurvivorHooks_4"
+               Grid.Row="3"
+               Style="{StaticResource LabelStyle}">0</Label>
     </Grid>
 </Window>

@@ -7,7 +7,7 @@
 
         public Survivor() 
         {
-            State = SurvivorState.Default;
+            State = SurvivorState.Fresh;
             Hooks = 0;
         }
     }

@@ -100,7 +100,7 @@ namespace DBDOverlay
             var rect = ScreenshotRecognizer.GetRect(RectType.Survivors);
             var halfWidth = rect.Width / 2;
 
-            KillerOverlayController.HooksOverlay.Left = rect.Left + rect.Width;
+            KillerOverlayController.HooksOverlay.Left = rect.Left + rect.Width - (rect.Width / 5);
             KillerOverlayController.HooksOverlay.Top = rect.Top;
             KillerOverlayController.HooksOverlay.Width = halfWidth;
             KillerOverlayController.HooksOverlay.Height = rect.Height;

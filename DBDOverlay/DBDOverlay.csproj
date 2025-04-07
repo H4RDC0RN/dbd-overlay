@@ -124,6 +124,9 @@
     <None Remove="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png" />
     <None Remove="Images\Recognition\test1.png" />
     <None Remove="Images\Recognition\test2.png" />
+    <None Remove="Images\SurvivorStates\dead.png" />
+    <None Remove="Images\SurvivorStates\escaped.png" />
+    <None Remove="Images\SurvivorStates\sacrificed.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -193,7 +196,10 @@
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\FAMILY_RESIDENCE_2.png" />
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH.png" />
     <Resource Include="Images\Maps\YAMAOKA_ESTATE\SANCTUM_OF_WRATH_2.png" />
-    <Resource Include="Images\SurvivorStatuses\hooked.png" />
+    <Resource Include="Images\SurvivorStates\dead.png" />
+    <Resource Include="Images\SurvivorStates\escaped.png" />
+    <Resource Include="Images\SurvivorStates\hooked.png" />
+    <Resource Include="Images\SurvivorStates\sacrificed.png" />
     <Content Include="Images\App\icon.ico" />
   </ItemGroup>
 
@@ -208,10 +214,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MapImages.resx</DependentUpon>
     </Compile>
-    <Compile Update="Images\SurvivorStatuses\SurvivorStatuses.Designer.cs">
+    <Compile Update="Images\SurvivorStates\SurvivorStates.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>SurvivorStatuses.resx</DependentUpon>
+      <DependentUpon>SurvivorStates.resx</DependentUpon>
     </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -229,9 +235,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MapImages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Images\SurvivorStatuses\SurvivorStatuses.resx">
+    <EmbeddedResource Update="Images\SurvivorStates\SurvivorStates.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SurvivorStatuses.Designer.cs</LastGenOutput>
+      <LastGenOutput>SurvivorStates.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

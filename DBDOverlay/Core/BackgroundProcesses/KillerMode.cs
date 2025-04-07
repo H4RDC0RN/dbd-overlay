@@ -1,6 +1,4 @@
 ﻿using DBDOverlay.Core.ImageProcessing;
-using DBDOverlay.Core.MapOverlay;
-using System;
 
 namespace DBDOverlay.Core.BackgroundProcesses
 {
@@ -8,7 +6,6 @@ namespace DBDOverlay.Core.BackgroundProcesses
     {
         public bool IsHookMode { get; set; } = false;
         public bool IsPostUnhookTimerMode { get; set; } = false;
-        public event EventHandler<NewMapEventArgs> NewMapRecognized;
         private static KillerMode instance;
 
         public static KillerMode Instance
@@ -19,11 +16,6 @@ namespace DBDOverlay.Core.BackgroundProcesses
                     instance = new KillerMode();
                 return instance;
             }
-        }
-
-        protected KillerMode()
-        {
-            NewMapRecognized += MapOverlayController.Instance.HandleNewMapRecognized;
         }
 
         protected override void Action()

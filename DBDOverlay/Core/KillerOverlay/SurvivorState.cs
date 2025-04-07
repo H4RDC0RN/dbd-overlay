@@ -2,7 +2,7 @@
 {
     public enum SurvivorState
     {
-        Default,
+        Fresh,
         Hooked,
         Unhooked
     }

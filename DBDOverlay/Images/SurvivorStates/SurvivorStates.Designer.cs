@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DBDOverlay.Images.SurvivorStatuses {
+namespace DBDOverlay.Images.SurvivorStates {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DBDOverlay.Images.SurvivorStatuses {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SurvivorStatuses {
+    internal class SurvivorStates {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SurvivorStatuses() {
+        internal SurvivorStates() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DBDOverlay.Images.SurvivorStatuses {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DBDOverlay.Images.SurvivorStatuses.SurvivorStatuses", typeof(SurvivorStatuses).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DBDOverlay.Images.SurvivorStates.SurvivorStates", typeof(SurvivorStates).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,9 +63,39 @@ namespace DBDOverlay.Images.SurvivorStatuses {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Dead {
+            get {
+                object obj = ResourceManager.GetObject("Dead", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Escaped {
+            get {
+                object obj = ResourceManager.GetObject("Escaped", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Hooked {
             get {
                 object obj = ResourceManager.GetObject("Hooked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Sacrificed {
+            get {
+                object obj = ResourceManager.GetObject("Sacrificed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
