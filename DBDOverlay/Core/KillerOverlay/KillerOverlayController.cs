@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Application = System.Windows.Application;
 
 namespace DBDOverlay.Core.KillerOverlay
@@ -17,6 +18,8 @@ namespace DBDOverlay.Core.KillerOverlay
         private static HooksOverlayWindow hooksOverlay;
         private static PostUnhookTimerOverlayWindow postUnhookTimerOverlay;
         private readonly string defaultTimerValue = "0.0";
+        private readonly int unhookAnimationDelay = 1500;
+        private readonly int otrTimer = 80000;
 
         public static KillerOverlayController Instance
         {
@@ -103,8 +106,9 @@ namespace DBDOverlay.Core.KillerOverlay
             var worker = new BackgroundWorker();
             worker.DoWork += (s, e) =>
             {
+                Thread.Sleep(unhookAnimationDelay);
                 var watch = Stopwatch.StartNew();
-                while (Survivors[index].State.Equals(SurvivorState.Unhooked) && watch.ElapsedMilliseconds <= 80000)
+                while (Survivors[index].State.Equals(SurvivorState.Unhooked) && watch.ElapsedMilliseconds <= otrTimer)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {

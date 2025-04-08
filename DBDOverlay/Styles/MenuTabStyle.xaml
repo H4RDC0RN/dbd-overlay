@@ -17,7 +17,7 @@
                                            Text="{TemplateBinding Property=Content}"
                                            Foreground="#dcdcde"
                                            VerticalAlignment="Center"
-                                           Margin="30,0,0,0"/>
+                                           Margin="20,0,0,0"/>
                             </Border>
                             <Border x:Name="SelectedItemBorder"
                                     Background="{DynamicResource RedLightBrush}"

@@ -56,7 +56,7 @@
                              Checked="MapOverlayTab_Selected"/>
 
                 <RadioButton x:Name="KillerOverlayTab"
-                             Content="Killer Overlay"
+                             Content="Killer Overlay (beta)"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
