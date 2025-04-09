@@ -1,4 +1,4 @@
-# DBD Overlay
+# DBD Overlay <meta name="google-site-verification" content="cShrx4nF8Fzzoo9cpp6l0MPW-AHxPIeI6lep_ri1TyA" />
 **DBD Overlay** is an application to automatically recognize current map in Dead by Daylight and put corresponding map overlay on top of your screen. Some new features also will be added in near feature.
 ## Features
 - **Auto mode** (set map overlay automatically)
