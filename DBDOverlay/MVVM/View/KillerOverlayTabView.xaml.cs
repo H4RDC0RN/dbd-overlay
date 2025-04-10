@@ -57,5 +57,10 @@ namespace DBDOverlay.MVVM.View
             Settings.Default.IsPostUnhookTimerMode = false;
             Settings.Default.Save();
         }
+
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            KillerOverlayController.Instance.ResetSurvivors();
+        }
     }
 }

@@ -122,6 +122,7 @@ namespace DBDOverlay.Core.Download
             }
 
             Logger.Info($"New application version is available ({latestVersion})");
+            Logger.Info($"Current version is ({CurrentVersion})");
             var zipFilePath = DownloadUpdate(latestVersion);
 
             ZipFile.ExtractToDirectory(zipFilePath, Folders.Update);

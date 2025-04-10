@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Application = System.Windows.Application;
 
@@ -13,10 +14,11 @@ namespace DBDOverlay.Core.KillerOverlay
     public class KillerOverlayController
     {
         public List<Survivor> Survivors = new List<Survivor>();
-        private readonly double treshold = 0.9;
         private static KillerOverlayController instance;
         private static HooksOverlayWindow hooksOverlay;
         private static PostUnhookTimerOverlayWindow postUnhookTimerOverlay;
+        private readonly double treshold = 0.9;
+        private readonly int survivorsCount = 4;
         private readonly string defaultTimerValue = "0.0";
         private readonly int unhookAnimationDelay = 1500;
         private readonly int otrTimer = 80000;
@@ -53,10 +55,7 @@ namespace DBDOverlay.Core.KillerOverlay
 
         public KillerOverlayController()
         {
-            for (int i = 1; i <= 4; i++)
-            {
-                Survivors.Add(new Survivor());
-            }
+            SetSurvivors();
         }
 
         public void CheckIfHooked(int index, double similarity)
@@ -101,6 +100,24 @@ namespace DBDOverlay.Core.KillerOverlay
             }
         }
 
+        public void ResetSurvivors()
+        {
+            Survivors.Clear();
+            SetSurvivors();
+            for (int i = 0; i < survivorsCount; i++)
+            {
+                HooksOverlay.GetHooksLabel((SurvivorNumber)(i + 1)).Content = "0";
+            }
+        }
+
+        private void SetSurvivors()
+        {
+            for (int i = 1; i <= survivorsCount; i++)
+            {
+                Survivors.Add(new Survivor());
+            }
+        }
+
         private void RunTimer(int index)
         {
             var worker = new BackgroundWorker();
@@ -122,7 +139,6 @@ namespace DBDOverlay.Core.KillerOverlay
                     PostUnhookTimerOverlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = defaultTimerValue;
                 });
             };
-
             worker.RunWorkerAsync();
         }
     }

@@ -9,7 +9,6 @@
              d:DesignHeight="400" d:DesignWidth="500"
              Background="{DynamicResource DarkestGrayBrush}">
 
-    <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.44*"/>
@@ -18,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" 
@@ -45,6 +45,19 @@
                             Style="{StaticResource ToggleButtonStyle}"
                             Checked="PostUnhookTimer_Checked"
                             Unchecked="PostUnhookTimer_Unchecked"/>
+
+            <Button Grid.Row="2"
+                    Grid.Column="1"
+                    x:Name="ResetButton"
+                    Style="{StaticResource ButtonStyle}"
+                    Content="Reset"
+                    FontSize="20"
+                    Foreground="White"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Width="70"
+                    Height="35"
+                    Margin="20"
+                    Click="Reset_Click"/>
         </Grid>
-    </StackPanel>
 </UserControl>

@@ -14,7 +14,6 @@ using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Rectangle = System.Drawing.Rectangle;
-using Application = System.Windows.Application;
 using System.Collections.Generic;
 
 namespace DBDOverlay.Core.ImageProcessing
