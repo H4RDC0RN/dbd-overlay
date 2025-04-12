@@ -14,6 +14,7 @@ using System.IO;
 using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.Core.KillerOverlay;
+using DBDOverlay.Core.Extensions;
 
 namespace DBDOverlay
 {
@@ -97,7 +98,7 @@ namespace DBDOverlay
 
         private void SetKillerOverlaysBounds()
         {
-            var rect = ScreenshotRecognizer.GetRect(RectType.Survivors);
+            var rect = ScreenshotRecognizer.GetRect(RectType.Survivors, SystemParameters.PrimaryScreenWidth.Round(), SystemParameters.PrimaryScreenHeight.Round());
             var halfWidth = rect.Width / 2;
 
             KillerOverlayController.HooksOverlay.Left = rect.Left + rect.Width - (rect.Width / 5);
