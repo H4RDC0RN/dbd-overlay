@@ -17,7 +17,7 @@ namespace DBDOverlay.Core.KillerOverlay
         private static KillerOverlayController instance;
         private static HooksOverlayWindow hooksOverlay;
         private static PostUnhookTimerOverlayWindow postUnhookTimerOverlay;
-        private readonly double treshold = 0.9;
+        private readonly double threshold = 0.9;
         private readonly int survivorsCount = 4;        
         private readonly int unhookAnimationDelay = 1500;
         private readonly int otrTimer = 80000;
@@ -64,7 +64,7 @@ namespace DBDOverlay.Core.KillerOverlay
 
         public void CheckIfHooked(int index, double similarity)
         {
-            if (!Survivors[index].State.Equals(SurvivorState.Hooked) && similarity > treshold)
+            if (!Survivors[index].State.Equals(SurvivorState.Hooked) && similarity > threshold)
             {
                 Logger.Info($"--- Survovor {index} is hooked. 'Hooked' image similarity = {similarity * 100} %");
                 Application.Current.Dispatcher.Invoke(() =>
@@ -79,7 +79,7 @@ namespace DBDOverlay.Core.KillerOverlay
 
         public void CheckIfUnhooked(int index, double similarity)
         {
-            if (Survivors[index].State.Equals(SurvivorState.Hooked) && similarity < treshold)
+            if (Survivors[index].State.Equals(SurvivorState.Hooked) && similarity < threshold)
             {
                 Logger.Info($"--- Survovor {index} is unhooked. 'Hooked' image similarity = {similarity * 100} %");
                 Survivors[index].State = SurvivorState.Unhooked;
@@ -92,7 +92,7 @@ namespace DBDOverlay.Core.KillerOverlay
             var max = refreshStates.Values.Max();
             var pair = refreshStates.FirstOrDefault(x => x.Value.Equals(max));
 
-            if ((Survivors[index].State.Equals(SurvivorState.Hooked) || Survivors[index].State.Equals(SurvivorState.Unhooked)) && pair.Value > treshold)
+            if ((Survivors[index].State.Equals(SurvivorState.Hooked) || Survivors[index].State.Equals(SurvivorState.Unhooked)) && pair.Value > threshold)
             {
                 Logger.Info($"--- Survovor {index} is {pair.Key.ToLower()}. '{pair.Key}' image similarity = {pair.Value * 100} %");
                 Application.Current.Dispatcher.Invoke(() =>

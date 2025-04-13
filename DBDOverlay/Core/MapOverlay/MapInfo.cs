@@ -8,7 +8,7 @@ namespace DBDOverlay.Core.MapOverlay
         public string Realm { get; set; }
         public string Name { get; set; }
         public double Scale { get; set; }
-        public int Treshold { get; set; }
+        public int Threshold { get; set; }
         public long Time { get; set; }
 
         public MapInfo(string realm, string name)

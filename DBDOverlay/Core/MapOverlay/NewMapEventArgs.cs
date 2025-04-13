@@ -20,7 +20,7 @@ namespace DBDOverlay.Core.MapOverlay
             Logger.Info($"-----Name: {MapInfo.Name}");
             Logger.Info("=====Recognize details=====");
             Logger.Info($"-----Scale: {MapInfo.Scale}");
-            Logger.Info($"-----Treshold: {MapInfo.Treshold}");
+            Logger.Info($"-----Threshold: {MapInfo.Threshold}");
             Logger.Info($"-----Time: {MapInfo.Time} ms");
         }
     }

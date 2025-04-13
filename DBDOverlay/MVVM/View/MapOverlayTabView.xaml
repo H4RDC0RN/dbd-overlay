@@ -72,17 +72,17 @@
                        Style="{StaticResource TextBlockStyle}"/>
 
             <TextBlock Grid.Row="1" 
-                       Text="Opacity"
-                       FontSize="16"
-                       Style="{StaticResource TextBlockStyle}"/>
-
-            <TextBlock Grid.Row="2" 
                        Text="Align ratio"
                        FontSize="16"
                        Style="{StaticResource TextBlockStyle}"/>
 
-            <TextBlock Grid.Row="3" 
+            <TextBlock Grid.Row="2" 
                        Text="Reset"
+                       FontSize="16"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <TextBlock Grid.Row="3" 
+                       Text="Opacity"
                        FontSize="16"
                        Style="{StaticResource TextBlockStyle}"/>
 
@@ -119,38 +119,8 @@
                         Grid.Row="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
-                <Slider x:Name="OpacitySlider" 
-                        VerticalAlignment="Center" 
-                        Margin="20,0,0,0" 
-                        Width="140" 
-                        ValueChanged="Slider_ValueChanged" 
-                        Maximum="100"
-                        IsSnapToTickEnabled="True"
-                        Style="{StaticResource Horizontal_Slider}"/>
-                <TextBox x:Name="OpacityTextBox" 
-                         Text="{Binding ElementName=OpacitySlider, 
-                                Path=Value, 
-                                UpdateSourceTrigger=PropertyChanged}" 
-                         VerticalAlignment="Center"
-                         Width="34" 
-                         Height="30"
-                         Margin="10,0,0,3"
-                         FontSize="20"
-                         TextAlignment="Center"
-                         Style="{StaticResource TextBoxInputStyle}"/>
-                <Label Content="%"
-                       Foreground="White"
-                       FontSize="20"
-                       Margin="0,0,0,3"  
-                       VerticalAlignment="Center"/>
-            </StackPanel>
-
-            <StackPanel Grid.Column="1"
-                        Grid.Row="2"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center">
                 <Button x:Name="AlignHButton"
-                        Margin="0,0,10,0"
+                        Margin="0,5,10,0"
                         Foreground="White"
                         FontSize="20"
                         VerticalAlignment="Center"
@@ -165,7 +135,7 @@
                     </Button.Content>
                 </Button>
                 <Button x:Name="AlignVButton"
-                        Margin="10,0,0,0"
+                        Margin="10,5,0,0"
                         Foreground="White"
                         FontSize="20"
                         VerticalAlignment="Center"
@@ -182,7 +152,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1"
-                        Grid.Row="3"
+                        Grid.Row="2"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
                 <Button x:Name="ResetPositionButton"
@@ -210,6 +180,36 @@
                         Width="60"
                         Height="30"
                         Click="ResetAll_Click"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1"
+                        Grid.Row="3"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Slider x:Name="OpacitySlider" 
+                        VerticalAlignment="Center" 
+                        Margin="20,0,0,0" 
+                        Width="140" 
+                        ValueChanged="Slider_ValueChanged" 
+                        Maximum="100"
+                        IsSnapToTickEnabled="True"
+                        Style="{StaticResource Horizontal_Slider}"/>
+                <TextBox x:Name="OpacityTextBox" 
+                         Text="{Binding ElementName=OpacitySlider, 
+                                        Path=Value, 
+                                        UpdateSourceTrigger=PropertyChanged}" 
+                         VerticalAlignment="Center"
+                         Width="34" 
+                         Height="30"
+                         Margin="10,0,0,3"
+                         FontSize="20"
+                         TextAlignment="Center"
+                         Style="{StaticResource TextBoxInputStyle}"/>
+                <Label Content="%"
+                       Foreground="White"
+                       FontSize="20"
+                       Margin="0,0,0,3"  
+                       VerticalAlignment="Center"/>
             </StackPanel>
 
         </Grid>

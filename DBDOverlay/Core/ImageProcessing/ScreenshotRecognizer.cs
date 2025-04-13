@@ -26,9 +26,9 @@ namespace DBDOverlay.Core.ImageProcessing
         private static readonly double maxScaleAuto = 1.5;
         private static readonly double scaleStepManual = 1;
         private static readonly double scaleStepAuto = 0.5;
-        private static readonly int maxTreshold = 750;
-        private static readonly int minTreshold = 400;
-        private static readonly int tresholdStep = 50;
+        private static readonly int maxThreshold = 750;
+        private static readonly int minThreshold = 400;
+        private static readonly int thresholdStep = 50;
         private static readonly string png = "png";
         private static string text = string.Empty;
 
@@ -60,10 +60,10 @@ namespace DBDOverlay.Core.ImageProcessing
             var scaleStep = autoMode ? scaleStepAuto : scaleStepManual;
             for (double scale = 1; scale <= maxScale; scale += scaleStep)
             {
-                for (int treshold = autoMode ? maxTreshold : minTreshold; treshold >= minTreshold; treshold -= tresholdStep)
+                for (int threshold = autoMode ? maxThreshold : minThreshold; threshold >= minThreshold; threshold -= thresholdStep)
                 {
-                    if (log) Logger.Info($"===== Size = {scale}, Treshold = {treshold} =====");
-                    RecognizeText(PreProcessImage(imagePath, scale, treshold, true, log), log);
+                    if (log) Logger.Info($"===== Size = {scale}, Threshold = {threshold} =====");
+                    RecognizeText(PreProcessImage(imagePath, scale, threshold, true, log), log);
                     if (IsMapTextCorrect(autoMode))
                     {
                         if (log) Logger.Info("Map text is correct");
@@ -74,7 +74,7 @@ namespace DBDOverlay.Core.ImageProcessing
                             watch.Stop();
                             var time = watch.ElapsedMilliseconds;
                             mapInfo.Scale = scale;
-                            mapInfo.Treshold = treshold;
+                            mapInfo.Threshold = threshold;
                             mapInfo.Time = time;
                             if (log) Logger.Info($"=============== Finish getting map info ===============");
                             if (log) Logger.Info($"=============== ({time} ms) ===============");
@@ -103,7 +103,7 @@ namespace DBDOverlay.Core.ImageProcessing
             int parts = 4;
             var path = GetImagePath(Settings.Default.SurvivorsScreenshotName);
             CreateImageFromScreenArea(RectType.Survivors, path, false);
-            var newPath = PreProcessImage(path, treshold: 600, saveAsNew: true, log: false);
+            var newPath = PreProcessImage(path, threshold: 600, saveAsNew: true, log: false);
             var image = new Bitmap(newPath);
 
             var width = image.Width;
@@ -247,11 +247,11 @@ namespace DBDOverlay.Core.ImageProcessing
             return mapName;
         }
 
-        private static string PreProcessImage(string path, double scale = 1, int treshold = 400, bool saveAsNew = false, bool log = true)
+        private static string PreProcessImage(string path, double scale = 1, int threshold = 400, bool saveAsNew = false, bool log = true)
         {
             var newPath = saveAsNew ? path.ReplaceRegex($@"\.{png}", $"_edited.{png}") : path;
             var image = new Bitmap(path);
-            image.Resize(scale).ToBlackWhite(treshold).Save(newPath);
+            image.Resize(scale).ToBlackWhite(threshold).Save(newPath);
             image.Dispose();
             if (log) Logger.Info($"Preprocessed image is saved to '{newPath}'");
             return newPath;
