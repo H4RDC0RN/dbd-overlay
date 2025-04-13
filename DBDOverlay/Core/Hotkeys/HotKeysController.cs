@@ -41,7 +41,7 @@ namespace DBDOverlay.Core.Hotkeys
         private static void PressedNext(object sender, KeyPressedEventArgs e)
         {
             e.Log("Next map");
-            ScreenshotRecognizer.HandleSurvivors();
+            MapOverlayController.Instance.SwitchMapVariationToNext();
         }
 
         private static void PressedPrevious(object sender, KeyPressedEventArgs e)

@@ -18,10 +18,12 @@ namespace DBDOverlay.Core.KillerOverlay
         private static HooksOverlayWindow hooksOverlay;
         private static PostUnhookTimerOverlayWindow postUnhookTimerOverlay;
         private readonly double treshold = 0.9;
-        private readonly int survivorsCount = 4;
-        private readonly string defaultTimerValue = "0.0";
+        private readonly int survivorsCount = 4;        
         private readonly int unhookAnimationDelay = 1500;
         private readonly int otrTimer = 80000;
+
+        private readonly string defaultTimerValue;
+        private readonly char delimiter;
 
         public static KillerOverlayController Instance
         {
@@ -55,6 +57,8 @@ namespace DBDOverlay.Core.KillerOverlay
 
         public KillerOverlayController()
         {
+            delimiter = 0.1.ToString().ReplaceRegex(@"\d", string.Empty).FirstOrDefault();
+            defaultTimerValue = $"0{delimiter}0";
             SetSurvivors();
         }
 
@@ -130,7 +134,7 @@ namespace DBDOverlay.Core.KillerOverlay
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         var time = (watch.ElapsedMilliseconds / 1000.0).Round(1).ToString();
-                        PostUnhookTimerOverlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = time.IsInt() ? $"{time}.0" : time;
+                        PostUnhookTimerOverlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = time.IsInt() ? $"{time}{delimiter}0" : time;
                     });
                 }
                 watch.Stop();

@@ -19,10 +19,6 @@
     </WindowChrome.WindowChrome>
 
     <Grid x:Name="MapOverlayGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition x:Name="ImageRow" Height="*"/>
-        </Grid.RowDefinitions>
-
         <Border>
             <Border.Background>
                 <ImageBrush x:Name="ImageBrush" Stretch="Fill"/>
