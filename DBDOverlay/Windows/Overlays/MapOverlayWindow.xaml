@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBDOverlay"
         mc:Ignorable="d"
-        Title="Map overlay" Height="220" Width="200"
+        Title="Map overlay"
         MouseLeftButtonDown="OverlayMouseDown"
         MouseLeftButtonUp="OverlayMouseUp"
         Cursor="Hand"
@@ -13,5 +13,20 @@
         AllowsTransparency="True"
         ShowInTaskbar="False"
         Topmost="True">
-    <Grid x:Name="MapOverlayGrid"/>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="10"/>
+    </WindowChrome.WindowChrome>
+
+    <Grid x:Name="MapOverlayGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="ImageRow" Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border>
+            <Border.Background>
+                <ImageBrush x:Name="ImageBrush" Stretch="Fill"/>
+            </Border.Background>
+        </Border>
+    </Grid>
 </Window>

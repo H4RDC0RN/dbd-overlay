@@ -60,7 +60,6 @@
 
                 <Button x:Name="DownloadButton"
                         Margin="10,5,5,5"
-                        Padding="10"
                         Foreground="White"
                         FontSize="20"
                         VerticalAlignment="Center"

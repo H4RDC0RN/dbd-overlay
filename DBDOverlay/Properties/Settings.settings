@@ -5,16 +5,16 @@
     <Setting Name="ManualScreenshotFileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">manual_map</Value>
     </Setting>
-    <Setting Name="OverlayX" Type="System.Double" Scope="User">
+    <Setting Name="MapOverlayX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="OverlayY" Type="System.Double" Scope="User">
+    <Setting Name="MapOverlayY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="OverlayOpacity" Type="System.Int32" Scope="User">
+    <Setting Name="MapOverlayOpacity" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">90</Value>
     </Setting>
-    <Setting Name="IsOverlayOpened" Type="System.Boolean" Scope="User">
+    <Setting Name="IsMapOverlayOpened" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Language" Type="System.String" Scope="User">
@@ -52,6 +52,12 @@
     </Setting>
     <Setting Name="IsPostUnhookTimerMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MapOverlayWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="MapOverlayHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">220</Value>
     </Setting>
   </Settings>
 </SettingsFile>

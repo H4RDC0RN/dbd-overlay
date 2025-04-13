@@ -1,11 +1,11 @@
-﻿using DBDOverlay.Core.Extensions;
+﻿using DBDOverlay.Core.BackgroundProcesses;
+using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.Windows;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using Application = System.Windows.Application;
 
@@ -125,7 +125,7 @@ namespace DBDOverlay.Core.KillerOverlay
             {
                 Thread.Sleep(unhookAnimationDelay);
                 var watch = Stopwatch.StartNew();
-                while (Survivors[index].State.Equals(SurvivorState.Unhooked) && watch.ElapsedMilliseconds <= otrTimer)
+                while (KillerMode.Instance.IsPostUnhookTimerMode && Survivors[index].State.Equals(SurvivorState.Unhooked) && watch.ElapsedMilliseconds <= otrTimer)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {

@@ -18,8 +18,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" 
@@ -27,14 +25,6 @@
                        Style="{StaticResource TextBlockStyle}"/>
 
             <TextBlock Grid.Row="1" 
-                       Text="Change position"
-                       Style="{StaticResource TextBlockStyle}"/>
-
-            <TextBlock Grid.Row="2" 
-                       Text="Opacity"
-                       Style="{StaticResource TextBlockStyle}"/>
-
-            <TextBlock Grid.Row="3" 
                        Text="Auto mode"
                        Style="{StaticResource TextBlockStyle}"/>
 
@@ -47,30 +37,78 @@
                           Checked="OpenClose_Checked"
                           Unchecked="OpenClose_Unchecked"/>
 
-            <custom:CustomToggleButton x:Name="MoveToggleButton"
-                          Grid.Column="1"
-                          Grid.Row="1"
-                          IsChecked="False"
-                          HorizontalAlignment="Center"
-                          Margin="5"
-                          Style="{StaticResource ToggleButtonStyle}"
-                          Checked="Move_Checked"
-                          Unchecked="Move_Unchecked">
+            <custom:CustomToggleButton x:Name="AutoModeToggleButton"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                Margin="5"
+                                Style="{StaticResource ToggleButtonStyle}"
+                                Checked="AutoMode_Checked"
+                                Unchecked="AutoMode_Unchecked"/>
+        </Grid>
+
+        <TextBlock Text="Visual Settings"
+                   Foreground="White"
+                   FontSize="22"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,20,0,10"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.44*"/>
+                <ColumnDefinition Width="0.56*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" 
+                       Text="Reposition / Resize"
+                       FontSize="16"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <TextBlock Grid.Row="1" 
+                       Text="Opacity"
+                       FontSize="16"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <TextBlock Grid.Row="2" 
+                       Text="Align ratio"
+                       FontSize="16"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <TextBlock Grid.Row="3" 
+                       Text="Reset"
+                       FontSize="16"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <custom:CustomToggleButton x:Name="ReToggleButton"
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            IsChecked="False"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource ToggleButtonStyle}"
+                            Checked="Re_Checked"
+                            Unchecked="Re_Unchecked">
                 <custom:CustomToggleButton.ToolTip>
                     <ToolTip Style="{StaticResource ToolTipStyle}">
                         <StackPanel>
                             <TextBlock FontWeight="Bold" 
                                        Style="{DynamicResource ToolTipTextBlockStyle}">
-                                To change position:
+                            To change position/size:
                             </TextBlock>
                             <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
-                                - Turn on
+                            - Turn on
                             </TextBlock>
                             <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
-                                - Drag map overlay
+                            - Drag map overlay
                             </TextBlock>
                             <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
-                                - Turn off
+                            - Turn off
                             </TextBlock>
                         </StackPanel>
                     </ToolTip>
@@ -78,43 +116,102 @@
             </custom:CustomToggleButton>
 
             <StackPanel Grid.Column="1"
-                        Grid.Row="2"
+                        Grid.Row="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
                 <Slider x:Name="OpacitySlider" 
-                            VerticalAlignment="Center" 
-                            Margin="20,0,0,0" 
-                            Width="140" 
-                            ValueChanged="Slider_ValueChanged" 
-                            Maximum="100"
-                            IsSnapToTickEnabled="True"
-                            Style="{StaticResource Horizontal_Slider}"/>
+                        VerticalAlignment="Center" 
+                        Margin="20,0,0,0" 
+                        Width="140" 
+                        ValueChanged="Slider_ValueChanged" 
+                        Maximum="100"
+                        IsSnapToTickEnabled="True"
+                        Style="{StaticResource Horizontal_Slider}"/>
                 <TextBox x:Name="OpacityTextBox" 
-                             Text="{Binding ElementName=OpacitySlider, 
-                                            Path=Value, 
-                                            UpdateSourceTrigger=PropertyChanged}" 
-                             VerticalAlignment="Center"
-                             Width="34" 
-                             Height="30"
-                             Margin="10,0,0,3"
-                             FontSize="20"
-                             TextAlignment="Center"
-                             Style="{StaticResource TextBoxInputStyle}"/>
+                         Text="{Binding ElementName=OpacitySlider, 
+                                Path=Value, 
+                                UpdateSourceTrigger=PropertyChanged}" 
+                         VerticalAlignment="Center"
+                         Width="34" 
+                         Height="30"
+                         Margin="10,0,0,3"
+                         FontSize="20"
+                         TextAlignment="Center"
+                         Style="{StaticResource TextBoxInputStyle}"/>
                 <Label Content="%"
-                           Foreground="White"
-                           FontSize="20"
-                           Margin="0,0,0,3"  
-                           VerticalAlignment="Center"/>
+                       Foreground="White"
+                       FontSize="20"
+                       Margin="0,0,0,3"  
+                       VerticalAlignment="Center"/>
             </StackPanel>
 
-            <custom:CustomToggleButton x:Name="AutoModeToggleButton"
-                                Grid.Row="3"
-                                Grid.Column="1"
-                                HorizontalAlignment="Center"
-                                Margin="5"
-                                Style="{StaticResource ToggleButtonStyle}"
-                                Checked="AutoMode_Checked"
-                                Unchecked="AutoMode_Unchecked"/>
+            <StackPanel Grid.Column="1"
+                        Grid.Row="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="AlignHButton"
+                        Margin="0,0,10,0"
+                        Foreground="White"
+                        FontSize="20"
+                        VerticalAlignment="Center"
+                        Width="35"
+                        Height="35"
+                        Style="{StaticResource ButtonStyle}" 
+                        Click="AlignH_Click">
+                    <Button.Content>
+                        <Image x:Name="AlignHButtonImage" 
+                               Source="/Images/App/align-horizontal.png">
+                        </Image>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="AlignVButton"
+                        Margin="10,0,0,0"
+                        Foreground="White"
+                        FontSize="20"
+                        VerticalAlignment="Center"
+                        Width="35"
+                        Height="35"
+                        Style="{StaticResource ButtonStyle}" 
+                        Click="AlignV_Click">
+                    <Button.Content>
+                        <Image x:Name="AlignVButtonImage" 
+                               Source="/Images/App/align-vertical.png">
+                        </Image>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1"
+                        Grid.Row="3"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button x:Name="ResetPositionButton"
+                        Style="{StaticResource ButtonStyle}"
+                        Content="Position"
+                        FontSize="16"
+                        Foreground="White"
+                        Width="60"
+                        Height="30"
+                        Click="ResetPosition_Click"/>
+                <Button x:Name="ResetSizeButton"
+                        Style="{StaticResource ButtonStyle}"
+                        Content="Size"
+                        FontSize="16"
+                        Foreground="White"
+                        Width="60"
+                        Height="30"
+                        Margin="20,0,20,0"
+                        Click="ResetSize_Click"/>
+                <Button x:Name="ResetAllButton"
+                        Style="{StaticResource ButtonStyle}"
+                        Content="All"
+                        FontSize="16"
+                        Foreground="White"
+                        Width="60"
+                        Height="30"
+                        Click="ResetAll_Click"/>
+            </StackPanel>
+
         </Grid>
     </StackPanel>
 </UserControl>

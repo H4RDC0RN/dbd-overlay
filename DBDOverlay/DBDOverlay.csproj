@@ -9,11 +9,13 @@
     <UseWindowsForms>True</UseWindowsForms>
     <ApplicationIcon>Images\App\icon.ico</ApplicationIcon>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <AssemblyVersion>1.2.0</AssemblyVersion>
-    <FileVersion>1.2.0</FileVersion>
+    <AssemblyVersion>1.2.1</AssemblyVersion>
+    <FileVersion>1.2.1</FileVersion>
   </PropertyGroup>
   
   <ItemGroup>
+    <None Remove="Images\App\align-horizontal.png" />
+    <None Remove="Images\App\align-vertical.png" />
     <None Remove="Images\App\close.png" />
     <None Remove="Images\App\download.png" />
     <None Remove="Images\App\link.png" />
@@ -136,6 +138,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\App\align-horizontal.png" />
+    <Resource Include="Images\App\align-vertical.png" />
     <Resource Include="Images\App\download.png" />
     <Resource Include="Images\App\link.png" />
     <Resource Include="Images\App\loading.png" />

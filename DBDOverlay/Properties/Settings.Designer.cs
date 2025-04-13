@@ -38,48 +38,48 @@ namespace DBDOverlay.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double OverlayX {
+        public double MapOverlayX {
             get {
-                return ((double)(this["OverlayX"]));
+                return ((double)(this["MapOverlayX"]));
             }
             set {
-                this["OverlayX"] = value;
+                this["MapOverlayX"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double OverlayY {
+        public double MapOverlayY {
             get {
-                return ((double)(this["OverlayY"]));
+                return ((double)(this["MapOverlayY"]));
             }
             set {
-                this["OverlayY"] = value;
+                this["MapOverlayY"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("90")]
-        public int OverlayOpacity {
+        public int MapOverlayOpacity {
             get {
-                return ((int)(this["OverlayOpacity"]));
+                return ((int)(this["MapOverlayOpacity"]));
             }
             set {
-                this["OverlayOpacity"] = value;
+                this["MapOverlayOpacity"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsOverlayOpened {
+        public bool IsMapOverlayOpened {
             get {
-                return ((bool)(this["IsOverlayOpened"]));
+                return ((bool)(this["IsMapOverlayOpened"]));
             }
             set {
-                this["IsOverlayOpened"] = value;
+                this["IsMapOverlayOpened"] = value;
             }
         }
         
@@ -224,6 +224,30 @@ namespace DBDOverlay.Properties {
             }
             set {
                 this["IsPostUnhookTimerMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public double MapOverlayWidth {
+            get {
+                return ((double)(this["MapOverlayWidth"]));
+            }
+            set {
+                this["MapOverlayWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("220")]
+        public double MapOverlayHeight {
+            get {
+                return ((double)(this["MapOverlayHeight"]));
+            }
+            set {
+                this["MapOverlayHeight"] = value;
             }
         }
     }

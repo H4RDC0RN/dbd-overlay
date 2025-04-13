@@ -13,11 +13,11 @@ namespace DBDOverlay.MVVM.View
         public MapOverlayTabView()
         {
             InitializeComponent();
-            OpenCloseToggleButton.IsChecked = Settings.Default.IsOverlayOpened;
-            OpacitySlider.Value = Settings.Default.OverlayOpacity;
+            OpenCloseToggleButton.IsChecked = Settings.Default.IsMapOverlayOpened;
+            OpacitySlider.Value = Settings.Default.MapOverlayOpacity;
             AutoModeToggleButton.IsChecked = AutoMode.Instance.IsActive ? true : AutoModeToggleButton.IsChecked = Settings.Default.IsAutoMode;
 
-            if (MapOverlayController.Instance.CanBeMoved) MoveToggleButton.IsChecked = true;
+            if (MapOverlayController.Instance.CanBeMoved) ReToggleButton.IsChecked = true;
 
             WindowsServices.Instance.MoveModeOff += HandleMoveModeOff;
         }
@@ -25,35 +25,14 @@ namespace DBDOverlay.MVVM.View
         private void OpenClose_Checked(object sender, RoutedEventArgs e)
         {
             MapOverlayController.Overlay.Show();
-            Settings.Default.IsOverlayOpened = true;
+            Settings.Default.IsMapOverlayOpened = true;
             Settings.Default.Save();
         }
 
         private void OpenClose_Unchecked(object sender, RoutedEventArgs e)
         {
             MapOverlayController.Overlay.Hide();
-            Settings.Default.IsOverlayOpened = false;
-            Settings.Default.Save();
-        }
-
-        private void Move_Checked(object sender, RoutedEventArgs e)
-        {
-            MapOverlayController.Instance.CanBeMoved = true;
-            WindowsServices.Instance.RevertWindowExTransparent(MapOverlayController.Overlay, MapOverlayController.Overlay.DefaultStyle);
-        }
-
-        private void Move_Unchecked(object sender, RoutedEventArgs e)
-        {
-            MapOverlayController.Overlay.DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(MapOverlayController.Overlay);
-            MapOverlayController.Instance.CanBeMoved = false;
-        }
-
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (MapOverlayController.Overlay == null) return;
-
-            MapOverlayController.Overlay.Opacity = OpacitySlider.Value / 100;
-            Settings.Default.OverlayOpacity = (int)OpacitySlider.Value;
+            Settings.Default.IsMapOverlayOpened = false;
             Settings.Default.Save();
         }
 
@@ -74,9 +53,58 @@ namespace DBDOverlay.MVVM.View
             Settings.Default.Save();
         }
 
+        private void Re_Checked(object sender, RoutedEventArgs e)
+        {
+            MapOverlayController.Instance.CanBeMoved = true;
+            WindowsServices.Instance.RevertWindowExTransparent(MapOverlayController.Overlay, MapOverlayController.Overlay.DefaultStyle);
+        }
+
+        private void Re_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MapOverlayController.Overlay.DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(MapOverlayController.Overlay);
+            MapOverlayController.Instance.CanBeMoved = false;
+            MapOverlayController.Overlay.SaveSize();
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (MapOverlayController.Overlay == null) return;
+
+            MapOverlayController.Overlay.Opacity = OpacitySlider.Value / 100;
+            Settings.Default.MapOverlayOpacity = (int)OpacitySlider.Value;
+            Settings.Default.Save();
+        }
+
+        private void AlignH_Click(object sender, RoutedEventArgs e)
+        {
+            MapOverlayController.Overlay.Width = MapOverlayController.Overlay.Height / MapOverlayController.Overlay.DefaultRatio;
+        }
+
+        private void AlignV_Click(object sender, RoutedEventArgs e)
+        {
+            MapOverlayController.Overlay.Height = MapOverlayController.Overlay.Width * MapOverlayController.Overlay.DefaultRatio;
+        }
+
         private void HandleMoveModeOff(object sender, EventArgs e)
         {
-            MoveToggleButton.Uncheck();
+            ReToggleButton.Uncheck();
+            MapOverlayController.Overlay.SaveSize();
+        }
+
+        private void ResetPosition_Click(object sender, RoutedEventArgs e)
+        {
+            MapOverlayController.Overlay.ResetPosition();
+        }
+
+        private void ResetSize_Click(object sender, RoutedEventArgs e)
+        {
+            MapOverlayController.Overlay.ResetSize();
+        }
+
+        private void ResetAll_Click(object sender, RoutedEventArgs e)
+        {
+            MapOverlayController.Overlay.ResetPosition();
+            MapOverlayController.Overlay.ResetSize();
         }
     }
 }
