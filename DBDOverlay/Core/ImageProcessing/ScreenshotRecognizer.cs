@@ -98,7 +98,7 @@ namespace DBDOverlay.Core.ImageProcessing
             return null;
         }
 
-        public static void HandleSurvivors()
+        public static void HandleSurvivors(bool savePieces = false)
         {
             int parts = 4;
             var path = GetImagePath(Settings.Default.SurvivorsScreenshotName);
@@ -118,6 +118,8 @@ namespace DBDOverlay.Core.ImageProcessing
                 for (int i = 0; i < parts; i++)
                 {
                     graphics.DrawImage(image, destRect, srcRect, GraphicsUnit.Pixel);
+
+                    if (savePieces) piece.Save(GetImagePath($"survivor_{i}"), ImageFormat.Png);
 
                     KillerOverlayController.Instance.CheckIfHooked(i, piece.Compare(SurvivorStates.Hooked));
                     KillerOverlayController.Instance.CheckIfUnhooked(i, piece.Compare(SurvivorStates.Hooked));

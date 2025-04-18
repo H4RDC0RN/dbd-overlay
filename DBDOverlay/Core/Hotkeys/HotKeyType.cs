@@ -4,6 +4,7 @@
     {
         Read = 9001,
         NextMap = 9002,
-        PreviousMap = 9003
+        PreviousMap = 9003,
+        Survivors = 9004
     }
 }
