@@ -19,6 +19,7 @@ namespace DBDOverlay.Windows
         {
             base.OnSourceInitialized(e);
             DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(this);
+            KillerOverlayController.Instance.SetTimers();
         }
 
         public Label GetTimerLabel(SurvivorNumber survivor)

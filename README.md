@@ -4,7 +4,7 @@
 - **Auto mode** (set map overlay automatically)
 - **Manual mode** through ESC menu (more precise)
 - Works with most in game **languages** of Dead by Daylight
-- Configure **position** and **opacity** of map overlay
+- Configure **position**, **size** and **opacity** of map overlay
 - Switching between **map variations** (like Ormond, Yamaoka etc.)
 - Configurable **hotkeys**
 ## How to install

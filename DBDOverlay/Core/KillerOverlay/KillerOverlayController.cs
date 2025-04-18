@@ -18,7 +18,7 @@ namespace DBDOverlay.Core.KillerOverlay
         private static HooksOverlayWindow hooksOverlay;
         private static PostUnhookTimerOverlayWindow postUnhookTimerOverlay;
         private readonly double threshold = 0.9;
-        private readonly int survivorsCount = 4;        
+        private readonly int survivorsCount = 4;
         private readonly int unhookAnimationDelay = 1500;
         private readonly int otrTimer = 80000;
 
@@ -101,6 +101,14 @@ namespace DBDOverlay.Core.KillerOverlay
                     Survivors[index] = new Survivor();
                     PostUnhookTimerOverlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = defaultTimerValue;
                 });
+            }
+        }
+
+        public void SetTimers()
+        {
+            for (int i = 0; i < survivorsCount; i++)
+            {
+                PostUnhookTimerOverlay.GetTimerLabel((SurvivorNumber)(i + 1)).Content = defaultTimerValue;
             }
         }
 
