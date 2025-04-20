@@ -42,7 +42,7 @@
                       Grid.Column="1"
                       VerticalAlignment="Center"
                       HorizontalAlignment="Left"
-                      Width="180"
+                      Width="170"
                       Margin="5"
                       Style="{StaticResource ComboBoxFlatStyle}"
                       SelectionChanged="LanguageComboBox_SelectionChanged"/>
@@ -54,7 +54,7 @@
 
                 <ComboBox x:Name="DownloadLanguageComboBox" 
                           VerticalAlignment="Center"
-                          Width="180"
+                          Width="170"
                           Margin="5"
                           Style="{StaticResource ComboBoxFlatStyle}"/>
 
@@ -113,7 +113,7 @@
             <StackPanel Grid.Row="0"
                         Grid.Column="1"
                         Orientation="Horizontal"
-                        HorizontalAlignment="Left">
+                        HorizontalAlignment="Center">
 
                 <ComboBox x:Name="ReadModifierComboBox"
                           VerticalAlignment="Center"
@@ -144,7 +144,7 @@
             <StackPanel Grid.Row="1"
                         Grid.Column="1"
                         Orientation="Horizontal"
-                        HorizontalAlignment="Left">
+                        HorizontalAlignment="Center">
 
                 <ComboBox x:Name="NextModifierComboBox"
                           Grid.Row="1"
@@ -177,7 +177,7 @@
             <StackPanel Grid.Row="2"
                         Grid.Column="1"
                         Orientation="Horizontal"
-                        HorizontalAlignment="Left">
+                        HorizontalAlignment="Center">
 
                 <ComboBox x:Name="PreviousModifierComboBox"
                           Grid.Row="2"

@@ -26,7 +26,7 @@ namespace DBDOverlay
         {
             InitializeComponent();
             SetOverlaySettings();
-            AddImageMapOverlay(new MapInfo(NamesOfMapsContainer.Empty));
+            AddImageMapOverlay(new MapInfo(MapNamesContainer.Empty));
         }
 
         protected override void OnSourceInitialized(EventArgs e)

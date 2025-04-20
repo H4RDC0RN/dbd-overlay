@@ -63,6 +63,14 @@
                              Style="{StaticResource MenuButtonStyle}"
                              Checked="KillerOverlayTab_Selected"/>
 
+                <RadioButton x:Name="ReshadeTab"
+                             Content="ReShade Integration"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonStyle}"
+                             Checked="ReshadeTab_Selected"/>
+
                 <RadioButton x:Name="SettingsTab"
                              Content="Settings"
                              Height="50"
@@ -79,6 +87,7 @@
                              Style="{StaticResource MenuButtonStyle}"
                              Checked="AboutTab_Selected"/>
             </StackPanel>
+            
             <Border x:Name="MenuBorder"
                     Grid.Row="1"
                     Grid.Column="1"
@@ -90,6 +99,7 @@
                     VerticalAlignment="Center"
                     CornerRadius="1"
                     Margin="0,0,0,5"/>
+            
             <ContentControl x:Name="ViewContent"
                             Grid.Row="1"
                             Grid.Column="1"

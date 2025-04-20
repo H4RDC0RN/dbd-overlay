@@ -19,12 +19,12 @@ namespace DBDOverlay.Core.MapOverlay
 
         public MapInfo(string name, bool addRealm = false)
         {
-            Name = addRealm ? NamesOfMapsContainer.GetNameByRecognizedName(name) : name;
-            Realm = addRealm ? NamesOfMapsContainer.GetRealmByRecognizedName(name) : string.Empty;
+            Name = addRealm ? MapNamesContainer.GetNameByRecognizedName(name) : name;
+            Realm = addRealm ? MapNamesContainer.GetRealmByRecognizedName(name) : string.Empty;
         }
 
         public string FullName => Realm != string.Empty ? $@"{Realm}.{Name}" : Name;
-        public string ResourceName => NamesOfMapsContainer.GetMapFileName(FullName);
+        public string ResourceName => MapNamesContainer.GetMapFileName(FullName);
         public bool HasImage => MapImages.ResourceManager.GetObject(ResourceName) != null;
     }
 }

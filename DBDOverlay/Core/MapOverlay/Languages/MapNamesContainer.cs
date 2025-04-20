@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace DBDOverlay.Core.MapOverlay.Languages
 {
-    public static class NamesOfMapsContainer
+    public static class MapNamesContainer
     {
         public static readonly string Empty = "Empty";
         public static readonly string NotReady = "NotReady";
@@ -557,6 +557,12 @@ namespace DBDOverlay.Core.MapOverlay.Languages
         private static readonly List<List<string>> maps = new List<List<string>> { deu, eng, spa, mex, fra, ita, pol, por, tur, rus };
         private static readonly Dictionary<string, List<string>> mapsByLang = LanguagesManager.GetAbbreviations()
             .Zip(maps, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
+
+        public static List<string> GetReshadeMapsList()
+        {
+            var diffColorRealms = new List<string>() { "WITHERED_ISLE", "DVARKA_DEEPWOOD" };
+            return eng.Select(x => diffColorRealms.Any(r => x.StartsWith(r)) ? x.Split('.')[1] : x.Split('.')[0]).Distinct().ToList();
+        }
 
         public static string GetMapFileName(string mapFullName)
         {

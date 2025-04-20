@@ -14,6 +14,22 @@ namespace DBDOverlay.Core.Extensions
             return $@"{projectPath}{str}";
         }
 
+        public static string ToTitle(this string str)
+        {
+            var words = str.ToLower().Split('_').ToList();
+            var result = string.Empty;
+            for (int i = 0; i < words.Count; i++)
+            {
+                result += words[i].First().ToString().ToUpper() + words[i].Substring(1) + (words.Count == i + 1 ? string.Empty : " ");
+            }
+            return result;
+        }
+
+        public static string RegexMatch(this string str, string pattern)
+        {
+            return Regex.Match(str, pattern).Value;
+        }
+
         public static string RemoveRegex(this string str, string pattern)
         {
             return str.ReplaceRegex(pattern, string.Empty);

@@ -28,6 +28,10 @@
                 <view:KillerOverlayTabView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:ReshadeTabViewModel}">
+                <view:ReshadeTabView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewModel:SettingsTabViewModel}">
                 <view:SettingsTabView/>
             </DataTemplate>

@@ -15,6 +15,7 @@ using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.Core.KillerOverlay;
 using DBDOverlay.Core.Extensions;
+using DBDOverlay.Core.MapOverlay.Languages;
 
 namespace DBDOverlay
 {
@@ -22,6 +23,7 @@ namespace DBDOverlay
     {
         private readonly MapOverlayTabViewModel mapOverlayTabVM;
         private readonly KillerOverlayTabViewModel killerOverlayTabVM;
+        private readonly ReshadeTabViewModel reshadeTabVM;
         private readonly SettingsTabViewModel settingsTabVM;
         private readonly AboutTabViewModel aboutTabVM;
 
@@ -40,6 +42,7 @@ namespace DBDOverlay
 
             mapOverlayTabVM = new MapOverlayTabViewModel();
             killerOverlayTabVM = new KillerOverlayTabViewModel();
+            reshadeTabVM = new ReshadeTabViewModel();
             settingsTabVM = new SettingsTabViewModel();
             aboutTabVM = new AboutTabViewModel();
             MapOverlayTab.IsChecked = true;
@@ -59,6 +62,11 @@ namespace DBDOverlay
         private void KillerOverlayTab_Selected(object sender, RoutedEventArgs e)
         {
             ViewContent.Content = killerOverlayTabVM;
+        }
+
+        private void ReshadeTab_Selected(object sender, RoutedEventArgs e)
+        {
+            ViewContent.Content = reshadeTabVM;
         }
 
         private void SettingsTab_Selected(object sender, RoutedEventArgs e)
