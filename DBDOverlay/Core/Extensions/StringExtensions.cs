@@ -55,6 +55,16 @@ namespace DBDOverlay.Core.Extensions
             return int.TryParse(str, out _);
         }
 
+        public static int ToInt(this string str)
+        {
+            return int.Parse(str);
+        }
+
+        public static bool ToBool(this string str)
+        {
+            return str.Equals("1");
+        }
+
         public static string GetLast(this string str, int substringLenght)
         {
             return str.Substring(str.Length - substringLenght);

@@ -1,6 +1,6 @@
 ﻿using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.MapOverlay.Languages;
-using DBDOverlay.Core.Windows;
+using DBDOverlay.Core.Reshade;
 using Microsoft.Win32;
 using System.Linq;
 using System.Windows;
@@ -41,6 +41,7 @@ namespace DBDOverlay.MVVM.View
                     Margin = new Thickness(5),
                     Style = (Style)FindResource("ComboBoxFlatStyle")
                 };
+                comboBox.SelectionChanged += new SelectionChangedEventHandler(FilterComboBox_SelectionChanged);
                 MapFiltersGrid.Children.Add(comboBox);
                 Grid.SetRow(comboBox, MapFiltersGrid.RowDefinitions.Count - 1);
                 Grid.SetColumn(comboBox, 1);
@@ -55,7 +56,8 @@ namespace DBDOverlay.MVVM.View
             };
             if ((bool)openFileDialog.ShowDialog())
             {
-                ReadReshadeIni(openFileDialog.FileName);
+                ReshadeManager.Instance.Initialize(openFileDialog.FileName);
+                SetComboboxValues();
             }
         }
 
@@ -64,18 +66,20 @@ namespace DBDOverlay.MVVM.View
 
         }
 
-        private void ReadReshadeIni(string iniPath)
+        private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var ini = new IniFile(iniPath);
-            var keys = ini.Read("PresetShortcutKeys", "GENERAL");
-            var filters = ini.Read("PresetShortcutPaths", "GENERAL").Split(',').Select(x => x.RegexMatch(@"(?<=\\)(?:.(?!\\))+(?=\.ini)")).ToList();
+            var comboBox = (ComboBox)sender;
+            ReshadeManager.Instance.AddHotKey(comboBox.Name, comboBox.SelectedItem.ToString());
+        }
 
+        private void SetComboboxValues()
+        {
             var list = MapNamesContainer.GetReshadeMapsList();
             var comboBoxes = MapFiltersGrid.Children.OfType<ComboBox>().ToList();
             foreach (var comboboxName in list)
             {
                 var comboBox = comboBoxes.Find(x => x.Name.Equals(comboboxName));
-                comboBox.ItemsSource = filters;
+                comboBox.ItemsSource = ReshadeManager.Instance.Filters;
             }
         }
     }

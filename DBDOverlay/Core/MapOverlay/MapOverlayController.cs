@@ -1,4 +1,5 @@
 ﻿using DBDOverlay.Core.Extensions;
+using DBDOverlay.Core.Reshade;
 using DBDOverlay.Core.Utils;
 using System.Linq;
 
@@ -41,6 +42,7 @@ namespace DBDOverlay.Core.MapOverlay
             realm = mapInfo.Realm;
             name = mapInfo.Name;
             Overlay.ChangeMapImageOverlay(mapInfo);
+            ReshadeManager.Instance.ApplyFilter(mapInfo);
         }
 
         public bool CanMapOverlayBeApplied(MapInfo mapInfo)
