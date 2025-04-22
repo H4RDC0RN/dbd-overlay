@@ -1,9 +1,12 @@
 ﻿using DBDOverlay.Core.Hotkeys;
 using DBDOverlay.Core.MapOverlay;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Interop;
 
 namespace DBDOverlay.Core.Windows
@@ -20,6 +23,7 @@ namespace DBDOverlay.Core.Windows
         private const uint EVENT_SYSTEM_FOREGROUND = 3;
 
         private readonly string dbdWindowName = "DeadByDaylight";
+        private readonly string dbdProcessName = "DeadByDaylight-Win64-Shipping";
         private readonly string appWindowName = "DBD Overlay";
         private readonly string overlayWindowName = "Map overlay";
 
@@ -54,7 +58,10 @@ namespace DBDOverlay.Core.Windows
             int hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
 
         [DllImport("user32.dll")]
-        static extern int GetForegroundWindow();
+        private static extern bool SetForegroundWindow(int hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern int GetForegroundWindow();
 
         [DllImport("user32.dll")]
         static extern int GetWindowText(int hWnd, StringBuilder text, int count);
@@ -88,6 +95,15 @@ namespace DBDOverlay.Core.Windows
         {
             var hwnd = new WindowInteropHelper(window).Handle.ToInt32();
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle);
+        }
+
+        public void Send(string key)
+        {
+            var dbdProcess = Process.GetProcessesByName(dbdProcessName).First();
+            if (SetForegroundWindow((int)dbdProcess.MainWindowHandle))
+            {
+                SendKeys.SendWait(key);
+            }
         }
 
         private void HandleHotkeys()

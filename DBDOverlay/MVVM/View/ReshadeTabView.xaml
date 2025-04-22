@@ -19,8 +19,8 @@
         <ScrollViewer>
             <Grid x:Name="MapFiltersGrid">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.54*"/>
-                    <ColumnDefinition Width="0.46*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                 </Grid.RowDefinitions>

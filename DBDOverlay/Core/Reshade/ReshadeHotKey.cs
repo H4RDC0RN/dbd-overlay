@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using DBDOverlay.Core.Extensions;
+using DBDOverlay.Core.Windows;
+using System.Windows.Forms;
 
 namespace DBDOverlay.Core.Reshade
 {
@@ -19,7 +21,7 @@ namespace DBDOverlay.Core.Reshade
 
         public void Press()
         {
-            SendKeys.SendWait($"{(Ctrl ? "^" : string.Empty)}{(Shift ? "+" : string.Empty)}{(Alt ? "%" : string.Empty)}{Key}");
+            WindowsServices.Instance.Send($"{(Ctrl ? "^" : string.Empty)}{(Shift ? "+" : string.Empty)}{(Alt ? "%" : string.Empty)}{Key.ToStringKey()}");
         }
     }
 }

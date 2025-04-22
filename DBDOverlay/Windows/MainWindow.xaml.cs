@@ -15,7 +15,8 @@ using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.Core.KillerOverlay;
 using DBDOverlay.Core.Extensions;
-using DBDOverlay.Core.MapOverlay.Languages;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace DBDOverlay
 {
@@ -30,6 +31,7 @@ namespace DBDOverlay
         public MainWindow()
         {
             HandleExceptions();
+            AddNumToSendKeys();
             Folders.CreateDefault();
             DownloadManager.Instance.DownloadDefaultLanguage();
             DownloadManager.Instance.CheckForUpdate();
@@ -118,6 +120,21 @@ namespace DBDOverlay
             KillerOverlayController.PostUnhookTimerOverlay.Top = rect.Top;
             KillerOverlayController.PostUnhookTimerOverlay.Width = halfWidth;
             KillerOverlayController.PostUnhookTimerOverlay.Height = rect.Height;
+        }
+
+        private void AddNumToSendKeys()
+        {
+            var info = typeof(SendKeys).GetField("keywords", BindingFlags.Static | BindingFlags.NonPublic);
+            var oldKeys = (Array)info.GetValue(null);
+            var elementType = oldKeys.GetType().GetElementType();
+            var newKeys = Array.CreateInstance(elementType, oldKeys.Length + 10);
+            Array.Copy(oldKeys, newKeys, oldKeys.Length);
+            for (int i = 0; i < 10; i++)
+            {
+                var newItem = Activator.CreateInstance(elementType, "NUMPAD" + i, (int)Keys.NumPad0 + i);
+                newKeys.SetValue(newItem, oldKeys.Length + i);
+            }
+            info.SetValue(null, newKeys);
         }
 
         private void HandleExceptions()
