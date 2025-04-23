@@ -250,5 +250,29 @@ namespace DBDOverlay.Properties {
                 this["MapOverlayHeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ReshadeIniPath {
+            get {
+                return ((string)(this["ReshadeIniPath"]));
+            }
+            set {
+                this["ReshadeIniPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ReshadeMappings {
+            get {
+                return ((string)(this["ReshadeMappings"]));
+            }
+            set {
+                this["ReshadeMappings"] = value;
+            }
+        }
     }
 }

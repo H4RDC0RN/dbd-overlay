@@ -59,5 +59,11 @@
     <Setting Name="MapOverlayHeight" Type="System.Double" Scope="User">
       <Value Profile="(Default)">220</Value>
     </Setting>
+    <Setting Name="ReshadeIniPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ReshadeMappings" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

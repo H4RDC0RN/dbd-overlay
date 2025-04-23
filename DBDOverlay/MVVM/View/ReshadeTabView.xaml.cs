@@ -1,6 +1,7 @@
 ﻿using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.MapOverlay.Languages;
 using DBDOverlay.Core.Reshade;
+using DBDOverlay.Properties;
 using Microsoft.Win32;
 using System.Linq;
 using System.Windows;
@@ -14,6 +15,8 @@ namespace DBDOverlay.MVVM.View
         {
             InitializeComponent();
             InitializeElements();
+            var path = Settings.Default.ReshadeIniPath;
+            if (!path.Equals(string.Empty)) SetReshadeIni(path);
         }
 
         private void InitializeElements()
@@ -56,8 +59,9 @@ namespace DBDOverlay.MVVM.View
             };
             if ((bool)openFileDialog.ShowDialog())
             {
-                ReshadeManager.Instance.Initialize(openFileDialog.FileName);
-                SetComboboxValues();
+                Settings.Default.ReshadeIniPath = openFileDialog.FileName;
+                Settings.Default.Save();
+                SetReshadeIni(openFileDialog.FileName);
             }
         }
 
@@ -76,11 +80,19 @@ namespace DBDOverlay.MVVM.View
         {
             var list = MapNamesContainer.GetReshadeMapsList();
             var comboBoxes = MapFiltersGrid.Children.OfType<ComboBox>().ToList();
-            foreach (var comboboxName in list)
+            for (int mapIndex = 0; mapIndex < list.Count; mapIndex++)
             {
-                var comboBox = comboBoxes.Find(x => x.Name.Equals(comboboxName));
+                var comboBox = comboBoxes.Find(x => x.Name.Equals(list[mapIndex]));
                 comboBox.ItemsSource = ReshadeManager.Instance.Filters;
+                var filterIndex = MappingsHandler.GetFilterIndex(mapIndex);
+                if (filterIndex != -1) comboBox.SelectedIndex = filterIndex;
             }
+        }
+
+        private void SetReshadeIni(string path)
+        {
+            ReshadeManager.Instance.Initialize(path);
+            SetComboboxValues();
         }
     }
 }

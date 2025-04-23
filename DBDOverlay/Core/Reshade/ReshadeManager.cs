@@ -13,7 +13,7 @@ namespace DBDOverlay.Core.Reshade
         public List<ReshadeHotKey> Keys { get; private set; }
         public List<string> Filters { get; private set; }
 
-        private readonly Dictionary<string, ReshadeHotKey> hotKeys = new Dictionary<string, ReshadeHotKey>();
+        private Dictionary<string, ReshadeHotKey> hotKeys;
         private IniFile ini;
         private readonly string generalSection = "GENERAL";
         private readonly string keysField = "PresetShortcutKeys";
@@ -36,6 +36,7 @@ namespace DBDOverlay.Core.Reshade
             ini = new IniFile(path);
             Keys = GetKeys();
             Filters = GetFilters();
+            hotKeys = new Dictionary<string, ReshadeHotKey>();
             foreach (string map in MapNamesContainer.GetReshadeMapsList())
             {
                 hotKeys.Add(map, null);
@@ -50,7 +51,9 @@ namespace DBDOverlay.Core.Reshade
 
         public void AddHotKey(string map, string filter)
         {
-            hotKeys[map] = Keys[Filters.IndexOf(filter)];
+            var filterIndex = Filters.IndexOf(filter);
+            hotKeys[map] = Keys[filterIndex];
+            MappingsHandler.AddEntry(hotKeys.Keys.ToList().IndexOf(map), filterIndex);
         }
 
         private List<ReshadeHotKey> GetKeys()

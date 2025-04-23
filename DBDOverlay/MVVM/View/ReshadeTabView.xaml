@@ -42,7 +42,8 @@
                     Margin="10"
                     Click="Open_Click"/>
 
-            <Label Content="ReShade.ini"
+            <Label x:Name="ReshadeIniPathLabel"
+                   Content="ReShade.ini"
                    Foreground="White"
                    FontSize="14"
                    VerticalAlignment="Center"/>
