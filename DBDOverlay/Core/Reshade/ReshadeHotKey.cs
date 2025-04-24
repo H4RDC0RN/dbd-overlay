@@ -21,7 +21,8 @@ namespace DBDOverlay.Core.Reshade
 
         public void Press()
         {
-            WindowsServices.Instance.Send($"{(Ctrl ? "^" : string.Empty)}{(Shift ? "+" : string.Empty)}{(Alt ? "%" : string.Empty)}{Key.ToStringKey()}");
+            var key = $"{(Ctrl ? "^" : string.Empty)}{(Shift ? "+" : string.Empty)}{(Alt ? "%" : string.Empty)}{Key.ToStringKey()}";
+            WindowsServices.Instance.Send(key);
         }
     }
 }

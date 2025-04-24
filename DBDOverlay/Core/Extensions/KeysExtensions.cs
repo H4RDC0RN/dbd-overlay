@@ -25,10 +25,9 @@ namespace DBDOverlay.Core.Extensions
                 default:
                     {
                         var stringKey = key.ToString();
-                        if (stringKey.Length == 1)
-                            return stringKey.ToLower();
-                        else
-                            return $"{{{stringKey.ToUpper()}}}";
+                        if (stringKey.Length == 1) return stringKey.ToLower();
+                        if (stringKey.Length == 2 && stringKey[0].Equals('D') && stringKey[1].ToString().IsInt()) return stringKey[1].ToString();
+                        return $"{{{stringKey.ToUpper()}}}";
                     }
             }
         }
