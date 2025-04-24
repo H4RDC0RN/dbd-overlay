@@ -40,7 +40,7 @@ namespace DBDOverlay.MVVM.View
                     Name = list[i],
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Width = 180,
+                    Width = 200,
                     Margin = new Thickness(5),
                     Style = (Style)FindResource("ComboBoxFlatStyle")
                 };

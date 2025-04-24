@@ -16,7 +16,8 @@
             <RowDefinition Height="0.16*"/>
         </Grid.RowDefinitions>
 
-        <ScrollViewer>
+        <ScrollViewer x:Name="FiltersScrollViewer"
+                      Style="{StaticResource ScrollViewerStyle}">
             <Grid x:Name="MapFiltersGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
