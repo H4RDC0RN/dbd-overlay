@@ -28,7 +28,7 @@ namespace DBDOverlay.Core.Download
         private readonly string traineddataExtension = ".traineddata";
         private readonly string zip = "zip";
 
-        private readonly string binariesName = "dbd-overlay-";
+        private readonly string binariesName = "dbd-overlay";
 
         private static DownloadManager instance;
 
@@ -147,7 +147,7 @@ namespace DBDOverlay.Core.Download
         private string DownloadUpdate(string version)
         {
             Directory.CreateDirectory(Folders.Update);
-            var fileName = $"{binariesName}{version}.{zip}";
+            var fileName = $"{binariesName}.{zip}";
             var path = $@"{Folders.Update}\{fileName}";
             DownloadFile($"{releasesLink}{download}/{version}/{fileName}", path);
             return path;
@@ -186,7 +186,7 @@ namespace DBDOverlay.Core.Download
 
             var exeName = AppDomain.CurrentDomain.FriendlyName;
             var exePath = Assembly.GetEntryAssembly().Location;
-            var from = $@"{Folders.Update}\{binariesName}{version}";
+            var from = $@"{Folders.Update}\{binariesName}";
             var to = string.Empty.ToProjectPath();
 
             CmdHelper.RunCommand($"taskkill /f /im \"{exeName}\" && " +
