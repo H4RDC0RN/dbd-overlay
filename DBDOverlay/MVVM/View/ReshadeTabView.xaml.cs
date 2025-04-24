@@ -15,8 +15,7 @@ namespace DBDOverlay.MVVM.View
         {
             InitializeComponent();
             InitializeElements();
-            var path = Settings.Default.ReshadeIniPath;
-            if (!path.Equals(string.Empty)) SetReshadeIni(path);
+            SetComboboxValues();
         }
 
         private void InitializeElements()
@@ -62,7 +61,8 @@ namespace DBDOverlay.MVVM.View
                 Settings.Default.ReshadeIniPath = openFileDialog.FileName;
                 Settings.Default.ReshadeMappings = string.Empty;
                 Settings.Default.Save();
-                SetReshadeIni(openFileDialog.FileName);
+                ReshadeManager.Instance.Initialize(openFileDialog.FileName);
+                SetComboboxValues();
             }
         }
 
@@ -94,12 +94,6 @@ namespace DBDOverlay.MVVM.View
                 var filterIndex = MappingsHandler.GetFilterIndex(mapIndex);
                 if (filterIndex != -1) comboBox.SelectedIndex = filterIndex;
             }
-        }
-
-        private void SetReshadeIni(string path)
-        {
-            ReshadeManager.Instance.Initialize(path);
-            SetComboboxValues();
         }
     }
 }

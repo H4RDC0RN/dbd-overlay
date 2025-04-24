@@ -17,6 +17,8 @@ using DBDOverlay.Core.KillerOverlay;
 using DBDOverlay.Core.Extensions;
 using System.Reflection;
 using System.Windows.Forms;
+using DBDOverlay.Core.Reshade;
+using DBDOverlay.Core.MapOverlay.Languages;
 
 namespace DBDOverlay
 {
@@ -31,11 +33,12 @@ namespace DBDOverlay
         public MainWindow()
         {
             HandleExceptions();
-            AddNumToSendKeys();
             Folders.CreateDefault();
             DownloadManager.Instance.DownloadDefaultLanguage();
             DownloadManager.Instance.CheckForUpdate();
             ReloadSettings();
+            AddNumToSendKeys();
+            LoadReshadeIni();
 
             Logger.Info("---Open Application---");
             InitializeComponent();
@@ -120,6 +123,21 @@ namespace DBDOverlay
             KillerOverlayController.PostUnhookTimerOverlay.Top = rect.Top;
             KillerOverlayController.PostUnhookTimerOverlay.Width = halfWidth;
             KillerOverlayController.PostUnhookTimerOverlay.Height = rect.Height;
+        }
+
+        private void LoadReshadeIni()
+        {
+            var path = Settings.Default.ReshadeIniPath;
+            if (!path.Equals(string.Empty))
+            {
+                ReshadeManager.Instance.Initialize(path);
+                var list = MapNamesContainer.GetReshadeMapsList();
+                for (int mapIndex = 0; mapIndex < list.Count; mapIndex++)
+                {
+                    var filterIndex = MappingsHandler.GetFilterIndex(mapIndex);
+                    if (filterIndex != -1) ReshadeManager.Instance.AddHotKey(list[mapIndex], filterIndex);
+                }
+            }
         }
 
         private void AddNumToSendKeys()

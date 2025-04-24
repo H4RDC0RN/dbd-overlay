@@ -48,6 +48,11 @@ namespace DBDOverlay.Core.Reshade
         public void AddHotKey(string map, string filter)
         {
             var filterIndex = Filters.IndexOf(filter);
+            AddHotKey(map, filterIndex);
+        }
+
+        public void AddHotKey(string map, int filterIndex)
+        {
             hotKeys[map] = Keys[filterIndex];
             MappingsHandler.AddEntry(hotKeys.Keys.ToList().IndexOf(map), filterIndex);
         }
