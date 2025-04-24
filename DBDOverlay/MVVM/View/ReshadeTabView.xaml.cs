@@ -67,13 +67,19 @@ namespace DBDOverlay.MVVM.View
 
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
-
+            foreach (var comboBox in MapFiltersGrid.Children.OfType<ComboBox>().ToList())
+            {
+                comboBox.SelectedItem = null;
+            }
+            ReshadeManager.Instance.ResetHotKeys();
+            Settings.Default.ReshadeMappings = string.Empty;
+            Settings.Default.Save();
         }
 
         private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = (ComboBox)sender;
-            ReshadeManager.Instance.AddHotKey(comboBox.Name, comboBox.SelectedItem.ToString());
+            if (comboBox.SelectedItem != null) ReshadeManager.Instance.AddHotKey(comboBox.Name, comboBox.SelectedItem.ToString());
         }
 
         private void SetComboboxValues()

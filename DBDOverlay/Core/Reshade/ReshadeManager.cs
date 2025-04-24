@@ -36,11 +36,7 @@ namespace DBDOverlay.Core.Reshade
             ini = new IniFile(path);
             Keys = GetKeys();
             Filters = GetFilters();
-            hotKeys = new Dictionary<string, ReshadeHotKey>();
-            foreach (string map in MapNamesContainer.GetReshadeMapsList())
-            {
-                hotKeys.Add(map, null);
-            }
+            ResetHotKeys();
         }
 
         public void ApplyFilter(MapInfo mapInfo)
@@ -54,6 +50,15 @@ namespace DBDOverlay.Core.Reshade
             var filterIndex = Filters.IndexOf(filter);
             hotKeys[map] = Keys[filterIndex];
             MappingsHandler.AddEntry(hotKeys.Keys.ToList().IndexOf(map), filterIndex);
+        }
+
+        public void ResetHotKeys()
+        {
+            hotKeys = new Dictionary<string, ReshadeHotKey>();
+            foreach (string map in MapNamesContainer.GetReshadeMapsList())
+            {
+                hotKeys.Add(map, null);
+            }
         }
 
         private List<ReshadeHotKey> GetKeys()

@@ -20,10 +20,9 @@ namespace DBDOverlay.Core.Extensions
             var result = string.Empty;
             for (int i = 0; i < words.Count; i++)
             {
-                if (words[i].Equals("laboratory")) words[i] = "lab";
                 result += words[i].First().ToString().ToUpper() + words[i].Substring(1) + (words.Count == i + 1 ? string.Empty : " ");
             }
-            return result;
+            return result.ReplaceRegex("Laboratory", "Lab");
         }
 
         public static string RegexMatch(this string str, string pattern)
