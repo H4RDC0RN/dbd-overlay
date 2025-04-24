@@ -60,6 +60,7 @@ namespace DBDOverlay.MVVM.View
             if ((bool)openFileDialog.ShowDialog())
             {
                 Settings.Default.ReshadeIniPath = openFileDialog.FileName;
+                Settings.Default.ReshadeMappings = string.Empty;
                 Settings.Default.Save();
                 SetReshadeIni(openFileDialog.FileName);
             }

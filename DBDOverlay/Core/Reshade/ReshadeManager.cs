@@ -16,8 +16,8 @@ namespace DBDOverlay.Core.Reshade
         private Dictionary<string, ReshadeHotKey> hotKeys;
         private IniFile ini;
         private readonly string generalSection = "GENERAL";
-        private readonly string keysField = "PresetShortcutKeys";
-        private readonly string filtersField = "PresetShortcutPaths";
+        private readonly string keysFieldName = "PresetShortcutKeys";
+        private readonly string filtersFieldName = "PresetShortcutPaths";
 
         private static ReshadeManager instance;
 
@@ -63,18 +63,24 @@ namespace DBDOverlay.Core.Reshade
 
         private List<ReshadeHotKey> GetKeys()
         {
-            var values = ini.Read(keysField, generalSection).Split(',');
             var keys = new List<ReshadeHotKey>();
-            for (int i = 0; i < values.Length; i += 4)
+            var keysFieldValue = ini.Read(keysFieldName, generalSection);
+            if (!keysFieldValue.Equals(string.Empty))
             {
-                keys.Add(new ReshadeHotKey((Keys)values[i].ToInt(), values[i + 1].ToBool(), values[i + 2].ToBool(), values[i + 3].ToBool()));
+                var values = ini.Read(keysFieldName, generalSection).Split(',');
+                for (int i = 0; i < values.Length; i += 4)
+                {
+                    keys.Add(new ReshadeHotKey((Keys)values[i].ToInt(), values[i + 1].ToBool(), values[i + 2].ToBool(), values[i + 3].ToBool()));
+                }
             }
             return keys;
         }
 
         private List<string> GetFilters()
         {
-            return ini.Read(filtersField, generalSection).Split(',').Select(x => x.RegexMatch(@"(?<=\\)(?:.(?!\\))+(?=\.ini)")).ToList();
+            var filtersFieldValue = ini.Read(filtersFieldName, generalSection);
+            if (filtersFieldValue.Equals(string.Empty)) return new List<string>();
+            return ini.Read(filtersFieldName, generalSection).Split(',').Select(x => x.RegexMatch(@"(?<=\\)(?:.(?!\\))+(?=\.ini)")).ToList();
         }
     }
 }
