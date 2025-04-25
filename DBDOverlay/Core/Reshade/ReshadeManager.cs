@@ -1,6 +1,7 @@
 ﻿using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.MapOverlay;
 using DBDOverlay.Core.MapOverlay.Languages;
+using DBDOverlay.Core.Utils;
 using DBDOverlay.Core.Windows;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace DBDOverlay.Core.Reshade
 
         public void Initialize(string path)
         {
+            Logger.Info($"Initializing file from '{path}'");
             ini = new IniFile(path);
             Keys = GetKeys();
             Filters = GetFilters();
@@ -49,6 +51,7 @@ namespace DBDOverlay.Core.Reshade
         {
             var filterIndex = Filters.IndexOf(filter);
             AddHotKey(map, filterIndex);
+            Logger.Info($"New filter is mapped: Map = {map}, Filter = {filter}");
         }
 
         public void AddHotKey(string map, int filterIndex)
@@ -60,7 +63,7 @@ namespace DBDOverlay.Core.Reshade
         public void ResetHotKeys()
         {
             hotKeys = new Dictionary<string, ReshadeHotKey>();
-            foreach (string map in MapNamesContainer.GetReshadeMapsList())
+            foreach (var map in MapNamesContainer.GetReshadeMapsList())
             {
                 hotKeys.Add(map, null);
             }
@@ -78,6 +81,7 @@ namespace DBDOverlay.Core.Reshade
                     keys.Add(new ReshadeHotKey((Keys)values[i].ToInt(), values[i + 1].ToBool(), values[i + 2].ToBool(), values[i + 3].ToBool()));
                 }
             }
+            Logger.Info($"Reshade keys: {keys}");
             return keys;
         }
 

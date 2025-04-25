@@ -80,7 +80,7 @@ namespace DBDOverlay.MVVM.View
         private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = (ComboBox)sender;
-            if (comboBox.SelectedItem != null) ReshadeManager.Instance.AddHotKey(comboBox.Name, comboBox.SelectedItem.ToString());
+            if (comboBox.SelectedItem != null && comboBox.IsVisible) ReshadeManager.Instance.AddHotKey(comboBox.Name, comboBox.SelectedItem.ToString());
         }
 
         private void SetComboboxValues()

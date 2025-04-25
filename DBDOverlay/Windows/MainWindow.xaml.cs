@@ -89,6 +89,8 @@ namespace DBDOverlay
             Logger.Info("---Close Application---");
             HotKeysController.Dispose();
             MapOverlayController.Overlay.Close();
+            KillerOverlayController.HooksOverlay.Close();
+            KillerOverlayController.PostUnhookTimerOverlay.Close();
             Close();
             Application.Current.Shutdown();
         }

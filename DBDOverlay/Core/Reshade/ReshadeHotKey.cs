@@ -1,4 +1,5 @@
 ﻿using DBDOverlay.Core.Extensions;
+using DBDOverlay.Core.Utils;
 using DBDOverlay.Core.Windows;
 using System.Windows.Forms;
 
@@ -23,6 +24,7 @@ namespace DBDOverlay.Core.Reshade
         {
             var key = $"{(Ctrl ? "^" : string.Empty)}{(Shift ? "+" : string.Empty)}{(Alt ? "%" : string.Empty)}{Key.ToStringKey()}";
             WindowsServices.Instance.Send(key);
+            Logger.Info($"'{key}' key is pressed ({Key})");
         }
     }
 }

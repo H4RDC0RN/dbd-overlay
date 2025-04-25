@@ -100,10 +100,11 @@ namespace DBDOverlay.Core.Windows
         public void Send(string key)
         {
             var dbdProcess = Process.GetProcessesByName(dbdProcessName).First();
-            if (SetForegroundWindow((int)dbdProcess.MainWindowHandle))
+            for (int i = 0; i < 5; i++)
             {
-                SendKeys.SendWait(key);
+                if (SetForegroundWindow((int)dbdProcess.MainWindowHandle)) break;
             }
+            SendKeys.SendWait(key);
         }
 
         private void HandleHotkeys()

@@ -14,19 +14,25 @@ namespace DBDOverlay.Core.Reshade
             if (mappingsString.Equals(string.Empty))
             {
                 Settings.Default.ReshadeMappings = newEntry;
+                Settings.Default.Save();
                 return;
             }
             var mappings = ToMappings(mappingsString);
             var mappingIndex = mappings.FindIndex(x => x.MapIndex == mapIndex);
             if (mappingIndex != -1)
             {
-                Settings.Default.ReshadeMappings = mappingsString.ReplaceRegex(mappings[mappingIndex].Entry, newEntry);
+                var entry = mappings[mappingIndex].Entry;
+                if (!entry.Equals(newEntry))
+                {
+                    Settings.Default.ReshadeMappings = mappingsString.ReplaceRegex(entry, newEntry);
+                    Settings.Default.Save();
+                }
             }
             else
             {
                 Settings.Default.ReshadeMappings = $"{mappingsString},{newEntry}";
+                Settings.Default.Save();
             }
-            Settings.Default.Save();
         }
 
         public static int GetFilterIndex(int mapIndex)

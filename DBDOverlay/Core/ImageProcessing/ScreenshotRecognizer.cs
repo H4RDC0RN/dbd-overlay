@@ -112,17 +112,19 @@ namespace DBDOverlay.Core.ImageProcessing
             var srcRect = GetRect(statusRectMulti, width, height);
             var destRect = GetRect(new RectMultiplier(0, 0, statusRectMulti.Width, statusRectMulti.Height), width, height);
             var piece = new Bitmap(destRect.Width, destRect.Height);
+            var hooked = SurvivorStates.Hooked;
 
             using (Graphics graphics = Graphics.FromImage(piece))
             {
                 for (int i = 0; i < parts; i++)
                 {
                     graphics.DrawImage(image, destRect, srcRect, GraphicsUnit.Pixel);
+                    piece = piece.Resize(hooked.Width, hooked.Height);
 
                     if (savePieces) piece.Save(GetImagePath($"survivor_{i}"), ImageFormat.Png);
 
-                    KillerOverlayController.Instance.CheckIfHooked(i, piece.Compare(SurvivorStates.Hooked));
-                    KillerOverlayController.Instance.CheckIfUnhooked(i, piece.Compare(SurvivorStates.Hooked));
+                    KillerOverlayController.Instance.CheckIfHooked(i, piece.Compare(hooked));
+                    KillerOverlayController.Instance.CheckIfUnhooked(i, piece.Compare(hooked));
 
                     var refreshStates = new Dictionary<string, double>
                     {

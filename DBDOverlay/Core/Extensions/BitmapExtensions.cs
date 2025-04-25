@@ -34,7 +34,11 @@ namespace DBDOverlay.Core.Extensions
 
             var newWidth = bitmap.Width * scale;
             var newHeight = bitmap.Height * scale;
+            return Resize(bitmap, newWidth, newHeight);
+        }
 
+        public static Bitmap Resize(this Bitmap bitmap, double newWidth, double newHeight)
+        {
             var result = new Bitmap((int)newWidth, (int)newHeight);
             using (var graphics = Graphics.FromImage(result))
             {
