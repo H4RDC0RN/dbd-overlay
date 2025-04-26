@@ -76,10 +76,13 @@ namespace DBDOverlay.MVVM.View
 
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var newLanguage = LanguagesManager.GetValue(LanguageComboBox.SelectedItem.ToString());
-            Settings.Default.Language = newLanguage;
-            Settings.Default.Save();
-            ImageReader.Instance.SetEngine();
+            if (LanguageComboBox.IsVisible)
+            {
+                var newLanguage = LanguagesManager.GetValue(LanguageComboBox.SelectedItem.ToString());
+                Settings.Default.Language = newLanguage;
+                Settings.Default.Save();
+                ImageReader.Instance.SetEngine();
+            }
         }
 
         private void Download_Click(object sender, RoutedEventArgs e)
@@ -122,7 +125,7 @@ namespace DBDOverlay.MVVM.View
             var settingName = $"{hotKeyType}Modifier";
             var oldModifier = (ModifierKeys)(uint)Settings.Default[settingName];
             var newModifier = modifiers.FirstOrDefault(x => x.Value.Equals(comboBox.SelectedItem.ToString())).Key;
-            
+
             Settings.Default[settingName] = (uint)newModifier;
             Settings.Default.Save();
 

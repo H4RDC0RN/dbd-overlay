@@ -108,23 +108,23 @@ namespace DBDOverlay.Core.ImageProcessing
 
         public void HandleSurvivors(bool savePieces = false)
         {
-            int parts = 4;
+            int survCount = 4;
             var path = GetImagePath(Settings.Default.SurvivorsScreenshotName);
             CreateFromScreenArea(RectType.Survivors, path, false);
             var newPath = PreProcess(path, threshold: 600, saveAsNew: true, log: false);
             var image = new Bitmap(newPath);
 
             var width = image.Width;
-            var height = image.Height / parts;
+            var height = image.Height / survCount;
             var statusRectMulti = GetRectMultiplier(RectType.State);
             var srcRect = GetRect(statusRectMulti, width, height);
             var destRect = GetRect(new RectMultiplier(0, 0, statusRectMulti.Width, statusRectMulti.Height), width, height);
             var piece = new Bitmap(destRect.Width, destRect.Height);
             var hooked = SurvivorStates.Hooked;
 
-            using (Graphics graphics = Graphics.FromImage(piece))
+            for (int i = 0; i < survCount; i++)
             {
-                for (int i = 0; i < parts; i++)
+                using (Graphics graphics = Graphics.FromImage(piece))
                 {
                     graphics.DrawImage(image, destRect, srcRect, GraphicsUnit.Pixel);
                     piece = piece.Resize(hooked.Width, hooked.Height);
