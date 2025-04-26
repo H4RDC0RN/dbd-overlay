@@ -57,7 +57,7 @@
                     HorizontalAlignment="Right"
                     Width="70"
                     Height="35"
-                    Margin="20"
+                    Margin="10"
                     Click="Reset_Click"/>
         </Grid>
 </UserControl>

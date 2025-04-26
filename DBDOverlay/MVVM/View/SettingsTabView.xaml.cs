@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.Properties;
 using DBDOverlay.Core.MapOverlay.Languages;
+using DBDOverlay.Core.ImageProcessing;
 
 namespace DBDOverlay.MVVM.View
 {
@@ -78,6 +79,7 @@ namespace DBDOverlay.MVVM.View
             var newLanguage = LanguagesManager.GetValue(LanguageComboBox.SelectedItem.ToString());
             Settings.Default.Language = newLanguage;
             Settings.Default.Save();
+            ImageReader.Instance.SetEngine();
         }
 
         private void Download_Click(object sender, RoutedEventArgs e)

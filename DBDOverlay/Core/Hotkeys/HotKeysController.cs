@@ -36,7 +36,7 @@ namespace DBDOverlay.Core.Hotkeys
         private static void PressedRead(object sender, KeyPressedEventArgs e)
         {
             e.Log("Read map");
-            MapOverlayController.Instance.ChangeMap(ScreenshotRecognizer.GetMapInfo());
+            MapOverlayController.Instance.ChangeMap(ImageReader.Instance.GetMapInfo());
         }
 
         private static void PressedNext(object sender, KeyPressedEventArgs e)
@@ -54,7 +54,7 @@ namespace DBDOverlay.Core.Hotkeys
         private static void PressedSurvivors(object sender, KeyPressedEventArgs e)
         {
             e.Log("Save survivors images");
-            ScreenshotRecognizer.HandleSurvivors(true);
+            ImageReader.Instance.HandleSurvivors(true);
         }
     }
 }

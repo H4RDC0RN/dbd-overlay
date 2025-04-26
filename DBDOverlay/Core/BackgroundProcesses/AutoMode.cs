@@ -27,7 +27,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
 
         protected override void Action()
         {
-            var mapInfo = ScreenshotRecognizer.GetMapInfo(true);
+            var mapInfo = ImageReader.Instance.GetMapInfo(true);
             if (MapOverlayController.Instance.CanMapOverlayBeApplied(mapInfo))
             {
                 Application.Current.Dispatcher.Invoke(() =>

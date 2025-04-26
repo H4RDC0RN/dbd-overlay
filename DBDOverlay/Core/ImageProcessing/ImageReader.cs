@@ -18,43 +18,51 @@ using System.Collections.Generic;
 
 namespace DBDOverlay.Core.ImageProcessing
 {
-    public static class ScreenshotRecognizer
+    public class ImageReader
     {
-        private static int width;
-        private static int height;
-        private static readonly double maxScaleManual = 3;
-        private static readonly double maxScaleAuto = 1.5;
-        private static readonly double scaleStepManual = 1;
-        private static readonly double scaleStepAuto = 0.5;
-        private static readonly int maxThreshold = 750;
-        private static readonly int minThreshold = 400;
-        private static readonly int thresholdStep = 50;
-        private static readonly string png = "png";
-        private static string text = string.Empty;
+        private int width;
+        private int height;
+        private readonly double maxScaleManual = 3;
+        private readonly double maxScaleAuto = 1.5;
+        private readonly double scaleStepManual = 1;
+        private readonly double scaleStepAuto = 0.5;
+        private readonly int maxThreshold = 750;
+        private readonly int minThreshold = 400;
+        private readonly int thresholdStep = 50;
+        private readonly string png = "png";
+        private string text = string.Empty;
 
-        public static void SetScreenBounds()
+        private TesseractEngine engine;
+        private static ImageReader instance;
+
+        public static ImageReader Instance
         {
-            var bounds = Screen.PrimaryScreen?.Bounds;
-            if (bounds != null)
+            get
             {
-                width = bounds.Value.Width;
-                Logger.Info($"Screen width = {width}");
-                height = bounds.Value.Height;
-                Logger.Info($"Screen height = {height}");
-            }
-            else
-            {
-                Logger.Error("Screen bounds was not found");
+                if (instance == null)
+                    instance = new ImageReader();
+                return instance;
             }
         }
 
-        public static MapInfo GetMapInfo(bool autoMode = false)
+        public void Initialize()
+        {
+            SetScreenBounds();
+            SetEngine();
+        }
+
+        public void SetEngine()
+        {
+            engine = new TesseractEngine(Folders.TessData, LanguagesManager.ConvertMexToSpa(Settings.Default.Language));
+        }
+
+        public MapInfo GetMapInfo(bool autoMode = false)
         {
             var log = !autoMode;
             if (log) Logger.Info($"=============== Start getting map info ===============");
             var imagePath = GetImagePath(GetFileName(autoMode));
             var watch = Stopwatch.StartNew();
-            CreateImageFromScreenArea(autoMode ? RectType.Auto : RectType.Manual, imagePath, log);
+            CreateFromScreenArea(autoMode ? RectType.Auto : RectType.Manual, imagePath, log);
 
             var maxScale = autoMode ? maxScaleAuto : maxScaleManual;
             var scaleStep = autoMode ? scaleStepAuto : scaleStepManual;
@@ -63,7 +71,7 @@ namespace DBDOverlay.Core.ImageProcessing
                 for (int threshold = autoMode ? maxThreshold : minThreshold; threshold >= minThreshold; threshold -= thresholdStep)
                 {
                     if (log) Logger.Info($"===== Size = {scale}, Threshold = {threshold} =====");
-                    RecognizeText(PreProcessImage(imagePath, scale, threshold, true, log), log);
+                    RecognizeText(PreProcess(imagePath, scale, threshold, true, log), log);
                     if (IsMapTextCorrect(autoMode))
                     {
                         if (log) Logger.Info("Map text is correct");
@@ -98,12 +106,12 @@ namespace DBDOverlay.Core.ImageProcessing
             return null;
         }
 
-        public static void HandleSurvivors(bool savePieces = false)
+        public void HandleSurvivors(bool savePieces = false)
         {
             int parts = 4;
             var path = GetImagePath(Settings.Default.SurvivorsScreenshotName);
-            CreateImageFromScreenArea(RectType.Survivors, path, false);
-            var newPath = PreProcessImage(path, threshold: 600, saveAsNew: true, log: false);
+            CreateFromScreenArea(RectType.Survivors, path, false);
+            var newPath = PreProcess(path, threshold: 600, saveAsNew: true, log: false);
             var image = new Bitmap(newPath);
 
             var width = image.Width;
@@ -141,12 +149,12 @@ namespace DBDOverlay.Core.ImageProcessing
             piece.Dispose();
         }
 
-        public static Rectangle GetRect(RectType rectType, int w = 0, int h = 0)
+        public Rectangle GetRect(RectType rectType, int w = 0, int h = 0)
         {
             return GetRect(GetRectMultiplier(rectType), w, h);
         }
 
-        public static Rectangle GetRect(RectMultiplier rectMultiplier, int w = 0, int h = 0)
+        public Rectangle GetRect(RectMultiplier rectMultiplier, int w = 0, int h = 0)
         {
             if (w == 0) w = width;
             if (h == 0) h = height;
@@ -155,7 +163,23 @@ namespace DBDOverlay.Core.ImageProcessing
             return new Rectangle((w * rectMultiplier.X).Round(), (h * rectMultiplier.Y).Round(), imageWidth, imageHeight);
         }
 
-        private static void CreateImageFromScreenArea(RectType rectType, string path, bool log = true)
+        private void SetScreenBounds()
+        {
+            var bounds = Screen.PrimaryScreen?.Bounds;
+            if (bounds != null)
+            {
+                width = bounds.Value.Width;
+                Logger.Info($"Screen width = {width}");
+                height = bounds.Value.Height;
+                Logger.Info($"Screen height = {height}");
+            }
+            else
+            {
+                Logger.Error("Screen bounds was not found");
+            }
+        }
+
+        private void CreateFromScreenArea(RectType rectType, string path, bool log = true)
         {
             var rect = GetRect(rectType);
             if (log) Logger.Info($"Screen area: x = {rect.X}, y = {rect.Y}, width = {rect.Width}, height = {rect.Height}");
@@ -170,7 +194,7 @@ namespace DBDOverlay.Core.ImageProcessing
             if (log) Logger.Info($"Image is saved to '{path}'");
         }
 
-        private static RectMultiplier GetRectMultiplier(RectType rectType)
+        private RectMultiplier GetRectMultiplier(RectType rectType)
         {
             switch (rectType)
             {
@@ -182,24 +206,25 @@ namespace DBDOverlay.Core.ImageProcessing
             }
         }
 
-        private static void RecognizeText(string imagePath, bool log = true)
+        private void RecognizeText(string imagePath, bool log = true)
         {
             var watch = Stopwatch.StartNew();
-            var engine = new TesseractEngine(Folders.TessData, LanguagesManager.ConvertMexToSpa(Settings.Default.Language));
             var image = Pix.LoadFromFile(imagePath);
-            text = engine.Process(image).GetText();
+            var page = engine.Process(image);
+            text = page.GetText();
             watch.Stop();
+            page.Dispose();
             if (log) Logger.Info($"Text from image is recognized ({watch.ElapsedMilliseconds} ms)");
         }
 
-        private static bool IsMapTextCorrect(bool autoMode = false)
+        private bool IsMapTextCorrect(bool autoMode = false)
         {
             return autoMode
                 ? text.Length > 5 && text.ContainsRegex(@"\w")
                 : text.Contains(LanguagesManager.GetMapInfoLocale()) && text.Contains('\n') && text.ContainsRegex(" - ");
         }
 
-        private static MapInfo ConvertTextToMapInfo(bool autoMode = false, bool log = true)
+        private MapInfo ConvertTextToMapInfo(bool autoMode = false, bool log = true)
         {
             var mapInfo = autoMode ? ConvertStartTextToMapInfo() : ConvertEscTextToMapInfo();
 
@@ -208,7 +233,7 @@ namespace DBDOverlay.Core.ImageProcessing
             return mapInfo;
         }
 
-        private static MapInfo ConvertEscTextToMapInfo()
+        private MapInfo ConvertEscTextToMapInfo()
         {
             var res = text.Split(" - ");
             var realm = res[0].Split('\n').Last().RemoveRegex("'").Replace(" ", "_").ToUpper();
@@ -216,13 +241,13 @@ namespace DBDOverlay.Core.ImageProcessing
             return new MapInfo(realm, HandleBadhamIssues(mapName));
         }
 
-        private static MapInfo ConvertStartTextToMapInfo()
+        private MapInfo ConvertStartTextToMapInfo()
         {
             var mapName = text.RemoveRegex(@"\n|'|\.").Replace(" ", "_").RemoveRegex(@"^_{1,}").ToUpper();
             return new MapInfo(HandleBadhamIssues(mapName, false), true);
         }
 
-        private static string HandleBadhamIssues(string mapName, bool log = true)
+        private string HandleBadhamIssues(string mapName, bool log = true)
         {
             var tessWicknessPattern = @"(I|L|\||1|!)";
             var badhamSuffixPattern = $"_{tessWicknessPattern}{{1,3}}$";
@@ -242,7 +267,7 @@ namespace DBDOverlay.Core.ImageProcessing
             return mapName;
         }
 
-        private static string ReplaceSymbol(string mapName, string oldString, string newString, bool log = true)
+        private string ReplaceSymbol(string mapName, string oldString, string newString, bool log = true)
         {
             if (!mapName.EndsWith(oldString)) return mapName;
             if (oldString.StartsWith(@"\")) oldString = $@"\{oldString}";
@@ -251,7 +276,7 @@ namespace DBDOverlay.Core.ImageProcessing
             return mapName;
         }
 
-        private static string PreProcessImage(string path, double scale = 1, int threshold = 400, bool saveAsNew = false, bool log = true)
+        private string PreProcess(string path, double scale = 1, int threshold = 400, bool saveAsNew = false, bool log = true)
         {
             var newPath = saveAsNew ? path.ReplaceRegex($@"\.{png}", $"_edited.{png}") : path;
             var image = new Bitmap(path);
@@ -261,12 +286,12 @@ namespace DBDOverlay.Core.ImageProcessing
             return newPath;
         }
 
-        private static string GetImagePath(string imageName)
+        private string GetImagePath(string imageName)
         {
             return $@"{Folders.Images}\{imageName}.{png}";
         }
 
-        private static string GetFileName(bool autoMode = false)
+        private string GetFileName(bool autoMode = false)
         {
             return autoMode ? Settings.Default.AutoScreenshotFileName : Settings.Default.ManualScreenshotFileName;
         }

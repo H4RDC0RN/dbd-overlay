@@ -1,5 +1,4 @@
-﻿using DBDOverlay.Core.Windows;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace DBDOverlay.Core.BackgroundProcesses
 {
@@ -17,10 +16,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
             {
                 while (IsActive)
                 {
-                    if (WindowsServices.Instance.IsDBDActiveWindow())
-                    {
-                        Action();
-                    }
+                    Action();
                 }
             };
             worker.RunWorkerAsync();

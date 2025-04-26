@@ -20,7 +20,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
 
         protected override void Action()
         {
-            ScreenshotRecognizer.HandleSurvivors();
+            ImageReader.Instance.HandleSurvivors();
         }
     }
 }

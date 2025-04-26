@@ -42,7 +42,7 @@ namespace DBDOverlay
 
             Logger.Info("---Open Application---");
             InitializeComponent();
-            ScreenshotRecognizer.SetScreenBounds();
+            ImageReader.Instance.Initialize();
             SetKillerOverlaysBounds();
 
             mapOverlayTabVM = new MapOverlayTabViewModel();
@@ -113,7 +113,7 @@ namespace DBDOverlay
 
         private void SetKillerOverlaysBounds()
         {
-            var rect = ScreenshotRecognizer.GetRect(RectType.Survivors, SystemParameters.PrimaryScreenWidth.Round(), SystemParameters.PrimaryScreenHeight.Round());
+            var rect = ImageReader.Instance.GetRect(RectType.Survivors, SystemParameters.PrimaryScreenWidth.Round(), SystemParameters.PrimaryScreenHeight.Round());
             var halfWidth = rect.Width / 2;
 
             KillerOverlayController.HooksOverlay.Left = rect.Left + rect.Width - (rect.Width / 5);
