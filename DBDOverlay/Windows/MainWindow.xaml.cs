@@ -161,6 +161,7 @@ namespace DBDOverlay
         {
             AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
             {
+                Logger.Fatal(e.Exception.GetType().Name);
                 Logger.Fatal(e.Exception.Message);
                 Logger.Fatal(e.Exception.StackTrace);
                 Logger.Info("---Close Application with exception---");

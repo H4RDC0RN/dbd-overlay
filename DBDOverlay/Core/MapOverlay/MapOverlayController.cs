@@ -37,11 +37,12 @@ namespace DBDOverlay.Core.MapOverlay
 
         public void ChangeMap(MapInfo mapInfo)
         {
-            if (!CanMapOverlayBeApplied(mapInfo)) return;
-
-            realm = mapInfo.Realm;
-            name = mapInfo.Name;
-            Overlay.ChangeMapImageOverlay(mapInfo);
+            if (CanMapOverlayBeApplied(mapInfo))
+            {
+                realm = mapInfo.Realm;
+                name = mapInfo.Name;
+                Overlay.ChangeMapImageOverlay(mapInfo);
+            }
             ReshadeManager.Instance.ApplyFilter(mapInfo);
         }
 

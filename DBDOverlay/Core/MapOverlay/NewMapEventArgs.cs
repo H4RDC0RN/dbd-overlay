@@ -18,7 +18,7 @@ namespace DBDOverlay.Core.MapOverlay
             Logger.Info("=====Map info=====");
             Logger.Info($"-----Realm: {MapInfo.Realm}");
             Logger.Info($"-----Name: {MapInfo.Name}");
-            Logger.Info("=====Recognize details=====");
+            Logger.Info("=====Recognition details=====");
             Logger.Info($"-----Scale: {MapInfo.Scale}");
             Logger.Info($"-----Threshold: {MapInfo.Threshold}");
             Logger.Info($"-----Time: {MapInfo.Time} ms");

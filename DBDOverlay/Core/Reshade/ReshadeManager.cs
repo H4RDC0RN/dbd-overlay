@@ -81,7 +81,7 @@ namespace DBDOverlay.Core.Reshade
                     keys.Add(new ReshadeHotKey((Keys)values[i].ToInt(), values[i + 1].ToBool(), values[i + 2].ToBool(), values[i + 3].ToBool()));
                 }
             }
-            Logger.Info($"Reshade keys: {keys}");
+            Logger.Info($"Reshade keys: {keysFieldValue}");
             return keys;
         }
 

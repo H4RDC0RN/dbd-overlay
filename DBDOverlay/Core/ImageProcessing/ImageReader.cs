@@ -15,6 +15,7 @@ using ImageFormat = System.Drawing.Imaging.ImageFormat;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Rectangle = System.Drawing.Rectangle;
 using System.Collections.Generic;
+using System;
 
 namespace DBDOverlay.Core.ImageProcessing
 {
@@ -210,11 +211,25 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             var watch = Stopwatch.StartNew();
             var image = Pix.LoadFromFile(imagePath);
-            var page = engine.Process(image);
-            text = page.GetText();
+            SetText(image);
             watch.Stop();
-            page.Dispose();
             if (log) Logger.Info($"Text from image is recognized ({watch.ElapsedMilliseconds} ms)");
+        }
+
+        private void SetText(Pix pix)
+        {
+            Page page;
+            try
+            {
+                page = engine.Process(pix);
+            }
+            catch (InvalidOperationException)
+            {
+                SetEngine();
+                page = engine.Process(pix);
+            }
+            text = page.GetText();
+            page.Dispose();
         }
 
         private bool IsMapTextCorrect(bool autoMode = false)
@@ -227,7 +242,6 @@ namespace DBDOverlay.Core.ImageProcessing
         private MapInfo ConvertTextToMapInfo(bool autoMode = false, bool log = true)
         {
             var mapInfo = autoMode ? ConvertStartTextToMapInfo() : ConvertEscTextToMapInfo();
-
             if (log) Logger.Info("Text is converted to 'Map info' object");
             if (log) Logger.Info($"Map info: realm = {mapInfo.Realm}, name = {mapInfo.Name}");
             return mapInfo;
