@@ -560,8 +560,8 @@ namespace DBDOverlay.Core.MapOverlay.Languages
 
         public static List<string> GetReshadeMapsList()
         {
-            var diffColorRealms = new List<string>() { "WITHERED_ISLE", "DVARKA_DEEPWOOD" };
-            return eng.Select(x => diffColorRealms.Any(r => x.StartsWith(r)) ? x.Split('.')[1] : x.Split('.')[0]).Distinct().ToList();
+            var diffColorRealms = new List<string>() { "WITHERED_ISLE", "DVARKA_DEEPWOOD", "ORMOND" };
+            return eng.Select(x => diffColorRealms.Any(r => x.StartsWith(r)) ? x.Split('.')[1].RemoveRegex(@"_\d") : x.Split('.')[0]).Distinct().ToList();
         }
 
         public static string GetMapFileName(string mapFullName)
