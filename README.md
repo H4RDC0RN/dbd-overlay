@@ -3,12 +3,13 @@
 ## Features
 - **Auto mode** (set map overlay automatically)
 - **Manual mode** through ESC menu (more precise)
+- **ReShade** integration to apply filters automatically
 - Works with most in game **languages** of Dead by Daylight
 - Configure **position**, **size** and **opacity** of map overlay
 - Switching between **map variations** (like Ormond, Yamaoka etc.)
 - Configurable **hotkeys**
 ## How to install
-- Download zip archive (dbd-overlay-x.x.x.zip) from [Latest Release](https://github.com/H4RDC0RN/dbd-overlay/releases/latest)
+- Download zip archive (dbd-overlay.zip) from [Latest Release](https://github.com/H4RDC0RN/dbd-overlay/releases/latest)
 - Unpack to any folder
 - Launch DBDOverlay.exe
 ### First launch
