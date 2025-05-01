@@ -120,34 +120,34 @@ namespace DBDOverlay.Core.ImageProcessing
             var statusRectMulti = GetRectMultiplier(RectType.State);
             var srcRect = GetRect(statusRectMulti, width, height);
             var destRect = GetRect(new RectMultiplier(0, 0, statusRectMulti.Width, statusRectMulti.Height), width, height);
-            var piece = new Bitmap(destRect.Width, destRect.Height);
             var hooked = SurvivorStates.Hooked;
 
             for (int i = 0; i < survCount; i++)
             {
+                var piece = new Bitmap(destRect.Width, destRect.Height);
                 using (Graphics graphics = Graphics.FromImage(piece))
                 {
                     graphics.DrawImage(image, destRect, srcRect, GraphicsUnit.Pixel);
-                    piece = piece.Resize(hooked.Width, hooked.Height);
+                }
 
-                    if (savePieces) piece.Save(GetImagePath($"survivor_{i}"), ImageFormat.Png);
+                if (!piece.Width.Equals(hooked.Width)) piece = piece.Resize(hooked.Width, hooked.Height).ToBlackWhite(400);
+                if (savePieces) piece.Save(GetImagePath($"survivor_{i}"), ImageFormat.Png);
 
-                    KillerOverlayController.Instance.CheckIfHooked(i, piece.Compare(hooked));
-                    KillerOverlayController.Instance.CheckIfUnhooked(i, piece.Compare(hooked));
+                KillerOverlayController.Instance.CheckIfHooked(i, piece.Compare(hooked));
+                KillerOverlayController.Instance.CheckIfUnhooked(i, piece.Compare(hooked));
 
-                    var refreshStates = new Dictionary<string, double>
+                var refreshStates = new Dictionary<string, double>
                     {
                         { "Sacrificed", piece.Compare(SurvivorStates.Sacrificed) },
                         { "Escaped", piece.Compare(SurvivorStates.Escaped) },
                         { "Dead", piece.Compare(SurvivorStates.Dead) }
                     };
 
-                    KillerOverlayController.Instance.CheckIfRefreshed(i, refreshStates);
-                    srcRect.Y += height;
-                }
+                KillerOverlayController.Instance.CheckIfRefreshed(i, refreshStates);
+                srcRect.Y += height;
+                piece.Dispose();
             }
             image.Dispose();
-            piece.Dispose();
         }
 
         public Rectangle GetRect(RectType rectType, int w = 0, int h = 0)

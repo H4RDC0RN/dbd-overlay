@@ -66,7 +66,7 @@ namespace DBDOverlay.Core.KillerOverlay
         {
             if (!Survivors[index].State.Equals(SurvivorState.Hooked) && similarity > threshold)
             {
-                Logger.Info($"--- Survovor {index} is hooked. 'Hooked' image similarity = {similarity * 100} %");
+                Logger.Info($"--- Survivor {index} is hooked. 'Hooked' image similarity = {similarity * 100} %");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     var textBlock = HooksOverlay.GetHooksLabel((SurvivorNumber)(index + 1));
@@ -81,7 +81,7 @@ namespace DBDOverlay.Core.KillerOverlay
         {
             if (Survivors[index].State.Equals(SurvivorState.Hooked) && similarity < threshold)
             {
-                Logger.Info($"--- Survovor {index} is unhooked. 'Hooked' image similarity = {similarity * 100} %");
+                Logger.Info($"--- Survivor {index} is unhooked. 'Hooked' image similarity = {similarity * 100} %");
                 Survivors[index].State = SurvivorState.Unhooked;
                 RunTimer(index);
             }
@@ -94,7 +94,7 @@ namespace DBDOverlay.Core.KillerOverlay
 
             if ((Survivors[index].State.Equals(SurvivorState.Hooked) || Survivors[index].State.Equals(SurvivorState.Unhooked)) && pair.Value > threshold)
             {
-                Logger.Info($"--- Survovor {index} is {pair.Key.ToLower()}. '{pair.Key}' image similarity = {pair.Value * 100} %");
+                Logger.Info($"--- Survivor {index} is {pair.Key.ToLower()}. '{pair.Key}' image similarity = {pair.Value * 100} %");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     HooksOverlay.GetHooksLabel((SurvivorNumber)(index + 1)).Content = "0";
