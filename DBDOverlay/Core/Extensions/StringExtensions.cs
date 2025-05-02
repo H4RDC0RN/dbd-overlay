@@ -70,14 +70,14 @@ namespace DBDOverlay.Core.Extensions
             return str.Substring(str.Length - substringLenght);
         }
 
-        public static int Increment(this string str)
+        public static string Increment(this string str)
         {
-            return Convert.ToInt32(str.Last().ToString()) + 1;
+            return $"{Convert.ToInt32(str.Last().ToString()) + 1}";
         }
 
-        public static int Decrement(this string str)
+        public static string Decrement(this string str)
         {
-            return Convert.ToInt32(str.Last().ToString()) - 1;
+            return $"{Convert.ToInt32(str.Last().ToString()) - 1}";
         }
     }
 }

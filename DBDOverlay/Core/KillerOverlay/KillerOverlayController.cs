@@ -70,7 +70,7 @@ namespace DBDOverlay.Core.KillerOverlay
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     var textBlock = HooksOverlay.GetHooksLabel((SurvivorNumber)(index + 1));
-                    textBlock.Content = textBlock.Content.ToString().Increment().ToString();
+                    textBlock.Content = textBlock.Content.ToString().Increment();
                     Survivors[index].State = SurvivorState.Hooked;
                     Survivors[index].Hooks++;
                 });

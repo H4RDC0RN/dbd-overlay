@@ -133,8 +133,9 @@ namespace DBDOverlay.Core.ImageProcessing
                 if (!piece.Width.Equals(hooked.Width)) piece = piece.Resize(hooked.Width, hooked.Height).ToBlackWhite(400);
                 if (savePieces) piece.Save(GetImagePath($"survivor_{i}"), ImageFormat.Png);
 
-                KillerOverlayController.Instance.CheckIfHooked(i, piece.Compare(hooked));
-                KillerOverlayController.Instance.CheckIfUnhooked(i, piece.Compare(hooked));
+                var hookComparison = piece.Compare(hooked);
+                KillerOverlayController.Instance.CheckIfHooked(i, hookComparison);
+                KillerOverlayController.Instance.CheckIfUnhooked(i, hookComparison);
 
                 var refreshStates = new Dictionary<string, double>
                     {

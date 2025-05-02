@@ -589,19 +589,13 @@ namespace DBDOverlay.Core.MapOverlay.Languages
         public static string GetRealmByRecognizedName(string recognizedName)
         {
             var result = GetFullMapName(recognizedName);
-            if (result == null)
-                return string.Empty;
-            else
-                return result.Split('.')[0];
+            return result == null ? string.Empty : result.Split('.')[0];
         }
 
         public static string GetNameByRecognizedName(string recognizedName)
         {
             var result = GetFullMapName(recognizedName);
-            if (result == null)
-                return recognizedName;
-            else
-                return result.Split('.')[1];
+            return result == null ? recognizedName : result.Split('.')[1];
         }
 
         private static string GetFullMapName(string recognizedName)
