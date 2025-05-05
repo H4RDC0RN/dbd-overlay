@@ -20,7 +20,7 @@ namespace DBDOverlay.Core.Hotkeys
             KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.Read, readModifier, readKey, PressedRead);
             KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.NextMap, nextModifier, nextKey, PressedNext);
             KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.PreviousMap, previousModifier, previousKey, PressedPrevious);
-            KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.Survivors, ModifierKeys.Control, Keys.M, PressedSurvivors);
+            KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.SaveImages, ModifierKeys.Control, Keys.M, PressedSaveImages);
         }
 
         public static void UnregisterAllHotKeys()
@@ -51,9 +51,10 @@ namespace DBDOverlay.Core.Hotkeys
             MapOverlayController.Instance.SwitchMapVariationToPrevious();
         }
 
-        private static void PressedSurvivors(object sender, KeyPressedEventArgs e)
+        private static void PressedSaveImages(object sender, KeyPressedEventArgs e)
         {
-            e.Log("Save survivors images");
+            e.Log("Save images");
+            ImageReader.Instance.IsMatchFinished(true);
             ImageReader.Instance.HandleSurvivors(true);
         }
     }

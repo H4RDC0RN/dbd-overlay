@@ -40,7 +40,8 @@ namespace DBDOverlay.MVVM.View
         {
             if (!AutoMode.Instance.IsActive)
             {
-                AutoMode.Instance.Run();
+                AutoMode.Instance.IsMapNameMode = true;
+                AutoMode.Instance.Run();                
                 Settings.Default.IsAutoMode = true;
                 Settings.Default.Save();
             }

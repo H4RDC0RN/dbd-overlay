@@ -81,22 +81,22 @@ namespace DBDOverlay.Core.Extensions
             return bitmap;
         }
 
-        public static Bitmap PreProcess(this Bitmap bitmap, double scale = 1, int threshold = 400, bool save = true)
+        public static Bitmap PreProcess(this Bitmap bitmap, double scale = 1, int threshold = 400, string saveName = null)
         {
             bitmap = bitmap.Resize(scale).ToBlackWhite(threshold);
-            if (save)
+            if (saveName != null)
             {
-                var newPath = FileSystem.GetImagePath(edited: true);
-                bitmap.Save(newPath);
-                Logger.Info($"Preprocessed image is saved to '{newPath}'");
+                var path = FileSystem.GetImagePath(saveName, edited: true);
+                bitmap.Save(path);
+                Logger.Info($"Preprocessed image is saved to '{path}'");
             }
             return bitmap;
         }
 
-        public static double Compare(this Bitmap bitmap, Bitmap bitmapToCompare)
+        public static double Compare(this Bitmap bitmap, Bitmap bitmapToCompare, int thresholdValue = 400)
         {
-            var current = bitmap.ToHashMap();
-            var toCompare = bitmapToCompare.ToHashMap();
+            var current = bitmap.ToHashMap(thresholdValue);
+            var toCompare = bitmapToCompare.ToHashMap(thresholdValue);
             var equals = current.Zip(toCompare, (i, j) => i == j).Count(x => x);
             var result = equals / (double)current.Count;
             return result.Round(2);
@@ -105,23 +105,20 @@ namespace DBDOverlay.Core.Extensions
         private static List<bool> ToHashMap(this Bitmap bitmap, int thresholdValue = 400)
         {
             var hashMap = new List<bool>();
-            var bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+            var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 ImageLockMode.ReadWrite, PixelFormat.Format32bppRgb);
 
-            unsafe
-            {
-                int TotalRGB;
-                byte* ptr = (byte*)bmpData.Scan0.ToPointer();
-                int stopAddress = (int)ptr + bmpData.Stride * bmpData.Height;
+            int size = bitmapData.Stride * bitmapData.Height;
+            byte[] data = new byte[size];
+            Marshal.Copy(bitmapData.Scan0, data, 0, size);
 
-                while ((int)ptr <= stopAddress)
-                {
-                    TotalRGB = ptr[0] + ptr[1] + ptr[2];
-                    hashMap.Add(TotalRGB <= thresholdValue);
-                    ptr += 4;
-                }
+            for (int i = 0; i < size; i += 4)
+            {
+                var totalRGB = data[i] + data[i + 1] + data[i + 2];
+                hashMap.Add(totalRGB <= thresholdValue);
             }
-            bitmap.UnlockBits(bmpData);
+            Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
+            bitmap.UnlockBits(bitmapData);
             return hashMap;
         }
     }

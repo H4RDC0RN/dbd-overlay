@@ -7,6 +7,8 @@ namespace DBDOverlay.Core.BackgroundProcesses
 {
     public class AutoMode : BaseBackgroundProcess
     {
+        public bool IsMapNameMode { get; set; } = true;
+
         public event EventHandler<NewMapEventArgs> NewMapRecognized;
         private static AutoMode instance;
 
@@ -27,13 +29,20 @@ namespace DBDOverlay.Core.BackgroundProcesses
 
         protected override void Action()
         {
-            var mapInfo = ImageReader.Instance.GetMapInfo(true);
-            if (MapOverlayController.Instance.CanMapOverlayBeApplied(mapInfo))
+            if (IsMapNameMode)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                var mapInfo = ImageReader.Instance.GetMapInfo(true);
+                if (MapOverlayController.Instance.CanMapOverlayBeApplied(mapInfo))
                 {
-                    NewMapRecognized?.Invoke(this, new NewMapEventArgs(mapInfo));
-                });
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        NewMapRecognized?.Invoke(this, new NewMapEventArgs(mapInfo));
+                    });
+                }
+            }
+            else
+            {
+                IsMapNameMode = ImageReader.Instance.IsMatchFinished();
             }
         }
     }

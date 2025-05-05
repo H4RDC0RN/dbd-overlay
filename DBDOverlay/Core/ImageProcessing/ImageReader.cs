@@ -16,6 +16,7 @@ using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Rectangle = System.Drawing.Rectangle;
 using System.Collections.Generic;
 using System;
+using DBDOverlay.Images.Identificators;
 
 namespace DBDOverlay.Core.ImageProcessing
 {
@@ -70,7 +71,8 @@ namespace DBDOverlay.Core.ImageProcessing
                 for (int threshold = autoMode ? maxThreshold : minThreshold; threshold >= minThreshold; threshold -= thresholdStep)
                 {
                     if (log) Logger.Info($"===== Size = {scale}, Threshold = {threshold} =====");
-                    RecognizeText(bitmap.PreProcess(scale, threshold, log), log);
+                    var saveName = autoMode ? null : Settings.Default.ManualScreenshotFileName;
+                    RecognizeText(bitmap.PreProcess(scale, threshold, saveName), log);
                     if (IsMapTextCorrect(autoMode))
                     {
                         if (log) Logger.Info("Map text is correct");
@@ -110,7 +112,7 @@ namespace DBDOverlay.Core.ImageProcessing
         public void HandleSurvivors(bool savePieces = false)
         {
             int survCount = 4;
-            var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: 600, save: false);
+            var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: 600);
             var width = bitmap.Width;
             var height = bitmap.Height / survCount;
             var statusRectMulti = GetRectMultiplier(RectType.State);
@@ -145,6 +147,15 @@ namespace DBDOverlay.Core.ImageProcessing
                 piece.Dispose();
             }
             bitmap.Dispose();
+        }
+
+        public bool IsMatchFinished(bool saveImage = false)
+        {
+            var saveName = saveImage ? Settings.Default.GearScreenshotFileName : null;
+            var bitmap = CreateFromScreenArea(RectType.Gear, false).PreProcess(threshold: 400, saveName: saveName);
+            var result = bitmap.Compare(Identificators.Gear) >= 0.99;
+            bitmap.Dispose();
+            return result;
         }
 
         public Rectangle GetRect(RectType rectType, int w = 0, int h = 0)
@@ -200,6 +211,7 @@ namespace DBDOverlay.Core.ImageProcessing
             {
                 case RectType.Manual: return new RectMultiplier(0.13, 0.62, 0.36, 0.14);
                 case RectType.Auto: return new RectMultiplier(0.04, 0.81, 0.56, 0.05);
+                case RectType.Gear: return new RectMultiplier(0.0472, 0.918, 0.0228, 0.0394);
                 case RectType.Survivors: return new RectMultiplier(0.04, 0.38, 0.055, 0.326);
                 case RectType.State: return new RectMultiplier(0.32, 0.25, 0.31, 0.5);
                 default: return null;

@@ -65,5 +65,8 @@
     <Setting Name="ReshadeMappings" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="GearScreenshotFileName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gear</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

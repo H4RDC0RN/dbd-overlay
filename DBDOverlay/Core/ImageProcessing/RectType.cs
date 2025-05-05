@@ -4,6 +4,7 @@
     {
         Manual,
         Auto,
+        Gear,
         Survivors,
         State
     }

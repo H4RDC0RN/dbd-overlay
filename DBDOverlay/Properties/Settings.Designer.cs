@@ -274,5 +274,17 @@ namespace DBDOverlay.Properties {
                 this["ReshadeMappings"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("gear")]
+        public string GearScreenshotFileName {
+            get {
+                return ((string)(this["GearScreenshotFileName"]));
+            }
+            set {
+                this["GearScreenshotFileName"] = value;
+            }
+        }
     }
 }

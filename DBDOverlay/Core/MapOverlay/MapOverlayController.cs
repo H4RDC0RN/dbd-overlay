@@ -1,4 +1,5 @@
-﻿using DBDOverlay.Core.Extensions;
+﻿using DBDOverlay.Core.BackgroundProcesses;
+using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Reshade;
 using DBDOverlay.Core.Utils;
 using System.Linq;
@@ -42,6 +43,7 @@ namespace DBDOverlay.Core.MapOverlay
                 realm = mapInfo.Realm;
                 name = mapInfo.Name;
                 Overlay.ChangeMapImageOverlay(mapInfo);
+                if (AutoMode.Instance.IsActive) AutoMode.Instance.IsMapNameMode = false;
             }
             ReshadeManager.Instance.ApplyFilter(mapInfo);
         }

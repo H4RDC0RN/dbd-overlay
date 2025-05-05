@@ -6,6 +6,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
     {
         public bool IsHookMode { get; set; } = false;
         public bool IsPostUnhookTimerMode { get; set; } = false;
+
         private static KillerMode instance;
 
         public static KillerMode Instance
