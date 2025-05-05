@@ -24,13 +24,12 @@ namespace DBDOverlay.Core.ImageProcessing
         private int width;
         private int height;
         private readonly double maxScaleManual = 3;
-        private readonly double maxScaleAuto = 1.5;
+        private readonly double maxScaleAuto = 1.0;
         private readonly double scaleStepManual = 1;
         private readonly double scaleStepAuto = 0.5;
         private readonly int maxThreshold = 750;
         private readonly int minThreshold = 400;
         private readonly int thresholdStep = 50;
-        private readonly string png = "png";
         private string text = string.Empty;
 
         private TesseractEngine engine;
@@ -54,16 +53,15 @@ namespace DBDOverlay.Core.ImageProcessing
 
         public void SetEngine()
         {
-            engine = new TesseractEngine(Folders.TessData, LanguagesManager.ConvertMexToSpa(Settings.Default.Language));
+            engine = new TesseractEngine(FileSystem.TessData, LanguagesManager.ConvertMexToSpa(Settings.Default.Language));
         }
 
         public MapInfo GetMapInfo(bool autoMode = false)
         {
             var log = !autoMode;
             if (log) Logger.Info($"=============== Start getting map info ===============");
-            var imagePath = GetImagePath(GetFileName(autoMode));
             var watch = Stopwatch.StartNew();
-            CreateFromScreenArea(autoMode ? RectType.Auto : RectType.Manual, imagePath, log);
+            var bitmap = CreateFromScreenArea(autoMode ? RectType.Auto : RectType.Manual, log);
 
             var maxScale = autoMode ? maxScaleAuto : maxScaleManual;
             var scaleStep = autoMode ? scaleStepAuto : scaleStepManual;
@@ -72,7 +70,7 @@ namespace DBDOverlay.Core.ImageProcessing
                 for (int threshold = autoMode ? maxThreshold : minThreshold; threshold >= minThreshold; threshold -= thresholdStep)
                 {
                     if (log) Logger.Info($"===== Size = {scale}, Threshold = {threshold} =====");
-                    RecognizeText(PreProcess(imagePath, scale, threshold, true, log), log);
+                    RecognizeText(bitmap.PreProcess(scale, threshold, log), log);
                     if (IsMapTextCorrect(autoMode))
                     {
                         if (log) Logger.Info("Map text is correct");
@@ -87,6 +85,7 @@ namespace DBDOverlay.Core.ImageProcessing
                             mapInfo.Time = time;
                             if (log) Logger.Info($"=============== Finish getting map info ===============");
                             if (log) Logger.Info($"=============== ({time} ms) ===============");
+                            bitmap.Dispose();
                             return mapInfo;
                         }
                         if (scale == maxScale)
@@ -104,19 +103,16 @@ namespace DBDOverlay.Core.ImageProcessing
             watch.Stop();
             if (log) Logger.Info($"=============== Finish getting map info ===============");
             if (log) Logger.Info($"=============== ({watch.ElapsedMilliseconds} ms) ===============");
+            bitmap.Dispose();
             return null;
         }
 
         public void HandleSurvivors(bool savePieces = false)
         {
             int survCount = 4;
-            var path = GetImagePath(Settings.Default.SurvivorsScreenshotName);
-            CreateFromScreenArea(RectType.Survivors, path, false);
-            var newPath = PreProcess(path, threshold: 600, saveAsNew: true, log: false);
-            var image = new Bitmap(newPath);
-
-            var width = image.Width;
-            var height = image.Height / survCount;
+            var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: 600, save: false);
+            var width = bitmap.Width;
+            var height = bitmap.Height / survCount;
             var statusRectMulti = GetRectMultiplier(RectType.State);
             var srcRect = GetRect(statusRectMulti, width, height);
             var destRect = GetRect(new RectMultiplier(0, 0, statusRectMulti.Width, statusRectMulti.Height), width, height);
@@ -127,11 +123,11 @@ namespace DBDOverlay.Core.ImageProcessing
                 var piece = new Bitmap(destRect.Width, destRect.Height);
                 using (Graphics graphics = Graphics.FromImage(piece))
                 {
-                    graphics.DrawImage(image, destRect, srcRect, GraphicsUnit.Pixel);
+                    graphics.DrawImage(bitmap, destRect, srcRect, GraphicsUnit.Pixel);
                 }
 
                 if (!piece.Width.Equals(hooked.Width)) piece = piece.Resize(hooked.Width, hooked.Height).ToBlackWhite(400);
-                if (savePieces) piece.Save(GetImagePath($"survivor_{i}"), ImageFormat.Png);
+                if (savePieces) piece.Save(FileSystem.GetImagePath($"survivor_{i}"), ImageFormat.Png);
 
                 var hookComparison = piece.Compare(hooked);
                 KillerOverlayController.Instance.CheckIfHooked(i, hookComparison);
@@ -148,7 +144,7 @@ namespace DBDOverlay.Core.ImageProcessing
                 srcRect.Y += height;
                 piece.Dispose();
             }
-            image.Dispose();
+            bitmap.Dispose();
         }
 
         public Rectangle GetRect(RectType rectType, int w = 0, int h = 0)
@@ -181,19 +177,21 @@ namespace DBDOverlay.Core.ImageProcessing
             }
         }
 
-        private void CreateFromScreenArea(RectType rectType, string path, bool log = true)
+        private Bitmap CreateFromScreenArea(RectType rectType, bool save = true)
         {
             var rect = GetRect(rectType);
-            if (log) Logger.Info($"Screen area: x = {rect.X}, y = {rect.Y}, width = {rect.Width}, height = {rect.Height}");
-
-            var image = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppRgb);
-            var graphics = Graphics.FromImage(image);
+            var bitmap = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppRgb);
+            var graphics = Graphics.FromImage(bitmap);
             graphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
-            image.Save(path, ImageFormat.Png);
-
             graphics.Dispose();
-            image.Dispose();
-            if (log) Logger.Info($"Image is saved to '{path}'");
+
+            if (save)
+            {
+                var path = FileSystem.GetImagePath();
+                bitmap.Save(path, ImageFormat.Png);
+                Logger.Info($"Image is saved to '{path}'");
+            }
+            return bitmap;
         }
 
         private RectMultiplier GetRectMultiplier(RectType rectType)
@@ -208,26 +206,26 @@ namespace DBDOverlay.Core.ImageProcessing
             }
         }
 
-        private void RecognizeText(string imagePath, bool log = true)
+        private void RecognizeText(Bitmap bitmap, bool log = true)
         {
             var watch = Stopwatch.StartNew();
-            var image = Pix.LoadFromFile(imagePath);
-            SetText(image);
+            var pixImage = PixConverter.ToPix(bitmap);
+            SetText(pixImage);
             watch.Stop();
             if (log) Logger.Info($"Text from image is recognized ({watch.ElapsedMilliseconds} ms)");
         }
 
-        private void SetText(Pix pix)
+        private void SetText(Pix pixImage)
         {
             Page page;
             try
             {
-                page = engine.Process(pix);
+                page = engine.Process(pixImage);
             }
             catch (InvalidOperationException)
             {
                 SetEngine();
-                page = engine.Process(pix);
+                page = engine.Process(pixImage);
             }
             text = page.GetText();
             page.Dispose();
@@ -289,26 +287,6 @@ namespace DBDOverlay.Core.ImageProcessing
             mapName = mapName.ReplaceRegex(oldString, newString);
             if (log) Logger.Info($"'{oldString}' symbol is replaced with '{newString}'");
             return mapName;
-        }
-
-        private string PreProcess(string path, double scale = 1, int threshold = 400, bool saveAsNew = false, bool log = true)
-        {
-            var newPath = saveAsNew ? path.ReplaceRegex($@"\.{png}", $"_edited.{png}") : path;
-            var image = new Bitmap(path);
-            image.Resize(scale).ToBlackWhite(threshold).Save(newPath);
-            image.Dispose();
-            if (log) Logger.Info($"Preprocessed image is saved to '{newPath}'");
-            return newPath;
-        }
-
-        private string GetImagePath(string imageName)
-        {
-            return $@"{Folders.Images}\{imageName}.{png}";
-        }
-
-        private string GetFileName(bool autoMode = false)
-        {
-            return autoMode ? Settings.Default.AutoScreenshotFileName : Settings.Default.ManualScreenshotFileName;
         }
     }
 }

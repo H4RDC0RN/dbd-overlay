@@ -33,7 +33,7 @@ namespace DBDOverlay
         public MainWindow()
         {
             HandleExceptions();
-            Folders.CreateDefault();
+            FileSystem.CreateDefaultFolders();
             DownloadManager.Instance.DownloadDefaultLanguage();
             DownloadManager.Instance.CheckForUpdate();
             ReloadSettings();

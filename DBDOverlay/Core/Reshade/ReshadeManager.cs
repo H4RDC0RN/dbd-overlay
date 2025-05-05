@@ -43,6 +43,7 @@ namespace DBDOverlay.Core.Reshade
 
         public void ApplyFilter(MapInfo mapInfo)
         {
+            if (mapInfo == null) return;
             var hotKey = hotKeys.FirstOrDefault(x => mapInfo.FullName.Contains(x.Key)).Value;
             hotKey?.Press();
         }

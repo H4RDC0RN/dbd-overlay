@@ -112,7 +112,7 @@ namespace DBDOverlay.Core.Download
             if (currentVersionNumber >= latestVersionNumber)
             {
                 Logger.Info($"Application has latest version ({CurrentVersion})");
-                var updatePath = Folders.Update;
+                var updatePath = FileSystem.Update;
                 if (Directory.Exists(updatePath))
                 {
                     Directory.Delete(updatePath, true);
@@ -125,7 +125,7 @@ namespace DBDOverlay.Core.Download
             Logger.Info($"Current version is ({CurrentVersion})");
             var zipFilePath = DownloadUpdate(latestVersion);
 
-            ZipFile.ExtractToDirectory(zipFilePath, Folders.Update);
+            ZipFile.ExtractToDirectory(zipFilePath, FileSystem.Update);
             File.Delete(zipFilePath);
             Logger.Info("Zip file with update is unpacked");
 
@@ -134,21 +134,21 @@ namespace DBDOverlay.Core.Download
 
         public List<string> GetDownloadedLanguages()
         {
-            var regex = $@"(?<={Folders.TessData.Split(@"\").Last()}\\).*(?={traineddataExtension})";
-            return Directory.GetFiles(Folders.TessData).Select(x => Regex.Match(x, regex).Value).ToList();
+            var regex = $@"(?<={FileSystem.TessData.Split(@"\").Last()}\\).*(?={traineddataExtension})";
+            return Directory.GetFiles(FileSystem.TessData).Select(x => Regex.Match(x, regex).Value).ToList();
         }
 
         private void DownloadLanguageData(string language)
         {
             language = LanguagesManager.ConvertMexToSpa(language);
-            DownloadFile($"{downloadTessDataLink}{language}{traineddataExtension}", $@"{Folders.TessData}\{language}{traineddataExtension}");
+            DownloadFile($"{downloadTessDataLink}{language}{traineddataExtension}", $@"{FileSystem.TessData}\{language}{traineddataExtension}");
         }
 
         private string DownloadUpdate(string version)
         {
-            Directory.CreateDirectory(Folders.Update);
+            Directory.CreateDirectory(FileSystem.Update);
             var fileName = $"{binariesName}.{zip}";
-            var path = $@"{Folders.Update}\{fileName}";
+            var path = $@"{FileSystem.Update}\{fileName}";
             DownloadFile($"{releasesLink}{download}/{version}/{fileName}", path);
             return path;
         }
@@ -186,7 +186,7 @@ namespace DBDOverlay.Core.Download
 
             var exeName = AppDomain.CurrentDomain.FriendlyName;
             var exePath = Assembly.GetEntryAssembly().Location;
-            var from = $@"{Folders.Update}\{binariesName}";
+            var from = $@"{FileSystem.Update}\{binariesName}";
             var to = string.Empty.ToProjectPath();
 
             CmdHelper.RunCommand($"taskkill /f /im \"{exeName}\" && " +

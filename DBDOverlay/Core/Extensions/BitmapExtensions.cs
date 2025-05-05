@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using DBDOverlay.Core.Utils;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
 
 namespace DBDOverlay.Core.Extensions
@@ -52,34 +54,42 @@ namespace DBDOverlay.Core.Extensions
 
         public static Bitmap ToBlackWhite(this Bitmap bitmap, int thresholdValue)
         {
-            var bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format32bppRgb);
+            var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
+            int size = bitmapData.Stride * bitmapData.Height;
+            byte[] data = new byte[size];
+            Marshal.Copy(bitmapData.Scan0, data, 0, size);
 
-            unsafe
+            for (int i = 0; i < size; i += 4)
             {
-                int TotalRGB;
-                byte* ptr = (byte*)bmpData.Scan0.ToPointer();
-                int stopAddress = (int)ptr + bmpData.Stride * bmpData.Height;
-
-                while ((int)ptr <= stopAddress)
+                var totalRGB = data[i] + data[i + 1] + data[i + 2];
+                if (totalRGB <= thresholdValue)
                 {
-                    TotalRGB = ptr[0] + ptr[1] + ptr[2];
-                    if (TotalRGB <= thresholdValue)
-                    {
-                        ptr[2] = 0;
-                        ptr[1] = 0;
-                        ptr[0] = 0;
-                    }
-                    else
-                    {
-                        ptr[2] = 255;
-                        ptr[1] = 255;
-                        ptr[0] = 255;
-                    }
-                    ptr += 4;
+                    data[i] = 0;
+                    data[i + 1] = 0;
+                    data[i + 2] = 0;
+                }
+                else
+                {
+                    data[i] = 255;
+                    data[i + 1] = 255;
+                    data[i + 2] = 255;
                 }
             }
-            bitmap.UnlockBits(bmpData);
+            Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
+
+            bitmap.UnlockBits(bitmapData);
+            return bitmap;
+        }
+
+        public static Bitmap PreProcess(this Bitmap bitmap, double scale = 1, int threshold = 400, bool save = true)
+        {
+            bitmap = bitmap.Resize(scale).ToBlackWhite(threshold);
+            if (save)
+            {
+                var newPath = FileSystem.GetImagePath(edited: true);
+                bitmap.Save(newPath);
+                Logger.Info($"Preprocessed image is saved to '{newPath}'");
+            }
             return bitmap;
         }
 
