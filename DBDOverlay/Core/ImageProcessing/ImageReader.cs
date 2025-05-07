@@ -209,7 +209,7 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             switch (rectType)
             {
-                case RectType.Manual: return new RectMultiplier(0.13, 0.62, 0.36, 0.14);
+                case RectType.Manual: return new RectMultiplier(0.34, 0.8, 0.32, 0.08);
                 case RectType.Auto: return new RectMultiplier(0.04, 0.81, 0.56, 0.05);
                 case RectType.Gear: return new RectMultiplier(0.0472, 0.918, 0.0228, 0.0394);
                 case RectType.Survivors: return new RectMultiplier(0.04, 0.38, 0.055, 0.326);
@@ -247,7 +247,7 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             return autoMode
                 ? text.Length > 5 && text.ContainsRegex(@"\w")
-                : text.Contains(LanguagesManager.GetMapInfoLocale()) && text.Contains('\n') && text.ContainsRegex(" - ");
+                : text.Length > 5 && text.Contains('\n') && text.ContainsRegex(" - ");
         }
 
         private MapInfo ConvertTextToMapInfo(bool autoMode = false, bool log = true)
@@ -261,7 +261,7 @@ namespace DBDOverlay.Core.ImageProcessing
         private MapInfo ConvertEscTextToMapInfo()
         {
             var res = text.Split(" - ");
-            var realm = res[0].Split('\n').Last().RemoveRegex("'").Replace(" ", "_").ToUpper();
+            var realm = res[0].RemoveRegex("'").Replace(" ", "_").ToUpper();
             var mapName = res[1].Split('\n')[0].RemoveRegex("'").Replace(" ", "_").ToUpper();
             return new MapInfo(realm, HandleBadhamIssues(mapName));
         }
