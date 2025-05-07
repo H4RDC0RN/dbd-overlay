@@ -160,7 +160,7 @@ namespace DBDOverlay.MVVM.View
             else
             {
                 DownloadButton.IsEnabled = true;
-                SetLanguages();
+                SetLanguages();                
             }
         }
     }

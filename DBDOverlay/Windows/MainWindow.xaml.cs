@@ -133,11 +133,11 @@ namespace DBDOverlay
             if (!path.Equals(string.Empty))
             {
                 ReshadeManager.Instance.Initialize(path);
-                var list = MapNamesContainer.GetReshadeMapsList();
-                for (int mapIndex = 0; mapIndex < list.Count; mapIndex++)
+                var maps = MapNamesContainer.GetReshadeMapsList();
+                for (int mapIndex = 0; mapIndex < maps.Count; mapIndex++)
                 {
                     var filterIndex = MappingsHandler.GetFilterIndex(mapIndex);
-                    if (filterIndex != -1) ReshadeManager.Instance.AddHotKey(list[mapIndex], filterIndex);
+                    if (filterIndex != -1) ReshadeManager.Instance.AddHotKey(maps[mapIndex], filterIndex);
                 }
             }
         }

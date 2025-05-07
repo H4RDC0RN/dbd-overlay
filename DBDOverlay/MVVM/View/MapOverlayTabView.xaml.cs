@@ -18,7 +18,6 @@ namespace DBDOverlay.MVVM.View
             AutoModeToggleButton.IsChecked = AutoMode.Instance.IsActive ? true : AutoModeToggleButton.IsChecked = Settings.Default.IsAutoMode;
 
             if (MapOverlayController.Instance.CanBeMoved) ReToggleButton.IsChecked = true;
-
             WindowsServices.Instance.MoveModeOff += HandleMoveModeOff;
         }
 
@@ -41,7 +40,7 @@ namespace DBDOverlay.MVVM.View
             if (!AutoMode.Instance.IsActive)
             {
                 AutoMode.Instance.IsMapNameMode = true;
-                AutoMode.Instance.Run();                
+                AutoMode.Instance.Run();
                 Settings.Default.IsAutoMode = true;
                 Settings.Default.Save();
             }

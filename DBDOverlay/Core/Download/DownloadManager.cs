@@ -68,35 +68,41 @@ namespace DBDOverlay.Core.Download
             }
         }
 
-        public void DownloadLanguage(string language)
+        public void DownloadLanguage(string language, bool inBackground = true)
         {
             if (GetDownloadedLanguages().Contains(language)) return;
             if (!IsConnected) return;
-            var worker = new BackgroundWorker();
 
-            worker.DoWork += (s, e) =>
+            if (inBackground)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                var worker = new BackgroundWorker();
+                worker.DoWork += (s, e) =>
                 {
-                    Downloading?.Invoke(this, new DownloadEventArgs(true));
-                });
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        Downloading?.Invoke(this, new DownloadEventArgs(true));
+                    });
 
+                    DownloadLanguageData(language);
+
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        Downloading?.Invoke(this, new DownloadEventArgs(false));
+                    });
+                };
+                worker.RunWorkerAsync();
+            }
+            else
+            {
                 DownloadLanguageData(language);
-
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    Downloading?.Invoke(this, new DownloadEventArgs(false));
-                });
-            };
-
-            worker.RunWorkerAsync();
+            }
         }
 
         public void DownloadDefaultLanguage()
         {
             if (GetDownloadedLanguages().Count == 0)
             {
-                DownloadLanguage(LanguagesManager.Eng);
+                DownloadLanguage(LanguagesManager.Eng, false);
                 Logger.Info($"Default language is downloaded ({LanguagesManager.Eng})");
             }
         }
