@@ -33,9 +33,9 @@ namespace DBDOverlay
         public MainWindow()
         {
             HandleExceptions();
-            FileSystem.CreateDefaultFolders();
-            DownloadManager.Instance.DownloadDefaultLanguage();
+            FileSystem.CreateDefaultFolders(); 
             DownloadManager.Instance.CheckForUpdate();
+            DownloadManager.Instance.DownloadDefaultLanguage();
             ReloadSettings();
             AddNumToSendKeys();
             LoadReshadeIni();
