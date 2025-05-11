@@ -16,11 +16,13 @@ namespace DBDOverlay.Core.Hotkeys
             var nextKey = (Keys)Settings.Default.NextMapKey;
             var previousModifier = (ModifierKeys)Settings.Default.PreviousMapModifier;
             var previousKey = (Keys)Settings.Default.PreviousMapKey;
+            var screenshotsModifier = (ModifierKeys)Settings.Default.CreateScreenshotsModifier;
+            var screenshotsKey = (Keys)Settings.Default.CreateScreenshotsKey;
 
             KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.Read, readModifier, readKey, PressedRead);
             KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.NextMap, nextModifier, nextKey, PressedNext);
             KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.PreviousMap, previousModifier, previousKey, PressedPrevious);
-            KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.SaveImages, ModifierKeys.Control, Keys.M, PressedSaveImages);
+            KeyboardHook.Instance.RegisterHotKey((int)HotKeyType.CreateScreenshots, screenshotsModifier, screenshotsKey, PressedSaveImages);
         }
 
         public static void UnregisterAllHotKeys()

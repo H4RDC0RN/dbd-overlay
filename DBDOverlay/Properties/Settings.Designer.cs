@@ -286,5 +286,29 @@ namespace DBDOverlay.Properties {
                 this["GearScreenshotFileName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public uint CreateScreenshotsModifier {
+            get {
+                return ((uint)(this["CreateScreenshotsModifier"]));
+            }
+            set {
+                this["CreateScreenshotsModifier"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("77")]
+        public uint CreateScreenshotsKey {
+            get {
+                return ((uint)(this["CreateScreenshotsKey"]));
+            }
+            set {
+                this["CreateScreenshotsKey"] = value;
+            }
+        }
     }
 }

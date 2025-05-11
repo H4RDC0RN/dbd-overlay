@@ -129,11 +129,16 @@ namespace DBDOverlay.Core.ImageProcessing
                 }
 
                 if (!piece.Width.Equals(hooked.Width)) piece = piece.Resize(hooked.Width, hooked.Height).ToBlackWhite(400);
-                if (savePieces) piece.Save(FileSystem.GetImagePath($"survivor_{i}"), ImageFormat.Png);
 
-                var hookComparison = piece.Compare(hooked);
+                var hookComparison = Math.Max(Math.Max(piece.Compare(hooked), piece.Compare(SurvivorStates.Hooked2)), piece.Compare(SurvivorStates.Hooked3));
+                if (savePieces)
+                {
+                    piece.Save(FileSystem.GetImagePath($"survivor_{i}"), ImageFormat.Png);
+                    Logger.Info($"--- Survivor {i} 'Hooked' image similarity = {hookComparison * 100} %");
+                }
                 KillerOverlayController.Instance.CheckIfHooked(i, hookComparison);
-                KillerOverlayController.Instance.CheckIfUnhooked(i, hookComparison);
+                var res = KillerOverlayController.Instance.CheckIfUnhooked(i, hookComparison);
+                if (res > 0) piece.Save(FileSystem.GetImagePath($"survivor_No_{i}_Unhook_{res}"), ImageFormat.Png);
 
                 var refreshStates = new Dictionary<string, double>
                     {
@@ -153,9 +158,11 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             var saveName = saveImage ? Settings.Default.GearScreenshotFileName : null;
             var bitmap = CreateFromScreenArea(RectType.Gear, false).PreProcess(threshold: 400, saveName: saveName);
-            var result = bitmap.Compare(Identificators.Gear) >= 0.99;
+            var similarity = bitmap.Compare(Identificators.Gear);
+            var isFinished = similarity >= 0.99;
             bitmap.Dispose();
-            return result;
+            if (isFinished) Logger.Info($"Match is finished. 'Gear' image similarity = {similarity} %");
+            return isFinished;
         }
 
         public Rectangle GetRect(RectType rectType, int w = 0, int h = 0)

@@ -77,14 +77,16 @@ namespace DBDOverlay.Core.KillerOverlay
             }
         }
 
-        public void CheckIfUnhooked(int index, double similarity)
+        public int CheckIfUnhooked(int index, double similarity)
         {
             if (Survivors[index].State.Equals(SurvivorState.Hooked) && similarity < threshold)
             {
                 Logger.Info($"--- Survivor {index} is unhooked. 'Hooked' image similarity = {similarity * 100} %");
                 Survivors[index].State = SurvivorState.Unhooked;
                 RunTimer(index);
+                return Survivors[index].Hooks;
             }
+            return -1;
         }
 
         public void CheckIfRefreshed(int index, Dictionary<string, double> refreshStates)

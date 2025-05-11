@@ -93,6 +93,26 @@ namespace DBDOverlay.Images.SurvivorStates {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Hooked2 {
+            get {
+                object obj = ResourceManager.GetObject("Hooked2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Hooked3 {
+            get {
+                object obj = ResourceManager.GetObject("Hooked3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Sacrificed {
             get {
                 object obj = ResourceManager.GetObject("Sacrificed", resourceCulture);

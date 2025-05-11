@@ -46,10 +46,12 @@ namespace DBDOverlay.MVVM.View
             ReadModifierComboBox.ItemsSource = modifiers.Values;
             NextModifierComboBox.ItemsSource = modifiers.Values;
             PreviousModifierComboBox.ItemsSource = modifiers.Values;
+            CreateScreenshotsComboBox.ItemsSource = modifiers.Values;
 
             ReadModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.ReadModifier);
             NextModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.NextMapModifier);
             PreviousModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.PreviousMapModifier);
+            CreateScreenshotsComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.CreateScreenshotsModifier);
         }
 
         private void SetKeys()
@@ -57,6 +59,7 @@ namespace DBDOverlay.MVVM.View
             ReadKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.ReadKey).ToString().ToUpper();
             NextKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.NextMapKey).ToString().ToUpper();
             PreviousKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.PreviousMapKey).ToString().ToUpper();
+            CreateScreenshotsTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.CreateScreenshotsKey).ToString().ToUpper();
         }
 
         private void SetLanguages()
@@ -105,6 +108,11 @@ namespace DBDOverlay.MVVM.View
             UpdateModifier((ComboBox)sender, HotKeyType.PreviousMap);
         }
 
+        private void CreateScreenshotsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateModifier((ComboBox)sender, HotKeyType.CreateScreenshots);
+        }
+
         private void ReadKeyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             UpdateKey((TextBox)sender, HotKeyType.Read, e.Key);
@@ -118,6 +126,11 @@ namespace DBDOverlay.MVVM.View
         private void PreviousKeyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             UpdateKey((TextBox)sender, HotKeyType.PreviousMap, e.Key);
+        }
+
+        private void CreateScreenshotsTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            UpdateKey((TextBox)sender, HotKeyType.CreateScreenshots, e.Key);
         }
 
         private void UpdateModifier(ComboBox comboBox, HotKeyType hotKeyType)

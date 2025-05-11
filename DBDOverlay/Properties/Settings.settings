@@ -68,5 +68,11 @@
     <Setting Name="GearScreenshotFileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">gear</Value>
     </Setting>
+    <Setting Name="CreateScreenshotsModifier" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="CreateScreenshotsKey" Type="System.UInt32" Scope="User">
+      <Value Profile="(Default)">77</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -128,6 +128,8 @@
     <None Remove="Images\Recognition\test2.png" />
     <None Remove="Images\SurvivorStates\dead.png" />
     <None Remove="Images\SurvivorStates\escaped.png" />
+    <None Remove="Images\SurvivorStates\hooked2.png" />
+    <None Remove="Images\SurvivorStates\hooked3.png" />
     <None Remove="Images\SurvivorStates\sacrificed.png" />
   </ItemGroup>
 
@@ -203,6 +205,8 @@
     <Resource Include="Images\SurvivorStates\dead.png" />
     <Resource Include="Images\SurvivorStates\escaped.png" />
     <Resource Include="Images\SurvivorStates\hooked.png" />
+    <Resource Include="Images\SurvivorStates\hooked2.png" />
+    <Resource Include="Images\SurvivorStates\hooked3.png" />
     <Resource Include="Images\SurvivorStates\sacrificed.png" />
     <Content Include="Images\App\icon.ico" />
   </ItemGroup>

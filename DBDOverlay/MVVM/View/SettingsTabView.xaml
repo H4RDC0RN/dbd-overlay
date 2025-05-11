@@ -82,7 +82,7 @@
                    FontSize="22"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Margin="0,15,0,10"/>
+                   Margin="0,10,0,10"/>
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -90,6 +90,7 @@
                 <ColumnDefinition Width="0.52*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -108,6 +109,11 @@
             <TextBlock Grid.Row="2"
                        Grid.Column="0"
                        Text="Previous map variation"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       Text="Create screenshots"
                        Style="{StaticResource TextBlockStyle}"/>
 
             <StackPanel Grid.Row="0"
@@ -203,6 +209,39 @@
                          FontSize="20"
                          TextAlignment="Center"
                          PreviewKeyDown="PreviousKeyTextBox_PreviewKeyDown"
+                         Style="{StaticResource TextBoxKeyStyle}"/>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="3"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+
+                <ComboBox x:Name="CreateScreenshotsComboBox"
+                          Grid.Row="2"
+                          Grid.Column="1"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Left"
+                          Width="100"
+                          Margin="5"
+                          Style="{StaticResource ComboBoxFlatStyle}"
+                          SelectionChanged="CreateScreenshotsComboBox_SelectionChanged"/>
+
+                <Label Content="+"
+                       Foreground="White"
+                       FontSize="20"
+                       Margin="0,0,0,5"
+                       VerticalAlignment="Center"/>
+
+                <TextBox x:Name="CreateScreenshotsTextBox"
+                         VerticalAlignment="Center"
+                         Width="34"
+                         Height="30"
+                         Margin="5,0,0,0"
+                         FontSize="20"
+                         TextAlignment="Center"
+                         PreviewKeyDown="CreateScreenshotsTextBox_PreviewKeyDown"
                          Style="{StaticResource TextBoxKeyStyle}"/>
 
             </StackPanel>
