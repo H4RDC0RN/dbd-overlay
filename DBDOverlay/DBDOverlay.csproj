@@ -131,6 +131,7 @@
     <None Remove="Images\SurvivorStates\hooked2.png" />
     <None Remove="Images\SurvivorStates\hooked3.png" />
     <None Remove="Images\SurvivorStates\sacrificed.png" />
+    <None Remove="Images\SurvivorStates\sacrificed2.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -208,6 +209,7 @@
     <Resource Include="Images\SurvivorStates\hooked2.png" />
     <Resource Include="Images\SurvivorStates\hooked3.png" />
     <Resource Include="Images\SurvivorStates\sacrificed.png" />
+    <Resource Include="Images\SurvivorStates\sacrificed2.png" />
     <Content Include="Images\App\icon.ico" />
   </ItemGroup>
 

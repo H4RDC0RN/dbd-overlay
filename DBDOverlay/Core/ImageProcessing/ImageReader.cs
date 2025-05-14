@@ -137,12 +137,11 @@ namespace DBDOverlay.Core.ImageProcessing
                     Logger.Info($"--- Survivor {i} 'Hooked' image similarity = {hookComparison * 100} %");
                 }
                 KillerOverlayController.Instance.CheckIfHooked(i, hookComparison);
-                var res = KillerOverlayController.Instance.CheckIfUnhooked(i, hookComparison);
-                if (res > 0) piece.Save(FileSystem.GetImagePath($"survivor_No_{i}_Unhook_{res}"), ImageFormat.Png);
+                KillerOverlayController.Instance.CheckIfUnhooked(i, hookComparison);
 
                 var refreshStates = new Dictionary<string, double>
                     {
-                        { "Sacrificed", piece.Compare(SurvivorStates.Sacrificed) },
+                        { "Sacrificed", Math.Max(piece.Compare(SurvivorStates.Sacrificed), piece.Compare(SurvivorStates.Sacrificed2)) },
                         { "Escaped", piece.Compare(SurvivorStates.Escaped) },
                         { "Dead", piece.Compare(SurvivorStates.Dead) }
                     };
