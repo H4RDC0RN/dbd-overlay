@@ -1,5 +1,5 @@
 ﻿using DBDOverlay.Core.BackgroundProcesses;
-using DBDOverlay.Core.KillerOverlay;
+using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Properties;
 using System.Windows;
 using System.Windows.Controls;

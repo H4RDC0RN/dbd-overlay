@@ -1,7 +1,7 @@
 ﻿using DBDOverlay.Core.Extensions;
-using DBDOverlay.Core.MapOverlay;
-using DBDOverlay.Core.MapOverlay.Languages;
 using DBDOverlay.Core.Utils;
+using DBDOverlay.Core.WindowControllers.MapOverlay;
+using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Core.Windows;
 using System.Collections.Generic;
 using System.Linq;

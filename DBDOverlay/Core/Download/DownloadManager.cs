@@ -1,6 +1,7 @@
 ﻿using DBDOverlay.Core.Extensions;
-using DBDOverlay.Core.MapOverlay.Languages;
 using DBDOverlay.Core.Utils;
+using DBDOverlay.Core.WindowControllers.Loading;
+using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -102,6 +103,7 @@ namespace DBDOverlay.Core.Download
         {
             if (GetDownloadedLanguages().Count == 0)
             {
+                LoadingWindowController.Instance.SetStatus("Downloading default language");
                 DownloadLanguage(LanguagesManager.Eng, false);
                 Logger.Info($"Default language is downloaded ({LanguagesManager.Eng})");
             }
@@ -129,8 +131,10 @@ namespace DBDOverlay.Core.Download
 
             Logger.Info($"New application version is available ({latestVersion})");
             Logger.Info($"Current version is ({CurrentVersion})");
+            LoadingWindowController.Instance.SetStatus($"Downloading version {latestVersion}");
             var zipFilePath = DownloadUpdate(latestVersion);
 
+            LoadingWindowController.Instance.SetStatus("Extracting archive");
             ZipFile.ExtractToDirectory(zipFilePath, FileSystem.Update);
             File.Delete(zipFilePath);
             Logger.Info("Zip file with update is unpacked");
@@ -189,6 +193,7 @@ namespace DBDOverlay.Core.Download
         private void InstallUpdate(string version)
         {
             Logger.Info($"Installation version {version}");
+            LoadingWindowController.Instance.SetStatus($"Installing version {version}");
 
             var exeName = AppDomain.CurrentDomain.FriendlyName;
             var exePath = Assembly.GetEntryAssembly().Location;

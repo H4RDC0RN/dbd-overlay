@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using Application = System.Windows.Application;
 
-namespace DBDOverlay.Core.KillerOverlay
+namespace DBDOverlay.Core.WindowControllers.KillerOverlay
 {
     public class KillerOverlayController
     {

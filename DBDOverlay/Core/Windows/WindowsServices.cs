@@ -1,5 +1,5 @@
 ﻿using DBDOverlay.Core.Hotkeys;
-using DBDOverlay.Core.MapOverlay;
+using DBDOverlay.Core.WindowControllers.MapOverlay;
 using System;
 using System.Diagnostics;
 using System.Linq;

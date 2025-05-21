@@ -1,4 +1,4 @@
-﻿using DBDOverlay.Core.KillerOverlay;
+﻿using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.Windows;
 using System;
 using System.Windows;

@@ -12,8 +12,8 @@ using System.Linq;
 using System.Windows.Forms;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.Properties;
-using DBDOverlay.Core.MapOverlay.Languages;
 using DBDOverlay.Core.ImageProcessing;
+using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 
 namespace DBDOverlay.MVVM.View
 {

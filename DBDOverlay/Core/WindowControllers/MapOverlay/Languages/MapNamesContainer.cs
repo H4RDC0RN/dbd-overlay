@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace DBDOverlay.Core.MapOverlay.Languages
+namespace DBDOverlay.Core.WindowControllers.MapOverlay.Languages
 {
     public static class MapNamesContainer
     {

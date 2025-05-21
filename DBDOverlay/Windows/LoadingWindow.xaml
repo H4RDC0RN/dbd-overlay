@@ -1,0 +1,34 @@
+﻿<Window x:Class="DBDOverlay.Windows.LoadingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DBDOverlay.Windows"
+        mc:Ignorable="d"
+        Title="DBD Overlay Loading" Height="200" Width="250"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Border Background="{DynamicResource DarkestGrayBrush}"
+            CornerRadius="10">
+        <Grid>
+            <StackPanel>
+                <Image x:Name="DownloadButtonImage"
+                       Height="100" 
+                       Width="100"
+                       Margin="0,20,0,20"
+                       Source="/Images/App/loading.png"
+                       RenderTransformOrigin=".5,.5">
+                </Image>
+                <TextBlock x:Name="StatusTextBlock"
+                           Text="Loading"
+                           FontSize="20"
+                           Foreground="White"
+                           Margin="0"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

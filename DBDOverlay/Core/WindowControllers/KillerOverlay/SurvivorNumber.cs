@@ -1,4 +1,4 @@
-﻿namespace DBDOverlay.Core.KillerOverlay
+﻿namespace DBDOverlay.Core.WindowControllers.KillerOverlay
 {
     public enum SurvivorNumber
     {

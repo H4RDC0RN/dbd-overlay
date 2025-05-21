@@ -1,7 +1,4 @@
 ﻿using DBDOverlay.Core.Extensions;
-using DBDOverlay.Core.KillerOverlay;
-using DBDOverlay.Core.MapOverlay;
-using DBDOverlay.Core.MapOverlay.Languages;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.Images.SurvivorStates;
 using DBDOverlay.Properties;
@@ -17,6 +14,9 @@ using Rectangle = System.Drawing.Rectangle;
 using System.Collections.Generic;
 using System;
 using DBDOverlay.Images.Identificators;
+using DBDOverlay.Core.WindowControllers.KillerOverlay;
+using DBDOverlay.Core.WindowControllers.MapOverlay;
+using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 
 namespace DBDOverlay.Core.ImageProcessing
 {

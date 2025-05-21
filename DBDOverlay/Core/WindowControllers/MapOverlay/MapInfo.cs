@@ -1,7 +1,7 @@
-﻿using DBDOverlay.Core.MapOverlay.Languages;
+﻿using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Images.Maps;
 
-namespace DBDOverlay.Core.MapOverlay
+namespace DBDOverlay.Core.WindowControllers.MapOverlay
 {
     public class MapInfo
     {

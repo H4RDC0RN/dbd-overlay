@@ -1,5 +1,5 @@
 ﻿using DBDOverlay.Core.ImageProcessing;
-using DBDOverlay.Core.MapOverlay;
+using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Properties;
 using System.Windows.Forms;
 using System.Windows.Input;

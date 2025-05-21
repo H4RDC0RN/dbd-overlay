@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBDOverlay"
         xmlns:viewModel="clr-namespace:DBDOverlay.MVVM.ViewModel"
+        xmlns:view="clr-namespace:DBDOverlay.MVVM.View"
         mc:Ignorable="d"
         Title="DBD Overlay" Height="400" Width="650"
         MouseLeftButtonDown="WindowMouseDown"
@@ -12,6 +13,26 @@
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type viewModel:MapOverlayTabViewModel}">
+                <view:MapOverlayTabView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:KillerOverlayTabViewModel}">
+                <view:KillerOverlayTabView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:ReshadeTabViewModel}">
+                <view:ReshadeTabView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:SettingsTabViewModel}">
+                <view:SettingsTabView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AboutTabViewModel}">
+                <view:AboutTabView/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
     
     <Border Background="{DynamicResource DarkestGrayBrush}"
             CornerRadius="10">

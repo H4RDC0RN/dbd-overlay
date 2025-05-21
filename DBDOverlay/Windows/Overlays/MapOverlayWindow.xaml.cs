@@ -4,12 +4,12 @@ using System.Windows.Media;
 using Cursors = System.Windows.Input.Cursors;
 using DBDOverlay.Images.Maps;
 using DBDOverlay.Core.Extensions;
-using DBDOverlay.Core.MapOverlay;
 using DBDOverlay.Core.Windows;
 using System;
 using System.Drawing;
 using DBDOverlay.Properties;
-using DBDOverlay.Core.MapOverlay.Languages;
+using DBDOverlay.Core.WindowControllers.MapOverlay;
+using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 
 namespace DBDOverlay
 {

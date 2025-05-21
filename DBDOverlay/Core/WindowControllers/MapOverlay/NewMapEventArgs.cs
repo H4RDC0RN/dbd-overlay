@@ -1,7 +1,7 @@
 ﻿using DBDOverlay.Core.Utils;
 using System;
 
-namespace DBDOverlay.Core.MapOverlay
+namespace DBDOverlay.Core.WindowControllers.MapOverlay
 {
     public class NewMapEventArgs : EventArgs
     {

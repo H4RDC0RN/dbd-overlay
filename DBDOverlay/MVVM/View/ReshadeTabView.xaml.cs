@@ -1,6 +1,6 @@
 ﻿using DBDOverlay.Core.Extensions;
-using DBDOverlay.Core.MapOverlay.Languages;
 using DBDOverlay.Core.Reshade;
+using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Properties;
 using Microsoft.Win32;
 using System.Linq;

@@ -4,7 +4,7 @@ using DBDOverlay.Core.Reshade;
 using DBDOverlay.Core.Utils;
 using System.Linq;
 
-namespace DBDOverlay.Core.MapOverlay
+namespace DBDOverlay.Core.WindowControllers.MapOverlay
 {
     public class MapOverlayController
     {

@@ -4,26 +4,16 @@ using Application = System.Windows.Application;
 using Logger = DBDOverlay.Core.Utils.Logger;
 using Window = System.Windows.Window;
 using DBDOverlay.Core.Hotkeys;
-using DBDOverlay.Core.MapOverlay;
 using DBDOverlay.MVVM.ViewModel;
-using System;
-using DBDOverlay.Core.Download;
-using System.Configuration;
-using DBDOverlay.Properties;
-using System.IO;
 using DBDOverlay.Core.ImageProcessing;
-using DBDOverlay.Core.Utils;
-using DBDOverlay.Core.KillerOverlay;
 using DBDOverlay.Core.Extensions;
-using System.Reflection;
-using System.Windows.Forms;
-using DBDOverlay.Core.Reshade;
-using DBDOverlay.Core.MapOverlay.Languages;
+using DBDOverlay.Core.WindowControllers.KillerOverlay;
+using DBDOverlay.Core.WindowControllers.MapOverlay;
 
 namespace DBDOverlay
 {
     public partial class MainWindow : Window
-    {
+    {        
         private readonly MapOverlayTabViewModel mapOverlayTabVM;
         private readonly KillerOverlayTabViewModel killerOverlayTabVM;
         private readonly ReshadeTabViewModel reshadeTabVM;
@@ -32,17 +22,8 @@ namespace DBDOverlay
 
         public MainWindow()
         {
-            HandleExceptions();
-            FileSystem.CreateDefaultFolders(); 
-            DownloadManager.Instance.CheckForUpdate();
-            DownloadManager.Instance.DownloadDefaultLanguage();
-            ReloadSettings();
-            AddNumToSendKeys();
-            LoadReshadeIni();
-
             Logger.Info("---Open Application---");
-            InitializeComponent();
-            ImageReader.Instance.Initialize();
+            InitializeComponent();            
             SetKillerOverlaysBounds();
 
             mapOverlayTabVM = new MapOverlayTabViewModel();
@@ -98,18 +79,7 @@ namespace DBDOverlay
         private void MinButtonClick(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
-        }
-
-        private void ReloadSettings()
-        {
-            string configPath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
-            if (!File.Exists(configPath))
-            {
-                Settings.Default.Upgrade();
-                Settings.Default.Reload();
-                Settings.Default.Save();
-            }
-        }
+        }        
 
         private void SetKillerOverlaysBounds()
         {
@@ -125,47 +95,6 @@ namespace DBDOverlay
             KillerOverlayController.PostUnhookTimerOverlay.Top = rect.Top;
             KillerOverlayController.PostUnhookTimerOverlay.Width = halfWidth;
             KillerOverlayController.PostUnhookTimerOverlay.Height = rect.Height;
-        }
-
-        private void LoadReshadeIni()
-        {
-            var path = Settings.Default.ReshadeIniPath;
-            if (!path.Equals(string.Empty))
-            {
-                ReshadeManager.Instance.Initialize(path);
-                var maps = MapNamesContainer.GetReshadeMapsList();
-                for (int mapIndex = 0; mapIndex < maps.Count; mapIndex++)
-                {
-                    var filterIndex = MappingsHandler.GetFilterIndex(mapIndex);
-                    if (filterIndex != -1) ReshadeManager.Instance.AddHotKey(maps[mapIndex], filterIndex);
-                }
-            }
-        }
-
-        private void AddNumToSendKeys()
-        {
-            var info = typeof(SendKeys).GetField("keywords", BindingFlags.Static | BindingFlags.NonPublic);
-            var oldKeys = (Array)info.GetValue(null);
-            var elementType = oldKeys.GetType().GetElementType();
-            var newKeys = Array.CreateInstance(elementType, oldKeys.Length + 10);
-            Array.Copy(oldKeys, newKeys, oldKeys.Length);
-            for (int i = 0; i < 10; i++)
-            {
-                var newItem = Activator.CreateInstance(elementType, "NUMPAD" + i, (int)Keys.NumPad0 + i);
-                newKeys.SetValue(newItem, oldKeys.Length + i);
-            }
-            info.SetValue(null, newKeys);
-        }
-
-        private void HandleExceptions()
-        {
-            AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
-            {
-                Logger.Fatal(e.Exception.GetType().Name);
-                Logger.Fatal(e.Exception.Message);
-                Logger.Fatal(e.Exception.StackTrace);
-                Logger.Info("---Close Application with exception---");
-            };
-        }
+        }        
     }
 }
