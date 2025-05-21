@@ -18,44 +18,38 @@ namespace DBDOverlay
 {
     public partial class App : Application
     {
-
         protected override void OnStartup(StartupEventArgs e)
         {
-            Current.MainWindow = new MainWindow();
             base.OnStartup(e);
-            LoadPresets();
+            Initialize();
         }
 
-        private void LoadPresets()
+        private void Initialize()
         {
+            Logger.Info("---Open Application---");
+            Current.MainWindow = new MainWindow();
             LoadingWindowController.Window.Show();
 
             var worker = new BackgroundWorker();
             worker.DoWork += (s, e) =>
             {
-                LoadingWindowController.Instance.SetStatus("App configuration");
-                HandleExceptions();
-                AddNumToSendKeys();
-
-                LoadingWindowController.Instance.SetStatus("Creating default folders");
-                FileSystem.CreateDefaultFolders();
-
-                LoadingWindowController.Instance.SetStatus("Checking for updates");
-                DownloadManager.Instance.CheckForUpdate();
-
-                LoadingWindowController.Instance.SetStatus("Checking default language");
-                DownloadManager.Instance.DownloadDefaultLanguage();
-
-                LoadingWindowController.Instance.SetStatus("Loading user settings");
-                ReloadSettings();
-
-                LoadingWindowController.Instance.SetStatus("Loading ReShade.ini");
-                LoadReshadeIni();
-                LoadingWindowController.Instance.SetStatus("Initializing Tesseract");
-                ImageReader.Instance.Initialize();
+                PresetAction("App configuration", HandleExceptions);
+                PresetAction("App configuration", AddNumToSendKeys);
+                PresetAction("Creating default folders", FileSystem.CreateDefaultFolders);
+                PresetAction("Checking for updates", DownloadManager.Instance.CheckForUpdate);
+                PresetAction("Checking default language", DownloadManager.Instance.DownloadDefaultLanguage);
+                PresetAction("Loading user settings", ReloadSettings);
+                PresetAction("Loading ReShade.ini", LoadReshadeIni);
+                PresetAction("Initializing Tesseract", ImageReader.Instance.Initialize);
             };
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(FinishLoading);
             worker.RunWorkerAsync();
+        }
+
+        private void PresetAction(string message, Action action)
+        {
+            LoadingWindowController.Instance.SetStatus(message);
+            action();
         }
 
         private void FinishLoading(object sender, RunWorkerCompletedEventArgs e)

@@ -21,8 +21,7 @@ namespace DBDOverlay
         private readonly AboutTabViewModel aboutTabVM;
 
         public MainWindow()
-        {
-            Logger.Info("---Open Application---");
+        {            
             InitializeComponent();            
             SetKillerOverlaysBounds();
 
