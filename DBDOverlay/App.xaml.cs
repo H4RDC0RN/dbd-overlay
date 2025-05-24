@@ -56,6 +56,8 @@ namespace DBDOverlay
         {
             LoadingWindowController.Window.Close();
             Current.MainWindow.Show();
+
+            //ImageReader.Instance.HandleSurvivorsSmart(true);
         }
 
         private void ReloadSettings()

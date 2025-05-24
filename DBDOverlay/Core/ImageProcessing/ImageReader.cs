@@ -109,10 +109,13 @@ namespace DBDOverlay.Core.ImageProcessing
             return null;
         }
 
-        public void HandleSurvivors(bool savePieces = false)
+        public void HandleSurvivors(bool saveImages = false)
         {
+            var watch = Stopwatch.StartNew();
             int survCount = 4;
             var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: 600);
+            if (saveImages) bitmap.Save(FileSystem.GetImagePath($"survivors_area"), ImageFormat.Png);
+
             var width = bitmap.Width;
             var height = bitmap.Height / survCount;
             var statusRectMulti = GetRectMultiplier(RectType.State);
@@ -131,7 +134,7 @@ namespace DBDOverlay.Core.ImageProcessing
                 if (!piece.Width.Equals(hooked.Width)) piece = piece.Resize(hooked.Width, hooked.Height).ToBlackWhite(400);
 
                 var hookComparison = Math.Max(Math.Max(piece.Compare(hooked), piece.Compare(SurvivorStates.Hooked2)), piece.Compare(SurvivorStates.Hooked3));
-                if (savePieces)
+                if (saveImages)
                 {
                     piece.Save(FileSystem.GetImagePath($"survivor_{i}"), ImageFormat.Png);
                     Logger.Info($"--- Survivor {i} 'Hooked' image similarity = {hookComparison * 100} %");
@@ -151,6 +154,52 @@ namespace DBDOverlay.Core.ImageProcessing
                 piece.Dispose();
             }
             bitmap.Dispose();
+            watch.Stop();
+        }
+
+        public void HandleSurvivorsSmart(bool saveImages = false)
+        {
+            var watch = Stopwatch.StartNew();
+            int survCount = 4;
+            //var bitmap = new Bitmap(@"D:\survivorsSS.png");
+            var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: 600);
+            if (saveImages) bitmap.Save(FileSystem.GetImagePath($"survivors_area"), ImageFormat.Png);
+
+            var width = bitmap.Width;
+            var height = bitmap.Height / survCount;
+            var rect = new Rectangle(0, 0, width, height);
+            var hooked = SurvivorStates.Hooked;
+
+            for (int i = 0; i < survCount; i++)
+            {
+                var piece = new Bitmap(rect.Width, rect.Height);
+                using (Graphics graphics = Graphics.FromImage(piece))
+                {
+                    graphics.DrawImage(bitmap, 0, 0, rect, GraphicsUnit.Pixel);
+                }
+
+                var hookComparison = piece.Find(hooked);
+                if (saveImages)
+                {
+                    piece.Save(FileSystem.GetImagePath($"survivor_{i}"), ImageFormat.Png);
+                    Logger.Info($"--- Survivor {i} 'Hooked' image similarity = {hookComparison * 100} %");
+                }
+                KillerOverlayController.Instance.CheckIfHooked(i, hookComparison);
+                KillerOverlayController.Instance.CheckIfUnhooked(i, hookComparison);
+
+                var refreshStates = new Dictionary<string, double>
+                    {
+                        { "Sacrificed", piece.Compare(SurvivorStates.Sacrificed) },
+                        { "Escaped", piece.Find(SurvivorStates.Escaped) },
+                        { "Dead", piece.Find(SurvivorStates.Dead) }
+                    };
+
+                KillerOverlayController.Instance.CheckIfRefreshed(i, refreshStates);
+                rect.Y += height;
+                piece.Dispose();
+            }
+            bitmap.Dispose();
+            watch.Stop();
         }
 
         public bool IsMatchFinished(bool saveImage = false)

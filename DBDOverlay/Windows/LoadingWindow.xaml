@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBDOverlay.Windows"
         mc:Ignorable="d"
-        Title="DBD Overlay Loading" Height="170" Width="300"
+        Title="DBD Overlay Loading" Height="170" Width="270"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         Background="Transparent"
@@ -39,7 +39,7 @@
                 </Image>
                 <TextBlock x:Name="StatusTextBlock"
                            Text="Loading"
-                           FontSize="20"
+                           FontSize="18"
                            Foreground="White"
                            Margin="0"
                            HorizontalAlignment="Center"/>

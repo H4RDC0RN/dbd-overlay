@@ -95,16 +95,43 @@ namespace DBDOverlay.Core.Extensions
 
         public static double Compare(this Bitmap bitmap, Bitmap bitmapToCompare, int thresholdValue = 400)
         {
-            var current = bitmap.ToHashMap(thresholdValue);
-            var toCompare = bitmapToCompare.ToHashMap(thresholdValue);
+            var current = bitmap.ToHashList(thresholdValue);
+            var toCompare = bitmapToCompare.ToHashList(thresholdValue);
             var equals = current.Zip(toCompare, (i, j) => i == j).Count(x => x);
-            var result = equals / (double)current.Count;
-            return result.Round(2);
+            var equality = equals / (double)current.Count;
+            return equality.Round(2);
         }
 
-        private static List<bool> ToHashMap(this Bitmap bitmap, int thresholdValue = 400)
+        public static double Find(this Bitmap bitmap, Bitmap bitmapToFind, int thresholdValue = 400)
         {
-            var hashMap = new List<bool>();
+            var full = bitmap.ToHashMap(thresholdValue);
+            var toFind = bitmapToFind.ToHashMap(thresholdValue);
+            var width = toFind.GetLength(1);
+            var height = toFind.GetLength(0);
+
+            double maxEquality = 0.0;
+            for (int yShift = 0; yShift < bitmap.Height - bitmapToFind.Height; yShift++)
+            {
+                for (int xShift = 0; xShift < bitmap.Width - bitmapToFind.Width; xShift++)
+                {
+                    int equals = 0;
+                    for (int y = 0; y < width; y++)
+                    {
+                        for (int x = 0; x < height; x++)
+                        {
+                            if (full[x + xShift, y + yShift] == toFind[x, y]) equals++;
+                        }
+                    }
+                    var equality = equals / (double)toFind.Length;
+                    if (equality > maxEquality) maxEquality = equality;
+                }
+            }
+            return maxEquality.Round(2);
+        }
+
+        private static List<bool> ToHashList(this Bitmap bitmap, int thresholdValue = 400)
+        {
+            var hashList = new List<bool>();
             var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 ImageLockMode.ReadWrite, PixelFormat.Format32bppRgb);
 
@@ -115,11 +142,28 @@ namespace DBDOverlay.Core.Extensions
             for (int i = 0; i < size; i += 4)
             {
                 var totalRGB = data[i] + data[i + 1] + data[i + 2];
-                hashMap.Add(totalRGB <= thresholdValue);
+                hashList.Add(totalRGB <= thresholdValue);
             }
             Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
             bitmap.UnlockBits(bitmapData);
-            return hashMap;
+            return hashList;
+        }
+
+        private static bool[,] ToHashMap(this Bitmap bitmap, int thresholdValue = 400)
+        {
+            var width = bitmap.Width;
+            var height = bitmap.Height;
+            var hashList = bitmap.ToHashList(thresholdValue);
+            bool[,] hashmap = new bool[width, height];
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    hashmap[x, y] = hashList[x + y * width];
+                }
+            }
+            return hashmap;
         }
     }
 }
