@@ -2,9 +2,11 @@
 using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.Reshade;
 using DBDOverlay.Core.Utils;
+using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.Loading;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Properties;
+using DBDOverlay.Windows;
 using System;
 using System.ComponentModel;
 using System.Configuration;
@@ -56,7 +58,7 @@ namespace DBDOverlay
         {
             LoadingWindowController.Window.Close();
             Current.MainWindow.Show();
-
+            KillerOverlayController.Overlay.SetBounds();
             //ImageReader.Instance.HandleSurvivorsSmart(true);
         }
 

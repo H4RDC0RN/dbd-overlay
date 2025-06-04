@@ -74,5 +74,8 @@
     <Setting Name="CreateScreenshotsKey" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">77</Value>
     </Setting>
+    <Setting Name="HooksThreshold" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">600</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

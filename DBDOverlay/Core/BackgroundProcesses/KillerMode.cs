@@ -21,7 +21,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
 
         protected override void Action()
         {
-            ImageReader.Instance.HandleSurvivorsSmart();
+            ImageReader.Instance.HandleSurvivors();
         }
     }
 }

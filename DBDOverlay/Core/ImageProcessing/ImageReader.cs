@@ -28,10 +28,13 @@ namespace DBDOverlay.Core.ImageProcessing
         private readonly double maxScaleAuto = 1.0;
         private readonly double scaleStepManual = 1;
         private readonly double scaleStepAuto = 0.5;
-        private readonly int maxThreshold = 750;
-        private readonly int minThreshold = 400;
+        private readonly int maxThresholdForAuto = 750;
+        private readonly int maxThresholdForManual = 400;
+        private readonly int minThreshold = 300;
         private readonly int thresholdStep = 50;
+        private readonly int gearThreshold = 400;
         private string text = string.Empty;
+        private int hooksThreshold;
 
         private TesseractEngine engine;
         private static ImageReader instance;
@@ -50,6 +53,7 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             SetScreenBounds();
             SetEngine();
+            hooksThreshold = Settings.Default.HooksThreshold;
         }
 
         public void SetEngine()
@@ -68,7 +72,7 @@ namespace DBDOverlay.Core.ImageProcessing
             var scaleStep = autoMode ? scaleStepAuto : scaleStepManual;
             for (double scale = 1; scale <= maxScale; scale += scaleStep)
             {
-                for (int threshold = autoMode ? maxThreshold : minThreshold; threshold >= minThreshold; threshold -= thresholdStep)
+                for (int threshold = autoMode ? maxThresholdForAuto : maxThresholdForManual; threshold >= minThreshold; threshold -= thresholdStep)
                 {
                     if (log) Logger.Info($"===== Size = {scale}, Threshold = {threshold} =====");
                     var saveName = autoMode ? null : Settings.Default.ManualScreenshotFileName;
@@ -113,8 +117,8 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             var watch = Stopwatch.StartNew();
             int survCount = 4;
-            var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: 600);
-            if (saveImages) bitmap.Save(FileSystem.GetImagePath($"survivors_area"), ImageFormat.Png);
+            //var bitmap = new Bitmap(@"D:\survivorsSS.png");
+            var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: hooksThreshold, imageName: saveImages ? "survivors_area" : null);
 
             var width = bitmap.Width;
             var height = bitmap.Height / survCount;
@@ -122,6 +126,7 @@ namespace DBDOverlay.Core.ImageProcessing
             var srcRect = GetRect(statusRectMulti, width, height);
             var destRect = GetRect(new RectMultiplier(0, 0, statusRectMulti.Width, statusRectMulti.Height), width, height);
             var hooked = SurvivorStates.Hooked;
+            //var hookedHuge = new Bitmap(@"D:\survivorhuge.png");
 
             for (int i = 0; i < survCount; i++)
             {
@@ -131,9 +136,13 @@ namespace DBDOverlay.Core.ImageProcessing
                     graphics.DrawImage(bitmap, destRect, srcRect, GraphicsUnit.Pixel);
                 }
 
-                if (!piece.Width.Equals(hooked.Width)) piece = piece.Resize(hooked.Width, hooked.Height).ToBlackWhite(400);
+                //if (!piece.Width.Equals(hookedHuge.Width)) hookedHuge = hookedHuge.Resize(piece.Width, piece.Height).ToBlackWhite(400);
+                //hookedHuge.Save(FileSystem.GetImagePath($"survivorOPA"), ImageFormat.Png);
+                //var hookComparison = piece.Compare(hookedHuge);
 
+                if (!piece.Width.Equals(hooked.Width)) piece = piece.Resize(hooked.Width, hooked.Height).ToBlackWhite(400);
                 var hookComparison = Math.Max(Math.Max(piece.Compare(hooked), piece.Compare(SurvivorStates.Hooked2)), piece.Compare(SurvivorStates.Hooked3));
+
                 if (saveImages)
                 {
                     piece.Save(FileSystem.GetImagePath($"survivor_{i}"), ImageFormat.Png);
@@ -162,13 +171,14 @@ namespace DBDOverlay.Core.ImageProcessing
             var watch = Stopwatch.StartNew();
             int survCount = 4;
             //var bitmap = new Bitmap(@"D:\survivorsSS.png");
-            var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: 600);
+            var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: hooksThreshold, imageName: saveImages ? "survivors_area" : null);
             if (saveImages) bitmap.Save(FileSystem.GetImagePath($"survivors_area"), ImageFormat.Png);
 
             var width = bitmap.Width;
             var height = bitmap.Height / survCount;
             var rect = new Rectangle(0, 0, width, height);
             var hooked = SurvivorStates.Hooked;
+            //var hookedHuge = new Bitmap(@"D:\survivorhuge.png");
 
             for (int i = 0; i < survCount; i++)
             {
@@ -177,6 +187,11 @@ namespace DBDOverlay.Core.ImageProcessing
                 {
                     graphics.DrawImage(bitmap, 0, 0, rect, GraphicsUnit.Pixel);
                 }
+
+                //var statusRectMulti = GetRectMultiplier(RectType.State);
+                //var srcRect = GetRect(statusRectMulti, width, height);
+                //if (!srcRect.Width.Equals(hookedHuge.Width)) hookedHuge = hookedHuge.Resize(srcRect.Width, srcRect.Height).ToBlackWhite(400);
+                //hookedHuge.Save(FileSystem.GetImagePath($"survivorOPA"), ImageFormat.Png);
 
                 var hookComparison = piece.Find(hooked);
                 if (saveImages)
@@ -189,7 +204,7 @@ namespace DBDOverlay.Core.ImageProcessing
 
                 var refreshStates = new Dictionary<string, double>
                     {
-                        { "Sacrificed", piece.Compare(SurvivorStates.Sacrificed) },
+                        { "Sacrificed", piece.Find(SurvivorStates.Sacrificed) },
                         { "Escaped", piece.Find(SurvivorStates.Escaped) },
                         { "Dead", piece.Find(SurvivorStates.Dead) }
                     };
@@ -200,12 +215,13 @@ namespace DBDOverlay.Core.ImageProcessing
             }
             bitmap.Dispose();
             watch.Stop();
+            //Logger.Info($"SMART {watch.ElapsedMilliseconds} ms");
         }
 
         public bool IsMatchFinished(bool saveImage = false)
         {
             var saveName = saveImage ? Settings.Default.GearScreenshotFileName : null;
-            var bitmap = CreateFromScreenArea(RectType.Gear, false).PreProcess(threshold: 400, saveName: saveName);
+            var bitmap = CreateFromScreenArea(RectType.Gear, false).PreProcess(threshold: gearThreshold, imageName: saveName);
             var similarity = bitmap.Compare(Identificators.Gear);
             var isFinished = similarity >= 0.99;
             bitmap.Dispose();

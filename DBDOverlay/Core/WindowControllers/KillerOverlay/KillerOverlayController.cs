@@ -1,7 +1,7 @@
 ﻿using DBDOverlay.Core.BackgroundProcesses;
 using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Utils;
-using DBDOverlay.Windows;
+using DBDOverlay.Windows.Overlays;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -15,8 +15,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
     {
         public List<Survivor> Survivors = new List<Survivor>();
         private static KillerOverlayController instance;
-        private static HooksOverlayWindow hooksOverlay;
-        private static PostUnhookTimerOverlayWindow postUnhookTimerOverlay;
+        private static KillerOverlayWindow killerOverlay;
         private readonly double threshold = 0.9;
         private readonly int survivorsCount = 4;
         private readonly int unhookAnimationDelay = 1500;
@@ -35,23 +34,13 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
             }
         }
 
-        public static HooksOverlayWindow HooksOverlay
+        public static KillerOverlayWindow Overlay
         {
             get
             {
-                if (hooksOverlay == null)
-                    hooksOverlay = new HooksOverlayWindow();
-                return hooksOverlay;
-            }
-        }
-
-        public static PostUnhookTimerOverlayWindow PostUnhookTimerOverlay
-        {
-            get
-            {
-                if (postUnhookTimerOverlay == null)
-                    postUnhookTimerOverlay = new PostUnhookTimerOverlayWindow();
-                return postUnhookTimerOverlay;
+                if (killerOverlay == null)
+                    killerOverlay = new KillerOverlayWindow();
+                return killerOverlay;
             }
         }
 
@@ -69,7 +58,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
                 Logger.Info($"--- Survivor {index} is hooked. 'Hooked' image similarity = {similarity * 100} %");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    var textBlock = HooksOverlay.GetHooksLabel((SurvivorNumber)(index + 1));
+                    var textBlock = Overlay.GetHooksLabel((SurvivorNumber)(index + 1));
                     textBlock.Content = textBlock.Content.ToString().Increment();
                     Survivors[index].State = SurvivorState.Hooked;
                     Survivors[index].Hooks++;
@@ -97,9 +86,9 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
                 Logger.Info($"--- Survivor {index} is {pair.Key.ToLower()}. '{pair.Key}' image similarity = {pair.Value * 100} %");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    HooksOverlay.GetHooksLabel((SurvivorNumber)(index + 1)).Content = "0";
+                    Overlay.GetHooksLabel((SurvivorNumber)(index + 1)).Content = "0";
                     Survivors[index] = new Survivor();
-                    PostUnhookTimerOverlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = defaultTimerValue;
+                    Overlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = defaultTimerValue;
                 });
             }
         }
@@ -108,7 +97,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
         {
             for (int i = 0; i < survivorsCount; i++)
             {
-                PostUnhookTimerOverlay.GetTimerLabel((SurvivorNumber)(i + 1)).Content = defaultTimerValue;
+                Overlay.GetTimerLabel((SurvivorNumber)(i + 1)).Content = defaultTimerValue;
             }
         }
 
@@ -118,7 +107,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
             SetSurvivors();
             for (int i = 0; i < survivorsCount; i++)
             {
-                HooksOverlay.GetHooksLabel((SurvivorNumber)(i + 1)).Content = "0";
+                Overlay.GetHooksLabel((SurvivorNumber)(i + 1)).Content = "0";
             }
         }
 
@@ -142,13 +131,13 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         var time = (watch.ElapsedMilliseconds / 1000.0).Round(1).ToString();
-                        PostUnhookTimerOverlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = time.IsInt() ? $"{time}{delimiter}0" : time;
+                        Overlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = time.IsInt() ? $"{time}{delimiter}0" : time;
                     });
                 }
                 watch.Stop();
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    PostUnhookTimerOverlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = defaultTimerValue;
+                    Overlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = defaultTimerValue;
                 });
             };
             worker.RunWorkerAsync();

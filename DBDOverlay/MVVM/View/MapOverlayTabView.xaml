@@ -12,12 +12,12 @@
     <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.44*"/>
-                <ColumnDefinition Width="0.56*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.6*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" 
@@ -32,7 +32,6 @@
                           Grid.Row="0"
                           Grid.Column="1"
                           HorizontalAlignment="Center"
-                          Margin="5"
                           Style="{StaticResource ToggleButtonStyle}"
                           Checked="OpenClose_Checked"
                           Unchecked="OpenClose_Unchecked"/>
@@ -41,13 +40,12 @@
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
-                                Margin="5"
                                 Style="{StaticResource ToggleButtonStyle}"
                                 Checked="AutoMode_Checked"
                                 Unchecked="AutoMode_Unchecked"/>
         </Grid>
 
-        <TextBlock Text="Visual Settings"
+        <TextBlock Text="Overlay Settings"
                    Foreground="White"
                    FontSize="22"
                    HorizontalAlignment="Center"
@@ -56,8 +54,8 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.44*"/>
-                <ColumnDefinition Width="0.56*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.6*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
@@ -67,7 +65,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" 
-                       Text="Reposition / Resize"
+                       Text="Reposition / resize"
                        FontSize="16"
                        Style="{StaticResource TextBlockStyle}"/>
 

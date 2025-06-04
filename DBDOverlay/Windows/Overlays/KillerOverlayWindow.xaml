@@ -1,0 +1,100 @@
+﻿<Window x:Class="DBDOverlay.Windows.Overlays.KillerOverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DBDOverlay.Windows.Overlays"
+        mc:Ignorable="d"
+        Title="KillerOverlay" Height="400" Width="200"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ShowInTaskbar="False"
+        Topmost="True"
+        Background="Transparent">
+
+    <Border x:Name="MainGridBorder"
+            BorderBrush="White"
+            BorderThickness="0">
+        <Grid x:Name="MainGrid"
+              Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.35*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="PostUnhookTimerGrid"
+                  Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="SurvivorTimer_1"
+                       Grid.Row="0"
+                       Style="{StaticResource TimerLabelStyle}">0.0</Label>
+                <Label x:Name="SurvivorTimer_2"
+                       Grid.Row="1"
+                       Style="{StaticResource TimerLabelStyle}">0.0</Label>
+                <Label x:Name="SurvivorTimer_3"
+                       Grid.Row="2"
+                       Style="{StaticResource TimerLabelStyle}">0.0</Label>
+                <Label x:Name="SurvivorTimer_4"
+                       Grid.Row="3"
+                       Style="{StaticResource TimerLabelStyle}">0.0</Label>
+            </Grid>
+
+            <Grid x:Name="SurvivorsAreaGrid"
+                  Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border x:Name="Survivor1"
+                        Grid.Row="0"
+                        BorderBrush="White"
+                        BorderThickness="0"/>
+                <Border x:Name="Survivor2"
+                        Grid.Row="1"
+                        BorderBrush="White"
+                        BorderThickness="0"/>
+                <Border x:Name="Survivor3"
+                        Grid.Row="2"
+                        BorderBrush="White"
+                        BorderThickness="0"/>
+                <Border x:Name="Survivor4"
+                        Grid.Row="3"
+                        BorderBrush="White"
+                        BorderThickness="0"/>
+            </Grid>
+
+            <Grid x:Name="HooksGrid"
+                  Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="SurvivorHooks_1"
+                       Grid.Row="0"
+                       Style="{StaticResource HooksLabelStyle}">0</Label>
+                <Label x:Name="SurvivorHooks_2"
+                       Grid.Row="1"
+                       Style="{StaticResource HooksLabelStyle}">0</Label>
+                <Label x:Name="SurvivorHooks_3"
+                       Grid.Row="2"
+                       Style="{StaticResource HooksLabelStyle}">0</Label>
+                <Label x:Name="SurvivorHooks_4"
+                       Grid.Row="3"
+                       Style="{StaticResource HooksLabelStyle}">0</Label>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

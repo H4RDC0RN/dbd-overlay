@@ -9,15 +9,15 @@
              d:DesignHeight="400" d:DesignWidth="500"
              Background="{DynamicResource DarkestGrayBrush}">
 
+    <StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.44*"/>
-                <ColumnDefinition Width="0.56*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.6*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" 
@@ -32,7 +32,6 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             HorizontalAlignment="Center"
-                            Margin="5"
                             Style="{StaticResource ToggleButtonStyle}"
                             Checked="Hooks_Checked"
                             Unchecked="Hooks_Unchecked"/>
@@ -41,23 +40,158 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             HorizontalAlignment="Center"
-                            Margin="5"
                             Style="{StaticResource ToggleButtonStyle}"
                             Checked="PostUnhookTimer_Checked"
                             Unchecked="PostUnhookTimer_Unchecked"/>
-
-            <Button Grid.Row="2"
-                    Grid.Column="1"
-                    x:Name="ResetButton"
-                    Style="{StaticResource ButtonStyle}"
-                    Content="Reset"
-                    FontSize="16"
-                    Foreground="White"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Right"
-                    Width="70"
-                    Height="35"
-                    Margin="10"
-                    Click="Reset_Click"/>
         </Grid>
+
+        <Button x:Name="ResetButton"
+                Style="{StaticResource ButtonStyle}"
+                Content="Reset values"
+                FontSize="14"
+                Foreground="White"
+                HorizontalAlignment="Center"
+                Width="90"
+                Height="30"
+                Click="Reset_Click"/>
+
+        <TextBlock Text="Overlay Configuration"
+                   Foreground="White"
+                   FontSize="22"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,20,0,10"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.35*"/>
+                <ColumnDefinition Width="0.65*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel>
+                <TextBlock Text="Preview"
+                           Foreground="White"
+                           FontSize="16"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+                <Image x:Name="SurvivorsAreaImage"
+                       Source="E:\VSSpace\DBDUtilityOverlay\DBDOverlay\bin\Debug\net48\Images\survivors_area.png"
+                       HorizontalAlignment="Left"
+                       Width="70"
+                       Margin="10,5,0,0"/>
+            </StackPanel>
+            
+            <Grid Grid.Column="1"
+                  VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.7*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+       
+                <TextBlock Grid.Row="0" 
+                           Text="Select area"
+                           FontSize="16"
+                           Style="{StaticResource TextBlockStyle}"/>
+
+                <TextBlock Grid.Row="1" 
+                           Text="Reset area"
+                           FontSize="16"
+                           Style="{StaticResource TextBlockStyle}"/>
+
+                <TextBlock Grid.Row="2" 
+                           Text="Threshold"
+                           FontSize="16"
+                           Style="{StaticResource TextBlockStyle}"/>
+
+                <TextBlock Grid.Row="3" 
+                           Text="Calibration"
+                           FontSize="16"
+                           Style="{StaticResource TextBlockStyle}"/>
+
+                <custom:CustomToggleButton x:Name="SelectAreaToggleButton"
+                                           Grid.Column="1"
+                                           Grid.Row="0"
+                                           IsChecked="False"
+                                           HorizontalAlignment="Center"
+                                           Style="{StaticResource ToggleButtonStyle}"
+                                           Checked="SelectArea_Checked"
+                                           Unchecked="SelectArea_Unchecked">
+                    
+                    <custom:CustomToggleButton.ToolTip>
+                        <ToolTip Style="{StaticResource ToolTipStyle}">
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold" 
+                                           Style="{DynamicResource ToolTipTextBlockStyle}">
+                    To change position/size:
+                                </TextBlock>
+                                <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                    - Turn on
+                                </TextBlock>
+                                <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                    - Update survovors area
+                                </TextBlock>
+                                <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                    - Turn off
+                                </TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </custom:CustomToggleButton.ToolTip>
+                </custom:CustomToggleButton>
+
+                <Button x:Name="ResetAllButton"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Style="{StaticResource ButtonStyle}"
+                        Content="Reset"
+                        FontSize="14"
+                        Foreground="White"
+                        Width="60"
+                        Height="30"
+                        Click="ResetPosSize_Click"/>
+
+                <StackPanel Grid.Column="1"
+                            Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <Slider x:Name="ThresholdSlider"
+                            VerticalAlignment="Center" 
+                            Width="140"
+                            ValueChanged="Slider_ValueChanged" 
+                            Maximum="100"
+                            IsSnapToTickEnabled="True"
+                            Style="{StaticResource Horizontal_Slider}"/>
+                    <TextBox x:Name="ThresholdTextBox" 
+                             Text="{Binding ElementName=ThresholdSlider, 
+                                            Path=Value, 
+                                            UpdateSourceTrigger=PropertyChanged}" 
+                             VerticalAlignment="Center"
+                             Width="34" 
+                             Height="30"
+                             Margin="10,0,0,3"
+                             FontSize="20"
+                             TextAlignment="Center"
+                             Style="{StaticResource TextBoxInputStyle}"/>
+                    <Label Content="%"
+                           Foreground="White"
+                           FontSize="20"
+                           Margin="0,0,0,3"  
+                           VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <custom:CustomToggleButton x:Name="CalibrationToggleButton"
+                           Grid.Row="3"
+                           Grid.Column="1"
+                           HorizontalAlignment="Center"
+                           Style="{StaticResource ToggleButtonStyle}"
+                           Checked="Calibration_Checked"
+                           Unchecked="Calibration_Unchecked"/>
+            </Grid>
+        </Grid>
+    </StackPanel>
 </UserControl>

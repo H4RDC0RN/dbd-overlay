@@ -5,15 +5,13 @@ using Logger = DBDOverlay.Core.Utils.Logger;
 using Window = System.Windows.Window;
 using DBDOverlay.Core.Hotkeys;
 using DBDOverlay.MVVM.ViewModel;
-using DBDOverlay.Core.ImageProcessing;
-using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 
-namespace DBDOverlay
+namespace DBDOverlay.Windows
 {
     public partial class MainWindow : Window
-    {        
+    {
         private readonly MapOverlayTabViewModel mapOverlayTabVM;
         private readonly KillerOverlayTabViewModel killerOverlayTabVM;
         private readonly ReshadeTabViewModel reshadeTabVM;
@@ -21,9 +19,8 @@ namespace DBDOverlay
         private readonly AboutTabViewModel aboutTabVM;
 
         public MainWindow()
-        {            
-            InitializeComponent();            
-            SetKillerOverlaysBounds();
+        {
+            InitializeComponent();
 
             mapOverlayTabVM = new MapOverlayTabViewModel();
             killerOverlayTabVM = new KillerOverlayTabViewModel();
@@ -69,8 +66,7 @@ namespace DBDOverlay
             Logger.Info("---Close Application---");
             HotKeysController.Dispose();
             MapOverlayController.Overlay.Close();
-            KillerOverlayController.HooksOverlay.Close();
-            KillerOverlayController.PostUnhookTimerOverlay.Close();
+            KillerOverlayController.Overlay.Close();
             Close();
             Application.Current.Shutdown();
         }
@@ -78,22 +74,6 @@ namespace DBDOverlay
         private void MinButtonClick(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
-        }        
-
-        private void SetKillerOverlaysBounds()
-        {
-            var rect = ImageReader.Instance.GetRect(RectType.Survivors, SystemParameters.PrimaryScreenWidth.Round(), SystemParameters.PrimaryScreenHeight.Round());
-            var halfWidth = rect.Width / 2;
-
-            KillerOverlayController.HooksOverlay.Left = rect.Left + rect.Width - (rect.Width / 5);
-            KillerOverlayController.HooksOverlay.Top = rect.Top;
-            KillerOverlayController.HooksOverlay.Width = halfWidth;
-            KillerOverlayController.HooksOverlay.Height = rect.Height;
-
-            KillerOverlayController.PostUnhookTimerOverlay.Left = rect.Left - halfWidth;
-            KillerOverlayController.PostUnhookTimerOverlay.Top = rect.Top;
-            KillerOverlayController.PostUnhookTimerOverlay.Width = halfWidth;
-            KillerOverlayController.PostUnhookTimerOverlay.Height = rect.Height;
-        }        
+        }
     }
 }

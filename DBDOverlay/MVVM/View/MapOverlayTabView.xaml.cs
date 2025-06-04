@@ -64,6 +64,7 @@ namespace DBDOverlay.MVVM.View
             MapOverlayController.Overlay.DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(MapOverlayController.Overlay);
             MapOverlayController.Instance.CanBeMoved = false;
             MapOverlayController.Overlay.SaveSize();
+            MapOverlayController.Overlay.SavePosition();
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -89,6 +90,7 @@ namespace DBDOverlay.MVVM.View
         {
             ReToggleButton.Uncheck();
             MapOverlayController.Overlay.SaveSize();
+            MapOverlayController.Overlay.SavePosition();
         }
 
         private void ResetPosition_Click(object sender, RoutedEventArgs e)

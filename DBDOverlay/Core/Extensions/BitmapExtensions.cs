@@ -81,12 +81,12 @@ namespace DBDOverlay.Core.Extensions
             return bitmap;
         }
 
-        public static Bitmap PreProcess(this Bitmap bitmap, double scale = 1, int threshold = 400, string saveName = null)
+        public static Bitmap PreProcess(this Bitmap bitmap, double scale = 1, int threshold = 400, string imageName = null)
         {
             bitmap = bitmap.Resize(scale).ToBlackWhite(threshold);
-            if (saveName != null)
+            if (imageName != null)
             {
-                var path = FileSystem.GetImagePath(saveName, edited: true);
+                var path = FileSystem.GetImagePath(imageName, edited: true);
                 bitmap.Save(path);
                 Logger.Info($"Preprocessed image is saved to '{path}'");
             }
@@ -97,7 +97,9 @@ namespace DBDOverlay.Core.Extensions
         {
             var current = bitmap.ToHashList(thresholdValue);
             var toCompare = bitmapToCompare.ToHashList(thresholdValue);
+            //var equals = current.Zip(toCompare, (i, j) => i && i == j).Count(x => x);
             var equals = current.Zip(toCompare, (i, j) => i == j).Count(x => x);
+            //var equality = equals / (double)current.Where(x => x).ToList().Count;
             var equality = equals / (double)current.Count;
             return equality.Round(2);
         }
@@ -108,6 +110,7 @@ namespace DBDOverlay.Core.Extensions
             var toFind = bitmapToFind.ToHashMap(thresholdValue);
             var width = toFind.GetLength(1);
             var height = toFind.GetLength(0);
+            var truePixCount = (double)toFind.Cast<bool>().Where(x => x).ToList().Count;
 
             double maxEquality = 0.0;
             for (int yShift = 0; yShift < bitmap.Height - bitmapToFind.Height; yShift++)
@@ -119,6 +122,7 @@ namespace DBDOverlay.Core.Extensions
                     {
                         for (int x = 0; x < height; x++)
                         {
+                            //if (toFind[x, y] && full[x + xShift, y + yShift] == toFind[x, y]) equals++;
                             if (full[x + xShift, y + yShift] == toFind[x, y]) equals++;
                         }
                     }
@@ -142,7 +146,7 @@ namespace DBDOverlay.Core.Extensions
             for (int i = 0; i < size; i += 4)
             {
                 var totalRGB = data[i] + data[i + 1] + data[i + 2];
-                hashList.Add(totalRGB <= thresholdValue);
+                hashList.Add(totalRGB >= thresholdValue);
             }
             Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
             bitmap.UnlockBits(bitmapData);

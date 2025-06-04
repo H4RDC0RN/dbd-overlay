@@ -310,5 +310,17 @@ namespace DBDOverlay.Properties {
                 this["CreateScreenshotsKey"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public int HooksThreshold {
+            get {
+                return ((int)(this["HooksThreshold"]));
+            }
+            set {
+                this["HooksThreshold"] = value;
+            }
+        }
     }
 }
