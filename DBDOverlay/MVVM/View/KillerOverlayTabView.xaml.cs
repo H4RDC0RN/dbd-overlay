@@ -1,4 +1,6 @@
 ﻿using DBDOverlay.Core.BackgroundProcesses;
+using DBDOverlay.Core.Extensions;
+using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Properties;
 using System.Windows;
@@ -8,14 +10,18 @@ namespace DBDOverlay.MVVM.View
 {
     public partial class KillerOverlayTabView : UserControl
     {
+        private readonly int RGBSum = 765;
+        private readonly int defaultHooksThreshold = 600;
+
         public KillerOverlayTabView()
         {
             InitializeComponent();
             HooksToggleButton.IsChecked = KillerMode.Instance.IsActive && KillerMode.Instance.IsHookMode
                 ? true : HooksToggleButton.IsChecked = Settings.Default.IsHookMode;
-
             PostUnhookTimerToggleButton.IsChecked = KillerMode.Instance.IsActive && KillerMode.Instance.IsPostUnhookTimerMode
                 ? true : PostUnhookTimerToggleButton.IsChecked = Settings.Default.IsPostUnhookTimerMode;
+
+            SetSliderValue(Settings.Default.HooksThreshold);
         }
 
         private void Hooks_Checked(object sender, RoutedEventArgs e)
@@ -80,9 +86,13 @@ namespace DBDOverlay.MVVM.View
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            //MapOverlayController.Overlay.Opacity = OpacitySlider.Value / 100;
-            //Settings.Default.MapOverlayOpacity = (int)OpacitySlider.Value;
-            //Settings.Default.Save();
+            SetThreshold((ThresholdSlider.Value * RGBSum / 100).Round());
+        }
+
+        private void ResetThreshold_Click(object sender, RoutedEventArgs e)
+        {
+            SetThreshold(defaultHooksThreshold);
+            SetSliderValue(defaultHooksThreshold);
         }
 
         private void Calibration_Checked(object sender, RoutedEventArgs e)
@@ -93,6 +103,18 @@ namespace DBDOverlay.MVVM.View
         private void Calibration_Unchecked(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void SetThreshold(int threshold)
+        {
+            ImageReader.Instance.SetHooksThreshold(threshold);
+            Settings.Default.HooksThreshold = threshold;
+            Settings.Default.Save();
+        }
+
+        private void SetSliderValue(int threshold)
+        {
+            ThresholdSlider.Value = (threshold * 100.0 / RGBSum).Round();
         }
     }
 }

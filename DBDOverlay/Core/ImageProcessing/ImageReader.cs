@@ -53,7 +53,7 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             SetScreenBounds();
             SetEngine();
-            hooksThreshold = Settings.Default.HooksThreshold;
+            SetHooksThreshold(Settings.Default.HooksThreshold);
         }
 
         public void SetEngine()
@@ -241,6 +241,11 @@ namespace DBDOverlay.Core.ImageProcessing
             var imageWidth = (w * rectMultiplier.Width).Round();
             var imageHeight = (h * rectMultiplier.Height).Round();
             return new Rectangle((w * rectMultiplier.X).Round(), (h * rectMultiplier.Y).Round(), imageWidth, imageHeight);
+        }
+
+        public void SetHooksThreshold(int value)
+        {
+            hooksThreshold = value;
         }
 
         private void SetScreenBounds()

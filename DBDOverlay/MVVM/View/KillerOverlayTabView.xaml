@@ -61,10 +61,10 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Margin="0,20,0,10"/>
-        <Grid>
+        <!--<Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.35*"/>
-                <ColumnDefinition Width="0.65*"/>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.7*"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel>
@@ -80,7 +80,7 @@
                        Width="70"
                        Margin="10,5,0,0"/>
             </StackPanel>
-            
+
             <Grid Grid.Column="1"
                   VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
@@ -93,75 +93,72 @@
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
-       
+
                 <TextBlock Grid.Row="0" 
                            Text="Select area"
                            FontSize="16"
                            Style="{StaticResource TextBlockStyle}"/>
 
                 <TextBlock Grid.Row="1" 
-                           Text="Reset area"
-                           FontSize="16"
-                           Style="{StaticResource TextBlockStyle}"/>
-
-                <TextBlock Grid.Row="2" 
                            Text="Threshold"
                            FontSize="16"
                            Style="{StaticResource TextBlockStyle}"/>
 
-                <TextBlock Grid.Row="3" 
+                <TextBlock Grid.Row="2" 
                            Text="Calibration"
                            FontSize="16"
                            Style="{StaticResource TextBlockStyle}"/>
 
-                <custom:CustomToggleButton x:Name="SelectAreaToggleButton"
-                                           Grid.Column="1"
-                                           Grid.Row="0"
-                                           IsChecked="False"
-                                           HorizontalAlignment="Center"
-                                           Style="{StaticResource ToggleButtonStyle}"
-                                           Checked="SelectArea_Checked"
-                                           Unchecked="SelectArea_Unchecked">
-                    
-                    <custom:CustomToggleButton.ToolTip>
-                        <ToolTip Style="{StaticResource ToolTipStyle}">
-                            <StackPanel>
-                                <TextBlock FontWeight="Bold" 
+                <StackPanel Grid.Column="1"
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <custom:CustomToggleButton x:Name="SelectAreaToggleButton"
+                                               IsChecked="False"
+                                               HorizontalAlignment="Center"
+                                               Style="{StaticResource ToggleButtonStyle}"
+                                               Checked="SelectArea_Checked"
+                                               Unchecked="SelectArea_Unchecked">
+
+                        <custom:CustomToggleButton.ToolTip>
+                            <ToolTip Style="{StaticResource ToolTipStyle}">
+                                <StackPanel>
+                                    <TextBlock FontWeight="Bold" 
                                            Style="{DynamicResource ToolTipTextBlockStyle}">
                     To change position/size:
-                                </TextBlock>
-                                <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                                    </TextBlock>
+                                    <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
                     - Turn on
-                                </TextBlock>
-                                <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                                    </TextBlock>
+                                    <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
                     - Update survovors area
-                                </TextBlock>
-                                <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                                    </TextBlock>
+                                    <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
                     - Turn off
-                                </TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </custom:CustomToggleButton.ToolTip>
-                </custom:CustomToggleButton>
+                                    </TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </custom:CustomToggleButton.ToolTip>
+                    </custom:CustomToggleButton>
 
-                <Button x:Name="ResetAllButton"
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        Style="{StaticResource ButtonStyle}"
-                        Content="Reset"
-                        FontSize="14"
-                        Foreground="White"
-                        Width="60"
-                        Height="30"
-                        Click="ResetPosSize_Click"/>
+                    <Button x:Name="ResetPosSizeButton"
+                            Style="{StaticResource ButtonStyle}"
+                            Content="Reset"
+                            FontSize="14"
+                            Foreground="White"
+                            Width="60"
+                            Height="30"
+                            Margin="25,0,0,0"
+                            Click="ResetPosSize_Click"/>
+                </StackPanel>
 
                 <StackPanel Grid.Column="1"
-                            Grid.Row="2"
+                            Grid.Row="1"
                             Orientation="Horizontal"
                             HorizontalAlignment="Center">
                     <Slider x:Name="ThresholdSlider"
                             VerticalAlignment="Center" 
-                            Width="140"
+                            Width="120"
                             ValueChanged="Slider_ValueChanged" 
                             Maximum="100"
                             IsSnapToTickEnabled="True"
@@ -171,27 +168,74 @@
                                             Path=Value, 
                                             UpdateSourceTrigger=PropertyChanged}" 
                              VerticalAlignment="Center"
-                             Width="34" 
-                             Height="30"
+                             Width="30" 
+                             Height="26"
                              Margin="10,0,0,3"
                              FontSize="20"
                              TextAlignment="Center"
                              Style="{StaticResource TextBoxInputStyle}"/>
                     <Label Content="%"
                            Foreground="White"
-                           FontSize="20"
-                           Margin="0,0,0,3"  
+                           FontSize="18"
                            VerticalAlignment="Center"/>
+                    <Button x:Name="ResetThresholdButton"
+                            Style="{StaticResource ButtonStyle}"
+                            Content="Reset"
+                            FontSize="14"
+                            Foreground="White"
+                            Width="40"
+                            Height="30"
+                            Margin="5,0,0,0"
+                            Click="ResetThreshold_Click"/>
                 </StackPanel>
 
                 <custom:CustomToggleButton x:Name="CalibrationToggleButton"
-                           Grid.Row="3"
+                           Grid.Row="2"
                            Grid.Column="1"
                            HorizontalAlignment="Center"
                            Style="{StaticResource ToggleButtonStyle}"
                            Checked="Calibration_Checked"
                            Unchecked="Calibration_Unchecked"/>
             </Grid>
-        </Grid>
+        </Grid>-->
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <TextBlock Text="Threshold"
+                       FontSize="16"
+                       Margin="0,0,20,0"
+                       Style="{StaticResource TextBlockStyle}"/>
+            <Slider x:Name="ThresholdSlider"
+                    VerticalAlignment="Center" 
+                    Width="140"
+                    ValueChanged="Slider_ValueChanged" 
+                    Maximum="100"
+                    IsSnapToTickEnabled="True"
+                    Style="{StaticResource Horizontal_Slider}"/>
+            <TextBox x:Name="ThresholdTextBox" 
+                     Text="{Binding ElementName=ThresholdSlider, 
+                            Path=Value, 
+                            UpdateSourceTrigger=PropertyChanged}" 
+                     VerticalAlignment="Center"
+                     Width="30" 
+                     Height="26"
+                     Margin="10,0,0,3"
+                     FontSize="20"
+                     TextAlignment="Center"
+                     Style="{StaticResource TextBoxInputStyle}"/>
+            <Label Content="%"
+                   Foreground="White"
+                   FontSize="18"
+                   VerticalAlignment="Center"/>
+            <Button x:Name="ResetThresholdButton"
+                    Style="{StaticResource ButtonStyle}"
+                    Content="Reset"
+                    FontSize="14"
+                    Foreground="White"
+                    Width="60"
+                    Height="30"
+                    Margin="20,0,0,0"
+                    Click="ResetThreshold_Click"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

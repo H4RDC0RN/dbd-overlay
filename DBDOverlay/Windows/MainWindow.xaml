@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:DBDOverlay.MVVM.ViewModel"
         xmlns:view="clr-namespace:DBDOverlay.MVVM.View"
         mc:Ignorable="d"
-        Title="DBD Overlay" Height="500" Width="650"
+        Title="DBD Overlay" Height="400" Width="650"
         MouseLeftButtonDown="WindowMouseDown"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -124,7 +124,7 @@
             <ContentControl x:Name="ViewContent"
                             Grid.Row="1"
                             Grid.Column="1"
-                            Margin="10"/>
+                            Margin="5"/>
         </Grid>
     </Border>
 </Window>
