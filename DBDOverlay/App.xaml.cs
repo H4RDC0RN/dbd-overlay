@@ -58,7 +58,6 @@ namespace DBDOverlay
         {
             LoadingWindowController.Window.Close();
             Current.MainWindow.Show();
-            KillerOverlayController.Overlay.SetBounds();
             //ImageReader.Instance.HandleSurvivorsSmart(true);
         }
 

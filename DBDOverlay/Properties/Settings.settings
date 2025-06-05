@@ -5,12 +5,6 @@
     <Setting Name="ManualScreenshotFileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">manual_map</Value>
     </Setting>
-    <Setting Name="MapOverlayX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="MapOverlayY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="MapOverlayOpacity" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">90</Value>
     </Setting>
@@ -53,12 +47,6 @@
     <Setting Name="IsPostUnhookTimerMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MapOverlayWidth" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">200</Value>
-    </Setting>
-    <Setting Name="MapOverlayHeight" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">220</Value>
-    </Setting>
     <Setting Name="ReshadeIniPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -76,6 +64,12 @@
     </Setting>
     <Setting Name="HooksThreshold" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">600</Value>
+    </Setting>
+    <Setting Name="MapOverlayRect" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0,0,200,220</Value>
+    </Setting>
+    <Setting Name="KillerOverlayRect" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

@@ -18,7 +18,7 @@ namespace DBDOverlay.MVVM.View
             AutoModeToggleButton.IsChecked = AutoMode.Instance.IsActive ? true : AutoModeToggleButton.IsChecked = Settings.Default.IsAutoMode;
 
             if (MapOverlayController.Instance.CanBeMoved) ReToggleButton.IsChecked = true;
-            WindowsServices.Instance.MoveModeOff += HandleMoveModeOff;
+            WindowsServices.Instance.MapOverlayMoveModeOff += HandleMoveModeOff;
         }
 
         private void OpenClose_Checked(object sender, RoutedEventArgs e)

@@ -2,19 +2,23 @@
 using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.Windows;
+using DBDOverlay.Properties;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DBDOverlay.Windows.Overlays
 {
     public partial class KillerOverlayWindow : Window
     {
         public int DefaultStyle { get; set; }
+        public Rect CurrentRect { get; set; }
 
         public KillerOverlayWindow()
         {
             InitializeComponent();
+            SetBounds();
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -22,6 +26,18 @@ namespace DBDOverlay.Windows.Overlays
             base.OnSourceInitialized(e);
             DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(this);
             KillerOverlayController.Instance.SetTimers();
+        }
+
+        private void OverlayMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Cursor = Cursors.SizeAll;
+            DragMove();
+        }
+
+        private void OverlayMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Cursor = Cursors.Hand;
+            SaveBounds();
         }
 
         public Label GetHooksLabel(SurvivorNumber survivor)
@@ -46,16 +62,6 @@ namespace DBDOverlay.Windows.Overlays
                 case SurvivorNumber.Fourth: return SurvivorTimer_4;
                 default: return null;
             }
-        }
-
-        public void SetBounds()
-        {
-            var rect = ImageReader.Instance.GetRect(RectType.Survivors, SystemParameters.PrimaryScreenWidth.Round(), SystemParameters.PrimaryScreenHeight.Round());
-
-            KillerOverlayController.Overlay.Left = rect.Left - (rect.Width / 2);
-            KillerOverlayController.Overlay.Top = rect.Top;
-            KillerOverlayController.Overlay.Width = rect.Width * 2;
-            KillerOverlayController.Overlay.Height = rect.Height;
         }
 
         public void ShowHooks()
@@ -90,6 +96,46 @@ namespace DBDOverlay.Windows.Overlays
         public void HideGrid()
         {
             ChangeGridThickness(false);
+        }
+
+        public void SaveBounds()
+        {
+            CurrentRect = new Rect(CurrentRect.X, CurrentRect.Y, CurrentRect.Width, CurrentRect.Height);
+            Settings.Default.MapOverlayRect = CurrentRect.ToString();
+            Settings.Default.Save();
+        }
+
+        public void ResetBounds()
+        {
+            SetDefaultBounds();
+            CurrentRect = new Rect(Left, Top, Width, Height);
+            Settings.Default.MapOverlayRect = CurrentRect.ToString();
+            Settings.Default.Save();
+        }
+
+        private void SetBounds()
+        {
+            if (Settings.Default.KillerOverlayRect != string.Empty)
+            {
+                CurrentRect = Settings.Default.KillerOverlayRect.ToRect();
+                Height = CurrentRect.Height;
+                Width = CurrentRect.Width;
+                Left = CurrentRect.X;
+                Top = CurrentRect.Y;
+            }
+            else
+            {
+                SetDefaultBounds();
+            }
+        }
+
+        private void SetDefaultBounds()
+        {
+            var rect = ImageReader.Instance.GetRect(RectType.Survivors, SystemParameters.PrimaryScreenWidth.Round(), SystemParameters.PrimaryScreenHeight.Round());
+            Left = rect.Left - (rect.Width / 2);
+            Top = rect.Top;
+            Width = rect.Width * 2;
+            Height = rect.Height;            
         }
 
         private void ChangeGridThickness(bool isVisible)

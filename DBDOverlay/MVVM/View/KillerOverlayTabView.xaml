@@ -61,7 +61,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Margin="0,20,0,10"/>
-        <!--<Grid>
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.7*"/>
@@ -197,9 +197,9 @@
                            Checked="Calibration_Checked"
                            Unchecked="Calibration_Unchecked"/>
             </Grid>
-        </Grid>-->
+        </Grid>
 
-        <StackPanel Orientation="Horizontal"
+        <!--<StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <TextBlock Text="Threshold"
                        FontSize="16"
@@ -236,6 +236,6 @@
                     Height="30"
                     Margin="20,0,0,0"
                     Click="ResetThreshold_Click"/>
-        </StackPanel>
+        </StackPanel>-->
     </StackPanel>
 </UserControl>

@@ -5,12 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBDOverlay.Windows.Overlays"
         mc:Ignorable="d"
-        Title="KillerOverlay" Height="400" Width="200"
+        Title="Killer Overlay" Height="400" Width="200"
+        MouseLeftButtonDown="OverlayMouseDown"
+        MouseLeftButtonUp="OverlayMouseUp"
+        Cursor="Hand"
         WindowStyle="None"
         AllowsTransparency="True"
         ShowInTaskbar="False"
         Topmost="True"
         Background="Transparent">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="10"/>
+    </WindowChrome.WindowChrome>
 
     <Border x:Name="MainGridBorder"
             BorderBrush="White"

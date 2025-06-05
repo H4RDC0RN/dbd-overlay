@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Windows;
 using Path = System.IO.Path;
 
 namespace DBDOverlay.Core.Extensions
@@ -63,6 +64,12 @@ namespace DBDOverlay.Core.Extensions
         public static bool ToBool(this string str)
         {
             return str.Equals("1");
+        }
+
+        public static Rect ToRect(this string str)
+        {
+            var values = str.Split(',').Select(x => x.ToInt()).ToList();
+            return new Rect(values[0], values[1], values[2], values[3]);
         }
 
         public static string GetLast(this string str, int substringLenght)

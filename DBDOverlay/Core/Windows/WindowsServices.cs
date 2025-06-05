@@ -1,4 +1,5 @@
 ﻿using DBDOverlay.Core.Hotkeys;
+using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using System;
 using System.Diagnostics;
@@ -13,7 +14,8 @@ namespace DBDOverlay.Core.Windows
 {
     public class WindowsServices
     {
-        public event EventHandler<EventArgs> MoveModeOff;
+        public event EventHandler<EventArgs> MapOverlayMoveModeOff;
+        public event EventHandler<EventArgs> KillerOverlayMoveModeOff;
         private readonly WinEventDelegate winEventDelegate;
         private static WindowsServices instance;
 
@@ -25,7 +27,8 @@ namespace DBDOverlay.Core.Windows
         private readonly string dbdWindowName = "DeadByDaylight";
         private readonly string dbdProcessName = "DeadByDaylight-Win64-Shipping";
         private readonly string appWindowName = "DBD Overlay";
-        private readonly string overlayWindowName = "Map overlay";
+        private readonly string mapOverlayWindowName = "Map overlay";
+        private readonly string killerOverlayWindowName = "Killer Overlay";
 
         public WindowsServices()
         {
@@ -71,6 +74,7 @@ namespace DBDOverlay.Core.Windows
         {
             HandleHotkeys();
             HandleMapOverlayMoveMode();
+            HandleKillerOverlayMoveMode();
         }
 
         public bool IsDBDActiveWindow()
@@ -80,7 +84,9 @@ namespace DBDOverlay.Core.Windows
 
         public bool IsAppWindow()
         {
-            return GetActiveWindowTitle().Equals(appWindowName) || GetActiveWindowTitle().Equals(overlayWindowName);
+            return GetActiveWindowTitle().Equals(appWindowName) 
+                || GetActiveWindowTitle().Equals(mapOverlayWindowName)
+                || GetActiveWindowTitle().Equals(killerOverlayWindowName);
         }
 
         public int SetWindowExTransparent(Window window)
@@ -117,7 +123,15 @@ namespace DBDOverlay.Core.Windows
         {
             if (MapOverlayController.Instance.CanBeMoved && !IsAppWindow())
             {
-                MoveModeOff?.Invoke(this, new RoutedEventArgs());
+                MapOverlayMoveModeOff?.Invoke(this, new RoutedEventArgs());
+            }
+        }
+
+        private void HandleKillerOverlayMoveMode()
+        {
+            if (KillerOverlayController.Instance.CanBeMoved && !IsAppWindow())
+            {
+                KillerOverlayMoveModeOff?.Invoke(this, new RoutedEventArgs());
             }
         }
 

@@ -17,10 +17,8 @@ namespace DBDOverlay.Windows.Overlays
     {
         public int DefaultStyle { get; set; }
         public double DefaultRatio { get; private set; } = 1.1;
-        public int DefaultHeight { get; private set; } = 220;
-        public int DefaultWidth { get; private set; } = 200;
-        public int DefaultX { get; private set; } = 0;
-        public int DefaultY { get; private set; } = 0;
+        public Rect DefaultRect { get; set; } = new Rect(0, 0, 200, 220);
+        public Rect CurrentRect { get; set; }
 
         public MapOverlayWindow()
         {
@@ -37,16 +35,17 @@ namespace DBDOverlay.Windows.Overlays
 
         private void SetOverlaySettings()
         {
-            Height = Settings.Default.MapOverlayHeight;
-            Width = Settings.Default.MapOverlayWidth;
+            CurrentRect = Settings.Default.MapOverlayRect.ToRect();
+            Height = CurrentRect.Height;
+            Width = CurrentRect.Width;
             MinHeight = Height / 2;
             MinWidth = Width / 2;
             MaxHeight = Height * 3;
             MaxWidth = Width * 3;
 
             Opacity = Settings.Default.MapOverlayOpacity / 100.0;
-            Left = Settings.Default.MapOverlayX;
-            Top = Settings.Default.MapOverlayY;
+            Left = CurrentRect.X;
+            Top = CurrentRect.Y;
         }
 
         private void OverlayMouseDown(object sender, MouseButtonEventArgs e)
@@ -63,29 +62,29 @@ namespace DBDOverlay.Windows.Overlays
 
         public void SavePosition()
         {
-            Settings.Default.MapOverlayX = Left;
-            Settings.Default.MapOverlayY = Top;
+            CurrentRect = new Rect(Left, Top, CurrentRect.Width, CurrentRect.Height);
+            Settings.Default.MapOverlayRect = CurrentRect.ToString();
             Settings.Default.Save();
         }
 
         public void SaveSize()
         {
-            Settings.Default.MapOverlayHeight = Height;
-            Settings.Default.MapOverlayWidth = Width;
+            CurrentRect = new Rect(CurrentRect.X, CurrentRect.Y, Width, Height);
+            Settings.Default.MapOverlayRect = CurrentRect.ToString();
             Settings.Default.Save();
         }
 
         public void ResetPosition()
         {
-            Left = DefaultX;
-            Top = DefaultY;
+            Left = DefaultRect.X;
+            Top = DefaultRect.Y;
             SavePosition();
         }
 
         public void ResetSize()
         {
-            Height = DefaultHeight;
-            Width = DefaultWidth;
+            Height = DefaultRect.Height;
+            Width = DefaultRect.Width;
             SaveSize();
         }
 

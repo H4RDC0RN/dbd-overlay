@@ -13,6 +13,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
 {
     public class KillerOverlayController
     {
+        public bool CanBeMoved { get; set; } = false;
         public List<Survivor> Survivors = new List<Survivor>();
         private static KillerOverlayController instance;
         private static KillerOverlayWindow killerOverlay;

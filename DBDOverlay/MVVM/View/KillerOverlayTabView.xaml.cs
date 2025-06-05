@@ -2,9 +2,12 @@
 using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
+using DBDOverlay.Core.Windows;
 using DBDOverlay.Properties;
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace DBDOverlay.MVVM.View
 {
@@ -16,10 +19,15 @@ namespace DBDOverlay.MVVM.View
         public KillerOverlayTabView()
         {
             InitializeComponent();
+            KillerOverlayController.Overlay.HideHooks();
+            KillerOverlayController.Overlay.HideTimer();
             HooksToggleButton.IsChecked = KillerMode.Instance.IsActive && KillerMode.Instance.IsHookMode
                 ? true : HooksToggleButton.IsChecked = Settings.Default.IsHookMode;
             PostUnhookTimerToggleButton.IsChecked = KillerMode.Instance.IsActive && KillerMode.Instance.IsPostUnhookTimerMode
                 ? true : PostUnhookTimerToggleButton.IsChecked = Settings.Default.IsPostUnhookTimerMode;
+
+            if (KillerOverlayController.Instance.CanBeMoved) SelectAreaToggleButton.IsChecked = true;
+            WindowsServices.Instance.KillerOverlayMoveModeOff += HandleMoveModeOff;
 
             SetSliderValue(Settings.Default.HooksThreshold);
         }
@@ -72,16 +80,21 @@ namespace DBDOverlay.MVVM.View
         private void SelectArea_Checked(object sender, RoutedEventArgs e)
         {
             KillerOverlayController.Overlay.ShowGrid();
+            KillerOverlayController.Instance.CanBeMoved = true;
+            WindowsServices.Instance.RevertWindowExTransparent(KillerOverlayController.Overlay, KillerOverlayController.Overlay.DefaultStyle);
         }
 
         private void SelectArea_Unchecked(object sender, RoutedEventArgs e)
         {
             KillerOverlayController.Overlay.HideGrid();
+            KillerOverlayController.Overlay.DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(KillerOverlayController.Overlay);
+            KillerOverlayController.Instance.CanBeMoved = false;
+            KillerOverlayController.Overlay.SaveBounds();
         }
 
         private void ResetPosSize_Click(object sender, RoutedEventArgs e)
         {
-
+            KillerOverlayController.Overlay.ResetBounds();
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -93,6 +106,12 @@ namespace DBDOverlay.MVVM.View
         {
             SetThreshold(defaultHooksThreshold);
             SetSliderValue(defaultHooksThreshold);
+        }
+
+        private void HandleMoveModeOff(object sender, EventArgs e)
+        {
+            SelectAreaToggleButton.Uncheck();
+            KillerOverlayController.Overlay.SaveBounds();
         }
 
         private void Calibration_Checked(object sender, RoutedEventArgs e)

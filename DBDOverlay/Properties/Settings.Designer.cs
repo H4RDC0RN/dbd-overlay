@@ -37,30 +37,6 @@ namespace DBDOverlay.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double MapOverlayX {
-            get {
-                return ((double)(this["MapOverlayX"]));
-            }
-            set {
-                this["MapOverlayX"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double MapOverlayY {
-            get {
-                return ((double)(this["MapOverlayY"]));
-            }
-            set {
-                this["MapOverlayY"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("90")]
         public int MapOverlayOpacity {
             get {
@@ -229,30 +205,6 @@ namespace DBDOverlay.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("200")]
-        public double MapOverlayWidth {
-            get {
-                return ((double)(this["MapOverlayWidth"]));
-            }
-            set {
-                this["MapOverlayWidth"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("220")]
-        public double MapOverlayHeight {
-            get {
-                return ((double)(this["MapOverlayHeight"]));
-            }
-            set {
-                this["MapOverlayHeight"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ReshadeIniPath {
             get {
@@ -320,6 +272,30 @@ namespace DBDOverlay.Properties {
             }
             set {
                 this["HooksThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0,0,200,220")]
+        public string MapOverlayRect {
+            get {
+                return ((string)(this["MapOverlayRect"]));
+            }
+            set {
+                this["MapOverlayRect"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string KillerOverlayRect {
+            get {
+                return ((string)(this["KillerOverlayRect"]));
+            }
+            set {
+                this["KillerOverlayRect"] = value;
             }
         }
     }
