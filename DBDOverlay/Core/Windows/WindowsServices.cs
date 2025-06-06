@@ -26,6 +26,7 @@ namespace DBDOverlay.Core.Windows
 
         private readonly string dbdWindowName = "DeadByDaylight";
         private readonly string dbdProcessName = "DeadByDaylight-Win64-Shipping";
+        private readonly string appProcessName = "DBDOverlay";
         private readonly string appWindowName = "DBD Overlay";
         private readonly string mapOverlayWindowName = "Map overlay";
         private readonly string killerOverlayWindowName = "Killer Overlay";
@@ -84,7 +85,7 @@ namespace DBDOverlay.Core.Windows
 
         public bool IsAppWindow()
         {
-            return GetActiveWindowTitle().Equals(appWindowName) 
+            return GetActiveWindowTitle().Equals(appWindowName)
                 || GetActiveWindowTitle().Equals(mapOverlayWindowName)
                 || GetActiveWindowTitle().Equals(killerOverlayWindowName);
         }
@@ -111,6 +112,13 @@ namespace DBDOverlay.Core.Windows
                 if (SetForegroundWindow((int)dbdProcess.MainWindowHandle)) break;
             }
             SendKeys.SendWait(key);
+        }
+
+        public void CloseRedundantProcesses()
+        {
+            var processes = Process.GetProcessesByName(appProcessName).OrderBy(x => x.StartTime).ToList();
+            processes.RemoveAt(processes.Count - 1);
+            processes.ForEach(x => x.Kill());
         }
 
         private void HandleHotkeys()

@@ -7,6 +7,7 @@ using DBDOverlay.Core.Hotkeys;
 using DBDOverlay.MVVM.ViewModel;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
+using DBDOverlay.Core.Windows;
 
 namespace DBDOverlay.Windows
 {
@@ -68,6 +69,7 @@ namespace DBDOverlay.Windows
             MapOverlayController.Overlay.Close();
             KillerOverlayController.Overlay.Close();
             Close();
+            WindowsServices.Instance.CloseRedundantProcesses();
             Application.Current.Shutdown();
         }
 
