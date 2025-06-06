@@ -22,6 +22,7 @@ namespace DBDOverlay.Core.ImageProcessing
 {
     public class ImageReader
     {
+        public event EventHandler<UpdateImageEventArgs> UpdatinghooksImage;
         private int width;
         private int height;
         private readonly double maxScaleManual = 3;
@@ -119,6 +120,7 @@ namespace DBDOverlay.Core.ImageProcessing
             int survCount = 4;
             //var bitmap = new Bitmap(@"D:\survivorsSS.png");
             var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: hooksThreshold, imageName: saveImages ? "survivors_area" : null);
+            if (saveImages) UpdatinghooksImage?.Invoke(this, new UpdateImageEventArgs(bitmap));
 
             var width = bitmap.Width;
             var height = bitmap.Height / survCount;
@@ -140,7 +142,7 @@ namespace DBDOverlay.Core.ImageProcessing
                 //hookedHuge.Save(FileSystem.GetImagePath($"survivorOPA"), ImageFormat.Png);
                 //var hookComparison = piece.Compare(hookedHuge);
 
-                if (!piece.Width.Equals(hooked.Width)) piece = piece.Resize(hooked.Width, hooked.Height).ToBlackWhite(400);
+                if (!piece.Width.Equals(hooked.Width)) piece = piece.Resize(hooked.Width, hooked.Height).ToBlackWhite(hooksThreshold);
                 var hookComparison = Math.Max(Math.Max(piece.Compare(hooked), piece.Compare(SurvivorStates.Hooked2)), piece.Compare(SurvivorStates.Hooked3));
 
                 if (saveImages)

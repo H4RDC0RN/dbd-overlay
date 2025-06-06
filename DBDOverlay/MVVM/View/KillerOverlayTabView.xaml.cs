@@ -7,7 +7,6 @@ using DBDOverlay.Properties;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace DBDOverlay.MVVM.View
 {
@@ -28,6 +27,7 @@ namespace DBDOverlay.MVVM.View
 
             if (KillerOverlayController.Instance.CanBeMoved) SelectAreaToggleButton.IsChecked = true;
             WindowsServices.Instance.KillerOverlayMoveModeOff += HandleMoveModeOff;
+            ImageReader.Instance.UpdatinghooksImage += UpdateHooksImage;
 
             SetSliderValue(Settings.Default.HooksThreshold);
         }
@@ -134,6 +134,12 @@ namespace DBDOverlay.MVVM.View
         private void SetSliderValue(int threshold)
         {
             ThresholdSlider.Value = (threshold * 100.0 / RGBSum).Round();
+        }
+
+        private void UpdateHooksImage(object sender, UpdateImageEventArgs e)
+        {
+           //if (SurvivorsAreaImage.IsVisible) 
+                SurvivorsAreaImage.Source = e.Image.ToBitmapImage();
         }
     }
 }

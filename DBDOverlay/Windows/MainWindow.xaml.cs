@@ -62,6 +62,11 @@ namespace DBDOverlay.Windows
             ViewContent.Content = aboutTabVM;
         }
 
+        private void MinButtonClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
             Logger.Info("---Close Application---");
@@ -71,11 +76,6 @@ namespace DBDOverlay.Windows
             Close();
             WindowsServices.Instance.CloseRedundantProcesses();
             Application.Current.Shutdown();
-        }
-
-        private void MinButtonClick(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
         }
     }
 }

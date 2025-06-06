@@ -7,6 +7,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace DBDOverlay.Windows.Overlays
 {
@@ -91,11 +92,13 @@ namespace DBDOverlay.Windows.Overlays
         public void ShowGrid()
         {
             ChangeGridThickness(true);
+            Background = new SolidColorBrush(Color.FromArgb(0x1A, 64, 69, 70));
         }
 
         public void HideGrid()
         {
             ChangeGridThickness(false);
+            Background = Brushes.Transparent;
         }
 
         public void SaveBounds()
@@ -135,7 +138,7 @@ namespace DBDOverlay.Windows.Overlays
             Left = rect.Left - (rect.Width / 2);
             Top = rect.Top;
             Width = rect.Width * 2;
-            Height = rect.Height;            
+            Height = rect.Height;
         }
 
         private void ChangeGridThickness(bool isVisible)
