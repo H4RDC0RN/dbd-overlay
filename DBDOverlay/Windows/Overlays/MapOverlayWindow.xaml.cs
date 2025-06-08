@@ -17,8 +17,8 @@ namespace DBDOverlay.Windows.Overlays
     {
         public int DefaultStyle { get; set; }
         public double DefaultRatio { get; private set; } = 1.1;
-        public Rect DefaultRect { get; set; } = new Rect(0, 0, 200, 220);
-        public Rect CurrentRect { get; set; }
+        public Rectangle DefaultRect { get; set; } = new Rectangle(0, 0, 200, 220);
+        public Rectangle CurrentRect { get; set; }
 
         public MapOverlayWindow()
         {
@@ -62,15 +62,15 @@ namespace DBDOverlay.Windows.Overlays
 
         public void SavePosition()
         {
-            CurrentRect = new Rect(Left, Top, CurrentRect.Width, CurrentRect.Height);
-            Settings.Default.MapOverlayRect = CurrentRect.ToString();
+            CurrentRect = new Rectangle(Left.Round(), Top.Round(), CurrentRect.Width, CurrentRect.Height);
+            Settings.Default.MapOverlayRect = $"{CurrentRect.X},{CurrentRect.Y},{CurrentRect.Width},{CurrentRect.Height}";
             Settings.Default.Save();
         }
 
         public void SaveSize()
         {
-            CurrentRect = new Rect(CurrentRect.X, CurrentRect.Y, Width, Height);
-            Settings.Default.MapOverlayRect = CurrentRect.ToString();
+            CurrentRect = new Rectangle(CurrentRect.X, CurrentRect.Y, Width.Round(), Height.Round());
+            Settings.Default.MapOverlayRect = $"{CurrentRect.X},{CurrentRect.Y},{CurrentRect.Width},{CurrentRect.Height}";
             Settings.Default.Save();
         }
 

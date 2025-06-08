@@ -89,8 +89,6 @@ namespace DBDOverlay.MVVM.View
         private void HandleMoveModeOff(object sender, EventArgs e)
         {
             ReToggleButton.Uncheck();
-            MapOverlayController.Overlay.SaveSize();
-            MapOverlayController.Overlay.SavePosition();
         }
 
         private void ResetPosition_Click(object sender, RoutedEventArgs e)

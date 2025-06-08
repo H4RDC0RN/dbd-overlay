@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -66,10 +67,10 @@ namespace DBDOverlay.Core.Extensions
             return str.Equals("1");
         }
 
-        public static Rect ToRect(this string str)
+        public static Rectangle ToRect(this string str)
         {
             var values = str.Split(',').Select(x => x.ToInt()).ToList();
-            return new Rect(values[0], values[1], values[2], values[3]);
+            return new Rectangle(values[0], values[1], values[2], values[3]);
         }
 
         public static string GetLast(this string str, int substringLenght)

@@ -111,7 +111,6 @@ namespace DBDOverlay.MVVM.View
         private void HandleMoveModeOff(object sender, EventArgs e)
         {
             SelectAreaToggleButton.Uncheck();
-            KillerOverlayController.Overlay.SaveBounds();
         }
 
         private void Calibration_Checked(object sender, RoutedEventArgs e)
@@ -138,8 +137,7 @@ namespace DBDOverlay.MVVM.View
 
         private void UpdateHooksImage(object sender, UpdateImageEventArgs e)
         {
-           //if (SurvivorsAreaImage.IsVisible) 
-                SurvivorsAreaImage.Source = e.Image.ToBitmapImage();
+            SurvivorsAreaImage.Source = e.Image.ToBitmapImage();
         }
     }
 }

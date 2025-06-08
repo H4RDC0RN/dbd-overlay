@@ -119,7 +119,7 @@ namespace DBDOverlay.Core.ImageProcessing
             var watch = Stopwatch.StartNew();
             int survCount = 4;
             //var bitmap = new Bitmap(@"D:\survivorsSS.png");
-            var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: hooksThreshold, imageName: saveImages ? "survivors_area" : null);
+            var bitmap = CreateFromScreenArea(GetSurvivorsRect(), false).PreProcess(threshold: hooksThreshold, imageName: saveImages ? "survivors_area" : null);
             if (saveImages) UpdatinghooksImage?.Invoke(this, new UpdateImageEventArgs(bitmap));
 
             var width = bitmap.Width;
@@ -269,6 +269,11 @@ namespace DBDOverlay.Core.ImageProcessing
         private Bitmap CreateFromScreenArea(RectType rectType, bool save = true)
         {
             var rect = GetRect(rectType);
+            return CreateFromScreenArea(rect, save);
+        }
+
+        private Bitmap CreateFromScreenArea(Rectangle rect, bool save = true)
+        {
             var bitmap = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppRgb);
             var graphics = Graphics.FromImage(bitmap);
             graphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
@@ -294,6 +299,12 @@ namespace DBDOverlay.Core.ImageProcessing
                 case RectType.State: return new RectMultiplier(0.32, 0.25, 0.31, 0.5);
                 default: return null;
             }
+        }
+
+        private Rectangle GetSurvivorsRect()
+        {
+            var rect = KillerOverlayController.Overlay.CurrentRect;
+            return rect != null ? new Rectangle((rect.X + rect.Width * 0.25).Round(), rect.Y, (rect.Width * 0.4).Round(), rect.Height) : GetRect(RectType.Survivors);
         }
 
         private void RecognizeText(Bitmap bitmap, bool log = true)

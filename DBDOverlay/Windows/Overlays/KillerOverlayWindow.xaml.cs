@@ -4,17 +4,20 @@ using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.Windows;
 using DBDOverlay.Properties;
 using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Brushes = System.Windows.Media.Brushes;
+using Color = System.Windows.Media.Color;
 
 namespace DBDOverlay.Windows.Overlays
 {
     public partial class KillerOverlayWindow : Window
     {
         public int DefaultStyle { get; set; }
-        public Rect CurrentRect { get; set; }
+        public Rectangle CurrentRect { get; set; }
 
         public KillerOverlayWindow()
         {
@@ -103,16 +106,16 @@ namespace DBDOverlay.Windows.Overlays
 
         public void SaveBounds()
         {
-            CurrentRect = new Rect(CurrentRect.X, CurrentRect.Y, CurrentRect.Width, CurrentRect.Height);
-            Settings.Default.MapOverlayRect = CurrentRect.ToString();
+            CurrentRect = new Rectangle(Left.Round(), Top.Round(), Width.Round(), Height.Round());
+            Settings.Default.KillerOverlayRect = $"{CurrentRect.X},{CurrentRect.Y},{CurrentRect.Width},{CurrentRect.Height}";
             Settings.Default.Save();
         }
 
         public void ResetBounds()
         {
             SetDefaultBounds();
-            CurrentRect = new Rect(Left, Top, Width, Height);
-            Settings.Default.MapOverlayRect = CurrentRect.ToString();
+            CurrentRect = new Rectangle(Left.Round(), Top.Round(), Width.Round(), Height.Round());
+            Settings.Default.KillerOverlayRect = $"{CurrentRect.X},{CurrentRect.Y},{CurrentRect.Width},{CurrentRect.Height}";
             Settings.Default.Save();
         }
 

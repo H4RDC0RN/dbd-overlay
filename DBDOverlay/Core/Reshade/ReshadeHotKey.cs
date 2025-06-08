@@ -24,7 +24,9 @@ namespace DBDOverlay.Core.Reshade
         {
             var key = $"{(Ctrl ? "^" : string.Empty)}{(Shift ? "+" : string.Empty)}{(Alt ? "%" : string.Empty)}{Key.ToStringKey()}";
             WindowsServices.Instance.Send(key);
-            Logger.Info($"'{key}' key is pressed ({Key})");
+
+            var modifier = $"{(Ctrl ? "Ctrl + " : string.Empty)}{(Shift ? "Shift + " : string.Empty)}{(Alt ? "Alt + " : string.Empty)}";
+            Logger.Info($"'{key}' key is pressed ({modifier}{Key})");
         }
     }
 }
