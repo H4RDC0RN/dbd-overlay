@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBDOverlay"
         mc:Ignorable="d"
-        Title="Map overlay"
+        Title="Map Overlay"
         MouseLeftButtonDown="OverlayMouseDown"
         MouseLeftButtonUp="OverlayMouseUp"
         Cursor="Hand"

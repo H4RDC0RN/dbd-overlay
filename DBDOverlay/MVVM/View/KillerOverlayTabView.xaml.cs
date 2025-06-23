@@ -5,6 +5,7 @@ using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.Windows;
 using DBDOverlay.Properties;
 using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,6 +15,7 @@ namespace DBDOverlay.MVVM.View
     {
         private readonly int RGBSum = 765;
         private readonly int defaultHooksThreshold = 600;
+        private Bitmap currentImage;
 
         public KillerOverlayTabView()
         {
@@ -99,7 +101,9 @@ namespace DBDOverlay.MVVM.View
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            SetThreshold((ThresholdSlider.Value * RGBSum / 100).Round());
+            var threshold = (ThresholdSlider.Value * RGBSum / 100).Round();
+            SetThreshold(threshold);
+            if (currentImage != null) UpdateImageSource(threshold);
         }
 
         private void ResetThreshold_Click(object sender, RoutedEventArgs e)
@@ -137,7 +141,13 @@ namespace DBDOverlay.MVVM.View
 
         private void UpdateHooksImage(object sender, UpdateImageEventArgs e)
         {
-            SurvivorsAreaImage.Source = e.Image.ToBitmapImage();
+            currentImage = new Bitmap(e.Image);
+            UpdateImageSource(e.Threshold);
+        }
+
+        private void UpdateImageSource(int threshold)
+        {
+            SurvivorsAreaImage.Source = new Bitmap(currentImage).PreProcess(threshold: threshold).ToBitmapImage();
         }
     }
 }
