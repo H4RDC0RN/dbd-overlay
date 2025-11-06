@@ -6,6 +6,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
     {
         public bool IsHookMode { get; set; } = false;
         public bool IsPostUnhookTimerMode { get; set; } = false;
+        public bool IsCalibrationMode { get; set; } = false;
 
         private static KillerMode instance;
 
@@ -21,7 +22,14 @@ namespace DBDOverlay.Core.BackgroundProcesses
 
         protected override void Action()
         {
-            ImageReader.Instance.HandleSurvivors();
+            if (IsCalibrationMode)
+            {
+                ImageReader.Instance.HandleSurvivorsSmart();
+            }
+            else
+            {
+                ImageReader.Instance.HandleSurvivors();
+            }
         }
     }
 }

@@ -77,6 +77,7 @@
                 <Image x:Name="SurvivorsAreaImage"
                        Source="E:\VSSpace\DBDUtilityOverlay\DBDOverlay\bin\Debug\net48\Images\survivors_area.png"
                        HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
                        Width="70"
                        Margin="10,5,0,0"/>
             </StackPanel>

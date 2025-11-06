@@ -57,6 +57,7 @@ namespace DBDOverlay.Core.Hotkeys
         {
             e.Log("Save images");
             ImageReader.Instance.IsMatchFinished(true);
+            //ImageReader.Instance.HandleSurvivorsSmart(true);
             ImageReader.Instance.HandleSurvivors(true);
         }
     }

@@ -119,12 +119,12 @@ namespace DBDOverlay.MVVM.View
 
         private void Calibration_Checked(object sender, RoutedEventArgs e)
         {
-
+            KillerMode.Instance.IsCalibrationMode = true;
         }
 
         private void Calibration_Unchecked(object sender, RoutedEventArgs e)
         {
-
+            KillerMode.Instance.IsCalibrationMode = false;
         }
 
         private void SetThreshold(int threshold)

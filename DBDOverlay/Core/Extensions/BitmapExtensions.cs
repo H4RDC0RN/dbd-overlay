@@ -1,4 +1,5 @@
-﻿using DBDOverlay.Core.Utils;
+﻿using DBDOverlay.Core.ImageProcessing;
+using DBDOverlay.Core.Utils;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -104,33 +105,41 @@ namespace DBDOverlay.Core.Extensions
             return equality.Round(2);
         }
 
-        public static double Find(this Bitmap bitmap, Bitmap bitmapToFind, int thresholdValue = 400)
+        public static HookData Find(this Bitmap bitmap, Bitmap bitmapToFind, int thresholdValue = 400)
         {
             var full = bitmap.ToHashMap(thresholdValue);
             var toFind = bitmapToFind.ToHashMap(thresholdValue);
-            var width = toFind.GetLength(1);
-            var height = toFind.GetLength(0);
+            var width = toFind.GetLength(0);
+            var height = toFind.GetLength(1);
             var truePixCount = (double)toFind.Cast<bool>().Where(x => x).ToList().Count;
 
             double maxEquality = 0.0;
-            for (int yShift = 0; yShift < bitmap.Height - bitmapToFind.Height; yShift++)
+            int maxEy = 0;
+            int maxEx = 0;
+            for (int xShift = 0; xShift < bitmap.Height - bitmapToFind.Height; xShift++)
             {
-                for (int xShift = 0; xShift < bitmap.Width - bitmapToFind.Width; xShift++)
+                for (int yShift = 0; yShift < bitmap.Width - bitmapToFind.Width; yShift++)
                 {
                     int equals = 0;
-                    for (int y = 0; y < width; y++)
+                    for (int x = 0; x < height; x++)
                     {
-                        for (int x = 0; x < height; x++)
+                        for (int y = 0; y < width; y++)
                         {
-                            //if (toFind[x, y] && full[x + xShift, y + yShift] == toFind[x, y]) equals++;
-                            if (full[x + xShift, y + yShift] == toFind[x, y]) equals++;
+                            //if (toFind[y, x] && full[y + yShift, x + xShift] == toFind[y, x]) equals++;
+                            if (full[y + yShift, x + xShift] == toFind[y, x]) equals++;
                         }
                     }
                     var equality = equals / (double)toFind.Length;
-                    if (equality > maxEquality) maxEquality = equality;
+                    //var equality = equals / truePixCount;
+                    if (equality > maxEquality)
+                    {
+                        maxEy = yShift;
+                        maxEx = xShift;
+                        maxEquality = equality;
+                    }
                 }
             }
-            return maxEquality.Round(2);
+            return new HookData(maxEx, maxEy, width, height, maxEquality.Round(2));
         }
 
         private static List<bool> ToHashList(this Bitmap bitmap, int thresholdValue = 400)

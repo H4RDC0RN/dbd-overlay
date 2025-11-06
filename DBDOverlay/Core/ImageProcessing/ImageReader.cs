@@ -4,7 +4,6 @@ using DBDOverlay.Images.SurvivorStates;
 using DBDOverlay.Properties;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Tesseract;
@@ -36,6 +35,7 @@ namespace DBDOverlay.Core.ImageProcessing
         private readonly int gearThreshold = 400;
         private string text = string.Empty;
         private int hooksThreshold;
+        private int hookImageWidth;
 
         private TesseractEngine engine;
         private static ImageReader instance;
@@ -119,7 +119,7 @@ namespace DBDOverlay.Core.ImageProcessing
             var watch = Stopwatch.StartNew();
             int survCount = 4;
             //var bitmap = new Bitmap(@"D:\survivorsSS.png");
-            var initBitmap = CreateFromScreenArea(GetSurvivorsRect(), false);         
+            var initBitmap = CreateFromScreenArea(GetSurvivorsRect(), false);
             if (saveImages) UpdatinghooksImage?.Invoke(this, new UpdateImageEventArgs(initBitmap, hooksThreshold));
             var bitmap = initBitmap.PreProcess(threshold: hooksThreshold, imageName: saveImages ? "survivors_area" : null);
 
@@ -129,7 +129,6 @@ namespace DBDOverlay.Core.ImageProcessing
             var srcRect = GetRect(statusRectMulti, width, height);
             var destRect = GetRect(new RectMultiplier(0, 0, statusRectMulti.Width, statusRectMulti.Height), width, height);
             var hooked = SurvivorStates.Hooked;
-            //var hookedHuge = new Bitmap(@"D:\survivorhuge.png");
 
             for (int i = 0; i < survCount; i++)
             {
@@ -138,10 +137,6 @@ namespace DBDOverlay.Core.ImageProcessing
                 {
                     graphics.DrawImage(bitmap, destRect, srcRect, GraphicsUnit.Pixel);
                 }
-
-                //if (!piece.Width.Equals(hookedHuge.Width)) hookedHuge = hookedHuge.Resize(piece.Width, piece.Height).ToBlackWhite(400);
-                //hookedHuge.Save(FileSystem.GetImagePath($"survivorOPA"), ImageFormat.Png);
-                //var hookComparison = piece.Compare(hookedHuge);
 
                 if (!piece.Width.Equals(hooked.Width)) piece = piece.Resize(hooked.Width, hooked.Height).ToBlackWhite(hooksThreshold);
                 var hookComparison = Math.Max(Math.Max(piece.Compare(hooked), piece.Compare(SurvivorStates.Hooked2)), piece.Compare(SurvivorStates.Hooked3));
@@ -171,20 +166,26 @@ namespace DBDOverlay.Core.ImageProcessing
 
         public void HandleSurvivorsSmart(bool saveImages = false)
         {
+            //hookImageWidth = 24;
             var watch = Stopwatch.StartNew();
             int survCount = 4;
             //var bitmap = new Bitmap(@"D:\survivorsSS.png");
-            var bitmap = CreateFromScreenArea(RectType.Survivors, false).PreProcess(threshold: hooksThreshold, imageName: saveImages ? "survivors_area" : null);
-            if (saveImages) bitmap.Save(FileSystem.GetImagePath($"survivors_area"), ImageFormat.Png);
+
+            var initBitmap = CreateFromScreenArea(GetSurvivorsRect(), false);
+            if (saveImages) UpdatinghooksImage?.Invoke(this, new UpdateImageEventArgs(initBitmap, hooksThreshold));
+            var bitmap = initBitmap.PreProcess(threshold: hooksThreshold, imageName: saveImages ? "survivors_area" : null);
 
             var width = bitmap.Width;
             var height = bitmap.Height / survCount;
             var rect = new Rectangle(0, 0, width, height);
-            var hooked = SurvivorStates.Hooked;
+            //var hooked = SurvivorStates.Hooked;
             //var hookedHuge = new Bitmap(@"D:\survivorhuge.png");
 
             for (int i = 0; i < survCount; i++)
             {
+                var hooked = SurvivorStates.Hooked;
+                if (hookImageWidth != 0) hooked = hooked.Resize(hookImageWidth, SurvivorStates.Hooked.Height - (SurvivorStates.Hooked.Width - hookImageWidth));
+
                 var piece = new Bitmap(rect.Width, rect.Height);
                 using (Graphics graphics = Graphics.FromImage(piece))
                 {
@@ -196,7 +197,49 @@ namespace DBDOverlay.Core.ImageProcessing
                 //if (!srcRect.Width.Equals(hookedHuge.Width)) hookedHuge = hookedHuge.Resize(srcRect.Width, srcRect.Height).ToBlackWhite(400);
                 //hookedHuge.Save(FileSystem.GetImagePath($"survivorOPA"), ImageFormat.Png);
 
-                var hookComparison = piece.Find(hooked);
+                double hookComparison = 0.0;
+
+                //if (saveImages)
+                //{
+                //    HookData hookDataFound = null;
+                //    while (hooked.Width > 10)
+                //    {
+                //        hooked = new Bitmap(SurvivorStates.Hooked).Resize(hooked.Width - 1, hooked.Height - 1).ToBlackWhite(hooksThreshold);
+                //        var hookData = piece.Find(hooked);
+                //        if (hookData.Equality > hookComparison)
+                //        {
+                //            hookComparison = hookData.Equality;
+                //            if (hooked.Width > hookImageWidth) hookImageWidth = hooked.Width;
+                //            hookDataFound = hookData;
+                //        }
+                //    }
+
+                //    if (hookDataFound != null)
+                //    {
+                //        var srcRect = new Rectangle(hookDataFound.X, hookDataFound.Y, hookDataFound.Width, hookDataFound.Height);
+                //        var destRect = new Rectangle(0, 0, hookDataFound.Width, hookDataFound.Height);
+
+                //        var pieceFound = new Bitmap(destRect.Width, destRect.Height);
+                //        using (Graphics graphics = Graphics.FromImage(pieceFound))
+                //        {
+                //            graphics.DrawImage(piece, destRect, srcRect, GraphicsUnit.Pixel);
+                //        }
+
+                //        pieceFound.Save(FileSystem.GetImagePath($"survivor_{i}_hooked_found"), ImageFormat.Png);
+                //    }
+
+                //    var hookedForSave = SurvivorStates.Hooked;
+                //    hookedForSave.Resize(hooked.Width, SurvivorStates.Hooked.Height - (SurvivorStates.Hooked.Width - hooked.Width)).ToBlackWhite(hooksThreshold)
+                //        .Save(FileSystem.GetImagePath($"survivor_{i}_hooked_model"), ImageFormat.Png);
+                //    Logger.Info($"--- Survivor {i} Hook Image Width {hooked.Width}");
+                //}
+                //else
+                //{
+                //    hookComparison = piece.Find(hooked).Equality;
+                //}
+
+                hookComparison = piece.Find(hooked).Equality;
+
                 if (saveImages)
                 {
                     piece.Save(FileSystem.GetImagePath($"survivor_{i}"), ImageFormat.Png);
@@ -207,9 +250,9 @@ namespace DBDOverlay.Core.ImageProcessing
 
                 var refreshStates = new Dictionary<string, double>
                     {
-                        { "Sacrificed", piece.Find(SurvivorStates.Sacrificed) },
-                        { "Escaped", piece.Find(SurvivorStates.Escaped) },
-                        { "Dead", piece.Find(SurvivorStates.Dead) }
+                        { "Sacrificed", piece.Find(SurvivorStates.Sacrificed).Equality },
+                        { "Escaped", piece.Find(SurvivorStates.Escaped).Equality },
+                        { "Dead", piece.Find(SurvivorStates.Dead).Equality }
                     };
 
                 KillerOverlayController.Instance.CheckIfRefreshed(i, refreshStates);
@@ -337,7 +380,7 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             return autoMode
                 ? text.Length > 5 && text.ContainsRegex(@"\w")
-                : text.Length > 5 && text.Contains('\n') && text.ContainsRegex(" - ");
+                : text.Length > 5 && text.Contains("\n") && text.ContainsRegex(" - ");
         }
 
         private MapInfo ConvertTextToMapInfo(bool autoMode = false, bool log = true)
