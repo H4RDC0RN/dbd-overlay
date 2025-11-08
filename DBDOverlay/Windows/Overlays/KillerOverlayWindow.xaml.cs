@@ -1,4 +1,5 @@
-﻿using DBDOverlay.Core.Extensions;
+﻿using DBDOverlay.Core.BackgroundProcesses;
+using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.Windows;
@@ -48,10 +49,14 @@ namespace DBDOverlay.Windows.Overlays
         {
             switch (survivor)
             {
-                case SurvivorNumber.First: return SurvivorHooks_1;
-                case SurvivorNumber.Second: return SurvivorHooks_2;
-                case SurvivorNumber.Third: return SurvivorHooks_3;
-                case SurvivorNumber.Fourth: return SurvivorHooks_4;
+                case SurvivorNumber.N1: return SurvivorHooks_1;
+                case SurvivorNumber.N2: return SurvivorHooks_2;
+                case SurvivorNumber.N3: return SurvivorHooks_3;
+                case SurvivorNumber.N4: return SurvivorHooks_4;
+                case SurvivorNumber.N5: return SurvivorHooks_5;
+                case SurvivorNumber.N6: return SurvivorHooks_6;
+                case SurvivorNumber.N7: return SurvivorHooks_7;
+                case SurvivorNumber.N8: return SurvivorHooks_8;
                 default: return null;
             }
         }
@@ -60,10 +65,14 @@ namespace DBDOverlay.Windows.Overlays
         {
             switch (survivor)
             {
-                case SurvivorNumber.First: return SurvivorTimer_1;
-                case SurvivorNumber.Second: return SurvivorTimer_2;
-                case SurvivorNumber.Third: return SurvivorTimer_3;
-                case SurvivorNumber.Fourth: return SurvivorTimer_4;
+                case SurvivorNumber.N1: return SurvivorTimer_1;
+                case SurvivorNumber.N2: return SurvivorTimer_2;
+                case SurvivorNumber.N3: return SurvivorTimer_3;
+                case SurvivorNumber.N4: return SurvivorTimer_4;
+                case SurvivorNumber.N5: return SurvivorTimer_5;
+                case SurvivorNumber.N6: return SurvivorTimer_6;
+                case SurvivorNumber.N7: return SurvivorTimer_7;
+                case SurvivorNumber.N8: return SurvivorTimer_8;
                 default: return null;
             }
         }
@@ -90,6 +99,32 @@ namespace DBDOverlay.Windows.Overlays
         {
             SetTimerVisibility(Visibility.Hidden);
             if (!HooksGrid.IsVisible) Hide();
+        }
+
+        public void ShowMoreSurvivors()
+        {
+            var autoValue = (GridLength)new GridLengthConverter().ConvertFrom("*");
+            for (int i = 4; i < 8; i++)
+            {
+                PostUnhookTimerGrid.RowDefinitions[i].Height = autoValue;
+                HooksGrid.RowDefinitions[i].Height = autoValue;
+                SurvivorsAreaGrid.RowDefinitions[i].Height = autoValue;
+            }
+            SetBounds(true);
+            KillerOverlayController.Instance.ResetSurvivors(true);
+        }
+
+        public void HideMoreSurvivors()
+        {
+            var zeroValue = (GridLength)new GridLengthConverter().ConvertFrom("0");
+            for (int i = 4; i < 8; i++)
+            {
+                PostUnhookTimerGrid.RowDefinitions[i].Height = zeroValue;
+                HooksGrid.RowDefinitions[i].Height = zeroValue;
+                SurvivorsAreaGrid.RowDefinitions[i].Height = zeroValue;
+            }
+            SetBounds();
+            KillerOverlayController.Instance.ResetSurvivors();
         }
 
         public void ShowGrid()
@@ -119,11 +154,12 @@ namespace DBDOverlay.Windows.Overlays
             Settings.Default.Save();
         }
 
-        private void SetBounds()
+        private void SetBounds(bool is2v8Mode = false)
         {
-            if (Settings.Default.KillerOverlayRect != string.Empty)
+            var overlayRect = is2v8Mode ? Settings.Default.Killer2v8OverlayRect : Settings.Default.KillerOverlayRect;
+            if (overlayRect != string.Empty)
             {
-                CurrentRect = Settings.Default.KillerOverlayRect.ToRect();
+                CurrentRect = overlayRect.ToRect();
                 Height = CurrentRect.Height;
                 Width = CurrentRect.Width;
                 Left = CurrentRect.X;
@@ -131,17 +167,19 @@ namespace DBDOverlay.Windows.Overlays
             }
             else
             {
-                SetDefaultBounds();
+                SetDefaultBounds(is2v8Mode);
             }
         }
 
-        private void SetDefaultBounds()
+        private void SetDefaultBounds(bool is2v8Mode = false)
         {
-            var rect = ImageReader.Instance.GetRect(RectType.Survivors, SystemParameters.PrimaryScreenWidth.Round(), SystemParameters.PrimaryScreenHeight.Round());
+            var rectType = is2v8Mode ? RectType.Survivors2v8 : RectType.Survivors;
+            var rect = ImageReader.Instance.GetRect(rectType, SystemParameters.PrimaryScreenWidth.Round(), SystemParameters.PrimaryScreenHeight.Round());
             Left = rect.Left - (rect.Width / 2);
             Top = rect.Top;
             Width = rect.Width * 2;
             Height = rect.Height;
+            CurrentRect = new Rectangle((int)Left, (int)Top, (int)Width, (int)Height);
         }
 
         private void ChangeGridThickness(bool isVisible)
@@ -151,6 +189,15 @@ namespace DBDOverlay.Windows.Overlays
             Survivor2.BorderThickness = new Thickness(i, 0, i, i);
             Survivor3.BorderThickness = new Thickness(i, 0, i, i);
             Survivor4.BorderThickness = new Thickness(i, 0, i, i);
+
+            if (KillerMode.Instance.Is2v8Mode)
+            {
+                Survivor5.BorderThickness = new Thickness(i, 0, i, i);
+                Survivor6.BorderThickness = new Thickness(i, 0, i, i);
+                Survivor7.BorderThickness = new Thickness(i, 0, i, i);
+                Survivor8.BorderThickness = new Thickness(i, 0, i, i);
+            }
+
             MainGridBorder.BorderThickness = new Thickness(i, i, i, i);
             MainGrid.Margin = new Thickness(-i, -i, -i, -i);
         }

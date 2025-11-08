@@ -1,4 +1,5 @@
-﻿using DBDOverlay.Core.ImageProcessing;
+﻿using DBDOverlay.Core.BackgroundProcesses;
+using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Properties;
 using System.Windows.Forms;
@@ -57,7 +58,7 @@ namespace DBDOverlay.Core.Hotkeys
         {
             e.Log("Save images");
             ImageReader.Instance.IsMatchFinished(true);
-            ImageReader.Instance.HandleSurvivors(true);
+            ImageReader.Instance.HandleSurvivors(KillerMode.Instance.Is2v8Mode, true);
         }
     }
 }

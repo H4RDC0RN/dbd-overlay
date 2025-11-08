@@ -6,6 +6,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
     {
         public bool IsHookMode { get; set; } = false;
         public bool IsPostUnhookTimerMode { get; set; } = false;
+        public bool Is2v8Mode { get; set; } = false;
 
         private static KillerMode instance;
 
@@ -21,7 +22,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
 
         protected override void Action()
         {
-            ImageReader.Instance.HandleSurvivors();
+            ImageReader.Instance.HandleSurvivors(Is2v8Mode);
         }
     }
 }

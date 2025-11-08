@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Application = System.Windows.Application;
 
@@ -17,10 +18,12 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
         public List<Survivor> Survivors = new List<Survivor>();
         private static KillerOverlayController instance;
         private static KillerOverlayWindow killerOverlay;
+
+        private int survivorsCount = 4;
+        private int otrTimer = 80000;
+
         private readonly double threshold = 0.9;
-        private readonly int survivorsCount = 4;
         private readonly int unhookAnimationDelay = 1500;
-        private readonly int otrTimer = 80000;
 
         private readonly string defaultTimerValue;
         private readonly char delimiter;
@@ -102,14 +105,18 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
             }
         }
 
-        public void ResetSurvivors()
+        public void ResetSurvivors(bool is2v8Mode = false)
         {
+            otrTimer = is2v8Mode ? 10000 : 80000;
+            survivorsCount = is2v8Mode ? 8 : 4;
             Survivors.Clear();
             SetSurvivors();
             for (int i = 0; i < survivorsCount; i++)
             {
                 Overlay.GetHooksLabel((SurvivorNumber)(i + 1)).Content = "0";
             }
+            SetTimers();
+            ResizeLabels(is2v8Mode);
         }
 
         private void SetSurvivors()
@@ -117,6 +124,15 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
             for (int i = 1; i <= survivorsCount; i++)
             {
                 Survivors.Add(new Survivor());
+            }
+        }
+
+        private void ResizeLabels(bool is2v8Mode = false)
+        {
+            for (int i = 0; i < survivorsCount; i++)
+            {
+                Overlay.GetHooksLabel((SurvivorNumber)(i + 1)).FontSize = is2v8Mode ? 16 : 20;
+                Overlay.GetTimerLabel((SurvivorNumber)(i + 1)).FontSize = is2v8Mode ? 12 : 16;
             }
         }
 

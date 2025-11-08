@@ -6,6 +6,8 @@
         Auto,
         Gear,
         Survivors,
+        Survivors2v8,
+        State2v8,
         State
     }
 }

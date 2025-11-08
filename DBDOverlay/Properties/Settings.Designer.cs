@@ -298,5 +298,29 @@ namespace DBDOverlay.Properties {
                 this["KillerOverlayRect"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Is2v8Mode {
+            get {
+                return ((bool)(this["Is2v8Mode"]));
+            }
+            set {
+                this["Is2v8Mode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Killer2v8OverlayRect {
+            get {
+                return ((string)(this["Killer2v8OverlayRect"]));
+            }
+            set {
+                this["Killer2v8OverlayRect"] = value;
+            }
+        }
     }
 }

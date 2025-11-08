@@ -18,6 +18,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="45"/>
                 <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" 
@@ -26,6 +27,10 @@
 
             <TextBlock Grid.Row="1" 
                        Text="Post unhook timer"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <TextBlock Grid.Row="2" 
+                       Text="2v8 mode"
                        Style="{StaticResource TextBlockStyle}"/>
 
             <custom:CustomToggleButton x:Name="HooksToggleButton"
@@ -43,6 +48,14 @@
                             Style="{StaticResource ToggleButtonStyle}"
                             Checked="PostUnhookTimer_Checked"
                             Unchecked="PostUnhookTimer_Unchecked"/>
+
+            <custom:CustomToggleButton x:Name="Mode2v8ToggleButton"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource ToggleButtonStyle}"
+                            Checked="Mode2v8_Checked"
+                            Unchecked="Mode2v8_Unchecked"/>
         </Grid>
 
         <Button x:Name="ResetButton"
@@ -53,7 +66,8 @@
                 HorizontalAlignment="Center"
                 Width="90"
                 Height="30"
-                Click="Reset_Click"/>
+                Click="Reset_Click"
+                Margin="0,5,0,0"/>
 
         <TextBlock Text="Overlay Configuration"
                    Foreground="White"
@@ -61,7 +75,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Margin="0,20,0,10"/>
-        <Grid>
+        <!--<Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.7*"/>
@@ -197,9 +211,9 @@
                            Checked="Calibration_Checked"
                            Unchecked="Calibration_Unchecked"/>
             </Grid>
-        </Grid>
+        </Grid>-->
 
-        <!--<StackPanel Orientation="Horizontal"
+        <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <TextBlock Text="Threshold"
                        FontSize="16"
@@ -236,6 +250,6 @@
                     Height="30"
                     Margin="20,0,0,0"
                     Click="ResetThreshold_Click"/>
-        </StackPanel>-->
+        </StackPanel>
     </StackPanel>
 </UserControl>

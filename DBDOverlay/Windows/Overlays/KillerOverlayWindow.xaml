@@ -37,6 +37,10 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
                 </Grid.RowDefinitions>
 
                 <Label x:Name="SurvivorTimer_1"
@@ -51,6 +55,18 @@
                 <Label x:Name="SurvivorTimer_4"
                        Grid.Row="3"
                        Style="{StaticResource TimerLabelStyle}">0.0</Label>
+                <Label x:Name="SurvivorTimer_5"
+                       Grid.Row="4"
+                       Style="{StaticResource TimerLabelStyle}">0.0</Label>
+                <Label x:Name="SurvivorTimer_6"
+                       Grid.Row="5"
+                       Style="{StaticResource TimerLabelStyle}">0.0</Label>
+                <Label x:Name="SurvivorTimer_7"
+                       Grid.Row="6"
+                       Style="{StaticResource TimerLabelStyle}">0.0</Label>
+                <Label x:Name="SurvivorTimer_8"
+                       Grid.Row="7"
+                       Style="{StaticResource TimerLabelStyle}">0.0</Label>
             </Grid>
 
             <Grid x:Name="SurvivorsAreaGrid"
@@ -60,6 +76,10 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
                 </Grid.RowDefinitions>
 
                 <Border x:Name="Survivor1"
@@ -78,6 +98,22 @@
                         Grid.Row="3"
                         BorderBrush="White"
                         BorderThickness="0"/>
+                <Border x:Name="Survivor5"
+                        Grid.Row="4"
+                        BorderBrush="White"
+                        BorderThickness="0"/>
+                <Border x:Name="Survivor6"
+                        Grid.Row="5"
+                        BorderBrush="White"
+                        BorderThickness="0"/>
+                <Border x:Name="Survivor7"
+                        Grid.Row="6"
+                        BorderBrush="White"
+                        BorderThickness="0"/>
+                <Border x:Name="Survivor8"
+                        Grid.Row="7"
+                        BorderBrush="White"
+                        BorderThickness="0"/>
             </Grid>
 
             <Grid x:Name="HooksGrid"
@@ -87,6 +123,10 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
                 </Grid.RowDefinitions>
 
                 <Label x:Name="SurvivorHooks_1"
@@ -100,6 +140,18 @@
                        Style="{StaticResource HooksLabelStyle}">0</Label>
                 <Label x:Name="SurvivorHooks_4"
                        Grid.Row="3"
+                       Style="{StaticResource HooksLabelStyle}">0</Label>
+                <Label x:Name="SurvivorHooks_5"
+                       Grid.Row="4"
+                       Style="{StaticResource HooksLabelStyle}">0</Label>
+                <Label x:Name="SurvivorHooks_6"
+                       Grid.Row="5"
+                       Style="{StaticResource HooksLabelStyle}">0</Label>
+                <Label x:Name="SurvivorHooks_7"
+                       Grid.Row="6"
+                       Style="{StaticResource HooksLabelStyle}">0</Label>
+                <Label x:Name="SurvivorHooks_8"
+                       Grid.Row="7"
                        Style="{StaticResource HooksLabelStyle}">0</Label>
             </Grid>
         </Grid>

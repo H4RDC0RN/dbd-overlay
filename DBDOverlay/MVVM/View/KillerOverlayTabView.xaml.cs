@@ -26,8 +26,9 @@ namespace DBDOverlay.MVVM.View
                 ? true : HooksToggleButton.IsChecked = Settings.Default.IsHookMode;
             PostUnhookTimerToggleButton.IsChecked = KillerMode.Instance.IsActive && KillerMode.Instance.IsPostUnhookTimerMode
                 ? true : PostUnhookTimerToggleButton.IsChecked = Settings.Default.IsPostUnhookTimerMode;
+            Mode2v8ToggleButton.IsChecked = Settings.Default.Is2v8Mode;
 
-            if (KillerOverlayController.Instance.CanBeMoved) SelectAreaToggleButton.IsChecked = true;
+            //if (KillerOverlayController.Instance.CanBeMoved) SelectAreaToggleButton.IsChecked = true;
             WindowsServices.Instance.KillerOverlayMoveModeOff += HandleMoveModeOff;
             ImageReader.Instance.UpdatinghooksImage += UpdateHooksImage;
 
@@ -74,9 +75,25 @@ namespace DBDOverlay.MVVM.View
             Settings.Default.Save();
         }
 
+        private void Mode2v8_Checked(object sender, RoutedEventArgs e)
+        {
+            KillerOverlayController.Overlay.ShowMoreSurvivors();
+            KillerMode.Instance.Is2v8Mode = true;
+            Settings.Default.Is2v8Mode = true;
+            Settings.Default.Save();
+        }
+
+        private void Mode2v8_Unchecked(object sender, RoutedEventArgs e)
+        {
+            KillerOverlayController.Overlay.HideMoreSurvivors();
+            KillerMode.Instance.Is2v8Mode = false;
+            Settings.Default.Is2v8Mode = false;
+            Settings.Default.Save();
+        }
+
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
-            KillerOverlayController.Instance.ResetSurvivors();
+            KillerOverlayController.Instance.ResetSurvivors(KillerMode.Instance.Is2v8Mode);
         }
 
         private void SelectArea_Checked(object sender, RoutedEventArgs e)
@@ -114,7 +131,7 @@ namespace DBDOverlay.MVVM.View
 
         private void HandleMoveModeOff(object sender, EventArgs e)
         {
-            SelectAreaToggleButton.Uncheck();
+            //SelectAreaToggleButton.Uncheck();
         }
 
         private void Calibration_Checked(object sender, RoutedEventArgs e)
@@ -147,7 +164,7 @@ namespace DBDOverlay.MVVM.View
 
         private void UpdateImageSource(int threshold)
         {
-            SurvivorsAreaImage.Source = new Bitmap(currentImage).PreProcess(threshold: threshold).ToBitmapImage();
+            //SurvivorsAreaImage.Source = new Bitmap(currentImage).PreProcess(threshold: threshold).ToBitmapImage();
         }
     }
 }
