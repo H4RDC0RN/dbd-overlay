@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Windows.Controls;
+using System.Windows.Media;
 using Application = System.Windows.Application;
 
 namespace DBDOverlay.Core.WindowControllers.KillerOverlay
@@ -66,6 +68,12 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
                     textBlock.Content = textBlock.Content.ToString().Increment();
                     Survivors[index].State = SurvivorState.Hooked;
                     Survivors[index].Hooks++;
+                    if (KillerMode.Instance.Is2v8Mode)
+                    {
+                        ((Border)textBlock.Template.FindName("LabelBorder", textBlock)).Background = Survivors[index].Hooks == 2
+                        ? (SolidColorBrush)Application.Current.FindResource("RedLightBrush")
+                        : (SolidColorBrush)Application.Current.FindResource("DarkestGrayBrush");
+                    }
                 });
             }
         }
@@ -90,7 +98,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
                 Logger.Info($"--- Survivor {index} is {pair.Key.ToLower()}. '{pair.Key}' image similarity = {pair.Value * 100} %");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Overlay.GetHooksLabel((SurvivorNumber)(index + 1)).Content = "0";
+                    ResetSurvivor(index, KillerMode.Instance.Is2v8Mode);
                     Survivors[index] = new Survivor();
                     Overlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = defaultTimerValue;
                 });
@@ -107,16 +115,26 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
 
         public void ResetSurvivors(bool is2v8Mode = false)
         {
-            otrTimer = is2v8Mode ? 10000 : 80000;
+            otrTimer = is2v8Mode ? 9900 : 80000;
             survivorsCount = is2v8Mode ? 8 : 4;
             Survivors.Clear();
             SetSurvivors();
             for (int i = 0; i < survivorsCount; i++)
             {
-                Overlay.GetHooksLabel((SurvivorNumber)(i + 1)).Content = "0";
+                ResetSurvivor(i, is2v8Mode);
             }
             SetTimers();
             ResizeLabels(is2v8Mode);
+        }
+
+        private void ResetSurvivor(int index, bool is2v8Mode = false)
+        {
+            var textBlock = Overlay.GetHooksLabel((SurvivorNumber)(index + 1));
+            textBlock.Content = "0";
+            if (is2v8Mode)
+            {
+                ((Border)textBlock.Template.FindName("LabelBorder", textBlock)).Background = (SolidColorBrush)Application.Current.FindResource("DarkestGrayBrush");
+            }
         }
 
         private void SetSurvivors()
@@ -143,6 +161,17 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
             {
                 Thread.Sleep(unhookAnimationDelay);
                 var watch = Stopwatch.StartNew();
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (KillerMode.Instance.Is2v8Mode)
+                    {
+                        var textBlock = Overlay.GetTimerLabel((SurvivorNumber)(index + 1));
+                        ((Border)textBlock.Template.FindName("LabelBorder", textBlock)).Background = (SolidColorBrush)Application.Current.FindResource("DarkYellowBrush");
+                        textBlock.Foreground = (SolidColorBrush)Application.Current.FindResource("DarkestGrayBrush");
+                    }
+                });
+
                 while (KillerMode.Instance.IsPostUnhookTimerMode && Survivors[index].State.Equals(SurvivorState.Unhooked) && watch.ElapsedMilliseconds <= otrTimer)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
@@ -152,9 +181,16 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
                     });
                 }
                 watch.Stop();
+
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Overlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = defaultTimerValue;
+                    if (KillerMode.Instance.Is2v8Mode)
+                    {
+                        var textBlock = Overlay.GetTimerLabel((SurvivorNumber)(index + 1));
+                        ((Border)textBlock.Template.FindName("LabelBorder", textBlock)).Background = (SolidColorBrush)Application.Current.FindResource("DarkestGrayBrush");
+                        textBlock.Foreground = new SolidColorBrush(Colors.White);
+                    }
                 });
             };
             worker.RunWorkerAsync();

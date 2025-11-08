@@ -8,6 +8,7 @@
     <Color x:Key="DarkGray">#1d2327</Color>
     <Color x:Key="DarkLightGray">#2c3338</Color>
     <Color x:Key="DarkestGray">#101517</Color>
+    <Color x:Key="DarkYellow">#dec40b</Color>
 
     <SolidColorBrush x:Key="WhiteGrayBrush" Color="{StaticResource WhiteGrayColor}"/>
     <SolidColorBrush x:Key="GrayBrush" Color="{StaticResource GrayColor}"/>
@@ -16,5 +17,6 @@
     <SolidColorBrush x:Key="DarkGrayBrush" Color="{StaticResource DarkGray}"/>
     <SolidColorBrush x:Key="DarkLightGrayBrush" Color="{StaticResource DarkLightGray}"/>
     <SolidColorBrush x:Key="DarkestGrayBrush" Color="{StaticResource DarkestGray}"/>
+    <SolidColorBrush x:Key="DarkYellowBrush" Color="{StaticResource DarkYellow}"/>
     
 </ResourceDictionary>

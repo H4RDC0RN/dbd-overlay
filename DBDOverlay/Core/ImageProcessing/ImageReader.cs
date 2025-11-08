@@ -155,10 +155,20 @@ namespace DBDOverlay.Core.ImageProcessing
                 KillerOverlayController.Instance.CheckIfHooked(i, hookComparison);
                 KillerOverlayController.Instance.CheckIfUnhooked(i, hookComparison);
 
+                var escapedComparison = is2v8Mode
+                    ? Math.Max(Math.Max(Math.Max(piece.Compare(SurvivorStates.Escaped_2v8_0), piece.Compare(SurvivorStates.Escaped_2v8_1)), 
+                      piece.Compare(SurvivorStates.Escaped_2v8_2)), piece.Compare(SurvivorStates.Escaped_2v8_3))
+                    : piece.Compare(SurvivorStates.Escaped);
+
+                var sacrificedComparison = is2v8Mode
+                    ? Math.Max(Math.Max(Math.Max(piece.Compare(SurvivorStates.Sacrificed_2v8_0), piece.Compare(SurvivorStates.Sacrificed_2v8_1)),
+                      piece.Compare(SurvivorStates.Sacrificed_2v8_2)), piece.Compare(SurvivorStates.Sacrificed_2v8_3))
+                    : Math.Max(piece.Compare(SurvivorStates.Sacrificed), piece.Compare(SurvivorStates.Sacrificed2));
+
                 var refreshStates = new Dictionary<string, double>
                     {
-                        { "Sacrificed", Math.Max(piece.Compare(SurvivorStates.Sacrificed), piece.Compare(SurvivorStates.Sacrificed2)) },
-                        { "Escaped", piece.Compare(SurvivorStates.Escaped) },
+                        { "Sacrificed", sacrificedComparison },
+                        { "Escaped", escapedComparison },
                         { "Dead", piece.Compare(SurvivorStates.Dead) }
                     };
 

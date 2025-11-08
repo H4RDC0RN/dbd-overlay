@@ -124,6 +124,18 @@
   <data name="Escaped" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>escaped.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Escaped_2v8_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>2v8\escaped_2v8_0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Escaped_2v8_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>2v8\escaped_2v8_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Escaped_2v8_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>2v8\escaped_2v8_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Escaped_2v8_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>2v8\escaped_2v8_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Hooked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>hooked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -153,5 +165,17 @@
   </data>
   <data name="Sacrificed2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sacrificed2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Sacrificed_2v8_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>2v8\sacrificed_2v8_0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Sacrificed_2v8_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>2v8\sacrificed_2v8_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Sacrificed_2v8_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>2v8\sacrificed_2v8_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Sacrificed_2v8_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>2v8\sacrificed_2v8_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

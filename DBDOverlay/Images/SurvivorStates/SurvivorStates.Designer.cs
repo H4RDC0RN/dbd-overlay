@@ -83,6 +83,46 @@ namespace DBDOverlay.Images.SurvivorStates {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Escaped_2v8_0 {
+            get {
+                object obj = ResourceManager.GetObject("Escaped_2v8_0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Escaped_2v8_1 {
+            get {
+                object obj = ResourceManager.GetObject("Escaped_2v8_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Escaped_2v8_2 {
+            get {
+                object obj = ResourceManager.GetObject("Escaped_2v8_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Escaped_2v8_3 {
+            get {
+                object obj = ResourceManager.GetObject("Escaped_2v8_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Hooked {
             get {
                 object obj = ResourceManager.GetObject("Hooked", resourceCulture);
@@ -166,6 +206,46 @@ namespace DBDOverlay.Images.SurvivorStates {
         internal static System.Drawing.Bitmap Sacrificed {
             get {
                 object obj = ResourceManager.GetObject("Sacrificed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Sacrificed_2v8_0 {
+            get {
+                object obj = ResourceManager.GetObject("Sacrificed_2v8_0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Sacrificed_2v8_1 {
+            get {
+                object obj = ResourceManager.GetObject("Sacrificed_2v8_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Sacrificed_2v8_2 {
+            get {
+                object obj = ResourceManager.GetObject("Sacrificed_2v8_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Sacrificed_2v8_3 {
+            get {
+                object obj = ResourceManager.GetObject("Sacrificed_2v8_3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
