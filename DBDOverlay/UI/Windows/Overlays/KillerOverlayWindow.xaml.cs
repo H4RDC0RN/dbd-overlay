@@ -13,7 +13,7 @@ using System.Windows.Media;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 
-namespace DBDOverlay.Windows.Overlays
+namespace DBDOverlay.UI.Windows.Overlays
 {
     public partial class KillerOverlayWindow : Window
     {

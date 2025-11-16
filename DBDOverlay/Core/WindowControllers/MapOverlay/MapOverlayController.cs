@@ -2,7 +2,7 @@
 using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Reshade;
 using DBDOverlay.Core.Utils;
-using DBDOverlay.Windows.Overlays;
+using DBDOverlay.UI.Windows.Overlays;
 using System.Linq;
 
 namespace DBDOverlay.Core.WindowControllers.MapOverlay

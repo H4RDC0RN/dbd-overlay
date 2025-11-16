@@ -9,7 +9,7 @@ using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Core.Windows;
 using DBDOverlay.MVVM.View;
 
-namespace DBDOverlay.Windows
+namespace DBDOverlay.UI.Windows
 {
     public partial class MainWindow : Window
     {

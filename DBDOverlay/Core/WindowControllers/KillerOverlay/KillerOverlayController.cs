@@ -1,7 +1,7 @@
 ﻿using DBDOverlay.Core.BackgroundProcesses;
 using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Utils;
-using DBDOverlay.Windows.Overlays;
+using DBDOverlay.UI.Windows.Overlays;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;

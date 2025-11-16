@@ -5,7 +5,7 @@ using DBDOverlay.Core.Utils;
 using DBDOverlay.Core.WindowControllers.Loading;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Properties;
-using DBDOverlay.Windows;
+using DBDOverlay.UI.Windows;
 using System;
 using System.ComponentModel;
 using System.Configuration;

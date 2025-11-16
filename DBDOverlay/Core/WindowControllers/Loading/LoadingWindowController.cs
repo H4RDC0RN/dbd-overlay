@@ -1,4 +1,4 @@
-﻿using DBDOverlay.Windows;
+﻿using DBDOverlay.UI.Windows;
 using System.Windows;
 
 namespace DBDOverlay.Core.WindowControllers.Loading

@@ -11,7 +11,7 @@ using DBDOverlay.Properties;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 
-namespace DBDOverlay.Windows.Overlays
+namespace DBDOverlay.UI.Windows.Overlays
 {
     public partial class MapOverlayWindow : Window
     {
