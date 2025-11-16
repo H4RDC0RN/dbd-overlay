@@ -9,7 +9,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DBDOverlay.MVVM.View
+namespace DBDOverlay.UI.Tabs
 {
     public partial class KillerOverlayTabView : UserControl
     {

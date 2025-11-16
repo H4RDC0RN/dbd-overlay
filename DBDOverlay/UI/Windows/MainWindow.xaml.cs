@@ -7,7 +7,7 @@ using DBDOverlay.Core.Hotkeys;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Core.Windows;
-using DBDOverlay.MVVM.View;
+using DBDOverlay.UI.Tabs;
 
 namespace DBDOverlay.UI.Windows
 {

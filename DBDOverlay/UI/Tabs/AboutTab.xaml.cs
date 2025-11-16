@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace DBDOverlay.MVVM.View
+namespace DBDOverlay.UI.Tabs
 {
     public partial class AboutTabView : UserControl
     {
