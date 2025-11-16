@@ -268,10 +268,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="System.Net.Http" />
   </ItemGroup>
 

@@ -5,17 +5,17 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Palette.xaml"/>
-                <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
-                <ResourceDictionary Source="Styles/ComboBoxStyle.xaml"/>
-                <ResourceDictionary Source="Styles/LabelStyle.xaml"/>
-                <ResourceDictionary Source="Styles/MenuTabStyle.xaml"/>
-                <ResourceDictionary Source="Styles/ScrollViewerStyle.xaml"/>
-                <ResourceDictionary Source="Styles/SliderStyle.xaml"/>
-                <ResourceDictionary Source="Styles/TextBlockStyle.xaml"/>
-                <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>
-                <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml"/>
-                <ResourceDictionary Source="Styles/ToolTipStyle.xaml"/>
+                <ResourceDictionary Source="UI/Styles/Palette.xaml"/>
+                <ResourceDictionary Source="UI/Styles/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="UI/Styles/ComboBoxStyle.xaml"/>
+                <ResourceDictionary Source="UI/Styles/LabelStyle.xaml"/>
+                <ResourceDictionary Source="UI/Styles/MenuTabStyle.xaml"/>
+                <ResourceDictionary Source="UI/Styles/ScrollViewerStyle.xaml"/>
+                <ResourceDictionary Source="UI/Styles/SliderStyle.xaml"/>
+                <ResourceDictionary Source="UI/Styles/TextBlockStyle.xaml"/>
+                <ResourceDictionary Source="UI/Styles/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="UI/Styles/ToggleButtonStyle.xaml"/>
+                <ResourceDictionary Source="UI/Styles/ToolTipStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

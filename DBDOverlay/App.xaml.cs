@@ -2,7 +2,6 @@
 using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.Reshade;
 using DBDOverlay.Core.Utils;
-using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.Loading;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Properties;
@@ -29,7 +28,6 @@ namespace DBDOverlay
         private void Initialize()
         {
             Logger.Info("---Open Application---");
-            Current.MainWindow = new MainWindow();
             LoadingWindowController.Window.Show();
 
             var worker = new BackgroundWorker();
@@ -56,9 +54,9 @@ namespace DBDOverlay
 
         private void FinishLoading(object sender, RunWorkerCompletedEventArgs e)
         {
+            Current.MainWindow = new MainWindow();
             LoadingWindowController.Window.Close();
             Current.MainWindow.Show();
-            //ImageReader.Instance.HandleSurvivorsSmart(true);
         }
 
         private void ReloadSettings()

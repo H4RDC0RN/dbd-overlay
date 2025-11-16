@@ -4,30 +4,30 @@ using Application = System.Windows.Application;
 using Logger = DBDOverlay.Core.Utils.Logger;
 using Window = System.Windows.Window;
 using DBDOverlay.Core.Hotkeys;
-using DBDOverlay.MVVM.ViewModel;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Core.Windows;
+using DBDOverlay.MVVM.View;
 
 namespace DBDOverlay.Windows
 {
     public partial class MainWindow : Window
     {
-        private readonly MapOverlayTabViewModel mapOverlayTabVM;
-        private readonly KillerOverlayTabViewModel killerOverlayTabVM;
-        private readonly ReshadeTabViewModel reshadeTabVM;
-        private readonly SettingsTabViewModel settingsTabVM;
-        private readonly AboutTabViewModel aboutTabVM;
+        private readonly MapOverlayTabView mapOverlayTab;
+        private readonly KillerOverlayTabView killerOverlayTab;
+        private readonly ReshadeTabView reshadeTab;
+        private readonly SettingsTabView settingsTab;
+        private readonly AboutTabView aboutTab;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            mapOverlayTabVM = new MapOverlayTabViewModel();
-            killerOverlayTabVM = new KillerOverlayTabViewModel();
-            reshadeTabVM = new ReshadeTabViewModel();
-            settingsTabVM = new SettingsTabViewModel();
-            aboutTabVM = new AboutTabViewModel();
+            mapOverlayTab = new MapOverlayTabView();
+            killerOverlayTab = new KillerOverlayTabView();
+            reshadeTab = new ReshadeTabView();
+            settingsTab = new SettingsTabView();
+            aboutTab = new AboutTabView();
             MapOverlayTab.IsChecked = true;
         }
 
@@ -39,27 +39,27 @@ namespace DBDOverlay.Windows
 
         private void MapOverlayTab_Selected(object sender, RoutedEventArgs e)
         {
-            ViewContent.Content = mapOverlayTabVM;
+            ViewContent.Content = mapOverlayTab;
         }
 
         private void KillerOverlayTab_Selected(object sender, RoutedEventArgs e)
         {
-            ViewContent.Content = killerOverlayTabVM;
+            ViewContent.Content = killerOverlayTab;
         }
 
         private void ReshadeTab_Selected(object sender, RoutedEventArgs e)
         {
-            ViewContent.Content = reshadeTabVM;
+            ViewContent.Content = reshadeTab;
         }
 
         private void SettingsTab_Selected(object sender, RoutedEventArgs e)
         {
-            ViewContent.Content = settingsTabVM;
+            ViewContent.Content = settingsTab;
         }
 
         private void AboutTab_Selected(object sender, RoutedEventArgs e)
         {
-            ViewContent.Content = aboutTabVM;
+            ViewContent.Content = aboutTab;
         }
 
         private void MinButtonClick(object sender, RoutedEventArgs e)

@@ -122,7 +122,7 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             var watch = Stopwatch.StartNew();
             int survCount = is2v8Mode ? 8 : 4;
-            var initBitmap = CreateFromScreenArea(GetSurvivorsRect(), false);
+            var initBitmap = CreateFromScreenArea(is2v8Mode ? RectType.Survivors2v8 : RectType.Survivors, false);
             if (saveImages) UpdatinghooksImage?.Invoke(this, new UpdateImageEventArgs(initBitmap, hooksThreshold));
             var bitmap = initBitmap.PreProcess(threshold: hooksThreshold, imageName: saveImages ? "survivors_area" : null);
 
@@ -131,7 +131,6 @@ namespace DBDOverlay.Core.ImageProcessing
             var statusRectMulti = GetRectMultiplier(is2v8Mode ? RectType.State2v8 : RectType.State);
             var srcRect = GetRect(statusRectMulti, width, height);
             var destRect = GetRect(new RectMultiplier(0, 0, statusRectMulti.Width, statusRectMulti.Height), width, height);
-            var hooked = SurvivorStates.Hooked;
 
             for (int i = 0; i < survCount; i++)
             {
@@ -141,11 +140,11 @@ namespace DBDOverlay.Core.ImageProcessing
                     graphics.DrawImage(bitmap, destRect, srcRect, GraphicsUnit.Pixel);
                 }
 
-                var hookComparison = is2v8Mode 
+                var hookComparison = is2v8Mode
                     ? Math.Max(Math.Max(Math.Max(Math.Max(piece.Compare(SurvivorStates.Hooked2v8_0),
                       piece.Compare(SurvivorStates.Hooked2v8_1)), piece.Compare(SurvivorStates.Hooked2v8_2)),
                       piece.Compare(SurvivorStates.Hooked2v8_3)), piece.Compare(SurvivorStates.Hooked2v8_4))
-                    : Math.Max(Math.Max(piece.Compare(hooked), piece.Compare(SurvivorStates.Hooked2)), piece.Compare(SurvivorStates.Hooked3));
+                    : Math.Max(Math.Max(piece.Compare(SurvivorStates.Hooked), piece.Compare(SurvivorStates.Hooked2)), piece.Compare(SurvivorStates.Hooked3));
 
                 if (saveImages)
                 {
@@ -156,7 +155,7 @@ namespace DBDOverlay.Core.ImageProcessing
                 KillerOverlayController.Instance.CheckIfUnhooked(i, hookComparison);
 
                 var escapedComparison = is2v8Mode
-                    ? Math.Max(Math.Max(Math.Max(piece.Compare(SurvivorStates.Escaped_2v8_0), piece.Compare(SurvivorStates.Escaped_2v8_1)), 
+                    ? Math.Max(Math.Max(Math.Max(piece.Compare(SurvivorStates.Escaped_2v8_0), piece.Compare(SurvivorStates.Escaped_2v8_1)),
                       piece.Compare(SurvivorStates.Escaped_2v8_2)), piece.Compare(SurvivorStates.Escaped_2v8_3))
                     : piece.Compare(SurvivorStates.Escaped);
 
@@ -284,11 +283,6 @@ namespace DBDOverlay.Core.ImageProcessing
         private Bitmap CreateFromScreenArea(RectType rectType, bool save = true)
         {
             var rect = GetRect(rectType);
-            return CreateFromScreenArea(rect, save);
-        }
-
-        private Bitmap CreateFromScreenArea(Rectangle rect, bool save = true)
-        {
             var bitmap = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppRgb);
             var graphics = Graphics.FromImage(bitmap);
             graphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
@@ -299,6 +293,7 @@ namespace DBDOverlay.Core.ImageProcessing
                 var path = FileSystem.GetImagePath();
                 bitmap.Save(path, ImageFormat.Png);
                 Logger.Info($"Image is saved to '{path}'");
+                Logger.Info($"Area coordinates: x={rect.Left}, y={rect.Top}");
             }
             return bitmap;
         }
@@ -316,12 +311,6 @@ namespace DBDOverlay.Core.ImageProcessing
                 case RectType.State2v8: return new RectMultiplier(0.134, 0.236, 0.64, 0.522);
                 default: return null;
             }
-        }
-
-        private Rectangle GetSurvivorsRect()
-        {
-            var rect = KillerOverlayController.Overlay.CurrentRect;
-            return rect != null ? new Rectangle((rect.X + rect.Width * 0.25).Round(), rect.Y, (rect.Width * 0.5).Round(), rect.Height) : GetRect(RectType.Survivors);
         }
 
         private void RecognizeText(Bitmap bitmap, bool log = true)
