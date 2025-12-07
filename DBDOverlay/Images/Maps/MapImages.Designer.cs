@@ -233,6 +233,16 @@ namespace DBDOverlay.Images.Maps {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FORSAKEN_BONEYARD_DEAD_SANDS {
+            get {
+                object obj = ResourceManager.GetObject("FORSAKEN_BONEYARD.DEAD_SANDS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FORSAKEN_BONEYARD_EYRIE_OF_CROWS {
             get {
                 object obj = ResourceManager.GetObject("FORSAKEN_BONEYARD.EYRIE_OF_CROWS", resourceCulture);
@@ -556,6 +566,26 @@ namespace DBDOverlay.Images.Maps {
         internal static System.Drawing.Bitmap THE_MACMILLAN_ESTATE_SUFFOCATION_PIT_2 {
             get {
                 object obj = ResourceManager.GetObject("THE_MACMILLAN_ESTATE.SUFFOCATION_PIT_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WITHERED_ISLE_FALLEN_REFUGE {
+            get {
+                object obj = ResourceManager.GetObject("WITHERED_ISLE.FALLEN_REFUGE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WITHERED_ISLE_FREDDY_FAZBEARS_PIZZA {
+            get {
+                object obj = ResourceManager.GetObject("WITHERED_ISLE.FREDDY_FAZBEARS_PIZZA", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
