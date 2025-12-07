@@ -13,7 +13,6 @@ using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Rectangle = System.Drawing.Rectangle;
 using System.Collections.Generic;
 using System;
-using DBDOverlay.Images.Identificators;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
@@ -35,7 +34,6 @@ namespace DBDOverlay.Core.ImageProcessing
         private readonly int maxThresholdForManual = 400;
         private readonly int minThreshold = 300;
         private readonly int thresholdStep = 50;
-        private readonly int gearThreshold = 400;
 
         private readonly long operationTime = 200L;
         private string text = string.Empty;
@@ -115,6 +113,9 @@ namespace DBDOverlay.Core.ImageProcessing
             if (log) Logger.Info($"=============== Finish getting map info ===============");
             if (log) Logger.Info($"=============== ({watch.ElapsedMilliseconds} ms) ===============");
             bitmap.Dispose();
+
+            var delay = (int)(operationTime - watch.ElapsedMilliseconds);
+            if (delay > 0) Thread.Sleep(delay);
             return null;
         }
 
@@ -232,17 +233,6 @@ namespace DBDOverlay.Core.ImageProcessing
             bitmap.Dispose();
             watch.Stop();
             //Logger.Info($"SMART {watch.ElapsedMilliseconds} ms");
-        }
-
-        public bool IsMatchFinished(bool saveImage = false)
-        {
-            var saveName = saveImage ? Settings.Default.GearScreenshotFileName : null;
-            var bitmap = CreateFromScreenArea(RectType.Gear, false).PreProcess(threshold: gearThreshold, imageName: saveName);
-            var similarity = bitmap.Compare(Identificators.Gear);
-            var isFinished = similarity >= 0.99;
-            bitmap.Dispose();
-            if (isFinished) Logger.Info($"Match is finished. 'Gear' image similarity = {similarity} %");
-            return isFinished;
         }
 
         public Rectangle GetRect(RectType rectType, int w = 0, int h = 0)

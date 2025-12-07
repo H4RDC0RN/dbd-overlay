@@ -219,11 +219,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AppImages.resx</DependentUpon>
     </Compile>
-    <Compile Update="Images\Identificators\Identificators.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Identificators.resx</DependentUpon>
-    </Compile>
     <Compile Update="Images\Maps\MapImages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -245,10 +240,6 @@
     <EmbeddedResource Update="Images\App\AppImages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppImages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Images\Identificators\Identificators.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Identificators.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Images\Maps\MapImages.resx">
       <Generator>ResXFileCodeGenerator</Generator>

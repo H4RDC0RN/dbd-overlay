@@ -39,7 +39,6 @@ namespace DBDOverlay.UI.Tabs
         {
             if (!AutoMode.Instance.IsActive)
             {
-                AutoMode.Instance.IsMapNameMode = true;
                 AutoMode.Instance.Run();
                 Settings.Default.IsAutoMode = true;
                 Settings.Default.Save();

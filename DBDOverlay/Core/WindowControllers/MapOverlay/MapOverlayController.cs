@@ -44,7 +44,6 @@ namespace DBDOverlay.Core.WindowControllers.MapOverlay
                 realm = mapInfo.Realm;
                 name = mapInfo.Name;
                 Overlay.ChangeMapImageOverlay(mapInfo);
-                if (AutoMode.Instance.IsActive) AutoMode.Instance.IsMapNameMode = false;
             }
             ReshadeManager.Instance.ApplyFilter(mapInfo);
         }
