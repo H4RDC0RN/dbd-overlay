@@ -61,18 +61,20 @@ namespace DBDOverlay.Core.Extensions
 
             for (int i = 0; i < size; i += 4)
             {
-                var totalRGB = data[i] + data[i + 1] + data[i + 2];
+                var totalRGB = data[i] + data[i + 1] + data[i + 2] + data[i + 3];
                 if (totalRGB <= thresholdValue)
                 {
                     data[i] = 0;
                     data[i + 1] = 0;
                     data[i + 2] = 0;
+                    data[i + 3] = 0;
                 }
                 else
                 {
                     data[i] = 255;
                     data[i + 1] = 255;
                     data[i + 2] = 255;
+                    data[i + 3] = 255;
                 }
             }
             Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
