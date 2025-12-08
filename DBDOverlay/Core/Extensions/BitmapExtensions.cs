@@ -52,7 +52,7 @@ namespace DBDOverlay.Core.Extensions
             return result;
         }
 
-        public static Bitmap ToBlackWhite(this Bitmap bitmap, int thresholdValue)
+        public static Bitmap ToBlackWhite(this Bitmap bitmap, int thresholdValue, bool isMapText = false)
         {
             var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
             int size = bitmapData.Stride * bitmapData.Height;
@@ -61,20 +61,20 @@ namespace DBDOverlay.Core.Extensions
 
             for (int i = 0; i < size; i += 4)
             {
-                var totalRGB = data[i] + data[i + 1] + data[i + 2] + data[i + 3];
+                var totalRGB = data[i] + data[i + 1] + data[i + 2] + (isMapText ? data[i + 3] : 0);
                 if (totalRGB <= thresholdValue)
                 {
                     data[i] = 0;
                     data[i + 1] = 0;
                     data[i + 2] = 0;
-                    data[i + 3] = 0;
+                    if (isMapText) data[i + 3] = 0;
                 }
                 else
                 {
                     data[i] = 255;
                     data[i + 1] = 255;
                     data[i + 2] = 255;
-                    data[i + 3] = 255;
+                    if (isMapText) data[i + 3] = 255;
                 }
             }
             Marshal.Copy(data, 0, bitmapData.Scan0, data.Length);
@@ -83,9 +83,9 @@ namespace DBDOverlay.Core.Extensions
             return bitmap;
         }
 
-        public static Bitmap PreProcess(this Bitmap bitmap, double scale = 1, int threshold = 400, string imageName = null)
+        public static Bitmap PreProcess(this Bitmap bitmap, double scale = 1, int threshold = 400, string imageName = null, bool isMapText = false)
         {
-            bitmap = bitmap.Resize(scale).ToBlackWhite(threshold);
+            bitmap = bitmap.Resize(scale).ToBlackWhite(threshold, isMapText);
             if (imageName != null)
             {
                 var path = FileSystem.GetImagePath(imageName, edited: true);

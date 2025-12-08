@@ -79,7 +79,7 @@ namespace DBDOverlay.Core.ImageProcessing
                 {
                     if (log) Logger.Info($"===== Size = {scale}, Threshold = {threshold} =====");
                     var saveName = autoMode ? null : Settings.Default.ManualScreenshotFileName;
-                    RecognizeText(bitmap.PreProcess(scale, threshold, saveName), log);
+                    RecognizeText(bitmap.PreProcess(scale, threshold, saveName, true), log);
                     if (IsMapTextCorrect(autoMode))
                     {
                         if (log) Logger.Info("Map text is correct");
