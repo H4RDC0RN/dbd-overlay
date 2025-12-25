@@ -16,5 +16,11 @@ namespace DBDOverlay.Core.Extensions
             label.GetBorder().Background = backgroundColor;
             label.Foreground = foregroundColor;
         }
+
+        public static void IncrementHooks(this Label label)
+        {
+            label.Content = label.Content.ToString().Increment();
+            label.GetBorder().Background = label.Content.ToString().ToInt() == 2 ? Palette.RedLightBrush : Palette.DarkestGrayBrush;
+        }
     }
 }

@@ -12,8 +12,7 @@ namespace DBDOverlay.Core.WindowControllers.Loading
         {
             get
             {
-                if (instance == null)
-                    instance = new LoadingWindowController();
+                if (instance == null) instance = new LoadingWindowController();
                 return instance;
             }
         }
@@ -22,8 +21,7 @@ namespace DBDOverlay.Core.WindowControllers.Loading
         {
             get
             {
-                if (window == null)
-                    window = new LoadingWindow();
+                if (window == null) window = new LoadingWindow();
                 return window;
             }
         }

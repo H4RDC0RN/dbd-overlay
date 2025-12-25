@@ -32,8 +32,7 @@ namespace DBDOverlay.Core.Hotkeys
         {
             get
             {
-                if (instance == null)
-                    instance = new KeyboardHook();
+                if (instance == null) instance = new KeyboardHook();
                 return instance;
             }
         }

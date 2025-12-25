@@ -1,5 +1,4 @@
-﻿using DBDOverlay.Core.BackgroundProcesses;
-using DBDOverlay.Core.Extensions;
+﻿using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Reshade;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.UI.Windows.Overlays;
@@ -21,8 +20,7 @@ namespace DBDOverlay.Core.WindowControllers.MapOverlay
         {
             get
             {
-                if (instance == null)
-                    instance = new MapOverlayController();
+                if (instance == null) instance = new MapOverlayController();
                 return instance;
             }
         }
@@ -31,8 +29,7 @@ namespace DBDOverlay.Core.WindowControllers.MapOverlay
         {
             get
             {
-                if (overlay == null)
-                    overlay = new MapOverlayWindow();
+                if (overlay == null) overlay = new MapOverlayWindow();
                 return overlay;
             }
         }

@@ -15,8 +15,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
         {
             get
             {
-                if (instance == null)
-                    instance = new AutoMode();
+                if (instance == null) instance = new AutoMode();
                 return instance;
             }
         }

@@ -110,8 +110,8 @@ namespace DBDOverlay.UI.Windows.Overlays
                 HooksGrid.RowDefinitions[i].Height = autoValue;
                 SurvivorsAreaGrid.RowDefinitions[i].Height = autoValue;
             }
-            SetBounds(true, resetPosition);
-            KillerOverlayController.Instance.ResetSurvivors(true);
+            SetBounds(resetPosition);
+            KillerOverlayController.Instance.ResetSurvivors();
         }
 
         public void HideMoreSurvivors(bool resetPosition = true)
@@ -123,7 +123,7 @@ namespace DBDOverlay.UI.Windows.Overlays
                 HooksGrid.RowDefinitions[i].Height = zeroValue;
                 SurvivorsAreaGrid.RowDefinitions[i].Height = zeroValue;
             }
-            SetBounds(false, resetPosition);
+            SetBounds(resetPosition);
             KillerOverlayController.Instance.ResetSurvivors();
         }
 
@@ -180,9 +180,9 @@ namespace DBDOverlay.UI.Windows.Overlays
             SetKillerWindowStartPosition();
         }
 
-        private void SetBounds(bool is2v8Mode = false, bool resetPosition = true)
+        private void SetBounds(bool resetPosition = true)
         {
-            var overlayRect = is2v8Mode ? Settings.Default.Killer2v8OverlayRect : Settings.Default.KillerOverlayRect;
+            var overlayRect = Settings.Default.Is2v8Mode ? Settings.Default.Killer2v8OverlayRect : Settings.Default.KillerOverlayRect;
             if (overlayRect != string.Empty)
             {
                 CurrentRect = overlayRect.ToRect();
@@ -193,13 +193,13 @@ namespace DBDOverlay.UI.Windows.Overlays
             }
             else
             {
-                SetDefaultBounds(is2v8Mode, resetPosition);
+                SetDefaultBounds(resetPosition);
             }
         }
 
-        private void SetDefaultBounds(bool is2v8Mode = false, bool resetPosition = true)
+        private void SetDefaultBounds(bool resetPosition = true)
         {
-            var rectType = is2v8Mode ? RectType.Survivors2v8 : RectType.Survivors;
+            var rectType = Settings.Default.Is2v8Mode ? RectType.Survivors2v8 : RectType.Survivors;
             var rect = ImageReader.Instance.GetRect(rectType, SystemParameters.PrimaryScreenWidth.Round(), SystemParameters.PrimaryScreenHeight.Round());
             if (resetPosition)
             {
@@ -219,7 +219,7 @@ namespace DBDOverlay.UI.Windows.Overlays
             Survivor3.BorderThickness = new Thickness(i, 0, i, i);
             Survivor4.BorderThickness = new Thickness(i, 0, i, i);
 
-            if (KillerMode.Instance.Is2v8Mode)
+            if (Settings.Default.Is2v8Mode)
             {
                 Survivor5.BorderThickness = new Thickness(i, 0, i, i);
                 Survivor6.BorderThickness = new Thickness(i, 0, i, i);

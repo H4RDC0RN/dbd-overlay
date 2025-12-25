@@ -42,8 +42,7 @@ namespace DBDOverlay.Core.Windows
         {
             get
             {
-                if (instance == null)
-                    instance = new WindowsServices();
+                if (instance == null) instance = new WindowsServices();
                 return instance;
             }
         }

@@ -25,8 +25,7 @@ namespace DBDOverlay.Core.Reshade
         {
             get
             {
-                if (instance == null)
-                    instance = new ReshadeManager();
+                if (instance == null) instance = new ReshadeManager();
                 return instance;
             }
         }

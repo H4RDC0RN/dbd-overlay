@@ -57,7 +57,7 @@ namespace DBDOverlay.Core.Hotkeys
         private static void PressedSaveImages(object sender, KeyPressedEventArgs e)
         {
             e.Log("Save images");
-            ImageReader.Instance.HandleSurvivors(KillerMode.Instance.Is2v8Mode, true);
+            ImageReader.Instance.HandleSurvivors(Settings.Default.Is2v8Mode, true);
         }
     }
 }

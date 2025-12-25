@@ -310,5 +310,17 @@ namespace DBDOverlay.Properties {
                 this["Killer2v8OverlayRect"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsSidePanelMode {
+            get {
+                return ((bool)(this["IsSidePanelMode"]));
+            }
+            set {
+                this["IsSidePanelMode"] = value;
+            }
+        }
     }
 }

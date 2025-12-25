@@ -58,7 +58,13 @@ namespace DBDOverlay
             Current.MainWindow = new MainWindow();
             LoadingWindowController.Window.Close();
             Current.MainWindow.Show();
-            KillerOverlayController.Window.SetKillerWindowStartPosition();
+            HandleSidePanel();
+        }
+
+        private void HandleSidePanel()
+        {
+            if (Settings.Default.IsSidePanelMode) KillerOverlayController.Window.ShowSidePanel();
+            else KillerOverlayController.Window.HideSidePanel();
         }
 
         private void ReloadSettings()

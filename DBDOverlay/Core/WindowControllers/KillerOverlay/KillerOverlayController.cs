@@ -1,6 +1,6 @@
-﻿using DBDOverlay.Core.BackgroundProcesses;
-using DBDOverlay.Core.Extensions;
+﻿using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Utils;
+using DBDOverlay.Properties;
 using DBDOverlay.UI.Styles;
 using DBDOverlay.UI.Windows.Overlays;
 using System.Collections.Generic;
@@ -39,8 +39,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
         {
             get
             {
-                if (instance == null)
-                    instance = new KillerOverlayController();
+                if (instance == null) instance = new KillerOverlayController();
                 return instance;
             }
         }
@@ -49,8 +48,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
         {
             get
             {
-                if (killerOverlay == null)
-                    killerOverlay = new KillerOverlayWindow();
+                if (killerOverlay == null) killerOverlay = new KillerOverlayWindow();
                 return killerOverlay;
             }
         }
@@ -59,8 +57,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
         {
             get
             {
-                if (killerOverlayWindow == null)
-                    killerOverlayWindow = new KillerOverlayWindow();
+                if (killerOverlayWindow == null) killerOverlayWindow = new KillerOverlayWindow();
                 return killerOverlayWindow;
             }
         }
@@ -75,23 +72,21 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
             SetSurvivors();
         }
 
-        public void CheckIfHooked(int index, double similarity)
+        public void HookedCheck(int index, double similarity)
         {
             if (!Survivors[index].State.Equals(SurvivorState.Hooked) && similarity > threshold)
             {
                 Logger.Info($"--- Survivor {index} is hooked. 'Hooked' image similarity = {similarity * 100} %");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    var textBlock = Overlay.GetHooksLabel((SurvivorNumber)(index + 1));
-                    textBlock.Content = textBlock.Content.ToString().Increment();
                     Survivors[index].State = SurvivorState.Hooked;
                     Survivors[index].Hooks++;
-                    textBlock.GetBorder().Background = Survivors[index].Hooks == 2 ? Palette.RedLightBrush : Palette.DarkestGrayBrush;
+                    HandleAction(KillerOverlayAction.IncrementHooks, index);
                 });
             }
         }
 
-        public void CheckIfUnhooked(int index, double similarity)
+        public void UnhookedCheck(int index, double similarity)
         {
             if (Survivors[index].State.Equals(SurvivorState.Hooked) && similarity < threshold)
             {
@@ -101,7 +96,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
             }
         }
 
-        public void CheckIfRefreshed(int index, Dictionary<string, double> refreshStates)
+        public void RefreshedCheck(int index, Dictionary<string, double> refreshStates)
         {
             var max = refreshStates.Values.Max();
             var pair = refreshStates.FirstOrDefault(x => x.Value.Equals(max));
@@ -111,9 +106,9 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
                 Logger.Info($"--- Survivor {index} is {pair.Key.ToLower()}. '{pair.Key}' image similarity = {pair.Value * 100} %");
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    ResetSurvivor(index, KillerMode.Instance.Is2v8Mode);
+                    HandleAction(KillerOverlayAction.ResetHooks, index);
                     Survivors[index] = new Survivor();
-                    Overlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = defaultTimerValue;
+                    HandleAction(KillerOverlayAction.SetTimerValue, index, defaultTimerValue);
                 });
             }
         }
@@ -122,14 +117,13 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
         {
             for (int i = 0; i < survivorsCount; i++)
             {
-                var textBlock = Overlay.GetTimerLabel((SurvivorNumber)(i + 1));
-                textBlock.Content = defaultTimerValue;
-                textBlock.UpdateColors(Palette.DarkestGrayBrush, Palette.WhiteBrush);
+                HandleAction(KillerOverlayAction.SetDefaultTimerConditional, i);
             }
         }
 
-        public void ResetSurvivors(bool is2v8Mode = false)
+        public void ResetSurvivors()
         {
+            var is2v8Mode = Settings.Default.Is2v8Mode;
             maxTimer = is2v8Mode ? unhookEndurance2v8 : maxTimerDefault;
             survivorsCount = is2v8Mode ? survivorsCount2v8 : survivorsCountDefault;
             unhookEndurance = is2v8Mode ? unhookEndurance2v8 : unhookEnduranceDefault;
@@ -137,21 +131,10 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
             SetSurvivors();
             for (int i = 0; i < survivorsCount; i++)
             {
-                ResetSurvivor(i, is2v8Mode);
+                HandleAction(KillerOverlayAction.ResetHooks, i);
             }
             SetTimers();
-            ResizeLabels(is2v8Mode);
-        }
-
-        private void ResetSurvivor(int index, bool is2v8Mode = false)
-        {
-            var textBlock = Overlay.GetHooksLabel((SurvivorNumber)(index + 1));
-            textBlock.Content = "0";
-            var labelBorder = textBlock.GetBorder();
-            if (labelBorder != null)
-            {
-                labelBorder.Background = Palette.DarkestGrayBrush;
-            }
+            ResizeLabels();
         }
 
         private void SetSurvivors()
@@ -162,12 +145,11 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
             }
         }
 
-        private void ResizeLabels(bool is2v8Mode = false)
+        private void ResizeLabels()
         {
             for (int i = 0; i < survivorsCount; i++)
             {
-                Overlay.GetHooksLabel((SurvivorNumber)(i + 1)).FontSize = is2v8Mode ? 16 : 20;
-                Overlay.GetTimerLabel((SurvivorNumber)(i + 1)).FontSize = is2v8Mode ? 12 : 16;
+                HandleAction(KillerOverlayAction.ResizeLabels, i);
             }
         }
 
@@ -181,19 +163,21 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Overlay.GetTimerLabel((SurvivorNumber)(index + 1)).UpdateColors(Palette.DarkYellowBrush, Palette.DarkestGrayBrush);
+                    HandleAction(KillerOverlayAction.SetEnduranceTimer, index);
                 });
 
-                while (KillerMode.Instance.IsPostUnhookTimerMode && Survivors[index].State.Equals(SurvivorState.Unhooked) && watch.ElapsedMilliseconds <= maxTimer)
+                while (Survivors[index].State.Equals(SurvivorState.Unhooked) && watch.ElapsedMilliseconds <= maxTimer)
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         var elapsedTime = watch.ElapsedMilliseconds;
                         var time = (elapsedTime / 1000.0).Round(1).ToString();
-                        Overlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = time.IsInt() ? $"{time}{delimiter}0" : time;
+                        var newTimerValue = time.IsInt() ? $"{time}{delimiter}0" : time;
+                        HandleAction(KillerOverlayAction.SetTimerValue, index, newTimerValue);
+
                         if (elapsedTime > unhookEndurance - 100)
                         {
-                            Overlay.GetTimerLabel((SurvivorNumber)(index + 1)).UpdateColors(Palette.DarkestGrayBrush, Palette.WhiteBrush);
+                            HandleAction(KillerOverlayAction.SetDefaultTimer, index);
                         }
                     });
                 }
@@ -201,10 +185,65 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Overlay.GetTimerLabel((SurvivorNumber)(index + 1)).Content = defaultTimerValue;
+                    HandleAction(KillerOverlayAction.SetTimerValue, index, defaultTimerValue);
                 });
             };
             worker.RunWorkerAsync();
+        }
+
+        private void HandleAction(KillerOverlayAction actionType, int survivorIndex, string argument = null)
+        {
+            if (Settings.Default.IsHookMode || Settings.Default.IsPostUnhookTimerMode) ActionFactory(Overlay, actionType, survivorIndex, argument);
+            if (Settings.Default.IsSidePanelMode) ActionFactory(Window, actionType, survivorIndex, argument);
+        }
+
+        private void ActionFactory(KillerOverlayWindow killerWindow, KillerOverlayAction actionType, int index, string argument = null)
+        {
+            switch (actionType)
+            {
+                case KillerOverlayAction.IncrementHooks:
+                    killerWindow.GetHooksLabel((SurvivorNumber)(index + 1)).IncrementHooks();
+                    break;
+                case KillerOverlayAction.SetTimerValue:
+                    killerWindow.GetTimerLabel((SurvivorNumber)(index + 1)).Content = argument;
+                    break;
+                case KillerOverlayAction.SetEnduranceTimer:
+                    killerWindow.GetTimerLabel((SurvivorNumber)(index + 1)).UpdateColors(Palette.DarkYellowBrush, Palette.DarkestGrayBrush);
+                    break;
+                case KillerOverlayAction.SetDefaultTimer:
+                    killerWindow.GetTimerLabel((SurvivorNumber)(index + 1)).UpdateColors(Palette.DarkestGrayBrush, Palette.WhiteBrush);
+                    break;
+                case KillerOverlayAction.SetDefaultTimerConditional:
+                    {
+                        var textBlock = killerWindow.GetTimerLabel((SurvivorNumber)(index + 1));
+                        textBlock.Content = defaultTimerValue;
+                        if (textBlock.GetBorder() != null)
+                        {
+                            textBlock.UpdateColors(Palette.DarkestGrayBrush, Palette.WhiteBrush);
+                        }
+                        break;
+                    }
+                case KillerOverlayAction.ResetHooks:
+                    {
+                        var textBlock = killerWindow.GetHooksLabel((SurvivorNumber)(index + 1));
+                        textBlock.Content = "0";
+                        var labelBorder = textBlock.GetBorder();
+                        if (labelBorder != null)
+                        {
+                            labelBorder.Background = Palette.DarkestGrayBrush;
+                        }
+                        break;
+                    }
+                case KillerOverlayAction.ResizeLabels:
+                    {
+                        var is2v8Mode = Settings.Default.Is2v8Mode;
+                        killerWindow.GetHooksLabel((SurvivorNumber)(index + 1)).FontSize = is2v8Mode ? 16 : 20;
+                        killerWindow.GetTimerLabel((SurvivorNumber)(index + 1)).FontSize = is2v8Mode ? 12 : 16;
+                        break;
+                    }
+                default:
+                    break;
+            }
         }
     }
 }

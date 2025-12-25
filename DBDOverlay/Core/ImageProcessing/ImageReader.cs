@@ -46,8 +46,7 @@ namespace DBDOverlay.Core.ImageProcessing
         {
             get
             {
-                if (instance == null)
-                    instance = new ImageReader();
+                if (instance == null) instance = new ImageReader();
                 return instance;
             }
         }
@@ -152,8 +151,8 @@ namespace DBDOverlay.Core.ImageProcessing
                     piece.Save(FileSystem.GetImagePath($"survivor_{i}"), ImageFormat.Png);
                     Logger.Info($"--- Survivor {i} 'Hooked' image similarity = {hookComparison * 100} %");
                 }
-                KillerOverlayController.Instance.CheckIfHooked(i, hookComparison);
-                KillerOverlayController.Instance.CheckIfUnhooked(i, hookComparison);
+                KillerOverlayController.Instance.HookedCheck(i, hookComparison);
+                KillerOverlayController.Instance.UnhookedCheck(i, hookComparison);
 
                 var escapedComparison = is2v8Mode
                     ? Math.Max(Math.Max(Math.Max(piece.Compare(SurvivorStates.Escaped_2v8_0), piece.Compare(SurvivorStates.Escaped_2v8_1)),
@@ -172,7 +171,7 @@ namespace DBDOverlay.Core.ImageProcessing
                         { "Dead", piece.Compare(SurvivorStates.Dead) }
                     };
 
-                KillerOverlayController.Instance.CheckIfRefreshed(i, refreshStates);
+                KillerOverlayController.Instance.RefreshedCheck(i, refreshStates);
                 srcRect.Y += height;
                 piece.Dispose();
             }
@@ -216,8 +215,8 @@ namespace DBDOverlay.Core.ImageProcessing
                     piece.Save(FileSystem.GetImagePath($"survivor_{i}"), ImageFormat.Png);
                     Logger.Info($"--- Survivor {i} 'Hooked' image similarity = {hookComparison * 100} %");
                 }
-                KillerOverlayController.Instance.CheckIfHooked(i, hookComparison);
-                KillerOverlayController.Instance.CheckIfUnhooked(i, hookComparison);
+                KillerOverlayController.Instance.HookedCheck(i, hookComparison);
+                KillerOverlayController.Instance.UnhookedCheck(i, hookComparison);
 
                 var refreshStates = new Dictionary<string, double>
                     {
@@ -226,7 +225,7 @@ namespace DBDOverlay.Core.ImageProcessing
                         { "Dead", piece.Find(SurvivorStates.Dead) }
                     };
 
-                KillerOverlayController.Instance.CheckIfRefreshed(i, refreshStates);
+                KillerOverlayController.Instance.RefreshedCheck(i, refreshStates);
                 rect.Y += height;
                 piece.Dispose();
             }

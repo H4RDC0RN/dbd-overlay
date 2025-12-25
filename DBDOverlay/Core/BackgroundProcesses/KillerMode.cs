@@ -1,28 +1,34 @@
 ﻿using DBDOverlay.Core.ImageProcessing;
+using DBDOverlay.Properties;
 
 namespace DBDOverlay.Core.BackgroundProcesses
 {
     public class KillerMode : BaseBackgroundProcess
     {
-        public bool IsHookMode { get; set; } = false;
-        public bool IsPostUnhookTimerMode { get; set; } = false;
-        public bool Is2v8Mode { get; set; } = false;
-
         private static KillerMode instance;
 
         public static KillerMode Instance
         {
             get
             {
-                if (instance == null)
-                    instance = new KillerMode();
+                if (instance == null) instance = new KillerMode();
                 return instance;
             }
         }
 
         protected override void Action()
         {
-            ImageReader.Instance.HandleSurvivors(Is2v8Mode);
+            ImageReader.Instance.HandleSurvivors(Settings.Default.Is2v8Mode);
+        }
+
+        public void RunConditional()
+        {
+            if (!IsActive) Run();
+        }
+
+        public void StopConditional()
+        {
+            if (!Settings.Default.IsHookMode && !Settings.Default.IsPostUnhookTimerMode && !Settings.Default.IsSidePanelMode) Stop();
         }
     }
 }

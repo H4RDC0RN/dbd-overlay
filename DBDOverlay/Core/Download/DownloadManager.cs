@@ -37,8 +37,7 @@ namespace DBDOverlay.Core.Download
         {
             get
             {
-                if (instance == null)
-                    instance = new DownloadManager();
+                if (instance == null) instance = new DownloadManager();
                 return instance;
             }
         }

@@ -35,7 +35,7 @@
                        Style="{StaticResource TextBlockStyle}"/>
 
             <TextBlock Grid.Row="3" 
-                       Text="Non-overlay mode"
+                       Text="Side panel"
                        Style="{StaticResource TextBlockStyle}"/>
 
             <custom:CustomToggleButton x:Name="HooksToggleButton"
@@ -62,13 +62,13 @@
                             Checked="Mode2v8_Checked"
                             Unchecked="Mode2v8_Unchecked"/>
 
-            <custom:CustomToggleButton x:Name="NonOverlayToggleButton"
+            <custom:CustomToggleButton x:Name="SidePanelToggleButton"
                             Grid.Row="3"
                             Grid.Column="1"
                             HorizontalAlignment="Center"
                             Style="{StaticResource ToggleButtonStyle}"
-                            Checked="NonOverlay_Checked"
-                            Unchecked="NonOverlay_Unchecked"/>
+                            Checked="SidePanel_Checked"
+                            Unchecked="SidePanel_Unchecked"/>
         </Grid>
 
         <Button x:Name="ResetButton"
