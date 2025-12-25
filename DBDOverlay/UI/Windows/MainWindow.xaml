@@ -90,7 +90,7 @@
             <Border x:Name="MenuBorder"
                     Grid.Row="1"
                     Grid.Column="1"
-                    Background="#1d2327"
+                    Background="{DynamicResource DarkGrayBrush}"
                     Height="{Binding RelativeSource={RelativeSource FindAncestor, 
                              AncestorType={x:Type Grid}}, Path=ActualHeight}"
                     Width="2"

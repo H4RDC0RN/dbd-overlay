@@ -4,6 +4,7 @@ using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.Windows;
 using DBDOverlay.Properties;
+using DBDOverlay.UI.Styles;
 using System;
 using System.Drawing;
 using System.Windows;
@@ -31,6 +32,7 @@ namespace DBDOverlay.UI.Windows.Overlays
             base.OnSourceInitialized(e);
             DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(this);
             KillerOverlayController.Instance.SetTimers();
+            App.Current.MainWindow.Owner = this;
         }
 
         private void OverlayMouseDown(object sender, MouseButtonEventArgs e)
@@ -157,17 +159,21 @@ namespace DBDOverlay.UI.Windows.Overlays
         public void SetKillerWindowStartPosition()
         {
             Left = App.Current.MainWindow.Left + App.Current.MainWindow.ActualWidth - ActualWidth;
-            Top = App.Current.MainWindow.Top;
+            Top = App.Current.MainWindow.Top + 30;
         }
 
         public void SetKillerWindowShowPosition()
         {
             Left = App.Current.MainWindow.Left + App.Current.MainWindow.ActualWidth;
-            Top = App.Current.MainWindow.Top;
+            Top = App.Current.MainWindow.Top + 30;
         }
 
         public void ShowSidePanel()
         {
+            KillerMode.Instance.RunConditional();
+            Topmost = false;
+            MainGridBorder.CornerRadius = new CornerRadius(0, 10, 10, 0);
+            MainGridBorder.Background = Palette.DarkGrayBrush;
             SetKillerWindowShowPosition();
             ShowHooks();
             ShowTimer();
@@ -175,6 +181,7 @@ namespace DBDOverlay.UI.Windows.Overlays
 
         public void HideSidePanel()
         {
+            KillerMode.Instance.StopConditional();
             HideHooks();
             HideTimer();
             SetKillerWindowStartPosition();

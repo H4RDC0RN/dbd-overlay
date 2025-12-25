@@ -28,7 +28,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
 
         public void StopConditional()
         {
-            if (!Settings.Default.IsHookMode && !Settings.Default.IsPostUnhookTimerMode && !Settings.Default.IsSidePanelMode) Stop();
+            if (Settings.Default.IsHookMode || Settings.Default.IsPostUnhookTimerMode || Settings.Default.IsSidePanelMode) Stop();
         }
     }
 }

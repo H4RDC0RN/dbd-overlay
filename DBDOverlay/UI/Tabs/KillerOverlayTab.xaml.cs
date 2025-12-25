@@ -92,9 +92,9 @@ namespace DBDOverlay.UI.Tabs
 
         private void SidePanel_Unchecked(object sender, RoutedEventArgs e)
         {
-            Settings.Default.IsSidePanelMode = false;
-            Settings.Default.Save();
             if (SidePanelToggleButton.IsVisible) KillerOverlayController.Window.HideSidePanel();
+            Settings.Default.IsSidePanelMode = false;
+            Settings.Default.Save();            
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)

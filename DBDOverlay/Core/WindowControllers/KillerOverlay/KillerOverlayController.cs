@@ -109,6 +109,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
                     HandleAction(KillerOverlayAction.ResetHooks, index);
                     Survivors[index] = new Survivor();
                     HandleAction(KillerOverlayAction.SetTimerValue, index, defaultTimerValue);
+                    HandleAction(KillerOverlayAction.SetDefaultTimer, index);
                 });
             }
         }

@@ -152,8 +152,7 @@ namespace DBDOverlay.Core.ImageProcessing
                     Logger.Info($"--- Survivor {i} 'Hooked' image similarity = {hookComparison * 100} %");
                 }
                 KillerOverlayController.Instance.HookedCheck(i, hookComparison);
-                KillerOverlayController.Instance.UnhookedCheck(i, hookComparison);
-
+                
                 var escapedComparison = is2v8Mode
                     ? Math.Max(Math.Max(Math.Max(piece.Compare(SurvivorStates.Escaped_2v8_0), piece.Compare(SurvivorStates.Escaped_2v8_1)),
                       piece.Compare(SurvivorStates.Escaped_2v8_2)), piece.Compare(SurvivorStates.Escaped_2v8_3))
@@ -172,6 +171,7 @@ namespace DBDOverlay.Core.ImageProcessing
                     };
 
                 KillerOverlayController.Instance.RefreshedCheck(i, refreshStates);
+                KillerOverlayController.Instance.UnhookedCheck(i, hookComparison);
                 srcRect.Y += height;
                 piece.Dispose();
             }
