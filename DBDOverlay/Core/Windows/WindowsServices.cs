@@ -149,11 +149,7 @@ namespace DBDOverlay.Core.Windows
             var sb = new StringBuilder(nChars);
             var handle = GetForegroundWindow();
 
-            if (GetWindowText(handle, sb, nChars) > 0)
-            {
-                return sb.ToString();
-            }
-            return string.Empty;
+            return (GetWindowText(handle, sb, nChars) > 0) ? sb.ToString() : string.Empty;
         }
     }
 }

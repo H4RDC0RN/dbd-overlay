@@ -101,7 +101,7 @@ namespace DBDOverlay.UI.Windows.Overlays
             if (!HooksGrid.IsVisible) Hide();
         }
 
-        public void ShowMoreSurvivors()
+        public void ShowMoreSurvivors(bool resetPosition = true)
         {
             var autoValue = (GridLength)new GridLengthConverter().ConvertFrom("*");
             for (int i = 4; i < 8; i++)
@@ -110,11 +110,11 @@ namespace DBDOverlay.UI.Windows.Overlays
                 HooksGrid.RowDefinitions[i].Height = autoValue;
                 SurvivorsAreaGrid.RowDefinitions[i].Height = autoValue;
             }
-            SetBounds(true);
+            SetBounds(true, resetPosition);
             KillerOverlayController.Instance.ResetSurvivors(true);
         }
 
-        public void HideMoreSurvivors()
+        public void HideMoreSurvivors(bool resetPosition = true)
         {
             var zeroValue = (GridLength)new GridLengthConverter().ConvertFrom("0");
             for (int i = 4; i < 8; i++)
@@ -123,7 +123,7 @@ namespace DBDOverlay.UI.Windows.Overlays
                 HooksGrid.RowDefinitions[i].Height = zeroValue;
                 SurvivorsAreaGrid.RowDefinitions[i].Height = zeroValue;
             }
-            SetBounds();
+            SetBounds(false, resetPosition);
             KillerOverlayController.Instance.ResetSurvivors();
         }
 
@@ -154,7 +154,33 @@ namespace DBDOverlay.UI.Windows.Overlays
             Settings.Default.Save();
         }
 
-        private void SetBounds(bool is2v8Mode = false)
+        public void SetKillerWindowStartPosition()
+        {
+            Left = App.Current.MainWindow.Left + App.Current.MainWindow.ActualWidth - ActualWidth;
+            Top = App.Current.MainWindow.Top;
+        }
+
+        public void SetKillerWindowShowPosition()
+        {
+            Left = App.Current.MainWindow.Left + App.Current.MainWindow.ActualWidth;
+            Top = App.Current.MainWindow.Top;
+        }
+
+        public void ShowSidePanel()
+        {
+            SetKillerWindowShowPosition();
+            ShowHooks();
+            ShowTimer();
+        }
+
+        public void HideSidePanel()
+        {
+            HideHooks();
+            HideTimer();
+            SetKillerWindowStartPosition();
+        }
+
+        private void SetBounds(bool is2v8Mode = false, bool resetPosition = true)
         {
             var overlayRect = is2v8Mode ? Settings.Default.Killer2v8OverlayRect : Settings.Default.KillerOverlayRect;
             if (overlayRect != string.Empty)
@@ -167,16 +193,19 @@ namespace DBDOverlay.UI.Windows.Overlays
             }
             else
             {
-                SetDefaultBounds(is2v8Mode);
+                SetDefaultBounds(is2v8Mode, resetPosition);
             }
         }
 
-        private void SetDefaultBounds(bool is2v8Mode = false)
+        private void SetDefaultBounds(bool is2v8Mode = false, bool resetPosition = true)
         {
             var rectType = is2v8Mode ? RectType.Survivors2v8 : RectType.Survivors;
             var rect = ImageReader.Instance.GetRect(rectType, SystemParameters.PrimaryScreenWidth.Round(), SystemParameters.PrimaryScreenHeight.Round());
-            Left = rect.Left - (rect.Width / 2);
-            Top = rect.Top;
+            if (resetPosition)
+            {
+                Left = rect.Left - (rect.Width / 2);
+                Top = rect.Top;
+            }
             Width = rect.Width * 2;
             Height = rect.Height;
             CurrentRect = new Rectangle((int)Left, (int)Top, (int)Width, (int)Height);

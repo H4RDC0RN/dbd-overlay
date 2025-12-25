@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Windows;
 using Path = System.IO.Path;
 
 namespace DBDOverlay.Core.Extensions

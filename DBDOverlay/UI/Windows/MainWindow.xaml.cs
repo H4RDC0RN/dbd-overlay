@@ -1,13 +1,14 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using Application = System.Windows.Application;
-using Logger = DBDOverlay.Core.Utils.Logger;
-using Window = System.Windows.Window;
-using DBDOverlay.Core.Hotkeys;
+﻿using DBDOverlay.Core.Hotkeys;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Core.Windows;
 using DBDOverlay.UI.Tabs;
+using System;
+using System.Windows;
+using System.Windows.Input;
+using Application = System.Windows.Application;
+using Logger = DBDOverlay.Core.Utils.Logger;
+using Window = System.Windows.Window;
 
 namespace DBDOverlay.UI.Windows
 {
@@ -22,13 +23,15 @@ namespace DBDOverlay.UI.Windows
         public MainWindow()
         {
             InitializeComponent();
-
+            
             mapOverlayTab = new MapOverlayTabView();
             killerOverlayTab = new KillerOverlayTabView();
             reshadeTab = new ReshadeTabView();
             settingsTab = new SettingsTabView();
             aboutTab = new AboutTabView();
+
             MapOverlayTab.IsChecked = true;
+            LocationChanged += MainWindow_LocationChanged;
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
@@ -67,12 +70,18 @@ namespace DBDOverlay.UI.Windows
             WindowState = WindowState.Minimized;
         }
 
+        private void MainWindow_LocationChanged(object sender, EventArgs e)
+        {
+            KillerOverlayController.Window.SetKillerWindowShowPosition();
+        }
+
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
             Logger.Info("---Close Application---");
             HotKeysController.Dispose();
             MapOverlayController.Overlay.Close();
             KillerOverlayController.Overlay.Close();
+            KillerOverlayController.Window.Close();
             Close();
             WindowsServices.Instance.CloseRedundantProcesses();
             Application.Current.Shutdown();

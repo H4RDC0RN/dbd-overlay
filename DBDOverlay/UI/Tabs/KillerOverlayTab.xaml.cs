@@ -78,6 +78,7 @@ namespace DBDOverlay.UI.Tabs
         private void Mode2v8_Checked(object sender, RoutedEventArgs e)
         {
             KillerOverlayController.Overlay.ShowMoreSurvivors();
+            KillerOverlayController.Window.ShowMoreSurvivors(false);
             KillerMode.Instance.Is2v8Mode = true;
             Settings.Default.Is2v8Mode = true;
             Settings.Default.Save();
@@ -86,6 +87,7 @@ namespace DBDOverlay.UI.Tabs
         private void Mode2v8_Unchecked(object sender, RoutedEventArgs e)
         {
             KillerOverlayController.Overlay.HideMoreSurvivors();
+            KillerOverlayController.Window.HideMoreSurvivors(false);
             KillerMode.Instance.Is2v8Mode = false;
             Settings.Default.Is2v8Mode = false;
             Settings.Default.Save();
@@ -165,6 +167,16 @@ namespace DBDOverlay.UI.Tabs
         private void UpdateImageSource(int threshold)
         {
             //SurvivorsAreaImage.Source = new Bitmap(currentImage).PreProcess(threshold: threshold).ToBitmapImage();
+        }
+
+        private void NonOverlay_Checked(object sender, RoutedEventArgs e)
+        {
+            KillerOverlayController.Window.ShowSidePanel();
+        }
+
+        private void NonOverlay_Unchecked(object sender, RoutedEventArgs e)
+        {
+            KillerOverlayController.Window.HideSidePanel();
         }
     }
 }

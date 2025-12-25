@@ -2,6 +2,7 @@
 using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.Reshade;
 using DBDOverlay.Core.Utils;
+using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.Loading;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Properties;
@@ -57,6 +58,7 @@ namespace DBDOverlay
             Current.MainWindow = new MainWindow();
             LoadingWindowController.Window.Close();
             Current.MainWindow.Show();
+            KillerOverlayController.Window.SetKillerWindowStartPosition();
         }
 
         private void ReloadSettings()
