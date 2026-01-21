@@ -2,6 +2,7 @@
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Core.Windows;
+using DBDOverlay.Properties;
 using DBDOverlay.UI.Tabs;
 using System;
 using System.Windows;
@@ -23,7 +24,7 @@ namespace DBDOverlay.UI.Windows
         public MainWindow()
         {
             InitializeComponent();
-            
+
             mapOverlayTab = new MapOverlayTabView();
             killerOverlayTab = new KillerOverlayTabView();
             reshadeTab = new ReshadeTabView();
@@ -72,7 +73,9 @@ namespace DBDOverlay.UI.Windows
 
         private void MainWindow_LocationChanged(object sender, EventArgs e)
         {
-            KillerOverlayController.Window.SetKillerWindowShowPosition();
+            if (!IsVisible) return;
+            if (Settings.Default.IsSidePanelMode) KillerOverlayController.Window.SetKillerWindowShowPosition();
+            else KillerOverlayController.Window.SetKillerWindowHiddenPosition();
         }
 
         private void ExitButtonClick(object sender, RoutedEventArgs e)

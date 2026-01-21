@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 
@@ -21,10 +22,11 @@ namespace DBDOverlay.UI.Windows.Overlays
         public int DefaultStyle { get; set; }
         public Rectangle CurrentRect { get; set; }
 
-        public KillerOverlayWindow()
+        public KillerOverlayWindow(bool isTopMost = true)
         {
             InitializeComponent();
             SetBounds();
+            Topmost = isTopMost;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -156,35 +158,66 @@ namespace DBDOverlay.UI.Windows.Overlays
             Settings.Default.Save();
         }
 
-        public void SetKillerWindowStartPosition()
+        public void SetKillerWindowHiddenPosition()
         {
-            Left = App.Current.MainWindow.Left + App.Current.MainWindow.ActualWidth - ActualWidth;
-            Top = App.Current.MainWindow.Top + 30;
+            Left = GetLeftSidePanel(false);
+            Top = GetTopSidePanel();
         }
 
         public void SetKillerWindowShowPosition()
         {
-            Left = App.Current.MainWindow.Left + App.Current.MainWindow.ActualWidth;
-            Top = App.Current.MainWindow.Top + 30;
+            Left = GetLeftSidePanel();
+            Top = GetTopSidePanel();
         }
 
         public void ShowSidePanel()
         {
             KillerMode.Instance.RunConditional();
-            Topmost = false;
             MainGridBorder.CornerRadius = new CornerRadius(0, 10, 10, 0);
             MainGridBorder.Background = Palette.DarkGrayBrush;
-            SetKillerWindowShowPosition();
-            ShowHooks();
-            ShowTimer();
+            SetHooksVisibility(Visibility.Visible);
+            SetTimerVisibility(Visibility.Visible);
+            Show();
+            MoveWindow(GetLeftSidePanel(), GetTopSidePanel());
         }
 
         public void HideSidePanel()
         {
             KillerMode.Instance.StopConditional();
-            HideHooks();
-            HideTimer();
-            SetKillerWindowStartPosition();
+            MoveWindow(GetLeftSidePanel(false), GetTopSidePanel());
+            SetHooksVisibility(Visibility.Hidden);
+            SetTimerVisibility(Visibility.Hidden);
+        }
+
+        private double GetLeftSidePanel(bool show = true) => App.Current.MainWindow.Left + App.Current.MainWindow.ActualWidth - (show ? 0 : Width + 5);
+        private double GetTopSidePanel() => App.Current.MainWindow.Top + 30;
+
+        private void MoveWindow(double newLeft, double newTop)
+        {
+
+            var duration = TimeSpan.FromMilliseconds(300);
+
+            var leftAnim = new DoubleAnimation
+            {
+                To = newLeft,
+                Duration = duration,
+                FillBehavior = FillBehavior.Stop,
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+            };
+
+            var topAnim = new DoubleAnimation
+            {
+                To = newTop,
+                Duration = duration,
+                FillBehavior = FillBehavior.Stop,
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+            };
+
+            BeginAnimation(LeftProperty, leftAnim);
+            BeginAnimation(TopProperty, topAnim);
+
+            Left = newLeft;
+            Top = newTop;
         }
 
         private void SetBounds(bool resetPosition = true)

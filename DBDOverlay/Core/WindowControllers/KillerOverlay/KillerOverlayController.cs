@@ -57,7 +57,7 @@ namespace DBDOverlay.Core.WindowControllers.KillerOverlay
         {
             get
             {
-                if (killerOverlayWindow == null) killerOverlayWindow = new KillerOverlayWindow();
+                if (killerOverlayWindow == null) killerOverlayWindow = new KillerOverlayWindow(false);
                 return killerOverlayWindow;
             }
         }
