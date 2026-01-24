@@ -80,7 +80,7 @@
                         Click="RefreshFilters_Click">
                     <Button.Content>
                         <Image x:Name="RefreshFiltersImage" 
-               Source="/Images/App/refresh.png">
+                               Source="/Images/App/refresh.png">
                         </Image>
                     </Button.Content>
                 </Button>
@@ -93,10 +93,17 @@
                    Foreground="White"
                    FontSize="12"
                    VerticalAlignment="Center"
-                   Margin="0,4,0,0"
                    HorizontalAlignment="Center"/>
         </Grid>
 
+        <Label Grid.Row="1"
+               x:Name="AppfilterInfoLabel"
+               Content="Test text"
+               Foreground="White"
+               FontSize="12"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"/>
+        
         <Button Grid.Row="1"
                 x:Name="ResetButton"
                 Style="{StaticResource ButtonStyle}"
@@ -111,8 +118,8 @@
                 Click="Reset_Click"/>
 
         <ScrollViewer x:Name="FiltersScrollViewer"
-              Grid.Row="2"
-              Style="{StaticResource ScrollViewerStyle}">
+                      Grid.Row="2"
+                      Style="{StaticResource ScrollViewerStyle}">
             <Grid x:Name="MapFiltersGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

@@ -1,29 +1,47 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
 
 namespace DBDOverlay.Core.CustomItems
 {
     public class ReadOnlyTextBox : TextBox
     {
-        private ScrollViewer _scrollViewer;
-        private ScrollBar _scrollBar;
+        private ScrollViewer scrollViewer;
+        private ScrollBar scrollBar;
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            _scrollViewer = GetTemplateChild("PART_ContentHost") as ScrollViewer;
-            _scrollBar = GetTemplateChild("PART_HorizontalScrollBar") as ScrollBar;
+            scrollViewer = GetTemplateChild("PART_ContentHost") as ScrollViewer;
+            scrollBar = GetTemplateChild("PART_HorizontalScrollBar") as ScrollBar;
 
-            if (_scrollViewer != null && _scrollBar != null)
+            if (scrollViewer != null && scrollBar != null)
             {
-                _scrollBar.Scroll += ScrollBar_Scroll;
+                scrollBar.Scroll += ScrollBar_Scroll;
             }
+
+            TextChanged -= OnTextChangedInternal;
+            TextChanged += OnTextChangedInternal;
         }
 
         private void ScrollBar_Scroll(object sender, ScrollEventArgs e)
         {
-            _scrollViewer?.ScrollToHorizontalOffset(e.NewValue);
+            scrollViewer?.ScrollToHorizontalOffset(e.NewValue);
+        }
+
+        private void OnTextChangedInternal(object sender, TextChangedEventArgs e)
+        {
+            if (scrollViewer == null || scrollBar == null)
+                return;
+
+            Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
+                (Action)(() =>
+                    {
+                        scrollViewer.ScrollToHorizontalOffset(0);
+                        scrollBar.Value = 0;
+                    }));
         }
     }
 }

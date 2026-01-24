@@ -5,6 +5,7 @@ namespace DBDOverlay.UI.Styles
 {
     public static class Palette
     {
+        public static SolidColorBrush WhiteGrayBrush => GetSolidBrushFromResources("WhiteGrayBrush");
         public static SolidColorBrush RedLightBrush => GetSolidBrushFromResources("RedLightBrush");
         public static SolidColorBrush DarkGrayBrush => GetSolidBrushFromResources("DarkGrayBrush");
         public static SolidColorBrush DarkestGrayBrush => GetSolidBrushFromResources("DarkestGrayBrush");

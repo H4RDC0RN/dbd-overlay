@@ -126,11 +126,13 @@ namespace DBDOverlay.UI.Tabs
             if (folderPath.Equals(string.Empty))
             {
                 ReShadePathTextBox.Text = reshadeFolderPlaceholder;
+                ReShadePathTextBox.Foreground = Palette.WhiteGrayBrush;
                 ReShadePathTextBox.Background = Palette.RedLightBrush;
             }
             else
             {
                 ReShadePathTextBox.Text = folderPath;
+                ReShadePathTextBox.Foreground = Palette.WhiteBrush;
                 ReShadePathTextBox.Background = Palette.WhiteBrush;
             }
         }
