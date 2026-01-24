@@ -2,7 +2,8 @@
 using DBDOverlay.Core.Reshade;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Properties;
-using Microsoft.Win32;
+using DBDOverlay.UI.Styles;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,11 +12,15 @@ namespace DBDOverlay.UI.Tabs
 {
     public partial class ReshadeTabView : UserControl
     {
+        private readonly string reshadeFolderPlaceholder = "Select ReShade folder with filters (.ini files)";
+
         public ReshadeTabView()
         {
             InitializeComponent();
             InitializeElements();
             SetComboboxValues();
+            UpdateReshadePath(Settings.Default.ReshadeFiltersPath);
+            UpdateFiltersStatus();
         }
 
         private void InitializeElements()
@@ -50,20 +55,29 @@ namespace DBDOverlay.UI.Tabs
             }
         }
 
-        private void Open_Click(object sender, RoutedEventArgs e)
+        private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog
+            var dialog = new CommonOpenFileDialog
             {
-                Filter = "Ini files (*.ini)|*.ini|All files (*.*)|*.*"
+                IsFolderPicker = true,
+                Title = "Select ReShade folder"
             };
-            if ((bool)openFileDialog.ShowDialog())
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                Settings.Default.ReshadeIniPath = openFileDialog.FileName;
-                Settings.Default.ReshadeMappings = string.Empty;
-                Settings.Default.Save();
-                ReshadeManager.Instance.Initialize(openFileDialog.FileName);
-                SetComboboxValues();
+                HandleReshadeFolder(dialog.FileName);
             }
+        }
+
+        private void ClearFolder_Click(object sender, RoutedEventArgs e)
+        {
+            HandleReshadeFolder(string.Empty);
+        }
+
+        private void RefreshFilters_Click(object sender, RoutedEventArgs e)
+        {
+            ReshadeManager.Instance.ReloadFilters();
+            SetComboboxValues();
+            UpdateFiltersStatus();
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)
@@ -72,7 +86,7 @@ namespace DBDOverlay.UI.Tabs
             {
                 comboBox.SelectedItem = null;
             }
-            ReshadeManager.Instance.ResetHotKeys();
+            ReshadeManager.Instance.ClearMapFilterPairs();
             Settings.Default.ReshadeMappings = string.Empty;
             Settings.Default.Save();
         }
@@ -80,7 +94,18 @@ namespace DBDOverlay.UI.Tabs
         private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = (ComboBox)sender;
-            if (comboBox.SelectedItem != null && comboBox.IsVisible) ReshadeManager.Instance.AddHotKey(comboBox.Name, comboBox.SelectedItem.ToString());
+            if (comboBox.SelectedItem != null && comboBox.IsVisible) ReshadeManager.Instance.AddFilterMapPair(comboBox.Name, comboBox.SelectedItem.ToString());
+        }
+
+        private void HandleReshadeFolder(string folderPath)
+        {
+            UpdateReshadePath(folderPath);
+            Settings.Default.ReshadeFiltersPath = folderPath;
+            Settings.Default.ReshadeMappings = string.Empty;
+            Settings.Default.Save();
+            ReshadeManager.Instance.Initialize(folderPath);
+            SetComboboxValues();
+            UpdateFiltersStatus();
         }
 
         private void SetComboboxValues()
@@ -93,6 +118,35 @@ namespace DBDOverlay.UI.Tabs
                 comboBox.ItemsSource = ReshadeManager.Instance.Filters;
                 var filterIndex = MappingsHandler.GetFilterIndex(mapIndex);
                 if (filterIndex != -1) comboBox.SelectedIndex = filterIndex;
+            }
+        }
+
+        private void UpdateReshadePath(string folderPath)
+        {
+            if (folderPath.Equals(string.Empty))
+            {
+                ReShadePathTextBox.Text = reshadeFolderPlaceholder;
+                ReShadePathTextBox.Background = Palette.RedLightBrush;
+            }
+            else
+            {
+                ReShadePathTextBox.Text = folderPath;
+                ReShadePathTextBox.Background = Palette.WhiteBrush;
+            }
+        }
+
+        private void UpdateFiltersStatus()
+        {
+            var filters = ReshadeManager.Instance.Filters;
+            if (filters != null && filters.Count > 0)
+            {
+                FiltersStatusLabel.Content = $"{filters.Count} filter(s) found ✓";
+                FiltersStatusLabel.Foreground = Palette.WhiteBrush;
+            }
+            else
+            {
+                FiltersStatusLabel.Content = $"No filters found ✕";
+                FiltersStatusLabel.Foreground = Palette.RedLightBrush;
             }
         }
     }

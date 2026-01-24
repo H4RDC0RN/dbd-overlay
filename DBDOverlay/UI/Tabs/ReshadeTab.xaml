@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DBDOverlay.UI.Tabs"
+             xmlns:custom="clr-namespace:DBDOverlay.Core.CustomItems"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500"
              Background="{DynamicResource DarkestGrayBrush}">
@@ -12,12 +13,106 @@
         <Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.84*"/>
-            <RowDefinition Height="0.16*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.7*"/>
         </Grid.RowDefinitions>
 
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.76*"/>
+                <ColumnDefinition Width="0.24*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.4*"/>
+            </Grid.RowDefinitions>
+            <custom:ReadOnlyTextBox Grid.Row="0"
+                     Grid.Column="0"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Center"
+                     x:Name="ReShadePathTextBox"
+                     Text="Test content Test content Test content Test content Test content Test content"
+                     Height="30"
+                     Margin="5,5,5,0"
+                     Style="{StaticResource TextBoxReadOnlyStyle}"/>
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left">
+                <Button Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        x:Name="OpenFolderButton"
+                        Style="{StaticResource ButtonStyle}"
+                        VerticalAlignment="Center"
+                        Width="30"
+                        Height="30"
+                        Margin="8,5,0,0"
+                        Click="OpenFolder_Click">
+                    <Button.Content>
+                        <Image x:Name="OpenFolderImage" 
+                               Source="/Images/App/open-folder.png">
+                        </Image>
+                    </Button.Content>
+                </Button>
+
+                <Button x:Name="ClearFolderButton"
+                        Style="{StaticResource ButtonStyle}"
+                        VerticalAlignment="Center"
+                        Width="30"
+                        Height="30"
+                        Margin="5,5,0,0"
+                        Click="ClearFolder_Click">
+                    <Button.Content>
+                        <Image x:Name="ClearFolderImage" 
+                               Source="/Images/App/clear-folder.png">
+                        </Image>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="RefreshFiltersButton"
+                        Style="{StaticResource ButtonStyle}"
+                        VerticalAlignment="Center"
+                        Width="30"
+                        Height="30"
+                        Margin="5,5,0,0"
+                        Click="RefreshFilters_Click">
+                    <Button.Content>
+                        <Image x:Name="RefreshFiltersImage" 
+               Source="/Images/App/refresh.png">
+                        </Image>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
+            <Label Grid.Row="1" 
+                   Grid.Column="0"
+                   x:Name="FiltersStatusLabel"
+                   Content="Test text"
+                   Foreground="White"
+                   FontSize="12"
+                   VerticalAlignment="Center"
+                   Margin="0,4,0,0"
+                   HorizontalAlignment="Center"/>
+        </Grid>
+
+        <Button Grid.Row="1"
+                x:Name="ResetButton"
+                Style="{StaticResource ButtonStyle}"
+                Content="Reset filters"
+                FontSize="16"
+                Foreground="White"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Width="100"
+                Height="30"
+                Margin="5"
+                Click="Reset_Click"/>
+
         <ScrollViewer x:Name="FiltersScrollViewer"
-                      Style="{StaticResource ScrollViewerStyle}">
+              Grid.Row="2"
+              Style="{StaticResource ScrollViewerStyle}">
             <Grid x:Name="MapFiltersGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -27,41 +122,6 @@
                 </Grid.RowDefinitions>
             </Grid>
         </ScrollViewer>
-
-        <StackPanel Grid.Row="2"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Bottom">
-            <Button x:Name="OpenButton"
-                    Style="{StaticResource ButtonStyle}"
-                    Content="Open"
-                    FontSize="16"
-                    Foreground="White"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Left"
-                    Width="70"
-                    Height="35"
-                    Margin="10"
-                    Click="Open_Click"/>
-
-            <Label x:Name="ReshadeIniPathLabel"
-                   Content="ReShade.ini"
-                   Foreground="White"
-                   FontSize="14"
-                   VerticalAlignment="Center"/>
-        </StackPanel>
-
-        <Button Grid.Row="2"
-                x:Name="ResetButton"
-                Style="{StaticResource ButtonStyle}"
-                Content="Reset"
-                FontSize="16"
-                Foreground="White"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right"
-                Width="70"
-                Height="35"
-                Margin="10"
-                Click="Reset_Click"/>
     </Grid>
 
 </UserControl>

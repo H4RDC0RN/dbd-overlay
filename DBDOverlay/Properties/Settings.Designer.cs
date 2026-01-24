@@ -206,12 +206,12 @@ namespace DBDOverlay.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ReshadeIniPath {
+        public string ReshadeFiltersPath {
             get {
-                return ((string)(this["ReshadeIniPath"]));
+                return ((string)(this["ReshadeFiltersPath"]));
             }
             set {
-                this["ReshadeIniPath"] = value;
+                this["ReshadeFiltersPath"] = value;
             }
         }
         

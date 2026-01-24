@@ -16,13 +16,16 @@
   <ItemGroup>
     <None Remove="Images\App\align-horizontal.png" />
     <None Remove="Images\App\align-vertical.png" />
+    <None Remove="Images\App\clear-folder.png" />
     <None Remove="Images\App\close.png" />
     <None Remove="Images\App\download.png" />
     <None Remove="Images\App\link.png" />
     <None Remove="Images\App\loading.png" />
     <None Remove="Images\App\logo.png" />
     <None Remove="Images\App\minimize.png" />
+    <None Remove="Images\App\open-folder.png" />
     <None Remove="Images\App\refresh.jpg" />
+    <None Remove="Images\App\refresh.png" />
     <None Remove="Images\Maps\AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png" />
     <None Remove="Images\Maps\AUTOHAVEN_WRECKERS\BLOOD_LODGE.png" />
     <None Remove="Images\Maps\AUTOHAVEN_WRECKERS\GAS_HEAVEN.png" />
@@ -136,6 +139,7 @@
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="3.0.3" />
+    <PackageReference Include="Microsoft.WindowsAPICodePack.Shell" Version="1.1.0" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.1" />
     <PackageReference Include="Tesseract" Version="5.2.0" />
   </ItemGroup>
@@ -143,10 +147,13 @@
   <ItemGroup>
     <Resource Include="Images\App\align-horizontal.png" />
     <Resource Include="Images\App\align-vertical.png" />
+    <Resource Include="Images\App\clear-folder.png" />
     <Resource Include="Images\App\download.png" />
     <Resource Include="Images\App\link.png" />
     <Resource Include="Images\App\loading.png" />
     <Resource Include="Images\App\logo.png" />
+    <Resource Include="Images\App\open-folder.png" />
+    <Resource Include="Images\App\refresh.png" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\AZAROVS_RESTING_PLACE.png" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\BLOOD_LODGE.png" />
     <Resource Include="Images\Maps\AUTOHAVEN_WRECKERS\GAS_HEAVEN.png" />

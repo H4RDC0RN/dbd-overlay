@@ -119,8 +119,6 @@
                         HorizontalAlignment="Center">
                 <Button x:Name="AlignHButton"
                         Margin="0,5,10,0"
-                        Foreground="White"
-                        FontSize="20"
                         VerticalAlignment="Center"
                         Width="30"
                         Height="30"
@@ -134,8 +132,6 @@
                 </Button>
                 <Button x:Name="AlignVButton"
                         Margin="10,5,0,0"
-                        Foreground="White"
-                        FontSize="20"
                         VerticalAlignment="Center"
                         Width="30"
                         Height="30"

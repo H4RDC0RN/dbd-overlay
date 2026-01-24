@@ -12,14 +12,13 @@
                     <Border
                         CornerRadius="6"
                         Background="{TemplateBinding Background}"
-                        BorderThickness="0"
-                        Width="10"/>
+                        BorderThickness="0"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="ScrollBarStyle" TargetType="{x:Type ScrollBar}">
+    <Style x:Key="VerticalScrollBarStyle" TargetType="{x:Type ScrollBar}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
@@ -29,12 +28,15 @@
                             <Thumb x:Name="ScrollThumb"
                                    Style="{StaticResource ScrollBarThumb}"
                                    Margin="2,0,2,0"
-                                   Background="{StaticResource RedBrush}" />
+                                   Width="10"
+                                   Background="{StaticResource RedBrush}"/>
                         </Track.Thumb>
                     </Track>
                     <ControlTemplate.Triggers>
                         <Trigger Property="UIElement.IsMouseOver" Value="True">
-                            <Setter Property="Thumb.Background" TargetName="ScrollThumb" Value="{StaticResource RedLightBrush}"/>
+                            <Setter Property="Thumb.Background" 
+                                    TargetName="ScrollThumb" 
+                                    Value="{StaticResource RedLightBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -78,7 +80,7 @@
                                    Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
                                    Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" 
                                    ViewportSize="{TemplateBinding ViewportHeight}"
-                                   Style="{StaticResource ScrollBarStyle}"/>
+                                   Style="{StaticResource VerticalScrollBarStyle}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

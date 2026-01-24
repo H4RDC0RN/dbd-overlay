@@ -1,23 +1,20 @@
-﻿using DBDOverlay.Core.Extensions;
-using DBDOverlay.Core.Utils;
+﻿using DBDOverlay.Core.Utils;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
-using DBDOverlay.Core.Windows;
+using DBDOverlay.Properties;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace DBDOverlay.Core.Reshade
 {
     public class ReshadeManager
     {
-        public List<ReshadeHotKey> Keys { get; private set; }
         public List<string> Filters { get; private set; }
 
-        private Dictionary<string, ReshadeHotKey> hotKeys;
-        private IniFile ini;
-        private readonly string keysFieldName = "PresetShortcutKeys";
-        private readonly string filtersFieldName = "PresetShortcutPaths";
+        private Dictionary<string, string> mapFilterPairs;
+        private string filtersPath;
 
         private static ReshadeManager instance;
 
@@ -32,63 +29,73 @@ namespace DBDOverlay.Core.Reshade
 
         public void Initialize(string path)
         {
-            Logger.Info($"Initializing file from '{path}'");
-            ini = new IniFile(path);
-            Keys = GetKeys();
-            Filters = GetFilters();
-            ResetHotKeys();
+            if (!path.Equals(string.Empty)) Logger.Info($"Initializing filters from '{path}'");
+            filtersPath = path;
+            Filters = GetFilters(path);
+            ClearMapFilterPairs();
+        }
+
+        public void ReloadFilters()
+        {
+            Initialize(filtersPath);
+        }
+
+        public void SetMapFilterPairs()
+        {
+            var path = Settings.Default.ReshadeFiltersPath;
+            if (!path.Equals(string.Empty))
+            {
+                Initialize(path);
+                var maps = MapNamesContainer.GetReshadeMapsList();
+                for (int mapIndex = 0; mapIndex < maps.Count; mapIndex++)
+                {
+                    var filterIndex = MappingsHandler.GetFilterIndex(mapIndex);
+                    if (filterIndex != -1) AddFilterMapPair(maps[mapIndex], filterIndex);
+                }
+            }
         }
 
         public void ApplyFilter(MapInfo mapInfo)
         {
             if (mapInfo == null) return;
-            var hotKey = hotKeys.FirstOrDefault(x => mapInfo.FullName.Contains(x.Key)).Value;
-            hotKey?.Press();
+            var filterName = mapFilterPairs.FirstOrDefault(x => mapInfo.FullName.Contains(x.Key)).Value;
+            if (filterName == null) return;
+
+            File.Copy(sourceFileName: $@"{filtersPath}{mapFilterPairs.FirstOrDefault(x => mapInfo.FullName.Contains(x.Key)).Value}.ini",
+                      destFileName: $@"{filtersPath}00-active.ini",
+                      overwrite: true);
+
+            File.AppendAllText($@"{filtersPath}00-active.ini", "\nupdated=" + DateTime.UtcNow.Ticks);
         }
 
-        public void AddHotKey(string map, string filter)
+        public void AddFilterMapPair(string map, string filter)
         {
             var filterIndex = Filters.IndexOf(filter);
-            AddHotKey(map, filterIndex);
+            AddFilterMapPair(map, filterIndex);
             Logger.Info($"New filter is mapped: Map = {map}, Filter = {filter}");
         }
 
-        public void AddHotKey(string map, int filterIndex)
+        public void AddFilterMapPair(string map, int filterIndex)
         {
-            hotKeys[map] = Keys[filterIndex];
-            MappingsHandler.AddEntry(hotKeys.Keys.ToList().IndexOf(map), filterIndex);
+            mapFilterPairs[map] = Filters[filterIndex];
+            MappingsHandler.AddEntry(mapFilterPairs.Keys.ToList().IndexOf(map), filterIndex);
         }
 
-        public void ResetHotKeys()
+        public void ClearMapFilterPairs()
         {
-            hotKeys = new Dictionary<string, ReshadeHotKey>();
+            mapFilterPairs = new Dictionary<string, string>();
             foreach (var map in MapNamesContainer.GetReshadeMapsList())
             {
-                hotKeys.Add(map, null);
+                mapFilterPairs.Add(map, null);
             }
         }
 
-        private List<ReshadeHotKey> GetKeys()
+        private List<string> GetFilters(string path)
         {
-            var keys = new List<ReshadeHotKey>();
-            var keysFieldValue = ini.Read(keysFieldName);
-            if (!keysFieldValue.Equals(string.Empty))
-            {
-                var values = keysFieldValue.Split(',');
-                for (int i = 0; i < values.Length; i += 4)
-                {
-                    keys.Add(new ReshadeHotKey((Keys)values[i].ToInt(), values[i + 1].ToBool(), values[i + 2].ToBool(), values[i + 3].ToBool()));
-                }
-            }
-            Logger.Info($"Reshade keys: {keysFieldValue}");
-            return keys;
-        }
-
-        private List<string> GetFilters()
-        {
-            var filtersFieldValue = ini.Read(filtersFieldName);
-            if (filtersFieldValue.Equals(string.Empty)) return new List<string>();
-            return filtersFieldValue.Split(',').Select(x => x.RegexMatch(@"(?<=\\)(?:.(?!\\))+(?=\.ini)")).ToList();
+            if (path.Equals(string.Empty)) return null;
+            return Directory.EnumerateFiles(path, "*.ini", SearchOption.TopDirectoryOnly)
+                .Select(Path.GetFileName)
+                .Where(f => !string.Equals(f, "ReShade.ini", StringComparison.OrdinalIgnoreCase)).ToList();
         }
     }
 }

@@ -40,7 +40,7 @@ namespace DBDOverlay
                 PresetAction("Checking for updates", DownloadManager.Instance.CheckForUpdate);
                 PresetAction("Checking default language", DownloadManager.Instance.DownloadDefaultLanguage);
                 PresetAction("Loading user settings", ReloadSettings);
-                PresetAction("Loading ReShade.ini", LoadReshadeIni);
+                PresetAction("Loading ReShade filters", ReshadeManager.Instance.SetMapFilterPairs);
                 PresetAction("Initializing Tesseract", ImageReader.Instance.Initialize);
             };
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(FinishLoading);
@@ -75,21 +75,6 @@ namespace DBDOverlay
                 Settings.Default.Upgrade();
                 Settings.Default.Reload();
                 Settings.Default.Save();
-            }
-        }
-
-        private void LoadReshadeIni()
-        {
-            var path = Settings.Default.ReshadeIniPath;
-            if (!path.Equals(string.Empty))
-            {
-                ReshadeManager.Instance.Initialize(path);
-                var maps = MapNamesContainer.GetReshadeMapsList();
-                for (int mapIndex = 0; mapIndex < maps.Count; mapIndex++)
-                {
-                    var filterIndex = MappingsHandler.GetFilterIndex(mapIndex);
-                    if (filterIndex != -1) ReshadeManager.Instance.AddHotKey(maps[mapIndex], filterIndex);
-                }
             }
         }
 

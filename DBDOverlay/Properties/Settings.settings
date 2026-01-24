@@ -47,7 +47,7 @@
     <Setting Name="IsPostUnhookTimerMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ReshadeIniPath" Type="System.String" Scope="User">
+    <Setting Name="ReshadeFiltersPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ReshadeMappings" Type="System.String" Scope="User">
