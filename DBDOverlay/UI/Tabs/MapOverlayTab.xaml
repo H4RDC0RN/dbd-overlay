@@ -97,16 +97,16 @@
                         <StackPanel>
                             <TextBlock FontWeight="Bold" 
                                        Style="{DynamicResource ToolTipTextBlockStyle}">
-                            To change position/size:
+                                To change position/size:
                             </TextBlock>
                             <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
-                            - Turn on
+                                - Turn on
                             </TextBlock>
                             <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
-                            - Drag map overlay
+                                - Drag map overlay
                             </TextBlock>
                             <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
-                            - Turn off
+                                - Turn off
                             </TextBlock>
                         </StackPanel>
                     </ToolTip>

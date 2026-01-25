@@ -8,8 +8,9 @@
         <Setter Property="Background" Value="{StaticResource WhiteGrayBrush}"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="CaretBrush" Value="White"/>
-        <Setter Property="Padding" Value="0,1,0,0"/>
+        <Setter Property="Padding" Value="5,0,5,0"/>
         <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate x:Name="TextBoxTemplate" TargetType="{x:Type TextBox}">
@@ -20,14 +21,37 @@
                             BorderBrush="{TemplateBinding Background}" 
                             SnapsToDevicePixels="True" 
                             Cursor="IBeam">
-                        <ScrollViewer x:Name="PART_ContentHost" 
-                                      Focusable="false" 
-                                      HorizontalScrollBarVisibility="Hidden" 
-                                      VerticalScrollBarVisibility="Hidden"/>
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                          Focusable="false" 
+                                          HorizontalScrollBarVisibility="Hidden" 
+                                          VerticalScrollBarVisibility="Hidden"
+                                          VerticalAlignment="Center"/>
+                            <TextBlock x:Name="Placeholder"
+                                       Text="{TemplateBinding Tag}"
+                                       Margin="4,0,0,0"
+                                       Foreground="{StaticResource LightGrayBrush}"
+                                       IsHitTestVisible="False"
+                                       VerticalAlignment="Center"
+                                       Visibility="Collapsed"/>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="Placeholder" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Placeholder" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource WhiteGrayBrush}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledGrayBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource WhiteGrayBrush}"/>
+                            <Setter Property="Cursor" Value="Arrow"/>
+                            <Setter Property="Opacity" Value="0.8"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -118,13 +142,13 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="TextWrapping" Value="NoWrap"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate x:Name="TextBoxTemplate" TargetType="{x:Type custom:ReadOnlyTextBox}">
                     <Grid>
                         <Border x:Name="Border" 
-                                Background="{StaticResource DarkGrayBrush}" 
+                                Background="Transparent" 
                                 Focusable="True" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 BorderBrush="{TemplateBinding Background}" 
@@ -140,7 +164,7 @@
                         <ScrollBar x:Name="PART_HorizontalScrollBar"
                                    Orientation="Horizontal"
                                    VerticalAlignment="Bottom"
-                                   Margin="0,0,0,-14"
+                                   Margin="0,0,0,-10"
                                    Cursor="Hand" 
                                    Style="{StaticResource HorizontalTextBoxScrollBarStyle}"
                                    Maximum="{Binding ElementName=PART_ContentHost, Path=ScrollableWidth}"

@@ -61,11 +61,9 @@ namespace DBDOverlay.Core.Reshade
             var filterName = mapFilterPairs.FirstOrDefault(x => mapInfo.FullName.Contains(x.Key)).Value;
             if (filterName == null) return;
 
-            File.Copy(sourceFileName: $@"{filtersPath}{mapFilterPairs.FirstOrDefault(x => mapInfo.FullName.Contains(x.Key)).Value}.ini",
-                      destFileName: $@"{filtersPath}00-active.ini",
-                      overwrite: true);
-
-            File.AppendAllText($@"{filtersPath}00-active.ini", "\nupdated=" + DateTime.UtcNow.Ticks);
+            var from = $"{filtersPath}{mapFilterPairs.FirstOrDefault(x => mapInfo.FullName.Contains(x.Key)).Value}";
+            var to = $"{filtersPath}{Settings.Default.MainFilterName}";
+            FileSystem.CopyIniFile(from, to);
         }
 
         public void AddFilterMapPair(string map, string filter)
@@ -93,9 +91,7 @@ namespace DBDOverlay.Core.Reshade
         private List<string> GetFilters(string path)
         {
             if (path.Equals(string.Empty)) return null;
-            return Directory.EnumerateFiles(path, "*.ini", SearchOption.TopDirectoryOnly)
-                .Select(Path.GetFileName)
-                .Where(f => !string.Equals(f, "ReShade.ini", StringComparison.OrdinalIgnoreCase)).ToList();
+            return FileSystem.GetIniFiles(path);
         }
     }
 }

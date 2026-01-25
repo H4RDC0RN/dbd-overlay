@@ -1,9 +1,11 @@
 ﻿using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Reshade;
+using DBDOverlay.Core.Utils;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Properties;
 using DBDOverlay.UI.Styles;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,15 +14,15 @@ namespace DBDOverlay.UI.Tabs
 {
     public partial class ReshadeTabView : UserControl
     {
-        private readonly string reshadeFolderPlaceholder = "Select ReShade folder with filters (.ini files)";
+        private readonly string reshadeFolderPlaceholder = "Select Reshade folder with filters (.ini files)";
 
         public ReshadeTabView()
         {
             InitializeComponent();
-            InitializeElements();
-            SetComboboxValues();
+            InitializeElements();            
             UpdateReshadePath(Settings.Default.ReshadeFiltersPath);
-            UpdateFiltersStatus();
+            UpdateFilters();
+            UpdateGenerateFilterUI();
         }
 
         private void InitializeElements()
@@ -64,20 +66,36 @@ namespace DBDOverlay.UI.Tabs
             };
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                HandleReshadeFolder(dialog.FileName);
+                HandleNewReshadeFolder(dialog.FileName);
             }
         }
 
         private void ClearFolder_Click(object sender, RoutedEventArgs e)
         {
-            HandleReshadeFolder(string.Empty);
+            HandleNewReshadeFolder(string.Empty);
         }
 
         private void RefreshFilters_Click(object sender, RoutedEventArgs e)
         {
             ReshadeManager.Instance.ReloadFilters();
-            SetComboboxValues();
-            UpdateFiltersStatus();
+            UpdateFilters();
+        }
+
+        private void GenerateFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (!IsValidFileName(MainFilterNameTextBox.Text)) return;
+            FileSystem.CreateFile(GetMainFilterPath(MainFilterNameTextBox.Text));
+            EnableGenerateFilterUI(false);
+            Settings.Default.MainFilterName = MainFilterNameTextBox.Text;
+            Settings.Default.Save();
+        }
+
+        private void DeleteFilter_Click(object sender, RoutedEventArgs e)
+        {
+            FileSystem.DeleteFile(GetMainFilterPath(Settings.Default.MainFilterName));
+            Settings.Default.MainFilterName = string.Empty;
+            Settings.Default.Save();
+            EnableGenerateFilterUI(!Settings.Default.ReshadeFiltersPath.Equals(string.Empty));
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)
@@ -97,15 +115,18 @@ namespace DBDOverlay.UI.Tabs
             if (comboBox.SelectedItem != null && comboBox.IsVisible) ReshadeManager.Instance.AddFilterMapPair(comboBox.Name, comboBox.SelectedItem.ToString());
         }
 
-        private void HandleReshadeFolder(string folderPath)
+        private void HandleNewReshadeFolder(string folderPath)
         {
+            if (folderPath.Equals(Settings.Default.ReshadeFiltersPath)) return;
             UpdateReshadePath(folderPath);
             Settings.Default.ReshadeFiltersPath = folderPath;
             Settings.Default.ReshadeMappings = string.Empty;
             Settings.Default.Save();
             ReshadeManager.Instance.Initialize(folderPath);
-            SetComboboxValues();
-            UpdateFiltersStatus();
+            UpdateFilters();
+            EnableGenerateFilterUI(!folderPath.Equals(string.Empty));
+            if (folderPath.Equals(string.Empty)) FileSystem.DeleteFile(GetMainFilterPath(Settings.Default.MainFilterName));
+            Settings.Default.MainFilterName = string.Empty;
         }
 
         private void SetComboboxValues()
@@ -126,19 +147,20 @@ namespace DBDOverlay.UI.Tabs
             if (folderPath.Equals(string.Empty))
             {
                 ReShadePathTextBox.Text = reshadeFolderPlaceholder;
-                ReShadePathTextBox.Foreground = Palette.WhiteGrayBrush;
-                ReShadePathTextBox.Background = Palette.RedLightBrush;
+                ReShadePathTextBox.Foreground = Palette.LightGrayBrush;
+                ReShadePathTextBox.BorderThickness = new Thickness(0, 0, 0, 1);
             }
             else
             {
                 ReShadePathTextBox.Text = folderPath;
                 ReShadePathTextBox.Foreground = Palette.WhiteBrush;
-                ReShadePathTextBox.Background = Palette.WhiteBrush;
+                ReShadePathTextBox.BorderThickness = new Thickness(0, 0, 0, 0);
             }
         }
 
-        private void UpdateFiltersStatus()
+        private void UpdateFilters()
         {
+            SetComboboxValues();
             var filters = ReshadeManager.Instance.Filters;
             if (filters != null && filters.Count > 0)
             {
@@ -150,6 +172,52 @@ namespace DBDOverlay.UI.Tabs
                 FiltersStatusLabel.Content = $"No filters found ✕";
                 FiltersStatusLabel.Foreground = Palette.RedLightBrush;
             }
+        }
+
+        private void UpdateGenerateFilterUI()
+        {
+            MainFilterNameTextBox.Text = Settings.Default.MainFilterName;
+            var isEnabled = !Settings.Default.ReshadeFiltersPath.Equals(string.Empty) && Settings.Default.MainFilterName.Equals(string.Empty);
+            EnableGenerateFilterUI(isEnabled);
+        }
+
+        private bool IsValidFileName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return false;
+
+            if (name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                return false;
+
+            if (name.EndsWith(" ") || name.EndsWith("."))
+                return false;
+
+            var baseName = Path.GetFileNameWithoutExtension(name)
+                               .TrimEnd('.', ' ')
+                               .ToUpperInvariant();
+
+            string[] reserved =
+            {
+                "CON","PRN","AUX","NUL",
+                "COM1","COM2","COM3","COM4","COM5","COM6","COM7","COM8","COM9",
+                "LPT1","LPT2","LPT3","LPT4","LPT5","LPT6","LPT7","LPT8","LPT9"
+            };
+
+            if (reserved.Contains(baseName))
+                return false;
+
+            return true;
+        }
+
+        private string GetMainFilterPath(string name)
+        {
+            return $@"{Settings.Default.ReshadeFiltersPath}\{name}.ini";
+        }
+
+        private void EnableGenerateFilterUI(bool isEnable)
+        {
+            MainFilterNameTextBox.IsEnabled = isEnable;
+            GenerateFilterButton.IsEnabled = isEnable;
         }
     }
 }

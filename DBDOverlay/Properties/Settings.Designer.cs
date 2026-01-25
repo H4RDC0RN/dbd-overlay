@@ -322,5 +322,17 @@ namespace DBDOverlay.Properties {
                 this["IsSidePanelMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MainFilterName {
+            get {
+                return ((string)(this["MainFilterName"]));
+            }
+            set {
+                this["MainFilterName"] = value;
+            }
+        }
     }
 }

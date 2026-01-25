@@ -4,17 +4,27 @@
     <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{StaticResource RedBrush}"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border CornerRadius="5"
+                    <Border x:Name="Border"
+                            CornerRadius="5"
                             Background="{TemplateBinding Background}">
                         <ContentPresenter VerticalAlignment="Center"
                                           HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource RedLightBrush}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource RedLightBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{StaticResource DisabledGrayBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource WhiteGrayBrush}"/>
+                            <Setter Property="Cursor" Value="Arrow"/>
+                            <Setter Property="Opacity" Value="0.8"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

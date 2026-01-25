@@ -148,6 +148,7 @@
     <Resource Include="Images\App\align-horizontal.png" />
     <Resource Include="Images\App\align-vertical.png" />
     <Resource Include="Images\App\clear-folder.png" />
+    <Resource Include="Images\App\close.png" />
     <Resource Include="Images\App\download.png" />
     <Resource Include="Images\App\link.png" />
     <Resource Include="Images\App\loading.png" />
