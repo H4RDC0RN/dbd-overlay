@@ -88,6 +88,11 @@ namespace DBDOverlay.Core.Reshade
             }
         }
 
+        public bool FilterExists(string name)
+        {
+            return FileSystem.IniExists($"{filtersPath}{name}");
+        }
+
         private List<string> GetFilters(string path)
         {
             if (path.Equals(string.Empty)) return null;

@@ -244,8 +244,8 @@
                             Path=Value, 
                             UpdateSourceTrigger=PropertyChanged}" 
                      VerticalAlignment="Center"
-                     Width="30" 
-                     Height="26"
+                     Width="34" 
+                     Height="30"
                      Margin="10,0,0,3"
                      FontSize="20"
                      TextAlignment="Center"

@@ -57,5 +57,38 @@ namespace DBDOverlay.Core.Utils
             File.Copy($"{from}.{ini}", $"{to}.{ini}", true);
             File.AppendAllText($"{to}.{ini}", "\nupdated=" + DateTime.UtcNow.Ticks);
         }
+
+        public static bool IniExists(string path)
+        {
+            return File.Exists($"{path}.{ini}");
+        }
+
+        public static bool IsValidFileName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return false;
+
+            if (name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                return false;
+
+            if (name.EndsWith(" ") || name.EndsWith("."))
+                return false;
+
+            var baseName = Path.GetFileNameWithoutExtension(name)
+                               .TrimEnd('.', ' ')
+                               .ToUpperInvariant();
+
+            string[] reserved =
+            {
+                "CON","PRN","AUX","NUL",
+                "COM1","COM2","COM3","COM4","COM5","COM6","COM7","COM8","COM9",
+                "LPT1","LPT2","LPT3","LPT4","LPT5","LPT6","LPT7","LPT8","LPT9"
+            };
+
+            if (reserved.Contains(baseName))
+                return false;
+
+            return true;
+        }
     }
 }
