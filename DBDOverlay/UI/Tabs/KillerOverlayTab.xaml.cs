@@ -87,14 +87,22 @@ namespace DBDOverlay.UI.Tabs
         {
             Settings.Default.IsSidePanelMode = true;
             Settings.Default.Save();
-            if (SidePanelToggleButton.IsVisible) KillerOverlayController.Window.ShowSidePanel();
+            if (SidePanelToggleButton.IsVisible)
+            {
+                KillerOverlayController.Window.ShowSidePanel();
+                KillerMode.Instance.RunConditional();
+            }
         }
 
         private void SidePanel_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (SidePanelToggleButton.IsVisible) KillerOverlayController.Window.HideSidePanel();
+            if (SidePanelToggleButton.IsVisible)
+            {
+                KillerOverlayController.Window.HideSidePanel();
+                KillerMode.Instance.StopConditional();
+            }
             Settings.Default.IsSidePanelMode = false;
-            Settings.Default.Save();            
+            Settings.Default.Save();
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)

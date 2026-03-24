@@ -13,20 +13,19 @@
         <Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.32*"/>
-            <RowDefinition Height="0.28*"/>
             <RowDefinition Height="0.4*"/>
+            <RowDefinition Height="0.6*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.76*"/>
-                <ColumnDefinition Width="0.24*"/>
+                <ColumnDefinition Width="0.74*"/>
+                <ColumnDefinition Width="0.26*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
             <custom:ReadOnlyTextBox Grid.Row="0"
@@ -99,6 +98,7 @@
                     Style="{StaticResource ButtonBackStyle}"
                     Content="Assign filters"
                     HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     Width="104"
                     Height="30"
                     FontSize="14"
@@ -119,7 +119,8 @@
             <StackPanel Grid.Row="2"
                         Grid.Column="1"
                         Orientation="Horizontal"
-                        HorizontalAlignment="Left">
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
                 <Button x:Name="GenerateFilterButton"
                         Style="{StaticResource ButtonBackStyle}"
                         Content="Generate"

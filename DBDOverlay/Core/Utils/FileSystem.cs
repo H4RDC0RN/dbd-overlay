@@ -35,21 +35,19 @@ namespace DBDOverlay.Core.Utils
 
         public static void CreateFile(string filePath)
         {
-            if (!File.Exists(filePath))
-                File.Create(filePath).Dispose();
+            if (!File.Exists(filePath)) File.Create(filePath).Dispose();
         }
 
         public static void DeleteFile(string filePath)
         {
-            if (File.Exists(filePath))
-                File.Delete(filePath);
+            if (File.Exists(filePath)) File.Delete(filePath);
         }
 
         public static List<string> GetIniFiles(string path)
         {
             return Directory.EnumerateFiles(path, $"*.{ini}", SearchOption.TopDirectoryOnly)
-                .Select(Path.GetFileName)
-                .Where(f => !string.Equals(f, $"{ReShade}.{ini}") && !string.Equals(f, $"{Settings.Default.MainFilterName}.{ini}")).ToList();
+                .Select(Path.GetFileNameWithoutExtension)
+                .Where(f => !string.Equals(f, $"{ReShade}") && !string.Equals(f, $"{Settings.Default.MainFilterName}")).ToList();
         }
 
         public static void CopyIniFile(string from, string to)

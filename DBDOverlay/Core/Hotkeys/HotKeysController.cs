@@ -1,5 +1,4 @@
-﻿using DBDOverlay.Core.BackgroundProcesses;
-using DBDOverlay.Core.ImageProcessing;
+﻿using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Properties;
 using System.Windows.Forms;

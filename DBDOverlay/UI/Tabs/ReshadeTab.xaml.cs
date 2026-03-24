@@ -5,8 +5,6 @@ using DBDOverlay.UI.Styles;
 using DBDOverlay.UI.Windows;
 using DBDOverlay.UI.Windows.Overlays;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -33,7 +31,7 @@ namespace DBDOverlay.UI.Tabs
             };
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                HandleNewReshadeFolder(dialog.FileName);
+                HandleNewReshadeFolder(dialog.FileName + @"\");
             }
         }
 
@@ -44,7 +42,7 @@ namespace DBDOverlay.UI.Tabs
 
         private void RefreshFilters_Click(object sender, RoutedEventArgs e)
         {
-            ReshadeManager.Instance.ReloadFilters();
+            ReshadeManager.Instance.Initialize();
             UpdateFilters();
             UpdateGenerateFilterUI();
         }
@@ -52,15 +50,15 @@ namespace DBDOverlay.UI.Tabs
         private void GenerateFilter_Click(object sender, RoutedEventArgs e)
         {
             if (!FileSystem.IsValidFileName(MainFilterNameTextBox.Text)) return;
-            FileSystem.CreateFile(GetMainFilterPath(MainFilterNameTextBox.Text));
-            EnableGenerateFilterUI(false);
             Settings.Default.MainFilterName = MainFilterNameTextBox.Text;
             Settings.Default.Save();
+            FileSystem.CreateFile(GetMainFilterPath());
+            EnableGenerateFilterUI(false);            
         }
 
         private void DeleteFilter_Click(object sender, RoutedEventArgs e)
         {
-            FileSystem.DeleteFile(GetMainFilterPath(Settings.Default.MainFilterName));
+            FileSystem.DeleteFile(GetMainFilterPath());
             Settings.Default.MainFilterName = string.Empty;
             Settings.Default.Save();
             EnableGenerateFilterUI(!Settings.Default.ReshadeFiltersPath.Equals(string.Empty));
@@ -96,10 +94,11 @@ namespace DBDOverlay.UI.Tabs
             Settings.Default.ReshadeFiltersPath = folderPath;
             Settings.Default.ReshadeMappings = string.Empty;
             Settings.Default.Save();
-            ReshadeManager.Instance.Initialize(folderPath);
+            ReshadeManager.Instance.Initialize();
             UpdateFilters();
-            EnableGenerateFilterUI(!folderPath.Equals(string.Empty));
-            if (folderPath.Equals(string.Empty)) FileSystem.DeleteFile(GetMainFilterPath(Settings.Default.MainFilterName));
+            var isFolderEmpty = folderPath.Equals(string.Empty);
+            EnableGenerateFilterUI(!isFolderEmpty);
+            if (isFolderEmpty) FileSystem.DeleteFile(GetMainFilterPath());
             Settings.Default.MainFilterName = string.Empty;
         }
 
@@ -153,9 +152,9 @@ namespace DBDOverlay.UI.Tabs
             }
         }
 
-        private string GetMainFilterPath(string name)
+        private string GetMainFilterPath()
         {
-            return $@"{Settings.Default.ReshadeFiltersPath}\{name}.ini";
+            return $@"{Settings.Default.ReshadeFiltersPath}\{Settings.Default.MainFilterName}.ini";
         }
 
         private void EnableGenerateFilterUI(bool isEnable)

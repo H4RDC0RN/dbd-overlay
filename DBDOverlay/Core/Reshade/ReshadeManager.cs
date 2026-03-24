@@ -2,9 +2,7 @@
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Properties;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace DBDOverlay.Core.Reshade
@@ -14,7 +12,6 @@ namespace DBDOverlay.Core.Reshade
         public List<string> Filters { get; private set; }
 
         private Dictionary<string, string> mapFilterPairs;
-        private string filtersPath;
 
         private static ReshadeManager instance;
 
@@ -27,25 +24,19 @@ namespace DBDOverlay.Core.Reshade
             }
         }
 
-        public void Initialize(string path)
+        public void Initialize()
         {
+            var path = Settings.Default.ReshadeFiltersPath;
             if (!path.Equals(string.Empty)) Logger.Info($"Initializing filters from '{path}'");
-            filtersPath = path;
             Filters = GetFilters(path);
             ClearMapFilterPairs();
         }
 
-        public void ReloadFilters()
-        {
-            Initialize(filtersPath);
-        }
-
         public void SetMapFilterPairs()
         {
-            var path = Settings.Default.ReshadeFiltersPath;
-            if (!path.Equals(string.Empty))
+            if (!Settings.Default.ReshadeFiltersPath.Equals(string.Empty))
             {
-                Initialize(path);
+                Initialize();
                 var maps = MapNamesContainer.GetReshadeMapsList();
                 for (int mapIndex = 0; mapIndex < maps.Count; mapIndex++)
                 {
@@ -61,7 +52,8 @@ namespace DBDOverlay.Core.Reshade
             var filterName = mapFilterPairs.FirstOrDefault(x => mapInfo.FullName.Contains(x.Key)).Value;
             if (filterName == null) return;
 
-            var from = $"{filtersPath}{mapFilterPairs.FirstOrDefault(x => mapInfo.FullName.Contains(x.Key)).Value}";
+            var filtersPath = Settings.Default.ReshadeFiltersPath;
+            var from = $"{filtersPath}{filterName}";
             var to = $"{filtersPath}{Settings.Default.MainFilterName}";
             FileSystem.CopyIniFile(from, to);
         }
@@ -90,7 +82,7 @@ namespace DBDOverlay.Core.Reshade
 
         public bool FilterExists(string name)
         {
-            return FileSystem.IniExists($"{filtersPath}{name}");
+            return FileSystem.IniExists($"{Settings.Default.ReshadeFiltersPath}{name}");
         }
 
         private List<string> GetFilters(string path)
