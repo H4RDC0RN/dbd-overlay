@@ -27,7 +27,8 @@ namespace DBDOverlay.Core.Reshade
         public void Initialize()
         {
             var path = Settings.Default.ReshadeFiltersPath;
-            if (!path.Equals(string.Empty)) Logger.Info($"Initializing filters from '{path}'");
+            if (path.Equals(string.Empty)) return;
+            Logger.Info($"Initializing filters from '{path}'");
             Filters = GetFilters(path);
             ClearMapFilterPairs();
         }
@@ -43,6 +44,10 @@ namespace DBDOverlay.Core.Reshade
                     var filterIndex = MappingsHandler.GetFilterIndex(mapIndex);
                     if (filterIndex != -1) AddFilterMapPair(maps[mapIndex], filterIndex);
                 }
+            }
+            else
+            {
+                ClearMapFilterPairs();
             }
         }
 

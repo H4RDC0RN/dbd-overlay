@@ -81,6 +81,7 @@ namespace DBDOverlay.UI.Windows
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
             Logger.Info("---Close Application---");
+            WindowsServices.Instance.StopMonitoring();
             HotKeysController.Dispose();
             MapOverlayController.Overlay.Close();
             KillerOverlayController.Overlay.Close();

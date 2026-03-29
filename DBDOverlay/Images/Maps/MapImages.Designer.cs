@@ -293,9 +293,9 @@ namespace DBDOverlay.Images.Maps {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LÉRYS_MEMORIAL_INSTITUTE_TREATMENT_THEATRE {
+        internal static System.Drawing.Bitmap LÉRYS_MEMORIAL_INSTITUTE_TREATMENT_THEATER {
             get {
-                object obj = ResourceManager.GetObject("LÉRYS_MEMORIAL_INSTITUTE.TREATMENT_THEATRE", resourceCulture);
+                object obj = ResourceManager.GetObject("LÉRYS_MEMORIAL_INSTITUTE.TREATMENT_THEATER", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

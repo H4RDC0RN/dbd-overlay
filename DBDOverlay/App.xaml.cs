@@ -4,7 +4,7 @@ using DBDOverlay.Core.Reshade;
 using DBDOverlay.Core.Utils;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.Loading;
-using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
+using DBDOverlay.Core.Windows;
 using DBDOverlay.Properties;
 using DBDOverlay.UI.Windows;
 using System;
@@ -59,6 +59,7 @@ namespace DBDOverlay
             LoadingWindowController.Window.Close();
             Current.MainWindow.Show();
             HandleSidePanel();
+            WindowsServices.Instance.StartMonitoring();
         }
 
         private void HandleSidePanel()

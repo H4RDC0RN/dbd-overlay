@@ -193,7 +193,7 @@
                                         Path=Value, 
                                         UpdateSourceTrigger=PropertyChanged}" 
                          VerticalAlignment="Center"
-                         Width="34" 
+                         Width="44" 
                          Height="30"
                          Margin="10,0,0,3"
                          FontSize="20"

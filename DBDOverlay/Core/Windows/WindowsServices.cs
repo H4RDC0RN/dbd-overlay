@@ -6,9 +6,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Interop;
+using Application = System.Windows.Application;
 
 namespace DBDOverlay.Core.Windows
 {
@@ -16,6 +17,8 @@ namespace DBDOverlay.Core.Windows
     {
         public event EventHandler<EventArgs> MapOverlayMoveModeOff;
         public event EventHandler<EventArgs> KillerOverlayMoveModeOff;
+        public bool IsMonitoringActive { get; private set; } = false;
+
         private readonly WinEventDelegate winEventDelegate;
         private static WindowsServices instance;
 
@@ -24,7 +27,6 @@ namespace DBDOverlay.Core.Windows
         private const uint WINEVENT_OUTOFCONTEXT = 0;
         private const uint EVENT_SYSTEM_FOREGROUND = 3;
 
-        private readonly string dbdWindowName = "DeadByDaylight";
         private readonly string dbdProcessName = "DeadByDaylight-Win64-Shipping";
         private readonly string appProcessName = "DBDOverlay";
         private readonly string appWindowName = "DBD Overlay";
@@ -67,19 +69,16 @@ namespace DBDOverlay.Core.Windows
         private static extern int GetForegroundWindow();
 
         [DllImport("user32.dll")]
+        static extern uint GetWindowThreadProcessId(int hWnd, out uint lpdwProcessId);
+
+        [DllImport("user32.dll")]
         static extern int GetWindowText(int hWnd, StringBuilder text, int count);
 
         public void HandleWindowEvent(int hWinEventHook, uint eventType,
             int hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
-            HandleHotkeys();
             HandleMapOverlayMoveMode();
             HandleKillerOverlayMoveMode();
-        }
-
-        public bool IsDBDActiveWindow()
-        {
-            return GetActiveWindowTitle().Contains(dbdWindowName);
         }
 
         public bool IsAppWindow()
@@ -103,16 +102,6 @@ namespace DBDOverlay.Core.Windows
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle);
         }
 
-        public void Send(string key)
-        {
-            var dbdProcess = Process.GetProcessesByName(dbdProcessName).First();
-            for (int i = 0; i < 5; i++)
-            {
-                if (SetForegroundWindow((int)dbdProcess.MainWindowHandle)) break;
-            }
-            SendKeys.SendWait(key);
-        }
-
         public void CloseRedundantProcesses()
         {
             var processes = Process.GetProcessesByName(appProcessName).OrderBy(x => x.StartTime).ToList();
@@ -120,9 +109,45 @@ namespace DBDOverlay.Core.Windows
             processes.ForEach(x => x.Kill());
         }
 
-        private void HandleHotkeys()
+        public void StartMonitoring(int interval = 200)
         {
-            if (IsDBDActiveWindow()) HotKeysController.RegisterAllHotKeys();
+            IsMonitoringActive = true;
+
+            Task.Run(async () =>
+            {
+                string lastValidProcess = null;
+
+                while (IsMonitoringActive)
+                {
+                    var handle = GetForegroundWindow();
+                    if (handle != 0)
+                    {
+                        GetWindowThreadProcessId(handle, out uint pid);
+                        if (pid != 0)
+                        {
+                            var process = Process.GetProcessById((int)pid);
+                            lastValidProcess = process.ProcessName;
+                        }
+                    }
+
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        HandleHotkeys(lastValidProcess == dbdProcessName);
+                    });
+
+                    await Task.Delay(interval);
+                }
+            });
+        }
+
+        public void StopMonitoring()
+        {
+            IsMonitoringActive = false;
+        }
+
+        private void HandleHotkeys(bool isWindowActive)
+        {
+            if (isWindowActive) HotKeysController.RegisterAllHotKeys();
             else HotKeysController.UnregisterAllHotKeys();
         }
 

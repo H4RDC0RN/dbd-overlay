@@ -1,22 +1,23 @@
 ﻿using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.Utils;
+using DBDOverlay.Core.WindowControllers.KillerOverlay;
+using DBDOverlay.Core.WindowControllers.MapOverlay;
+using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
+using DBDOverlay.Images.Maps;
 using DBDOverlay.Images.SurvivorStates;
 using DBDOverlay.Properties;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using Tesseract;
 using ImageFormat = System.Drawing.Imaging.ImageFormat;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Rectangle = System.Drawing.Rectangle;
-using System.Collections.Generic;
-using System;
-using DBDOverlay.Core.WindowControllers.KillerOverlay;
-using DBDOverlay.Core.WindowControllers.MapOverlay;
-using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
-using System.Threading;
 
 namespace DBDOverlay.Core.ImageProcessing
 {
@@ -337,7 +338,6 @@ namespace DBDOverlay.Core.ImageProcessing
         private MapInfo ConvertTextToMapInfo(bool autoMode = false, bool log = true)
         {
             var mapInfo = autoMode ? ConvertStartTextToMapInfo() : ConvertEscTextToMapInfo();
-            if (log) Logger.Info("Text is converted to 'Map info' object");
             if (log) Logger.Info($"Map info: realm = {mapInfo.Realm}, name = {mapInfo.Name}");
             return mapInfo;
         }
