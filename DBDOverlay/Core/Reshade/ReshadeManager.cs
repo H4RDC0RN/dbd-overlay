@@ -27,8 +27,7 @@ namespace DBDOverlay.Core.Reshade
         public void Initialize()
         {
             var path = Settings.Default.ReshadeFiltersPath;
-            if (path.Equals(string.Empty)) return;
-            Logger.Info($"Initializing filters from '{path}'");
+            if (!path.Equals(string.Empty)) Logger.Info($"Initializing filters from '{path}'");
             Filters = GetFilters(path);
             ClearMapFilterPairs();
         }
@@ -57,9 +56,20 @@ namespace DBDOverlay.Core.Reshade
             var filterName = mapFilterPairs.FirstOrDefault(x => mapInfo.FullName.Contains(x.Key)).Value;
             if (filterName == null) return;
 
+            CopyFilter(filterName, Settings.Default.MainFilterName);
+        }
+
+        public void ApplyBaseFilter()
+        {
+            var filterName = mapFilterPairs.First().Value;
+            CopyFilter(filterName, Settings.Default.MainFilterName);
+        }
+
+        public void CopyFilter(string fromfilterName, string toFilterName)
+        {
             var filtersPath = Settings.Default.ReshadeFiltersPath;
-            var from = $"{filtersPath}{filterName}";
-            var to = $"{filtersPath}{Settings.Default.MainFilterName}";
+            var from = $"{filtersPath}{fromfilterName}";
+            var to = $"{filtersPath}{toFilterName}";
             FileSystem.CopyIniFile(from, to);
         }
 

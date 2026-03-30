@@ -53,6 +53,7 @@ namespace DBDOverlay.UI.Tabs
             Settings.Default.MainFilterName = MainFilterNameTextBox.Text;
             Settings.Default.Save();
             FileSystem.CreateFile(GetMainFilterPath());
+            ReshadeManager.Instance.ApplyBaseFilter();
             EnableGenerateFilterUI(false);            
         }
 
