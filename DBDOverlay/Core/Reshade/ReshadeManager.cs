@@ -61,7 +61,7 @@ namespace DBDOverlay.Core.Reshade
 
         public void ApplyBaseFilter()
         {
-            var filterName = mapFilterPairs.First().Value;
+            var filterName = Filters.First();
             CopyFilter(filterName, Settings.Default.MainFilterName);
         }
 

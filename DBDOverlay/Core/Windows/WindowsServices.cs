@@ -112,6 +112,7 @@ namespace DBDOverlay.Core.Windows
         public void StartMonitoring(int interval = 200)
         {
             IsMonitoringActive = true;
+            bool lastState = false;
 
             Task.Run(async () =>
             {
@@ -130,10 +131,17 @@ namespace DBDOverlay.Core.Windows
                         }
                     }
 
-                    Application.Current.Dispatcher.Invoke(() =>
+                    bool currentState = lastValidProcess == dbdProcessName;
+
+                    if (currentState != lastState)
                     {
-                        HandleHotkeys(lastValidProcess == dbdProcessName);
-                    });
+                        lastState = currentState;
+
+                        _ = Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            HandleHotkeys(currentState);
+                        }));
+                    }
 
                     await Task.Delay(interval);
                 }
