@@ -403,6 +403,16 @@ namespace DBDOverlay.Images.Maps {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SLEEPLESS_DISTRICT_TRICKSTERS_DELUSION {
+            get {
+                object obj = ResourceManager.GetObject("SLEEPLESS_DISTRICT.TRICKSTERS_DELUSION", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SPRINGWOOD_BADHAM_PRESCHOOL_I {
             get {
                 object obj = ResourceManager.GetObject("SPRINGWOOD.BADHAM_PRESCHOOL_I", resourceCulture);
