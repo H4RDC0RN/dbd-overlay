@@ -88,6 +88,11 @@ namespace DBDOverlay.UI.Tabs
             }
         }
 
+        private void DownloadLanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DownloadButton.IsEnabled = !LanguageComboBox.Items.Cast<string>().ToList().Contains(DownloadLanguageComboBox.SelectedItem.ToString());
+        }
+
         private void Download_Click(object sender, RoutedEventArgs e)
         {
             DownloadManager.Instance.DownloadLanguage(LanguagesManager.GetValue(DownloadLanguageComboBox.SelectedItem.ToString()));
@@ -172,8 +177,8 @@ namespace DBDOverlay.UI.Tabs
             }
             else
             {
-                DownloadButton.IsEnabled = true;
-                SetLanguages();                
+                //DownloadButton.IsEnabled = true;
+                SetLanguages();
             }
         }
     }

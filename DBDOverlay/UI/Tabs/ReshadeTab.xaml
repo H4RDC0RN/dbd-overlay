@@ -148,16 +148,16 @@
                     Margin="5">
 
             <TextBlock Style="{DynamicResource InfoTextBlockStyle}">
-                Assign "Effect reload key" in Reshade settings
+                - Assign "Effect reload key" in Reshade settings
             </TextBlock>
             <TextBlock Style="{DynamicResource InfoTextBlockStyle}">
-                Select overlay filter in Reshade
+                - Select overlay filter in Reshade
             </TextBlock>
             <TextBlock Style="{DynamicResource InfoTextBlockStyle}">
-                It will be updated (not applied) each time when new map is recognized by this app
+                - It will be updated (not applied) each time when new map is recognized by this app
             </TextBlock>
             <TextBlock Style="{DynamicResource InfoTextBlockStyle}">
-                After recognizing press "Effect reload key" to apply updated filter
+                - After recognizing press "Effect reload key" to apply updated filter
             </TextBlock>
         </StackPanel>
     </Grid>

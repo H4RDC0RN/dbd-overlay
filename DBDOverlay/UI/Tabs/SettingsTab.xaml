@@ -56,7 +56,8 @@
                           VerticalAlignment="Center"
                           Width="170"
                           Margin="5"
-                          Style="{StaticResource ComboBoxFlatStyle}"/>
+                          Style="{StaticResource ComboBoxFlatStyle}"
+                          SelectionChanged="DownloadLanguageComboBox_SelectionChanged"/>
 
                 <Button x:Name="DownloadButton"
                         Margin="5"
