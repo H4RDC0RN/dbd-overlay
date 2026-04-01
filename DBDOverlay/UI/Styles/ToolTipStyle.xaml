@@ -28,4 +28,31 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ToolTipTopStyle" TargetType="{x:Type ToolTip}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Placement" Value="Top"/>
+        <Setter Property="VerticalOffset" Value="-4"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border x:Name="Root" 
+                         CornerRadius="5" 
+                         Background="{StaticResource DarkLightGrayBrush}">
+                        <ContentPresenter 
+                            Margin="6" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Top"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsOpen" Value="False">
+                            <Setter TargetName="Root" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

@@ -55,6 +55,15 @@
                                Source="/Images/App/open-folder.png">
                         </Image>
                     </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource ToolTipTopStyle}">
+                            <StackPanel>
+                                <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                                Select folder
+                                </TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </Button.ToolTip>
                 </Button>
 
                 <Button x:Name="ClearFolderButton"
@@ -68,6 +77,15 @@
                                Source="/Images/App/clear-folder.png">
                         </Image>
                     </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource ToolTipTopStyle}">
+                            <StackPanel>
+                                <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                                Clear folder
+                                </TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </Button.ToolTip>
                 </Button>
                 <Button x:Name="RefreshFiltersButton"
                         Width="30"
@@ -79,6 +97,15 @@
                                Source="/Images/App/refresh.png">
                         </Image>
                     </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource ToolTipTopStyle}">
+                            <StackPanel>
+                                <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                                Refresh folder
+                                </TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </Button.ToolTip>
                 </Button>
             </StackPanel>
 
@@ -139,6 +166,15 @@
                                Source="/Images/App/close.png">
                         </Image>
                     </Button.Content>
+                    <Button.ToolTip>
+                        <ToolTip Style="{StaticResource ToolTipTopStyle}">
+                            <StackPanel>
+                                <TextBlock Style="{DynamicResource ToolTipTextBlockStyle}">
+                                Delete filter
+                                </TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </Button.ToolTip>
                 </Button>
             </StackPanel>
         </Grid>

@@ -36,6 +36,7 @@
         <Setter Property="Background" Value="{StaticResource DarkGrayBrush}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="300"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">

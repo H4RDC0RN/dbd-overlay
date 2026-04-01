@@ -9,9 +9,7 @@ namespace DBDOverlay.Core.CustomItems
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double d)
-                return d > 0 ? Visibility.Visible : Visibility.Collapsed;
-
+            if (value is double d) return d > 0 ? Visibility.Visible : Visibility.Collapsed;
             return Visibility.Collapsed;
         }
 
