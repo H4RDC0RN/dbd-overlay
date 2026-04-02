@@ -27,7 +27,7 @@ namespace DBDOverlay.Core.Windows
         private const uint WINEVENT_OUTOFCONTEXT = 0;
         private const uint EVENT_SYSTEM_FOREGROUND = 3;
 
-        private readonly string dbdProcessName = "DeadByDaylight-Win64-Shipping";
+        private readonly string[] dbdProcessNames = { "DeadByDaylight-Win64-Shipping", "DeadByDaylight-EGS-Shipping" };
         private readonly string appProcessName = "DBDOverlay";
         private readonly string appWindowName = "DBD Overlay";
         private readonly string mapOverlayWindowName = "Map overlay";
@@ -131,7 +131,7 @@ namespace DBDOverlay.Core.Windows
                         }
                     }
 
-                    bool currentState = lastValidProcess == dbdProcessName;
+                    bool currentState = dbdProcessNames.Contains(lastValidProcess);
 
                     if (currentState != lastState)
                     {
