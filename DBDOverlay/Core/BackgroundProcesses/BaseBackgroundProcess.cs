@@ -24,6 +24,7 @@ namespace DBDOverlay.Core.BackgroundProcesses
 
         public void Stop()
         {
+            if (!IsActive) return;
             IsActive = false;
             worker.CancelAsync();
             worker.Dispose();

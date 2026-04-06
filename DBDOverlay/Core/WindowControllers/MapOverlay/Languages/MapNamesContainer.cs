@@ -602,7 +602,7 @@ namespace DBDOverlay.Core.WindowControllers.MapOverlay.Languages
 
         public static string GetMapFileName(string mapFullName)
         {
-            if (Settings.Default.Language.Equals(LanguagesManager.Eng)) return mapFullName;
+            if (Settings.Default.Language.Equals(LanguagesManager.Eng) || mapFullName.Equals(Empty) || mapFullName.Equals(NotReady)) return mapFullName;
             var mapsList = mapsByLang.FirstOrDefault(x => x.Key.Equals(Settings.Default.Language)).Value;
 
             int index = -1;

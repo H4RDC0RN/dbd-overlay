@@ -172,7 +172,6 @@ namespace DBDOverlay.UI.Windows.Overlays
 
         public void ShowSidePanel()
         {
-            KillerMode.Instance.RunConditional();
             MainGridBorder.CornerRadius = new CornerRadius(0, 10, 10, 0);
             MainGridBorder.Background = Palette.DarkGrayBrush;
             SetHooksVisibility(Visibility.Visible);
@@ -183,7 +182,6 @@ namespace DBDOverlay.UI.Windows.Overlays
 
         public void HideSidePanel()
         {
-            KillerMode.Instance.StopConditional();
             MoveWindow(GetLeftSidePanel(false), GetTopSidePanel());
             SetHooksVisibility(Visibility.Hidden);
             SetTimerVisibility(Visibility.Hidden);

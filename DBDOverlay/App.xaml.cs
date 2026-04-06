@@ -42,7 +42,7 @@ namespace DBDOverlay
                 PresetAction("Loading user settings", ReloadSettings);
                 PresetAction("Loading ReShade filters", ReshadeManager.Instance.SetMapFilterPairs);
                 PresetAction("Initializing Tesseract", ImageReader.Instance.Initialize);
-            };
+            };            
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(FinishLoading);
             worker.RunWorkerAsync();
         }

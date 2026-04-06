@@ -87,10 +87,10 @@ namespace DBDOverlay.UI.Tabs
         {
             Settings.Default.IsSidePanelMode = true;
             Settings.Default.Save();
+            KillerMode.Instance.RunConditional();
             if (SidePanelToggleButton.IsVisible)
             {
                 KillerOverlayController.Window.ShowSidePanel();
-                KillerMode.Instance.RunConditional();
             }
         }
 
@@ -98,9 +98,9 @@ namespace DBDOverlay.UI.Tabs
         {
             if (SidePanelToggleButton.IsVisible)
             {
-                KillerOverlayController.Window.HideSidePanel();
-                KillerMode.Instance.StopConditional();
+                KillerOverlayController.Window.HideSidePanel();                
             }
+            KillerMode.Instance.StopConditional();
             Settings.Default.IsSidePanelMode = false;
             Settings.Default.Save();
         }

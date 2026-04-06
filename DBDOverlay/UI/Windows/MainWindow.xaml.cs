@@ -1,4 +1,5 @@
-﻿using DBDOverlay.Core.Hotkeys;
+﻿using DBDOverlay.Core.BackgroundProcesses;
+using DBDOverlay.Core.Hotkeys;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
 using DBDOverlay.Core.Windows;
@@ -82,6 +83,9 @@ namespace DBDOverlay.UI.Windows
         {
             Logger.Info("---Close Application---");
             WindowsServices.Instance.StopMonitoring();
+            KillerOverlayController.Instance.ResetSurvivors();
+            KillerMode.Instance.Stop();
+            AutoMode.Instance.Stop();
             HotKeysController.Dispose();
             MapOverlayController.Overlay.Close();
             KillerOverlayController.Overlay.Close();
