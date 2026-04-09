@@ -1,6 +1,7 @@
 ﻿using DBDOverlay.Core.Hotkeys;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.WindowControllers.MapOverlay;
+using DBDOverlay.Properties;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -116,22 +117,9 @@ namespace DBDOverlay.Core.Windows
 
             Task.Run(async () =>
             {
-                string lastValidProcess = null;
-
                 while (IsMonitoringActive)
                 {
-                    var handle = GetForegroundWindow();
-                    if (handle != 0)
-                    {
-                        GetWindowThreadProcessId(handle, out uint pid);
-                        if (pid != 0)
-                        {
-                            var process = Process.GetProcessById((int)pid);
-                            lastValidProcess = process.ProcessName;
-                        }
-                    }
-
-                    bool currentState = dbdProcessNames.Contains(lastValidProcess);
+                    var currentState = IsDBDActive();
 
                     if (currentState != lastState)
                     {
@@ -139,10 +127,9 @@ namespace DBDOverlay.Core.Windows
 
                         _ = Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            HandleHotkeys(currentState);
+                            HandleActiveWindow(currentState);
                         }));
                     }
-
                     await Task.Delay(interval);
                 }
             });
@@ -153,10 +140,50 @@ namespace DBDOverlay.Core.Windows
             IsMonitoringActive = false;
         }
 
-        private void HandleHotkeys(bool isWindowActive)
+        public void CheckActiveWindow()
         {
-            if (isWindowActive) HotKeysController.RegisterAllHotKeys();
+            bool isActive = IsDBDActive();
+
+            _ = Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                HandleActiveWindow(isActive);
+            }));
+        }
+
+        private bool IsDBDActive()
+        {
+            string processName = null;
+
+            var handle = GetForegroundWindow();
+            if (handle != 0)
+            {
+                GetWindowThreadProcessId(handle, out uint pid);
+                if (pid != 0)
+                {
+                    var process = Process.GetProcessById((int)pid);
+                    processName = process.ProcessName;
+                }
+            }
+
+            return dbdProcessNames.Contains(processName);
+        }
+
+        private void HandleActiveWindow(bool isActive)
+        {
+            HandleHotkeys(isActive);
+            SetOverlaysVisible(!Settings.Default.IsHidingOverlaysMode || isActive);
+        }
+
+        private void HandleHotkeys(bool isDBDActive)
+        {
+            if (isDBDActive) HotKeysController.RegisterAllHotKeys();
             else HotKeysController.UnregisterAllHotKeys();
+        }
+
+        private void SetOverlaysVisible(bool isVisible)
+        {
+            KillerOverlayController.Overlay.SetOverlayVisible(isVisible);
+            MapOverlayController.Overlay.SetOverlayVisible(isVisible);
         }
 
         private void HandleMapOverlayMoveMode()

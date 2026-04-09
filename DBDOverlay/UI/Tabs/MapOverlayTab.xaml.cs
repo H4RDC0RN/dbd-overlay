@@ -26,6 +26,7 @@ namespace DBDOverlay.UI.Tabs
             MapOverlayController.Overlay.Show();
             Settings.Default.IsMapOverlayOpened = true;
             Settings.Default.Save();
+            WindowsServices.Instance.CheckActiveWindow();
         }
 
         private void OpenClose_Unchecked(object sender, RoutedEventArgs e)
@@ -33,6 +34,7 @@ namespace DBDOverlay.UI.Tabs
             MapOverlayController.Overlay.Hide();
             Settings.Default.IsMapOverlayOpened = false;
             Settings.Default.Save();
+            WindowsServices.Instance.CheckActiveWindow();
         }
 
         private void AutoMode_Checked(object sender, RoutedEventArgs e)

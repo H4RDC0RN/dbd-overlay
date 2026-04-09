@@ -1,19 +1,20 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using UserControl = System.Windows.Controls.UserControl;
-using System.Windows.Input;
-using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using ComboBox = System.Windows.Controls.ComboBox;
-using TextBox = System.Windows.Controls.TextBox;
-using DBDOverlay.Core.Download;
+﻿using DBDOverlay.Core.Download;
 using DBDOverlay.Core.Hotkeys;
+using DBDOverlay.Core.ImageProcessing;
+using DBDOverlay.Core.Utils;
+using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
+using DBDOverlay.Core.Windows;
+using DBDOverlay.Properties;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
-using DBDOverlay.Core.Utils;
-using DBDOverlay.Properties;
-using DBDOverlay.Core.ImageProcessing;
-using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
+using System.Windows.Input;
+using ComboBox = System.Windows.Controls.ComboBox;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using TextBox = System.Windows.Controls.TextBox;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace DBDOverlay.UI.Tabs
 {
@@ -44,21 +45,23 @@ namespace DBDOverlay.UI.Tabs
             InitializeModifiers();
 
             ReadModifierComboBox.ItemsSource = modifiers.Values;
-            NextModifierComboBox.ItemsSource = modifiers.Values;
-            PreviousModifierComboBox.ItemsSource = modifiers.Values;
+            //NextModifierComboBox.ItemsSource = modifiers.Values;
+            //PreviousModifierComboBox.ItemsSource = modifiers.Values;
             CreateScreenshotsComboBox.ItemsSource = modifiers.Values;
 
             ReadModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.ReadModifier);
-            NextModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.NextMapModifier);
-            PreviousModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.PreviousMapModifier);
+            //NextModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.NextMapModifier);
+            //PreviousModifierComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.PreviousMapModifier);
             CreateScreenshotsComboBox.SelectedIndex = modifiers.Keys.ToList().IndexOf((ModifierKeys)Settings.Default.CreateScreenshotsModifier);
+
+            HideOverlaysButton.IsChecked = Settings.Default.IsHidingOverlaysMode;
         }
 
         private void SetKeys()
         {
             ReadKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.ReadKey).ToString().ToUpper();
-            NextKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.NextMapKey).ToString().ToUpper();
-            PreviousKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.PreviousMapKey).ToString().ToUpper();
+            //NextKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.NextMapKey).ToString().ToUpper();
+            //PreviousKeyTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.PreviousMapKey).ToString().ToUpper();
             CreateScreenshotsTextBox.Text = KeyboardHook.Instance.GetCharFromKey((Keys)Settings.Default.CreateScreenshotsKey).ToString().ToUpper();
         }
 
@@ -136,6 +139,20 @@ namespace DBDOverlay.UI.Tabs
         private void CreateScreenshotsTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             UpdateKey((TextBox)sender, HotKeyType.CreateScreenshots, e.Key);
+        }
+
+        private void HideOverlays_Checked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.IsHidingOverlaysMode = true;
+            Settings.Default.Save();
+            WindowsServices.Instance.CheckActiveWindow();
+        }
+
+        private void HideOverlays_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.IsHidingOverlaysMode = false;
+            Settings.Default.Save();
+            WindowsServices.Instance.CheckActiveWindow();
         }
 
         private void UpdateModifier(ComboBox comboBox, HotKeyType hotKeyType)

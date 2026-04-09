@@ -41,6 +41,7 @@ namespace DBDOverlay.UI.Tabs
             Settings.Default.Save();
             KillerOverlayController.Overlay.ShowHooks();
             KillerMode.Instance.RunConditional();
+            WindowsServices.Instance.CheckActiveWindow();
         }
 
         private void Hooks_Unchecked(object sender, RoutedEventArgs e)
@@ -49,6 +50,7 @@ namespace DBDOverlay.UI.Tabs
             Settings.Default.Save();
             KillerOverlayController.Overlay.HideHooks();
             KillerMode.Instance.StopConditional();
+            WindowsServices.Instance.CheckActiveWindow();
         }
 
         private void PostUnhookTimer_Checked(object sender, RoutedEventArgs e)
@@ -57,6 +59,7 @@ namespace DBDOverlay.UI.Tabs
             Settings.Default.Save();
             KillerOverlayController.Overlay.ShowTimer();
             KillerMode.Instance.RunConditional();
+            WindowsServices.Instance.CheckActiveWindow();
         }
 
         private void PostUnhookTimer_Unchecked(object sender, RoutedEventArgs e)
@@ -65,6 +68,7 @@ namespace DBDOverlay.UI.Tabs
             Settings.Default.Save();
             KillerOverlayController.Overlay.HideTimer();
             KillerMode.Instance.StopConditional();
+            WindowsServices.Instance.CheckActiveWindow();
         }
 
         private void Mode2v8_Checked(object sender, RoutedEventArgs e)
@@ -98,7 +102,7 @@ namespace DBDOverlay.UI.Tabs
         {
             if (SidePanelToggleButton.IsVisible)
             {
-                KillerOverlayController.Window.HideSidePanel();                
+                KillerOverlayController.Window.HideSidePanel();
             }
             KillerMode.Instance.StopConditional();
             Settings.Default.IsSidePanelMode = false;

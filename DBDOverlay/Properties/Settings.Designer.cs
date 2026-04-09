@@ -334,5 +334,17 @@ namespace DBDOverlay.Properties {
                 this["MainFilterName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsHidingOverlaysMode {
+            get {
+                return ((bool)(this["IsHidingOverlaysMode"]));
+            }
+            set {
+                this["IsHidingOverlaysMode"] = value;
+            }
+        }
     }
 }

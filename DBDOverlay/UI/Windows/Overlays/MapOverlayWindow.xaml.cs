@@ -33,6 +33,13 @@ namespace DBDOverlay.UI.Windows.Overlays
             DefaultStyle = WindowsServices.Instance.SetWindowExTransparent(this);
         }
 
+        public void SetOverlayVisible(bool isVisible)
+        {
+            if (!Settings.Default.IsMapOverlayOpened) return;
+            if (isVisible) Show();
+            else Hide();
+        }
+
         private void SetOverlaySettings()
         {
             CurrentRect = Settings.Default.MapOverlayRect.ToRect();

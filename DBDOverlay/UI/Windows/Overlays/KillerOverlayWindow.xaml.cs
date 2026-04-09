@@ -1,5 +1,4 @@
-﻿using DBDOverlay.Core.BackgroundProcesses;
-using DBDOverlay.Core.Extensions;
+﻿using DBDOverlay.Core.Extensions;
 using DBDOverlay.Core.ImageProcessing;
 using DBDOverlay.Core.WindowControllers.KillerOverlay;
 using DBDOverlay.Core.Windows;
@@ -78,6 +77,20 @@ namespace DBDOverlay.UI.Windows.Overlays
                 case SurvivorNumber.N7: return SurvivorTimer_7;
                 case SurvivorNumber.N8: return SurvivorTimer_8;
                 default: return null;
+            }
+        }
+
+        public void SetOverlayVisible(bool isVisible)
+        {
+            if (Settings.Default.IsPostUnhookTimerMode)
+            {
+                if (isVisible) ShowTimer();
+                else HideTimer();
+            }
+            if (Settings.Default.IsHookMode)
+            {
+                if (isVisible) ShowHooks();
+                else HideHooks();
             }
         }
 

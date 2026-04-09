@@ -93,8 +93,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <!--<RowDefinition/>
+                <RowDefinition/>-->
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0"
@@ -102,7 +102,7 @@
                        Text="Read map"
                        Style="{StaticResource TextBlockStyle}"/>
 
-            <TextBlock Grid.Row="1"
+            <!--<TextBlock Grid.Row="1"
                        Grid.Column="0"
                        Text="Next map variation"
                        Style="{StaticResource TextBlockStyle}"/>
@@ -110,9 +110,9 @@
             <TextBlock Grid.Row="2"
                        Grid.Column="0"
                        Text="Previous map variation"
-                       Style="{StaticResource TextBlockStyle}"/>
+                       Style="{StaticResource TextBlockStyle}"/>-->
 
-            <TextBlock Grid.Row="3"
+            <TextBlock Grid.Row="1"
                        Grid.Column="0"
                        Text="Create screenshots"
                        Style="{StaticResource TextBlockStyle}"/>
@@ -148,7 +148,7 @@
 
             </StackPanel>
 
-            <StackPanel Grid.Row="1"
+            <!--<StackPanel Grid.Row="1"
                         Grid.Column="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
@@ -179,9 +179,9 @@
                          PreviewKeyDown="NextKeyTextBox_PreviewKeyDown"
                          Style="{StaticResource TextBoxKeyStyle}"/>
 
-            </StackPanel>
+            </StackPanel>-->
 
-            <StackPanel Grid.Row="2"
+            <!--<StackPanel Grid.Row="2"
                         Grid.Column="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
@@ -212,9 +212,9 @@
                          PreviewKeyDown="PreviousKeyTextBox_PreviewKeyDown"
                          Style="{StaticResource TextBoxKeyStyle}"/>
 
-            </StackPanel>
+            </StackPanel>-->
 
-            <StackPanel Grid.Row="3"
+            <StackPanel Grid.Row="1"
                         Grid.Column="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
@@ -246,6 +246,29 @@
                          Style="{StaticResource TextBoxKeyStyle}"/>
 
             </StackPanel>
+        </Grid>
+
+        <Grid Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.7*"/>
+                <ColumnDefinition Width="0.3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" 
+                       Text="Hide overlays if game is not active"
+                       Style="{StaticResource TextBlockStyle}"/>
+
+            <custom:CustomToggleButton x:Name="HideOverlaysButton"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       HorizontalAlignment="Center"
+                       Style="{StaticResource ToggleButtonStyle}"
+                       Checked="HideOverlays_Checked"
+                       Unchecked="HideOverlays_Unchecked"/>
         </Grid>
     </StackPanel>
 </UserControl>
