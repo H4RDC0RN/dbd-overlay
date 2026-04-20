@@ -205,7 +205,6 @@ namespace DBDOverlay.UI.Windows.Overlays
 
         private void MoveWindow(double newLeft, double newTop)
         {
-
             var duration = TimeSpan.FromMilliseconds(300);
 
             var leftAnim = new DoubleAnimation

@@ -86,5 +86,12 @@ namespace DBDOverlay.Core.Extensions
         {
             return $"{Convert.ToInt32(str.Last().ToString()) - 1}";
         }
+
+        public static string ExtractVersion(this string str)
+        {
+            var trimmed = str.TrimEnd('/');
+            var index = trimmed.LastIndexOf('/');
+            return trimmed.Substring(index + 1);
+        }
     }
 }

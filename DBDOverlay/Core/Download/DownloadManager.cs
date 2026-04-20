@@ -5,6 +5,7 @@ using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -112,11 +113,12 @@ namespace DBDOverlay.Core.Download
         {
             if (!IsConnected) return;
 
-            int.TryParse(CurrentVersion.RemoveRegex(@"\."), out int currentVersionNumber);
             var latestVersion = GetLatestVersion();
-            int.TryParse(latestVersion.RemoveRegex(@"\."), out int latestVersionNumber);
 
-            if (currentVersionNumber >= latestVersionNumber)
+            var current = new Version(CurrentVersion);
+            var latest = new Version(latestVersion);
+
+            if (current >= latest)
             {
                 Logger.Info($"Application has latest version ({CurrentVersion})");
                 var updatePath = FileSystem.Update;
@@ -185,7 +187,9 @@ namespace DBDOverlay.Core.Download
         {
             using (var client = new HttpClient())
             {
-                return client.GetAsync($"{releasesLink}{latest}").Result.RequestMessage.RequestUri.ToString().GetLast(5);
+                var message = client.GetAsync($"{releasesLink}{latest}").Result.RequestMessage;
+                if (message == null) return string.Empty;
+                return message.RequestUri.ToString().ExtractVersion();
             }
         }
 
