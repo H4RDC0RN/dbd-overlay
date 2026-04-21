@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using Path = System.IO.Path;
 
@@ -92,6 +93,30 @@ namespace DBDOverlay.Core.Extensions
             var trimmed = str.TrimEnd('/');
             var index = trimmed.LastIndexOf('/');
             return trimmed.Substring(index + 1);
+        }
+
+        public static string EscapeCmdArg(this string str)
+        {
+            if (string.IsNullOrEmpty(str)) return "\"\"";
+
+            var sb = new StringBuilder(str.Length);
+
+            foreach (var c in str)
+            {
+                switch (c)
+                {
+                    case '^':
+                    case '&':
+                    case '|':
+                    case '<':
+                    case '>':
+                        sb.Append('^');
+                        break;
+                }
+                sb.Append(c);
+            }
+
+            return $"\"{sb.ToString().Replace("\"", "\\\"")}\"";
         }
     }
 }

@@ -5,7 +5,6 @@ using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -206,7 +205,7 @@ namespace DBDOverlay.Core.Download
             CmdHelper.RunCommand($"taskkill /f /im \"{exeName}\" && " +
                 $"timeout /t 1 && " +
                 $"xcopy /i /e /y \"{from}\" \"{to}\" && " +
-                $"{exePath}");
+                $"{exePath}".EscapeCmdArg());
         }
     }
 }

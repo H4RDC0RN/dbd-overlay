@@ -61,6 +61,7 @@ namespace DBDOverlay.Core.ImageProcessing
 
         public void SetEngine()
         {
+            engine?.Dispose();
             engine = new TesseractEngine(FileSystem.TessData, LanguagesManager.ConvertMexToSpa(Settings.Default.Language));
         }
 
