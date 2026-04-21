@@ -1,9 +1,11 @@
 ﻿using DBDOverlay.Core.Extensions;
+using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using DBDOverlay.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace DBDOverlay.Core.Utils
 {
@@ -14,12 +16,28 @@ namespace DBDOverlay.Core.Utils
         public static readonly string Images = "Images".ToProjectPath();
         private static readonly string png = "png";
         private static readonly string ini = "ini";
+        private static readonly string traineddata = "traineddata";
+        private static readonly string zip = "zip";
+        private static readonly string binariesName = "dbd-overlay";
         private static readonly string ReShade = "ReShade";
 
         public static void CreateDefaultFolders()
         {
             Directory.CreateDirectory(TessData);
             Directory.CreateDirectory(Images);
+        }
+
+        public static List<string> GetDownloadedLanguagesAbbs()
+        {
+            var regex = $@"(?<={TessData.Split(@"\").Last()}\\).*(?=\.{traineddata})";
+            var languages = Directory.GetFiles(TessData).Select(x => Regex.Match(x, regex).Value).ToList();
+            if (languages.Contains(LanguagesManager.Spa)) languages.Add(LanguagesManager.Mex);
+            return languages;
+        }
+
+        public static Dictionary<string, string> GetDownloadedLanguages()
+        {
+            return LanguagesManager.GetOrderedKeyValuePairs(GetDownloadedLanguagesAbbs());
         }
 
         public static string GetImagePath(string imageName, bool edited = false)
@@ -59,6 +77,16 @@ namespace DBDOverlay.Core.Utils
         public static bool IniExists(string path)
         {
             return File.Exists($"{path}.{ini}");
+        }
+
+        public static string BuildTrainedDataFileFullName(string name)
+        {
+            return $"{name}.{traineddata}";
+        }
+
+        public static string GetBinariesName(bool withExtension = false)
+        {
+            return withExtension ? $"{binariesName}.{zip}" : binariesName;
         }
 
         public static bool IsValidFileName(string name)

@@ -67,9 +67,7 @@ namespace DBDOverlay.UI.Tabs
 
         private void SetLanguages()
         {
-            var downloadedLanguages = DownloadManager.Instance.GetDownloadedLanguages();
-            if (downloadedLanguages.Contains(LanguagesManager.Spa)) downloadedLanguages.Add(LanguagesManager.Mex);
-            var languages = LanguagesManager.GetOrderedKeyValuePairs(downloadedLanguages);
+            var languages = FileSystem.GetDownloadedLanguages();
             LanguageComboBox.ItemsSource = languages.Select(x => x.Key);
             LanguageComboBox.SelectedIndex = languages.Select(x => x.Value).ToList().IndexOf(Settings.Default.Language);
         }
@@ -93,7 +91,7 @@ namespace DBDOverlay.UI.Tabs
 
         private void DownloadLanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DownloadButton.IsEnabled = !LanguageComboBox.Items.Cast<string>().ToList().Contains(DownloadLanguageComboBox.SelectedItem.ToString());
+            DownloadButton.IsEnabled = !FileSystem.GetDownloadedLanguages().ContainsKey(DownloadLanguageComboBox.SelectedItem.ToString());
         }
 
         private void Download_Click(object sender, RoutedEventArgs e)

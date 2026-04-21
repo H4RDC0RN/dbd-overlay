@@ -3,15 +3,12 @@ using DBDOverlay.Core.Utils;
 using DBDOverlay.Core.WindowControllers.Loading;
 using DBDOverlay.Core.WindowControllers.MapOverlay.Languages;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using Application = System.Windows.Application;
 
 namespace DBDOverlay.Core.Download
@@ -25,11 +22,6 @@ namespace DBDOverlay.Core.Download
         private readonly string githubLink = "github.com";
         private readonly string download = "download";
         private readonly string latest = "latest";
-
-        private readonly string traineddataExtension = ".traineddata";
-        private readonly string zip = "zip";
-
-        private readonly string binariesName = "dbd-overlay";
 
         private static DownloadManager instance;
 
@@ -70,7 +62,7 @@ namespace DBDOverlay.Core.Download
 
         public void DownloadLanguage(string language, bool inBackground = true)
         {
-            if (GetDownloadedLanguages().Contains(language)) return;
+            if (FileSystem.GetDownloadedLanguagesAbbs().Contains(language)) return;
             if (!IsConnected) return;
 
             if (inBackground)
@@ -100,7 +92,7 @@ namespace DBDOverlay.Core.Download
 
         public void DownloadDefaultLanguage()
         {
-            if (GetDownloadedLanguages().Count == 0)
+            if (FileSystem.GetDownloadedLanguagesAbbs().Count == 0)
             {
                 LoadingWindowController.Instance.SetStatus("Downloading default language");
                 DownloadLanguage(LanguagesManager.Eng, false);
@@ -142,22 +134,17 @@ namespace DBDOverlay.Core.Download
             InstallUpdate(latestVersion);
         }
 
-        public List<string> GetDownloadedLanguages()
-        {
-            var regex = $@"(?<={FileSystem.TessData.Split(@"\").Last()}\\).*(?={traineddataExtension})";
-            return Directory.GetFiles(FileSystem.TessData).Select(x => Regex.Match(x, regex).Value).ToList();
-        }
-
         private void DownloadLanguageData(string language)
         {
             language = LanguagesManager.ConvertMexToSpa(language);
-            DownloadFile($"{downloadTessDataLink}{language}{traineddataExtension}", $@"{FileSystem.TessData}\{language}{traineddataExtension}");
+            var fileName = FileSystem.BuildTrainedDataFileFullName(language);
+            DownloadFile($"{downloadTessDataLink}{fileName}", $@"{FileSystem.TessData}\{fileName}");
         }
 
         private string DownloadUpdate(string version)
         {
             Directory.CreateDirectory(FileSystem.Update);
-            var fileName = $"{binariesName}.{zip}";
+            var fileName = FileSystem.GetBinariesName(true);
             var path = $@"{FileSystem.Update}\{fileName}";
             DownloadFile($"{releasesLink}{download}/{version}/{fileName}", path);
             return path;
@@ -199,7 +186,7 @@ namespace DBDOverlay.Core.Download
 
             var exeName = AppDomain.CurrentDomain.FriendlyName;
             var exePath = Assembly.GetEntryAssembly().Location;
-            var from = $@"{FileSystem.Update}\{binariesName}";
+            var from = $@"{FileSystem.Update}\{FileSystem.GetBinariesName()}";
             var to = string.Empty.ToProjectPath();
 
             CmdHelper.RunCommand($"taskkill /f /im \"{exeName}\" && " +
